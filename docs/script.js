@@ -10,7 +10,7 @@ authors.forEach(author => {
     console.log(author);
     container.appendChild(author);
 });
-console.log(container)
+
 
 
 header.innerHTML = "";
@@ -18,4 +18,6 @@ header.appendChild(title);
 header.appendChild(container);
 header.appendChild(date);
 header.appendChild(abstract);
-console.log(header)
+
+let link = document.getElementById("github");
+link.classList.add("github");

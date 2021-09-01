@@ -5,6 +5,7 @@ date: "`r format(Sys.Date(), '%B %Y')`"
 abstract: |
   The last two decades have seen major changes in the nature of the commodity markets with the influx of financial investor inflows followed by the financial crisis. We study the effects of these events on commodity futures pricing dynamics using commodity asset pricing techniques. We find that Keynesian and Working’s term structure paradigms based factors are best able to detect the effects of commodity financialisation, while the effects of the financial crisis and its aftermath are most clearly visible through the performance of the market factor. Besides, the effects of financialisation seem to go beyond mechanical effects induced by the rise of indexing.
 bibliography: literature_files/references.bib
+github-repo: bautheac/financialisation-co-movement
 output:
   bookdown::gitbook:
     pandoc_args: html.yaml
@@ -17,7 +18,8 @@ output:
         scroll_highlight: true
         before: |
           <li><a href="index.html">Financialization: co-movement</a></li>
-      edit: https://github.com/bautheac/financialisation-co-movement/edit/master/docs/%s
+        after: |
+          <li id="github"><a href="https://github.com/bautheac/financialisation-co-movement"><img src="github.png" alt="github" width="50" height="50"></a></li>
       sharing:
         facebook: true
         twitter: true

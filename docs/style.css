@@ -21,6 +21,11 @@
   padding: 0;
 }
 
+.github {
+  display: flex;
+  justify-content: center;
+}
+
 .caption {
   color: #777;
   margin-top: 10px;
