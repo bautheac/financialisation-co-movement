@@ -1,0 +1,50 @@
+.title, .author {
+  text-align: center;
+}
+
+.authors {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 50px;
+}
+
+.date {
+  text-align: center;
+}
+
+.abstract {
+  padding-top: 100px;
+  padding-bottom: 200px;
+}
+
+.abstract p {
+  padding: 0;
+}
+
+.caption {
+  color: #777;
+  margin-top: 10px;
+}
+
+
+p code {
+  white-space: inherit;
+}
+pre {
+  word-break: normal;
+  word-wrap: normal;
+}
+pre code {
+  white-space: inherit;
+}
+p, caption, .abstract{
+  text-align: justify;
+}
+
+.book .book-body .page-wrapper .page-inner {
+  max-width: 60%;
+}
+
+.html-widget {
+    margin: auto;
+}
