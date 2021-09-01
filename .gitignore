@@ -2,7 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
-renv/
+git-remove-file.sh
 renv.lock
+renv/
 explore/results
 explore/shiny
