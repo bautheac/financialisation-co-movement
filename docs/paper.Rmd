@@ -16,7 +16,7 @@ output:
         collapse: subsection
         scroll_highlight: true
         before: |
-          <li><a href="http://bautheac.com.s3-website.eu-west-2.amazonaws.com/research/financialization-co-movement/_book/index.html">Financialization: co-movement</a></li>
+          <li><a href="index.html">Financialization: co-movement</a></li>
       edit: https://github.com/bautheac/financialisation-co-movement/edit/master/%s
       sharing:
         facebook: true
@@ -77,7 +77,7 @@ knitr::asis_output('\\cleardoublepage')
 ```
 
 
-# Introduction {#introduction}
+# Introduction {#index}
 <!-- Introduction {#introduction} -->
 <!-- ========================== -->
 
