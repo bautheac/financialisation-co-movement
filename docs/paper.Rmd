@@ -19,7 +19,7 @@ output:
         before: |
           <li><a href="index.html">Financialization: co-movement</a></li>
         after: |
-          <li id="github"><a href="https://github.com/bautheac/financialisation-co-movement"><img src="github.png" alt="github" width="50" height="50"></a></li>
+          <li><a href="https://github.com/bautheac/financialisation-co-movement"><img src="github.png" alt="github" width="50" height="50"></a></li>
       sharing:
         facebook: true
         twitter: true
