@@ -17,7 +17,7 @@ output:
         scroll_highlight: true
         before: |
           <li><a href="index.html">Financialization: co-movement</a></li>
-      edit: https://github.com/bautheac/financialisation-co-movement/edit/master/%s
+      edit: https://github.com/bautheac/financialisation-co-movement/edit/master/docs/%s
       sharing:
         facebook: true
         twitter: true
