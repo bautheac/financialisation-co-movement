@@ -21,7 +21,7 @@
   padding: 0;
 }
 
-.github {
+#github {
   display: flex;
   justify-content: center;
 }

@@ -5,5 +5,7 @@
 git-remove-file.sh
 renv.lock
 renv/
+data/
+others/
 explore/results
 explore/shiny

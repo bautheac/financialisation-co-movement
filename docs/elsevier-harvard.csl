@@ -92,7 +92,7 @@
   <macro name="access">
     <choose>
       <if variable="DOI">
-        <text variable="DOI" prefix="doi:"/>
+        <!--<text variable="DOI" prefix="doi:"/>-->
       </if>
       <else-if type="webpage">
         <group delimiter=" ">
