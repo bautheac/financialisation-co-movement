@@ -5,15 +5,8 @@ date: "`r format(Sys.Date(), '%B %Y')`"
 bibliography: literature_files/references.bib
 github-repo: bautheac/financialisation-co-movement
 abstract: |
-  The last two decades have seen major changes in the nature of the commodity markets with the influx of financial investor inflows followed by the financial crisis. We study the effects of these events on commodity futures pricing dynamics using commodity asset pricing techniques. We find that Keynesian and Working’s term structure paradigms based factors are best able to detect the effects of commodity financialisation, while the effects of the financial crisis and its aftermath are most clearly visible through the performance of the market factor. Besides, the effects of financialisation seem to go beyond mechanical effects induced by the rise of indexing.
+  In the early 2000s institutional investors entered the commodity futures markets en masse with passive, long only, index type positions in sharp contrast with those typically assumed by traditional expert participants. A heated public debate soon erupted over the perceived consequences of the phenomenon--commonly referred to as "financialisation"—and, in response to immediate policy concerns, the matter was thrust onto the academic sphere as a burning issue. With the benefit of hindsight it now seems that the academic debate was framed rather narrowly, used contentious research methods, and eventually led to regulatory changes that were therefore perhaps unwarranted. In contrast, we take a broader approach where we consider a large cross-section of liquid commodities as suggested by the nature of financilisation that comprehends commodity futures as an asset class. Using a bespoke asset pricing factors based framework we study the issue through the lens of co-movement and find that the phenomenon had ontological consequences for the commodity complex with its impact extending beyond the mechanical effects induced by indexation. The onset of the financial crisis and the monetary policy regimes that followed, on the other hand, seem to have set off a motion of reversion to legacy pre-financialisation fundamentals, in other words, a process of "definancialisation" in global commodity futures markets.  
 output:
-  bookdown::pdf_book:
-      pandoc_args: latex.yaml
-      base_format: rticles::elsevier_article
-      latex_engine: xelatex
-      toc_depth: 3
-      includes:
-        in_header: preamble.tex
   bookdown::gitbook:
     pandoc_args: html.yaml
     split_by: "chapter"
@@ -36,6 +29,13 @@ output:
       info: false
     includes:
       after_body: doc_suffix.html
+  bookdown::pdf_book:
+      pandoc_args: latex.yaml
+      base_format: rticles::elsevier_article
+      latex_engine: xelatex
+      toc_depth: 3
+      includes:
+        in_header: preamble.tex
 ---
 
 ```{r globals, include = FALSE}
