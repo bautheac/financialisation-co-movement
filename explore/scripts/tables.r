@@ -594,7 +594,7 @@ readr::write_rds(tables, here::here("explore", "tables", "tables.rds"))
 
 
 tables <- readr::read_rds(here::here("explore", "tables", "tables.rds"))
-
+tidyr::unnest(tables[1, 2])
 
 
 
