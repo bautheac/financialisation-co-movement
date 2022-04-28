@@ -7,11 +7,21 @@ github-repo: bautheac/financialisation-co-movement
 abstract: |
   In the early 2000s institutional investors entered the commodity futures markets en masse with passive, long only, index type positions in sharp contrast with those typically assumed by traditional expert participants. A heated public debate soon erupted over the perceived consequences of the phenomenon--commonly referred to as "financialisation"—and, in response to immediate policy concerns, the matter was thrust onto the academic sphere as a burning issue. With the benefit of hindsight it now seems that the academic debate was framed rather narrowly, used contentious research methods, and eventually led to regulatory changes that were therefore perhaps unwarranted. In contrast, we take a broader approach where we consider a large cross-section of liquid commodities as suggested by the nature of financilisation that comprehends commodity futures as an asset class. Using a bespoke asset pricing factors based framework we study the issue through the lens of co-movement and find that the phenomenon had ontological consequences for the commodity complex with its impact extending beyond the mechanical effects induced by indexation. The onset of the financial crisis and the monetary policy regimes that followed, on the other hand, seem to have set off a motion of reversion to legacy pre-financialisation fundamentals, in other words, a process of "definancialisation" in global commodity futures markets.  
 output:
+  bookdown::pdf_book:
+      pandoc_args: latex.yaml
+      base_format: rticles::elsevier_article
+      latex_engine: xelatex
+      toc_depth: 3
+      includes:
+        in_header: preamble.tex
   bookdown::gitbook:
     pandoc_args: html.yaml
     split_by: "chapter"
     css: style.css
     toc_depth: 3
+    fig_caption: true
+    number_sections: true
+    global_numbering: true
     config:
       toc:
         collapse: subsection
@@ -29,17 +39,10 @@ output:
       info: false
     includes:
       after_body: doc_suffix.html
-  bookdown::pdf_book:
-      pandoc_args: latex.yaml
-      base_format: rticles::elsevier_article
-      latex_engine: xelatex
-      toc_depth: 3
-      includes:
-        in_header: preamble.tex
 ---
 
 ```{r globals, include = FALSE}
-library(kableExtra)
+library(kableExtra); library(slituR)
 
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 
@@ -47,24 +50,10 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 folder <- "literature_files"; dir.create(folder); path <- paste(folder, "references.bib", sep = "/")
 download.file("https://www.dropbox.com/s/htnd7o9nnkk8ng8/references.bib?dl=1", path)
 
-path <- "./format.r"
-download.file(
-  "https://www.dropbox.com/s/a88duv7rhqq8aar/bookdown-functions-book-building.r?dl=1",
-  path
-)
-source(path); file.remove(path)
 
-
-tables_font_size <- 9L
 tables_collapse_rows_align <- "top"
 tables_cut <- TRUE
 tables_hline <- "major"
-
-latex_options <- c("repeat_header")
-latex_repeat_header_text <- "\\textit{(continued)}"
-latex_repeat_header_method <- "replace"
-
-html_font <- "Cambria"
 
 html <- knitr::is_html_output(); latex <- knitr::is_latex_output()
 output_type <- ""
@@ -74,7 +63,11 @@ if (latex){ output_type <- "latex" }
 ```
 
 
-
+```{r, include=latex}
+knitr::asis_output('\\newgeometry{a4paper,left=1in,right=1in,top=1in,bottom=1in,nohead}')
+knitr::asis_output('\\savegeometry{tables}')
+knitr::asis_output('\\restoregeometry')
+```
 
 ```{r, include=latex}
 knitr::asis_output('\\cleardoublepage')
@@ -87,7 +80,7 @@ knitr::asis_output('\\cleardoublepage')
 
 The last twenty years have seen major upheavals in the commodity markets with the onset of financialisation^[Starting around 2004, with a view of commodity markets as an emerging asset class and in an effort to hedge against inflation and seek diversification benefits [@buyuksahin_speculators_2014; @singleton_investor_2013], institutional investors sent forth an unprecedented flow of capital into commodity futures markets. This phenomenon is commonly referred to as the financialisation of commodities [@domanski_financial_2007].] as well as the period of the 2008 financial crisis and its aftermath. Financialisation appears to have affected multiple economic sectors, including agriculture and energy, and its impact has been hotly debated in the policy, legislative, regulatory, and academic spheres. A vigorous legislative debate accompanied by an equally intense policy and academic debate across a number of disciplines about the perceived effects on commodity prices of the unprecedented inflow of institutional funds brought into commodity futures markets by new index type investors^[See section \@ref(co-movement-background) for a detailed discussion.] eventually led to regulatory changes in several individual markets.  
 In response to immediate policy concerns, the academic debate was initially framed rather narrowly around adequacy of speculation--the burning issue of the day--at the individual commodity market level and the ensuing academic analysis focused on the more mechanical effects of financialisation. With the benefit of hindsight, this approach seems to lack a fundamental understanding of the phenomenon it endeavoured to study and which consequences it attempted to address.  
-Financialisation was a phenomenon global in nature; through the channel of index investment it swayed the whole cross-section of liquid commodities at once, eventually spurring its transition away from a collection of idiosyncratic markets to its emergence as an asset class. Focusing on individual markets in this context thus seems incomprehensive. The mechanical approach similarly seems amiss both in form and substance. Most of the studies underpinning the regulatory response to financialisation took the form of pairwise correlation, causation and to some extent co-integration analysis, all of which are idiosyncratic in nature for they study single pairs of individual commodity assets. Besides, some of these techniques since proved controversial and seem to produce results the quality of which may fall short of the standards that may reasonably be expected to lay the ground for legislative action. In substance, leaving the idiosyncrasy issue aside, a case could be made for the mechanical approach under the assumption that financialised commodity markets can be described, ceteris paribus, as their prior or legacy state with increased uninformed financial participation. The aforementioned technique(s) could thence be used to observe potential changes in pricing dynamics, for example, which origin could be naturally attributed to the market behaviour of the new comers. Although appealing, for it comes with the promise of prompt "significant" results, this assumption depicts an incomplete picture for it misses a critical corollary of the substantial advent of a new category of players in a (set of) market(s): the alteration of market fundamentals it potentially induces, best observed in this context through the lens of commercial hedging pressure [@keynes_treatise_1930; @hicks_value_1939].  
+Financialisation was a phenomenon global in nature; through the channel of index investment it swayed the whole cross-section of liquid commodities at once, eventually spurring its transition away from a collection of idiosyncratic markets to its emergence as an asset class. Focusing on individual markets in this context thus seems incomprehensive. The mechanical approach similarly seems amiss both in form and substance. Most of the studies underpinning the regulatory response to financialisation took the form of pairwise correlation, causation and to some extent co-integration analysis, all of which are idiosyncratic in nature for they study single pairs of individual assets. Besides, some of these techniques since proved controversial and seem to produce results the quality of which may fall short of the standards that may reasonably be expected to lay the ground for legislative action. In substance, leaving the idiosyncrasy issue aside, a case could be made for the mechanical approach under the assumption that financialised commodity markets can be described, ceteris paribus, as their prior or legacy state with increased uninformed financial participation. The aforementioned technique(s) could thence be used to observe potential changes in pricing dynamics, for example, which origin could be naturally attributed to the market behaviour of the new comers. Although appealing, for it comes with the promise of prompt "significant" results, this approach misses a critical corollary of the substantial advent of a new category of players in a (set of) market(s): the alteration of market fundamentals it potentially induces, best observed in this context through the lens of commercial hedging pressure [@keynes_treatise_1930; @hicks_value_1939].  
 While essential to the understanding of the phenomenon, the global nature of financialisation and its impact on market fundamentals therefore appear to have been originally overlooked and another approach, perhaps more refined, seems warranted.  
   
 ```{r, include=latex}
@@ -410,7 +403,7 @@ knitr::asis_output('\\setlength{\\parindent}{0pt}')
 ```
 
 In table \@ref(tab:co-movement-time-reg-US-facts-picks) we assess the performance of the same factors on all the commodities instead of just the picks. While the average $R^{2}$s are expectedly lower, the pattern of results mostly holds with the relative performance of the market factors built with different sets of picks as well as that of the CHP and term structure factors built with each other's picks similar to table \@ref(tab:co-movement-time-reg-picks-facts-picks). In contrast, the average CHP factor built with average CHP factor picks shows a smaller absolute increase in average $R^{2}$ indicating that the link between CHP co-movement and price co-movement is stronger amongst the picks which are predominantly metals. Taken together, the results in tables \@ref(tab:co-movement-time-reg-picks-facts-picks) and \@ref(tab:co-movement-time-reg-US-facts-picks) suggest that the onset of financialisation had a major impact on the dynamics of US traded precious and precious-base metals.  
-To assess whether this phenomenon extended beyond US borders we examine the performance of the factors used in the last two tables above on the six UK metals futures traded on the London Metal Exchange with the results reported in Table \@ref(tab:co-movement-time-reg-UK-facts-picks). In the first period, although all sets of picks, except that of the market factor, included at least one metal, the average $R^{2}$s are very low; close to zero in most cases. These figures drastically increase across the board in the financialisation period and show a pattern similar to that observed in the US complex. The market factor built from the CHP and term structure factor sets of picks shows the sharpest increase in performance, relative to using the other sets of factor picks; rising to 20.1% from 1.5% and to 15% from 0.8% respectively. The increase in $R^{2}$ for the market factor built with market factor picks is more modest, providing further evidence of concentration of co-movement in the metals sector during financialisation.  
+To assess whether this phenomenon extended beyond US borders we examine the performance of the factors used in the last two tables above on the six UK metals futures traded on the London Metal Exchange with the results reported in table \@ref(tab:co-movement-time-reg-UK-facts-picks). In the first period, although all sets of picks, except that of the market factor, included at least one metal, the average $R^{2}$s are very low; close to zero in most cases. These figures drastically increase across the board in the financialisation period and show a pattern similar to that observed in the US complex. The market factor built from the CHP and term structure factor sets of picks shows the sharpest increase in performance, relative to using the other sets of factor picks; rising to 20.1% from 1.5% and to 15% from 0.8% respectively. The increase in $R^{2}$ for the market factor built with market factor picks is more modest, providing further evidence of concentration of co-movement in the metals sector during financialisation.  
 Here again the change in performance for the CHP and term structure factor legs stands out where the factors are built with their own as well as each other's sets of picks. The average $R^{2}$ for the long leg of the CHP factor built with its own sets of picks increases from 1% to 11% while the short leg shows no significant change. The opposite holds for the term structure factor built from its own set of picks with the short leg performance increasing from 0.1% to 14% while that of the long leg remains below 1%. Building these factors from each other's sets of picks produces a similar pattern with the performance of the long leg of the CHP factor built from the term structure factor picks increasing from 0.7% to 11.4%; a much greater increase relative to the short leg although in this case the latter also shows a sizable increase in performance (0.3% to 6%). The performance of the short leg of the term structure factor built from the CHP factor sets of picks on the other hand increases from 0.3% to 19.2% while the performance for the long leg in the second period remains below 1.5%.  
 Taken together these results emphasise the global nature of the impact of financialisation on the metals complex and provide further evidence that global metals co-movement could be detected by US based factor models that combine the Keynesian and Working's term structure paradigms. There seems thus to be information in the factor constructed from hedging pressure based on the Keynesian paradigm relevant to the term structure factor built on the Working paradigm and these findings therefore appear to complement the results of @kang_tale_2020 who find that hedging pressure both conveys information about liquidity provision in the short term (Working paradigm) and risk transfer in the longer term (Keynesian paradigm).
 
@@ -467,16 +460,17 @@ With the benefit of hindsight, this focus appears to have been too narrow. As ou
 The results of our analysis further suggest that financialisation set off an ontological drift in the commodity complex beyond energy and agricultural commodities and in fact strongest for the metals sector at the global level; an aspect largely overlooked in the original approach that we believe the existing literature has not fully analysed. The regulatory changes underpinned by these studies may thus have been unwarranted with potential substantial undesired effects on the functioning of the markets in which they were enforced and thence, to a larger extent on that of the economic system as a whole.  
 The onset of the financial crisis and the monetary policy regimes that followed, on the other hand, also appear to have induced significant changes in commodity pricing dynamics. In contrast with financialisation, our results suggest that the crisis and its aftermath have delivered an exogenous shock across the entire cross-section of liquid commodities and seem to have triggered a motion of reversion to legacy pre-financialisation fundamentals, in other words, a process of "definancialisation" in global commodity futures markets. 
 
-
-```{r, include=latex}
-knitr::asis_output('\\newpage')
-```
 ```{r, include=html}
 knitr::asis_output('<br/><br/>')
 ```
+```{r, include=latex}
+knitr::asis_output('\\newpage')
+knitr::asis_output('\\loadgeometry{tables}')
+```
+
 
 # Tables {#tables}
-<!-- Tables {#tables .unnumbered} -->
+<!-- # Tables {#tables .unnumbered} -->
 <!-- ============ -->
 
 ```{r}
@@ -490,14 +484,14 @@ caption <- if (latex) caption_latex(x = caption) else if (html) caption
 colnames <- c("asset", "estimate", "past", "financialisation", "crisis", "post-crisis")
 align <- c("llrrrr")
 
-table <- get_table(tables, "descriptive statistics (no regimes)") %>% 
-  kbl(booktabs = T, longtable = T, caption = caption, col.names = colnames, align = align) %>%
+table <- get_results(tables, "descriptive statistics (no regimes)") %>%
+  kbl(format = output_type, booktabs = T, longtable = T, caption = caption, col.names = colnames, align = align) %>%
   column_spec(1L, bold = TRUE) %>%
   collapse_rows(columns = 1L, valign = tables_collapse_rows_align, longtable_clean_cut = tables_cut, latex_hline = tables_hline) %>%
   pack_rows("individual commodities", 1, 60) %>%
-  pack_rows("equally weighted portfolios", 61, 64) 
+  pack_rows("equally weighted portfolios", 61, 64)
 
-show_table(output_type, table)
+style_table(output_type, table)
 ``` 
 
 ```{r, include=html}
@@ -515,14 +509,15 @@ caption <- if (latex) caption_latex(x = caption) else if (html) caption
 colnames <- c("asset", "regime", "estimate", "past", "financialisation", "crisis", "post-crisis")
 align <- c("lllrrrr")
 
-table <- get_table(tables, "descriptive statistics (regimes)") %>% 
-  kbl(booktabs = T, longtable = T, caption = caption, col.names = colnames, align = align) %>%
+table <- get_results(tables, "descriptive statistics (regimes)") %>% 
+  kbl(format = output_type, booktabs = T, longtable = T, caption = caption, col.names = colnames, align = align) %>%
   column_spec(1L, bold = TRUE) %>%
   collapse_rows(columns = 1L:2L, valign = tables_collapse_rows_align, longtable_clean_cut = tables_cut, latex_hline = tables_hline) %>%
   pack_rows("individual commodities", 1, 120) %>%
   pack_rows("equally weighted portfolios", 121, 128)
 
-show_table(output_type, table)
+
+style_table(output_type, table)
 ``` 
 
 ```{r, include=html}
@@ -539,12 +534,12 @@ caption <- if (latex) caption_latex(x = caption) else if (html) caption
 colnames <- c("regressor", "sector", "subsector", "past", "financialisation", "crisis", "post-crisis")
 align <- c("lllrrrr")
 
-table <- get_table(tables, "regressions - time series - US commodities ~ CHP") %>% 
-  kbl(booktabs = T, longtable = T, caption = caption, col.names = colnames, align = align) %>%
+table <- get_results(tables, "regressions - time series - US commodities ~ CHP") %>% 
+  kbl(format = output_type, booktabs = T, longtable = T, caption = caption, col.names = colnames, align = align) %>%
   column_spec(1L, bold = TRUE) %>%
   collapse_rows(columns = 1L:3L, valign = tables_collapse_rows_align, longtable_clean_cut = tables_cut, latex_hline = tables_hline)
 
-show_table(output_type, table)
+style_table(output_type, table)
 ``` 
 
 ```{r, include=html}
@@ -562,16 +557,16 @@ caption <- if (latex) caption_latex(x = caption) else if (html) caption
 colnames <- c("factor", "leg", "regime", "past", "financialisation", "crisis", "post-crisis")
 align <- c("lllrrrr")
 
-table <- get_table(tables, "regressions - time series - US commodities ~ factors from US commodities") %>%
+table <- get_results(tables, "regressions - time series - US commodities ~ factors from US commodities") %>%
   dplyr::mutate(
     factor = as.character(factor),
     factor = ifelse(factor == "OI nearby", "open interest", factor)
   ) %>% 
-  kbl(longtable = T, booktabs = T, caption = caption, col.names = colnames, align = align) %>%
+  kbl(format = output_type, longtable = T, booktabs = T, caption = caption, col.names = colnames, align = align) %>%
   column_spec(1L, bold = TRUE) %>%
   collapse_rows(columns = 1L:2L, valign = tables_collapse_rows_align, longtable_clean_cut = tables_cut, latex_hline = tables_hline) 
 
-show_table(output_type, table)
+style_table(output_type, table)
 ``` 
 
 ```{r, include=html}
@@ -589,19 +584,19 @@ caption <- if (latex) caption_latex(x = caption) else if (html) caption
 colnames <- c("picking factor", "period", "pick", "long", "short")
 align <- c("lllrr")
 
-table <- get_table(tables, "proportions") %>%
+table <- get_results(tables, "proportions") %>%
   dplyr::mutate(period = stringr::str_replace_all(period, "present", "post-crisis")) %>%
   dplyr::mutate(
     factor = as.character(factor),
     factor = ifelse(factor == "OI nearby", "open interest", factor)
   ) %>% 
-  kbl(longtable = T, booktabs = T, caption = caption, align = align, col.names = colnames) %>%
+  kbl(format = output_type, longtable = T, booktabs = T, caption = caption, align = align, col.names = colnames) %>%
   column_spec(1L, bold = TRUE) %>%
   collapse_rows(
     columns = 1L:2L, valign = tables_collapse_rows_align, longtable_clean_cut = tables_cut, latex_hline = tables_hline
   ) 
 
-show_table(output_type, table)
+style_table(output_type, table)
 ``` 
 
 ```{r, include=html}
@@ -619,40 +614,36 @@ caption <- if (latex) caption_latex(x = caption) else if (html) caption
 colnames <- c("picking factor", "regime", "past", "financialisation", "crisis", "post-crisis")
 align <- c("llrrrr")
 
-table <- get_table(tables, "average correlations (amongst factor picks)") %>%
+table <- get_results(tables, "average correlations (amongst factor picks)") %>%
   dplyr::mutate( factor = as.character(factor), factor = ifelse(factor == "OI nearby", "open interest", factor)) %>% 
-  kbl(longtable = T, booktabs = T, caption = caption, align = align, col.names = colnames) %>%
+  kbl(format = output_type, longtable = T, booktabs = T, caption = caption, align = align, col.names = colnames) %>%
   column_spec(1L, bold = TRUE) %>%
   collapse_rows(
     columns = 1L:2L, valign = tables_collapse_rows_align, longtable_clean_cut = tables_cut, latex_hline = tables_hline
   )
 
-show_table(output_type, table)
+style_table(output_type, table)
 ``` 
 
 ```{r, include=html}
 knitr::asis_output('<br/><br/>')
 ```
-```{r, include=latex}
-knitr::asis_output('\\newpage')
-```
 
 
-
-```{r co-movement-time-reg-picks-facts-picks}
+```{r co-movement-time-reg-picks-facts-picks, fig.pos = 'htbp'}
 caption <- "This table shows the average time series $R^{2}$ for models where the returns series for the various sets of factor picks are regressed against factor mimicking portfolios independently with the resulting $R^{2}$ averaged across the picks. For each picking factor and period, the market as well as the long-short factor mimicking portfolios are constructed from the corresponding set of factor picks. For each long-short factor (average CHP: CHP; open interest nearby growth: open interest; and term structure) the models are constructed with the factor itself (factor) as well as both legs independently (long vs. short). The results are reported in order for the market, CHP, open interest and term structure factors used as the picking factor, for the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018) and shown independently for phases of aggregate backwardation (aggregate CHP $\\leq$ period median) and aggregate contango (aggregate CHP > period median). Factors as well as aggregate CHP construction and corresponding regime definitions along with details on the picking process are discussed in section \\@ref(co-movement-methods) while the results are discussed in section \\@ref(co-movement-results)."
 caption <- if (latex) caption_latex(x = caption) else if (html) caption
 colnames <- c("picking factor", "factor", "leg", "regime", "past", "financialisation", "crisis", "post-crisis")
 align <- c("llllrrrr")
 
-table <- get_table(tables, "regressions - time series - factor picks ~ factors from picks") %>% 
-  kbl(longtable = T, booktabs = T, caption = caption, align = align, col.names = colnames) %>%
+table <- get_results(tables, "regressions - time series - factor picks ~ factors from picks") %>% 
+  kbl(format = output_type, longtable = T, booktabs = T, caption = caption, align = align, col.names = colnames) %>%
   column_spec(1L, bold = TRUE) %>%
   collapse_rows(
     columns = 1L:3L, valign = tables_collapse_rows_align, longtable_clean_cut = tables_cut, latex_hline = tables_hline
   )
 
-show_table(output_type, table)
+style_table(output_type, table)
 ``` 
 
 ```{r, include=html}
@@ -670,14 +661,14 @@ caption <- if (latex) caption_latex(x = caption) else if (html) caption
 colnames <- c("picking factor", "factor", "leg", "regime", "past", "financialisation", "crisis", "post-crisis")
 align <- c("llllrrrr")
 
-table <- get_table(tables, "regressions - time series - US commodities ~ factors from picks") %>% 
-  kbl(longtable = T, booktabs = T, caption = caption, align = align, col.names = colnames) %>%
+table <- get_results(tables, "regressions - time series - US commodities ~ factors from picks") %>% 
+  kbl(format = output_type, longtable = T, booktabs = T, caption = caption, align = align, col.names = colnames) %>%
   column_spec(1L, bold = TRUE) %>%
   collapse_rows(
     columns = 1L:3L, valign = tables_collapse_rows_align, longtable_clean_cut = tables_cut, latex_hline = tables_hline
   )
 
-show_table(output_type, table)
+style_table(output_type, table)
 ```
 
 ```{r, include=html}
@@ -695,21 +686,21 @@ caption <- if (latex) caption_latex(x = caption) else if (html) caption
 colnames <- c("picking factor", "factor", "leg", "regime", "past", "financialisation", "crisis", "post-crisis")
 align <- c("llllrrrr")
 
-table <- get_table(tables, "regressions - time series - UK metals ~ factors from picks") %>% 
-  kbl(longtable = T, booktabs = T, caption = caption, align = align, col.names = colnames) %>%
+table <- get_results(tables, "regressions - time series - UK metals ~ factors from picks") %>% 
+  kbl(format = output_type, longtable = T, booktabs = T, caption = caption, align = align, col.names = colnames) %>%
   column_spec(1L, bold = TRUE) %>%
   collapse_rows(
     columns = 1L:3L, valign = tables_collapse_rows_align, longtable_clean_cut = tables_cut, latex_hline = tables_hline
   ) 
 
-show_table(output_type, table)
+style_table(output_type, table)
 ``` 
 
 
 
 ```{r, include=latex}
-knitr::asis_output('\\cleardoublepage')
 knitr::asis_output('\\restoregeometry')
+knitr::asis_output('\\newpage')
 ```
 
 

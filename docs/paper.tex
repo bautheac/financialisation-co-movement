@@ -68,10 +68,10 @@
 \makesavenoteenv{longtable}
 
 
-% \usepackage[width=1\textwidth]{caption}
-\usepackage[margin=0pt]{caption}
 \usepackage{geometry}
 \usepackage{hyperref}
+\usepackage{lscape}
+\usepackage[margin=0pt]{caption}
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
@@ -108,6 +108,8 @@
   
  \end{frontmatter}
 
+\newgeometry{a4paper,left=1in,right=1in,top=1in,bottom=1in,nohead}\savegeometry{tables}\restoregeometry
+
 \cleardoublepage
 
 \hypertarget{index}{%
@@ -115,7 +117,7 @@
 
 The last twenty years have seen major upheavals in the commodity markets with the onset of financialisation\footnote{Starting around 2004, with a view of commodity markets as an emerging asset class and in an effort to hedge against inflation and seek diversification benefits (Büyükşahin and Robe, 2014; Singleton, 2013), institutional investors sent forth an unprecedented flow of capital into commodity futures markets. This phenomenon is commonly referred to as the financialisation of commodities (Domanski and Heath, 2007).} as well as the period of the 2008 financial crisis and its aftermath. Financialisation appears to have affected multiple economic sectors, including agriculture and energy, and its impact has been hotly debated in the policy, legislative, regulatory, and academic spheres. A vigorous legislative debate accompanied by an equally intense policy and academic debate across a number of disciplines about the perceived effects on commodity prices of the unprecedented inflow of institutional funds brought into commodity futures markets by new index type investors\footnote{See section \ref{co-movement-background} for a detailed discussion.} eventually led to regulatory changes in several individual markets.\\
 In response to immediate policy concerns, the academic debate was initially framed rather narrowly around adequacy of speculation--the burning issue of the day--at the individual commodity market level and the ensuing academic analysis focused on the more mechanical effects of financialisation. With the benefit of hindsight, this approach seems to lack a fundamental understanding of the phenomenon it endeavoured to study and which consequences it attempted to address.\\
-Financialisation was a phenomenon global in nature; through the channel of index investment it swayed the whole cross-section of liquid commodities at once, eventually spurring its transition away from a collection of idiosyncratic markets to its emergence as an asset class. Focusing on individual markets in this context thus seems incomprehensive. The mechanical approach similarly seems amiss both in form and substance. Most of the studies underpinning the regulatory response to financialisation took the form of pairwise correlation, causation and to some extent co-integration analysis, all of which are idiosyncratic in nature for they study single pairs of individual commodity assets. Besides, some of these techniques since proved controversial and seem to produce results the quality of which may fall short of the standards that may reasonably be expected to lay the ground for legislative action. In substance, leaving the idiosyncrasy issue aside, a case could be made for the mechanical approach under the assumption that financialised commodity markets can be described, ceteris paribus, as their prior or legacy state with increased uninformed financial participation. The aforementioned technique(s) could thence be used to observe potential changes in pricing dynamics, for example, which origin could be naturally attributed to the market behaviour of the new comers. Although appealing, for it comes with the promise of prompt ``significant'' results, this assumption depicts an incomplete picture for it misses a critical corollary of the substantial advent of a new category of players in a (set of) market(s): the alteration of market fundamentals it potentially induces, best observed in this context through the lens of commercial hedging pressure (Hicks, 1939; Keynes, 1930).\\
+Financialisation was a phenomenon global in nature; through the channel of index investment it swayed the whole cross-section of liquid commodities at once, eventually spurring its transition away from a collection of idiosyncratic markets to its emergence as an asset class. Focusing on individual markets in this context thus seems incomprehensive. The mechanical approach similarly seems amiss both in form and substance. Most of the studies underpinning the regulatory response to financialisation took the form of pairwise correlation, causation and to some extent co-integration analysis, all of which are idiosyncratic in nature for they study single pairs of individual assets. Besides, some of these techniques since proved controversial and seem to produce results the quality of which may fall short of the standards that may reasonably be expected to lay the ground for legislative action. In substance, leaving the idiosyncrasy issue aside, a case could be made for the mechanical approach under the assumption that financialised commodity markets can be described, ceteris paribus, as their prior or legacy state with increased uninformed financial participation. The aforementioned technique(s) could thence be used to observe potential changes in pricing dynamics, for example, which origin could be naturally attributed to the market behaviour of the new comers. Although appealing, for it comes with the promise of prompt ``significant'' results, this approach misses a critical corollary of the substantial advent of a new category of players in a (set of) market(s): the alteration of market fundamentals it potentially induces, best observed in this context through the lens of commercial hedging pressure (Hicks, 1939; Keynes, 1930).\\
 While essential to the understanding of the phenomenon, the global nature of financialisation and its impact on market fundamentals therefore appear to have been originally overlooked and another approach, perhaps more refined, seems warranted.
 
 \medskip\setlength{\parindent}{0pt}
@@ -326,7 +328,7 @@ Taken together with the previous results showing that the metal complex predomin
 \medskip\setlength{\parindent}{0pt}
 
 In table \ref{tab:co-movement-time-reg-US-facts-picks} we assess the performance of the same factors on all the commodities instead of just the picks. While the average \(R^{2}\)s are expectedly lower, the pattern of results mostly holds with the relative performance of the market factors built with different sets of picks as well as that of the CHP and term structure factors built with each other's picks similar to table \ref{tab:co-movement-time-reg-picks-facts-picks}. In contrast, the average CHP factor built with average CHP factor picks shows a smaller absolute increase in average \(R^{2}\) indicating that the link between CHP co-movement and price co-movement is stronger amongst the picks which are predominantly metals. Taken together, the results in tables \ref{tab:co-movement-time-reg-picks-facts-picks} and \ref{tab:co-movement-time-reg-US-facts-picks} suggest that the onset of financialisation had a major impact on the dynamics of US traded precious and precious-base metals.\\
-To assess whether this phenomenon extended beyond US borders we examine the performance of the factors used in the last two tables above on the six UK metals futures traded on the London Metal Exchange with the results reported in Table \ref{tab:co-movement-time-reg-UK-facts-picks}. In the first period, although all sets of picks, except that of the market factor, included at least one metal, the average \(R^{2}\)s are very low; close to zero in most cases. These figures drastically increase across the board in the financialisation period and show a pattern similar to that observed in the US complex. The market factor built from the CHP and term structure factor sets of picks shows the sharpest increase in performance, relative to using the other sets of factor picks; rising to 20.1\% from 1.5\% and to 15\% from 0.8\% respectively. The increase in \(R^{2}\) for the market factor built with market factor picks is more modest, providing further evidence of concentration of co-movement in the metals sector during financialisation.\\
+To assess whether this phenomenon extended beyond US borders we examine the performance of the factors used in the last two tables above on the six UK metals futures traded on the London Metal Exchange with the results reported in table \ref{tab:co-movement-time-reg-UK-facts-picks}. In the first period, although all sets of picks, except that of the market factor, included at least one metal, the average \(R^{2}\)s are very low; close to zero in most cases. These figures drastically increase across the board in the financialisation period and show a pattern similar to that observed in the US complex. The market factor built from the CHP and term structure factor sets of picks shows the sharpest increase in performance, relative to using the other sets of factor picks; rising to 20.1\% from 1.5\% and to 15\% from 0.8\% respectively. The increase in \(R^{2}\) for the market factor built with market factor picks is more modest, providing further evidence of concentration of co-movement in the metals sector during financialisation.\\
 Here again the change in performance for the CHP and term structure factor legs stands out where the factors are built with their own as well as each other's sets of picks. The average \(R^{2}\) for the long leg of the CHP factor built with its own sets of picks increases from 1\% to 11\% while the short leg shows no significant change. The opposite holds for the term structure factor built from its own set of picks with the short leg performance increasing from 0.1\% to 14\% while that of the long leg remains below 1\%. Building these factors from each other's sets of picks produces a similar pattern with the performance of the long leg of the CHP factor built from the term structure factor picks increasing from 0.7\% to 11.4\%; a much greater increase relative to the short leg although in this case the latter also shows a sizable increase in performance (0.3\% to 6\%). The performance of the short leg of the term structure factor built from the CHP factor sets of picks on the other hand increases from 0.3\% to 19.2\% while the performance for the long leg in the second period remains below 1.5\%.\\
 Taken together these results emphasise the global nature of the impact of financialisation on the metals complex and provide further evidence that global metals co-movement could be detected by US based factor models that combine the Keynesian and Working's term structure paradigms. There seems thus to be information in the factor constructed from hedging pressure based on the Keynesian paradigm relevant to the term structure factor built on the Working paradigm and these findings therefore appear to complement the results of Kang et al. (2020) who find that hedging pressure both conveys information about liquidity provision in the short term (Working paradigm) and risk transfer in the longer term (Keynesian paradigm).
 
@@ -360,7 +362,7 @@ With the benefit of hindsight, this focus appears to have been too narrow. As ou
 The results of our analysis further suggest that financialisation set off an ontological drift in the commodity complex beyond energy and agricultural commodities and in fact strongest for the metals sector at the global level; an aspect largely overlooked in the original approach that we believe the existing literature has not fully analysed. The regulatory changes underpinned by these studies may thus have been unwarranted with potential substantial undesired effects on the functioning of the markets in which they were enforced and thence, to a larger extent on that of the economic system as a whole.\\
 The onset of the financial crisis and the monetary policy regimes that followed, on the other hand, also appear to have induced significant changes in commodity pricing dynamics. In contrast with financialisation, our results suggest that the crisis and its aftermath have delivered an exogenous shock across the entire cross-section of liquid commodities and seem to have triggered a motion of reversion to legacy pre-financialisation fundamentals, in other words, a process of ``definancialisation'' in global commodity futures markets.
 
-\newpage
+\newpage\loadgeometry{tables}
 
 \hypertarget{tables}{%
 \section{Tables}\label{tables}}
@@ -1265,8 +1267,6 @@ picking factor & regime & past & financialisation & crisis & post-crisis\\
 \end{longtable}
 \endgroup{}
 
-\newpage
-
 \begingroup\fontsize{9}{11}\selectfont
 
 \begin{longtable}[t]{>{}llllrrrr}
@@ -2048,7 +2048,7 @@ picking factor & factor & leg & regime & past & financialisation & crisis & post
 \end{longtable}
 \endgroup{}
 
-\cleardoublepage\restoregeometry
+\restoregeometry\newpage
 
 \hypertarget{references}{%
 \section*{References}\label{references}}
