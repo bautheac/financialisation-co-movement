@@ -63,7 +63,7 @@ commodities <- dplyr::filter(commodities_market_individuals, regime == "all") %>
   tidyr::pivot_longer(
     cols = c("mean", "sd"), names_to = "estimate", values_to = "value"
   ) %>% tidyr::pivot_wider(names_from = "period", values_from = "value") %>%
-  dplyr::arrange(dplys::desc(country), sector, subsector, commodity) %>%
+  dplyr::arrange(dplyr::desc(country), sector, subsector, commodity) %>%
   dplyr::select(-c(country, sector, subsector)) %>%
   dplyr::rename(asset = commodity)
 
@@ -109,7 +109,7 @@ commodities <- dplyr::filter(commodities_market_individuals, regime != "all") %>
   tidyr::pivot_longer(
     cols = c("mean", "sd"), names_to = "estimate", values_to = "value"
   ) %>% tidyr::pivot_wider(names_from = "period", values_from = "value") %>%
-  dplyr::arrange(dplys::desc(country), sector, subsector, commodity) %>%
+  dplyr::arrange(dplyr::desc(country), sector, subsector, commodity) %>%
   dplyr::select(-c(country, sector, subsector)) %>%
   dplyr::rename(asset = commodity)
 
