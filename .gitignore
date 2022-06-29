@@ -2,7 +2,6 @@
 .Rhistory
 .RData
 .Ruserdata
-git-remove-file.sh
 renv.lock
 renv/
 data/
