@@ -43,6 +43,7 @@ div.abstract{
   width: 90%;
 }
 </style>
+<script src="libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -60,7 +61,6 @@ div.abstract{
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
@@ -69,6 +69,28 @@ div.abstract{
 
 
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -87,7 +109,8 @@ div.abstract{
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction<span></span></a></li>
-<li class="chapter" data-level="2" data-path="co-movement-data-methods.html"><a href="co-movement-data-methods.html"><i class="fa fa-check"></i><b>2</b> Data &amp; methods<span></span></a><ul>
+<li class="chapter" data-level="2" data-path="co-movement-data-methods.html"><a href="co-movement-data-methods.html"><i class="fa fa-check"></i><b>2</b> Data &amp; methods<span></span></a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="co-movement-data-methods.html"><a href="co-movement-data-methods.html#co-movement-background"><i class="fa fa-check"></i><b>2.1</b> Background<span></span></a></li>
 <li class="chapter" data-level="2.2" data-path="co-movement-data-methods.html"><a href="co-movement-data-methods.html#co-movement-data"><i class="fa fa-check"></i><b>2.2</b> Data<span></span></a></li>
 <li class="chapter" data-level="2.3" data-path="co-movement-data-methods.html"><a href="co-movement-data-methods.html#co-movement-methods"><i class="fa fa-check"></i><b>2.3</b> Methods<span></span></a></li>
@@ -116,30 +139,30 @@ div.abstract{
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="co-movement-data-methods" class="section level1 hasAnchor">
+<div id="co-movement-data-methods" class="section level1 hasAnchor" number="2">
 <h1><span class="header-section-number">2</span> Data &amp; methods<a href="co-movement-data-methods.html#co-movement-data-methods" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <!-- Data & methods {#co-movement-data-methods} -->
 <!-- ============ -->
-<div id="co-movement-background" class="section level2 hasAnchor">
+<div id="co-movement-background" class="section level2 hasAnchor" number="2.1">
 <h2><span class="header-section-number">2.1</span> Background<a href="co-movement-data-methods.html#co-movement-background" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The period from 1998 to 2008 saw an influx of investment into commodity index linked products most of which made its way into the commodity futures market. Popular commodity indexes whose goal was to track the broad movement of commodity prices became accessible by means of swaps, exchange traded funds and exchange traded notes and attracted at least $100 billion of net super-hoc investment over the 1998-2008 period.</p>
-<p>Concerns over the consequences of this financialisation phenomenon eventually led to legislative changes including the approval of Rule 76 FR 4752 issued by the US Commodity Futures Trading Commission (CFTC) on January 26<sup>th</sup>, 2011. This provision emanates from the Dodd-Frank Wall Street and Consumer Protection Act of 2010 (Title VII, Section 737) that mandates the CFTC to use position limits to restrict the flow of speculative capital into a number of commodity markets. The Rule was approved in a close 3-2 vote and the ensuing rule-making process was extremely contentious with several commissioners (Michael Dunn and Scott D. O’Malia in particular) expressing reservations about the lack of supporting evidence and the Rule also triggering thousands of comment letters as well as a lawsuit against the CFTC spearheaded by two Wall Street trade groups, the International Swaps &amp; Derivatives Association (ISDA) and the Securities Industries &amp; Financial Markets Association (SIFMA)<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>.</p>
+<p>Concerns over the consequences of this financialisation phenomenon eventually led to legislative changes including the approval of Rule 76 FR 4752 issued by the US Commodity Futures Trading Commission (CFTC) on January 26<sup>th</sup>, 2011. This provision emanates from the Dodd-Frank Wall Street and Consumer Protection Act of 2010 (Title VII, Section 737) that mandates the CFTC to use position limits to restrict the flow of speculative capital into a number of commodity markets. The Rule was approved in a close 3-2 vote and the ensuing rule-making process was extremely contentious with several commissioners (Michael Dunn and Scott D. O’Malia in particular) expressing reservations about the lack of supporting evidence and the Rule also triggering thousands of comment letters as well as a lawsuit against the CFTC spearheaded by two Wall Street trade groups, the International Swaps &amp; Derivatives Association (ISDA) and the Securities Industries &amp; Financial Markets Association (SIFMA)<a href="references.html#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>.</p>
 <p>A world-wide debate ensued about the role of index funds in commodity markets. The first responses to the 2007/2008 crisis of escalating food and energy prices took the form of policy reports, many of which reasoned that the growth of commodity index funds came along with an influx of largely speculative capital that was responsible for driving commodity prices beyond their historic highs <span class="citation">(De Schutter 2010; Gilbert 2010a; Herman, Kelly, and Nash 2011; Schumann 2011; UNCTAD and Cooperation 2009)</span>.<br />
 Early US Senate investigations on the matter drew on pricing and trading data supplied by the CFTC as well as interviews with numerous experts including hedge fund manager Michael Masters who linked the growing presence of index investors in US agricultural and energy markets to the observed surges in both futures and cash prices <span class="citation">(M. W. Masters 2008; M. Masters and White 2008)</span>. This contention has since come to be known as the Masters’ hypothesis and was largely endorsed by the final US Senate report on the issue <span class="citation">(Senate 2009)</span>.<br />
 At this stage, the question thrust on the academic sphere was whether “excessive speculation” (understood as the market activity peculiar to index type investors) was linked to escalating energy and agricultural commodity prices. A number of ensuing academic studies, most of which used commodity specific correlation and causality based analysis have since disproved this contention: <span class="citation">Irwin, Sanders, and Merrin (2009)</span>, <span class="citation">Sanders, Irwin, and Merrin (2010)</span>, <span class="citation">Sanders and Irwin (2011a)</span>, <span class="citation">Sanders and Irwin (2011b)</span>, <span class="citation">Irwin (2013)</span>, <span class="citation">Brunetti and Reiffen (2014)</span>, <span class="citation">Hamilton and Wu (2015)</span> and <span class="citation">Bruno, Büyükşahin, and Robe (2017)</span> investigated the issue in the context of the agricultural markets; meanwhile, <span class="citation">Büyükşahin and Harris (2011)</span>, <span class="citation">Tokic (2012)</span>, <span class="citation">Fattouh, Kilian, and Mahadeva (2013)</span>, <span class="citation">Kilian and Murphy (2014)</span>, <span class="citation">Knittel and Pindyck (2016)</span> and <span class="citation">Manera, Nicolini, and Vignati (2016)</span> examined the energy markets while <span class="citation">Bohl and Stephan (2013)</span>, <span class="citation">Kim (2015)</span> and <span class="citation">Boyd et al. (2016)</span> studied both energy and agricultural markets and <span class="citation">Irwin and Sanders (2011)</span>, <span class="citation">Irwin and Sanders (2012)</span> as well as <span class="citation">Stoll and Whaley (2011)</span> examined the commodity markets in general. Other studies have underlined various alterations in commodity pricing dynamics over the period. <span class="citation">Gilbert and Pfuderer (2014)</span> reject the view that financialisation has not had any effects in the grains markets and demonstrate that trades originated by financial market participants, and specifically index investors, can move prices but tend to be typically volatility-reducing. <span class="citation">Juvenal and Petrella (2015)</span> contend that the oil price increase between 2004 and 2008 was mainly driven by the strength of global demand but that the financialisation process of commodity markets also played a role. Likewise, <span class="citation">Henderson, Pearson, and Wang (2015)</span> show that non-information-based financial investments have important impacts on commodity prices. <span class="citation">Cheng and Xiong (2014)</span>, on the other hand, show that in the case of index commodities, financialisation has transformed the risk sharing, and information discovery functions of commodity futures markets.</p>
 <p><br/></p>
 </div>
-<div id="co-movement-data" class="section level2 hasAnchor">
+<div id="co-movement-data" class="section level2 hasAnchor" number="2.2">
 <h2><span class="header-section-number">2.2</span> Data<a href="co-movement-data-methods.html#co-movement-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Commodity index swaps, commodity index funds (CIFs), commodity-based exchange traded funds (ETFs) and notes (ETNs) or commodity linked notes (CLNs) were amongst the main investment vehicles that allowed institutional and retail investors to build up commodity exposure in the early 2000s <span class="citation">(Boons, De Roon, and Szymanowska 2012; Henderson, Pearson, and Wang 2015; Irwin and Sanders 2011; UNCTAD and Cooperation 2009; Schumann 2011)</span>. Most of these products were primarily designed to track prominent commodity indexes among which the S&amp;P-GSCI, the most popular.<br />
 Most of its constituents at the time of writing form the basis of the broad cross-section of commodities that we consider in this study: corn-#2 yellow (XCBT), oats (XCBT), soybean meal (XCBT), soybean oil (XCBT), soybeans (XCBT), wheat-SRW (XCBT), cattle-feeder (XCME), cattle-live (XCME), lean hogs (XCME), cocoa (IFUS), coffee-C (IFUS), cotton-#2 (IFUS), lumber (XCME), orange juice (IFUS), sugar-#11 (IFUS), natural gas (XNYM), crude oil-WTI (XNYM), gasoline (XNYM), heating oil (XNYM), copper (XCEC), gold (XCEC), palladium (XNYM), platinum (XNYM) and silver (XCEC). Unleaded gasoline, the NYMEX legacy contract for gasoline, stopped trading in 2006 when it was replaced by Reformulated Gasoline Blendstock for Oxygen Blending (RBOB) with the two futures series trading alongside for most of the year. For our NYMEX gasoline data series, we consider unleaded gasoline up to September 1<sup>st</sup>, 2006 and RBOB gasoline thereafter, date at which liquidity for the latter overtook that for the former.<br />
 We also consider the UK metal complex with aluminium (XLME), copper (XLME), lead (XLME), nickel-primary (XLME), tin-refined (XLME) and zinc (XLME).</p>
-<p>The commodity futures trading commission (CFTC) operates a comprehensive system of collecting information on market participants known as the large trader reporting program (LTRP) where it records and reports to the public position data on market participants who have position levels in excess of a particular market specific threshold<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a>. The commission collects market data and position information daily from clearing members, futures commission merchants (FCMs) and foreign brokers and publishes corresponding summaries weekly in a series of market specific reports. In these reports, individual traders are categorised according to the nature of their trading activity on the basis of self-reported information<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a> that is subject to review by CFTC staff for reasonableness. Position information is then aggregated by category and asset type with each report providing an aggregation for a set of report specific categories and, for each category, a breakdown between futures only positions and positions in futures and options combined.<br />
-In its legacy report, the commitment of trader report (COT) with data dating back to 1962, the CFTC distinguishes “commercial” and “non-commercial” market participants where a “commercial” participant is defined as one “[…] engaged in business activities hedged by the use of futures and option markets”<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a>. A third category, “non-reportable”, aggregates positions for participants not meeting the reporting threshold. In response to concerns related to category accuracy<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a> the CFTC now refines its classification in the disaggregated commitment of trader report (DCOT) where participant categories include “Producer/Merchant/Processor/User”, “Swap dealer”, “Money manager” and “Other reportable” as well as in the supplemental commitment of trader report (SCOT) that details commodity index trader aggregate positions for thirteen agricultural commodity futures markets. Data for DCOT and SCOT date back to 2006 and 2007 respectively.<br />
+<p>The commodity futures trading commission (CFTC) operates a comprehensive system of collecting information on market participants known as the large trader reporting program (LTRP) where it records and reports to the public position data on market participants who have position levels in excess of a particular market specific threshold<a href="references.html#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a>. The commission collects market data and position information daily from clearing members, futures commission merchants (FCMs) and foreign brokers and publishes corresponding summaries weekly in a series of market specific reports. In these reports, individual traders are categorised according to the nature of their trading activity on the basis of self-reported information<a href="references.html#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a> that is subject to review by CFTC staff for reasonableness. Position information is then aggregated by category and asset type with each report providing an aggregation for a set of report specific categories and, for each category, a breakdown between futures only positions and positions in futures and options combined.<br />
+In its legacy report, the commitment of trader report (COT) with data dating back to 1962, the CFTC distinguishes “commercial” and “non-commercial” market participants where a “commercial” participant is defined as one “[…] engaged in business activities hedged by the use of futures and option markets”<a href="references.html#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a>. A third category, “non-reportable”, aggregates positions for participants not meeting the reporting threshold. In response to concerns related to category accuracy<a href="references.html#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a> the CFTC now refines its classification in the disaggregated commitment of trader report (DCOT) where participant categories include “Producer/Merchant/Processor/User”, “Swap dealer”, “Money manager” and “Other reportable” as well as in the supplemental commitment of trader report (SCOT) that details commodity index trader aggregate positions for thirteen agricultural commodity futures markets. Data for DCOT and SCOT date back to 2006 and 2007 respectively.<br />
 We study the 1997/2018 period where we observe futures only position data from the COT report, the only CFTC report with data available for the whole period of interest; as well as futures term structure price and open interest data from Bloomberg.</p>
 <p><br/></p>
 </div>
-<div id="co-movement-methods" class="section level2 hasAnchor">
+<div id="co-movement-methods" class="section level2 hasAnchor" number="2.3">
 <h2><span class="header-section-number">2.3</span> Methods<a href="co-movement-data-methods.html#co-movement-methods" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>On the one hand, futures markets have a long history of serving commodity producers to alleviate their commodity price and output risks. <span class="citation">Keynes (1930)</span> and <span class="citation">Hicks (1939)</span> emphasise the “normal” behaviour of naturally short hedgers outsourcing their commodity risk to naturally long commodity specialist speculators. This market configuration is referred to as “backwardation” where futures are expected to trade at a discount to spot prices, providing speculators with incentives to take the long side. The opposite market paradigm is referred to as “contango”. Working <span class="citation">(Working 1933, 1948, 1953)</span> and Kaldor <span class="citation">(Kaldor 1939)</span> somehow relax this “supply-of-speculative-services” <span class="citation">(Till 2007)</span> approach by introducing processors and merchants, also commodity experts, on the hedgers side and relating the notions of backwardation and contango more directly to the term structure via the theory of storage where the shape of the front end of the term structure (basis) is directly related to the market price of storage.<br />
 Financialisation, on the other hand, refers to the entry of financial investors into the commodity futures markets who, for the most part, are not commodity experts. Besides, these new market participants tend to exhibit herding like behaviour, often taking massive long-only positions on the whole cross-section of indexed commodities in an attempt to enhance returns while hedging against inflation and reaping further diversification benefits for portfolios with, in most cases, existing large positions across various asset classes <span class="citation">(Brunetti, Büyükşahin, and Harris 2016; Boyd et al. 2016; Cheng, Kirilenko, and Xiong 2014; Juvenal and Petrella 2015; Singleton 2013; Tang and Xiong 2012)</span>. This contrasts with the traditional approaches of Keynes and Working and in this context the issues of co-movement and aggregate market participants behaviour seem particularly relevant.</p>
@@ -190,16 +213,6 @@ The period return for a particular mimicking portfolio is calculated as the diff
 <p>In the last part of the analysis, for each period our mimicking portfolios for risk factors in returns are constructed using each set of commodity picks independently as the asset pool for portfolio construction. A similar time series approach to that described above is then implemented using these newly formed mimicking portfolios. In this case, a first set of dependent variables includes the sets of commodity picks themselves, a second set includes the whole cross-section of US traded commodities while a third set includes the six UK traded metals considered in the study.</p>
 <p><br/><br/></p>
 </div>
-</div>
-<div class="footnotes">
-<hr />
-<ol start="9">
-<li id="fn9"><p>ISDA &amp; SIFMA v US CFTC; Complaint, 1:11-cv-02146; December 2<sup>nd</sup>, 2011.<a href="co-movement-data-methods.html#fnref9" class="footnote-back">↩︎</a></p></li>
-<li id="fn10"><p>Current reporting level thresholds available at: <a href="https://www.ecfr.gov/cgi-bin/retrieveECFR?gp=&amp;SID=970471b8455f4bab7db4110cfde50731&amp;mc=true&amp;r=SECTION&amp;n=se17.1.15_103">www.ecfr.gov</a>.<a href="co-movement-data-methods.html#fnref10" class="footnote-back">↩︎</a></p></li>
-<li id="fn11"><p>CFTC form 40. Available at: <a href="https://www.cftc.gov/sites/default/files/idc/groups/public/@forms/documents/file/cftcform40.pdf">www.cftc.gov</a>.<a href="co-movement-data-methods.html#fnref11" class="footnote-back">↩︎</a></p></li>
-<li id="fn12"><p>See <a href="https://www.gpo.gov/fdsys/pkg/CFR-1998-title17-vol1/xml/CFR-1998-title17-vol1-sec1-3.xml">CFTC regulation 1.3, 17 CFR 1.3(z)</a> for details.<a href="co-movement-data-methods.html#fnref12" class="footnote-back">↩︎</a></p></li>
-<li id="fn13"><p>See for example <span class="citation">Ederington and Lee (2002)</span>.<a href="co-movement-data-methods.html#fnref13" class="footnote-back">↩︎</a></p></li>
-</ol>
 </div>
 <script src="script.js" async defer></script>
 
