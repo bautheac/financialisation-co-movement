@@ -7,6 +7,13 @@ github-repo: bautheac/financialisation-co-movement
 abstract: |
   In the early 2000s institutional investors entered the commodity futures markets en masse with passive, long only, index type positions in sharp contrast with those typically assumed by traditional expert participants. A heated public debate soon erupted over the perceived consequences of the phenomenon--commonly referred to as "financialisation"—and, in response to immediate policy concerns, the matter was thrust onto the academic sphere as a burning issue. With the benefit of hindsight it now seems that the academic debate was framed rather narrowly, used contentious research methods, and eventually led to regulatory changes that were therefore perhaps unwarranted. In contrast, we take a broader approach where we consider a large cross-section of liquid commodities as suggested by the nature of financilisation that comprehends commodity futures as an asset class. Using a bespoke asset pricing factors based framework we study the issue through the lens of co-movement and find that the phenomenon had ontological consequences for the commodity complex with its impact extending beyond the mechanical effects induced by indexation. The onset of the financial crisis and the monetary policy regimes that followed, on the other hand, seem to have set off a motion of reversion to legacy pre-financialisation fundamentals.  
 output:
+  bookdown::pdf_book:
+      pandoc_args: latex.yaml
+      base_format: rticles::elsevier_article
+      latex_engine: xelatex
+      toc_depth: 3
+      includes:
+        in_header: preamble.tex
   bookdown::gitbook:
     pandoc_args: html.yaml
     split_by: "chapter"
@@ -32,13 +39,6 @@ output:
       info: false
     includes:
       after_body: doc_suffix.html
-  bookdown::pdf_book:
-      pandoc_args: latex.yaml
-      base_format: rticles::elsevier_article
-      latex_engine: pdflatex
-      toc_depth: 3
-      includes:
-        in_header: preamble.tex
 ---
 
 ```{r globals, include = FALSE}
@@ -64,7 +64,7 @@ if (latex){ output_type <- "latex" }
 
 
 ```{r, include=latex}
-knitr::asis_output('\\newgeometry{a4paper,left=1in,right=1in,top=1in,bottom=1in,nohead}')
+knitr::asis_output('\\newgeometry{left=1in,right=1in,top=1in,bottom=1in,nohead}')
 knitr::asis_output('\\savegeometry{tables}')
 knitr::asis_output('\\restoregeometry')
 ```
