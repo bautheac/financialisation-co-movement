@@ -1,0 +1,39 @@
+---
+title: "cover letter"
+format: docx
+editor: visual
+---
+
+## References
+
+### Co-movement
+
+-   [prokopczuk](https://doi.org/10.1002/fut.22222 "The dynamics of commodity return comovements")[\_dynamics_2021](https://doi.org/10.1002/fut.22222)
+
+### Financialisation
+
+-   [conghui](https://doi.org/10.1002/fut.22127 "Liquidity shocks, commodity financialization, and market comovements")[\_liquidity_2020](https://doi.org/10.1002/fut.22127)
+-   [kupabado](https://doi.org/10.1002/fut.22269 "Financialization, common stochastic trends, and commodity prices")[\_financialisation_2021](https://doi.org/10.1002/fut.22269)
+-   [yin](https://doi.org/10.1002/fut.22099 "Intermediary asset pricing in commodity futures returns")[\_intermediary_2020](https://doi.org/10.1002/fut.22099)
+
+### Fundamentals
+
+-   [liu_market_2020](https://doi.org/10.1002/fut.22115 "The market quality of commodity futures markets")
+
+#### Risk hedging
+
+-   [isleimeyyeh_role_2020](https://doi.org/10.1002/fut.22122 "The role of financial investors in determining the commodity futures risk premium")
+
+-   [ahmadi](https://doi.org/10.1002/fut.22113 "The theory of storage in the crude oil futures market, the role of financial conditions")[\_theory_2020](https://doi.org/10.1002/fut.22113)
+
+-   [fan_speculative_2020](https://doi.org/10.1002/fut.22085 "Speculative pressure")
+
+#### Price formation
+
+-   [adammer_price_2018](https://doi.org/10.1002/fut.21891 "Price discovery dynamics in European agricultural markets")
+
+-   [bohmann_price_2019](https://doi.org/10.1002/fut.22021 "Price discovery in commodity derivatives: Speculation or hedging?")
+
+-   [llorente_trading_2020](https://doi.org/10.1002/fut.22079 "Trading and information in futures markets")
+
+    ### 
