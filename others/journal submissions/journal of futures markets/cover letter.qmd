@@ -4,36 +4,122 @@ format: docx
 editor: visual
 ---
 
+-   Market integration.
+
+    -   Within commodity complex.
+
+    -   Across asset classes (equities in particular).
+
+-   Effect of financilisation on commodity prices
+
+-   Asset pricing/factor models to study financilisation.
+
 ## References
 
 ### Co-movement
 
--   [prokopczuk](https://doi.org/10.1002/fut.22222 "The dynamics of commodity return comovements")[\_dynamics_2021](https://doi.org/10.1002/fut.22222)
+#### [prokopczuk](https://doi.org/10.1002/fut.22222 "The dynamics of commodity return comovements")[\_dynamics_2021](https://doi.org/10.1002/fut.22222)
 
-### Financialisation
+-   A simple one-factor model based on the first principal component extracted from a panel of commodity returns outperforms a macroeconomic model, and explains most of the realized comovements.
 
--   [conghui](https://doi.org/10.1002/fut.22127 "Liquidity shocks, commodity financialization, and market comovements")[\_liquidity_2020](https://doi.org/10.1002/fut.22127)
--   [kupabado](https://doi.org/10.1002/fut.22269 "Financialization, common stochastic trends, and commodity prices")[\_financialisation_2021](https://doi.org/10.1002/fut.22269)
--   [yin](https://doi.org/10.1002/fut.22099 "Intermediary asset pricing in commodity futures returns")[\_intermediary_2020](https://doi.org/10.1002/fut.22099)
+-   Intersectoral correlations display more time variations than intrasectoral correlations.
+
+-   Comovements are driven by the variation of the factor as opposed to exposure to it.
+
+-   Results cast doubt on the persistence of the effects of financialization and emphasize the importance of the dynamics of the factor variance.
+
+#### [conghui](https://doi.org/10.1002/fut.22127 "Liquidity shocks, commodity financialization, and market comovements")[\_liquidity_2020](https://doi.org/10.1002/fut.22127)
+
+-   Liquidity shocks, including both funding liquidity and market liquidity, are positively associated with comovements between commodity and stock markets after 2000.
+
+-   The effect of liquidity on cross‐market correlations is state‐dependent and intensifies when liquidity conditions deteriorate and asset returns sustain substantial declines.
+
+-   The structural change indicates that financialization creates a role for adverse liquidity shocks to increase cross‐market correlations.
+
+-    A growing body of literature explores the risk transfers between commodity markets and stock markets (e.g., @buyuksahin_speculators_2014; @cheng_convective_2015; @ordu_food_2018). While these studies have different research issues, they all imply that liquidity (broadly defined) matters for risk transfers across markets with the financialization of commodity markets.
+
+-   We provide direct evidence that financialization is aprecondition for liquidity shocks to be passed through to commodity markets and that the risk transfer between commodity and stock markets intensifies when liquidity tightens and asset returns are poor.
+
+```{=html}
+<!-- -->
+```
+-   
+
+-   We add to the debate on the driving forces behind the dynamics of correlations between commodity and stock markets.
+
+    -   First, business cycles do not explain the structural change of liquidity's role in accounting for cross‐market correlations that happened in the early 2000s.
+
+    -   Second, we show thataside from funding liquidity, stock market liquidity also matters in predicting cross‐market correlations.
+
+    -   Third,the significant association between corporate spreads and cross‐market correlations might not be driven by business cycles.
+
+#### [isleimeyyeh_role_2020](https://doi.org/10.1002/fut.22122 "The role of financial investors in determining the commodity futures risk premium")
+
+-   The effect of the stock market on the energy market became significantly greater for the futures risk premium in the period following the 2008 crisis.
+
+-   This study extends studies that broadly address the financialization of commodities and specifically the risk premium in commodity markets.
+
+#### 
+
+#### [yin](https://doi.org/10.1002/fut.22099 "Intermediary asset pricing in commodity futures returns")[\_intermediary_2020](https://doi.org/10.1002/fut.22099)
+
+-   The intermediary capital (IC) effect is substantially positive and continues to grow as the financialization of commodities deepens.
+
+-   The effect of the positive IC risk factor varies significantly.
+
+-   Portfolios with low basis, low open interest, low momentum, and low liquidity earn significantly higher returns than counterparty portfolios.
+
+
+
 
 ### Fundamentals
 
--   [liu_market_2020](https://doi.org/10.1002/fut.22115 "The market quality of commodity futures markets")
-
 #### Risk hedging
 
--   [isleimeyyeh_role_2020](https://doi.org/10.1002/fut.22122 "The role of financial investors in determining the commodity futures risk premium")
+#### [ahmadi](https://doi.org/10.1002/fut.22113 "The theory of storage in the crude oil futures market, the role of financial conditions")[\_theory_2020](https://doi.org/10.1002/fut.22113)
 
--   [ahmadi](https://doi.org/10.1002/fut.22113 "The theory of storage in the crude oil futures market, the role of financial conditions")[\_theory_2020](https://doi.org/10.1002/fut.22113)
+-   Validates theory of storage in the crude oil market.
 
--   [fan_speculative_2020](https://doi.org/10.1002/fut.22085 "Speculative pressure")
+#### [fan_speculative_2020](https://doi.org/10.1002/fut.22085 "Speculative pressure")
+
+-   Long-short portfolios of futures contracts sorted by speculative pressure capture a significant premium in commodity, currency, and equity markets but not in fixed income markets.
+
+-   Exposure to commodity, currency, and equity index futures' speculative pressure is priced in the broad cross-section after controlling for momentum, carry, global liquidity, and volatility risks.
+
+-   There is an efficient hedgers-speculators risk transfer in commodity, currency, and equity index futures markets.
+
+-   Contribution to literature.
+
+    -   Provides the first empirical investigation of the ability of tradeable long-short portfolios based on speculative pressure to capture premia in futures markets on instruments beyond commodities.
+
+    -   We contribute to an "everywhere" pricing literature that has so far focused on the momentum, value and carry factors.
+
+    -   Adds to the literature that investigates the potentially harmful impact of speculators on futures prices [@fattouh_role_2013; @irwin_devil_2009; @stoll_commodity_2010]. Finding that equity index, currency and commodity futures markets facilitate risk transfer and reward suggests that calls to regulate excessive speculation are unwarranted; speculators do not destabilize these futures markets, rather they are important providers of liquidity and risk-bearing facility to hedgers.
 
 #### Price formation
 
--   [adammer_price_2018](https://doi.org/10.1002/fut.21891 "Price discovery dynamics in European agricultural markets")
+#### [adammer_price_2018](https://doi.org/10.1002/fut.21891 "Price discovery dynamics in European agricultural markets")
 
--   [bohmann_price_2019](https://doi.org/10.1002/fut.22021 "Price discovery in commodity derivatives: Speculation or hedging?")
+-   The impact of the futures markets was high during the first period of price spikes (2007 to 2009) but lower during the second one (2010 to 2013).
 
--   [llorente_trading_2020](https://doi.org/10.1002/fut.22079 "Trading and information in futures markets")
+-   More trading activity in futures markets did not lead to a higher influence on spot prices.
 
-    ### 
+#### [bohmann_price_2019](https://doi.org/10.1002/fut.22021 "Price discovery in commodity derivatives: Speculation or hedging?")
+
+-   Both commodity futures and option markets make a meaningful contribution to price discovery in recent times in the six most actively traded commodity markets.
+
+-   On average, options lead futures in reflecting new information for a majority of these commodities.
+
+-   Increased speculation, rather than hedging activity, in commodity derivatives is a key determinant of price discovery in the options markets.
+
+#### [kupabado](https://doi.org/10.1002/fut.22269 "Financialization, common stochastic trends, and commodity prices")[\_financialisation_2021](https://doi.org/10.1002/fut.22269)
+
+-   Financialization has contributed to the price movements of these commodities.
+
+#### [llorente_trading_2020](https://doi.org/10.1002/fut.22079 "Trading and information in futures markets")
+
+-   Nonmembers (CTI4) consume most of the intraday liquidity while local traders (CTI1) as market makers are its main provider. Both groups combine most of the intraday trading volume.
+
+-   Changes in the overnight positions of the general public (CTI4) and clearing members (CTI2) contribute mostly to daily price discovery, while the positions of CTI3 group reflect possible information advantage about future price movements.
+
+
