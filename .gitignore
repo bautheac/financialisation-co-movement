@@ -6,5 +6,6 @@ renv.lock
 renv/
 data/
 others/
+!others/journal*submissions/
 explore/results
 explore/shiny

@@ -1,12 +1,18 @@
 ---
-title: 'Financialisation of commodities: co-movement behind-the-scenes'
-subtitle: A tale of four factors
+title: 'Financialisation of Commodities: Co-movement Behind-the-scenes'
 date: "`r format(Sys.Date(), '%B %Y')`"
 bibliography: literature_files/references.bib
 github-repo: bautheac/financialisation-co-movement
 abstract: |
   In the early 2000s institutional investors entered the commodity futures markets en masse with passive, long only, index type positions in sharp contrast with those typically assumed by traditional expert participants. A heated public debate soon erupted over the perceived consequences of the phenomenon--commonly referred to as "financialisation"—and, in response to immediate policy concerns, the matter was thrust onto the academic sphere as a burning issue. With the benefit of hindsight it now seems that the academic debate was framed rather narrowly, used contentious research methods, and eventually led to regulatory changes that were therefore perhaps unwarranted. In contrast, we take a broader approach where we consider a large cross-section of liquid commodities as suggested by the nature of financilisation that comprehends commodity futures as an asset class. Using a bespoke asset pricing factors based framework we study the issue through the lens of co-movement and find that the phenomenon had ontological consequences for the commodity complex with its impact extending beyond the mechanical effects induced by indexation. The onset of the financial crisis and the monetary policy regimes that followed, on the other hand, seem to have set off a motion of reversion to legacy pre-financialisation fundamentals.  
 output:
+  bookdown::pdf_book:
+      pandoc_args: latex-blind.yaml
+      base_format: rticles::elsevier_article
+      latex_engine: xelatex
+      toc_depth: 3
+      includes:
+        in_header: preamble.tex
   bookdown::gitbook:
     pandoc_args: html.yaml
     split_by: "chapter"
@@ -32,13 +38,6 @@ output:
       info: false
     includes:
       after_body: doc_suffix.html
-  bookdown::pdf_book:
-      pandoc_args: latex.yaml
-      base_format: rticles::elsevier_article
-      latex_engine: xelatex
-      toc_depth: 3
-      includes:
-        in_header: preamble.tex
 ---
 
 ```{r globals, include = FALSE}
@@ -47,8 +46,8 @@ library(kableExtra); library(slituR)
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 
 
-folder <- "literature_files"; dir.create(folder); path <- paste(folder, "references.bib", sep = "/")
-download.file("https://www.dropbox.com/s/htnd7o9nnkk8ng8/references.bib?dl=1", path)
+# folder <- "literature_files"; dir.create(folder); path <- paste(folder, "references.bib", sep = "/")
+# download.file("https://www.dropbox.com/s/htnd7o9nnkk8ng8/references.bib?dl=1", path)
 
 
 tables_collapse_rows_align <- "top"
@@ -111,7 +110,7 @@ knitr::asis_output('\\setlength{\\parindent}{0pt}')
 ```
 
 Over the first period the cross-sectional average returns during phases of **backwardation** for both the US and UK commodities are positive and overall higher than during phases of **contango**, providing broad support for an aggregate version of the Keynesian hedging pressure hypothesis. Over the second period this pattern reverses, with both the US and UK commodities having higher returns during phases of **contango** as opposed to **backwardation**. This change in pattern suggests the onset of financialisation altered the traditional risk shifting nature of hedger’s behaviour, implied by the Keynesian hypothesis.   
-This change of paradigm due to the arrival of financial investors, on the other hand, raises the question of whether they functioned as liquidity providers or demanders. Arguments have been put forward in favour of both possibilities with @moskowitz_time_2012 arguing that financial investors provide liquidity and @kang_tale_2020 taking the opposite stance. Our analysis of individual commodity returns' relation with both CHP and **CHP** before and during financialisation sheds new lights on this issue with our results suggesting that financial investors may have been liquidity demanders leading hedgers to become liquidity providers.  
+This change of paradigm due to the arrival of financial investors, on the other hand, raises the question of whether they functioned as liquidity providers or demanders. Arguments have been put forward in favour of both possibilities with @moskowitz_time_2012 arguing that financial investors provide liquidity and @kang_tale_2020 taking the opposite stance. Our analysis of individual commodity returns' relation with both CHP and **CHP** before and during financialisation sheds a new light on this issue with our results suggesting that financial investors may have been liquidity demanders leading hedgers to become liquidity providers.  
   
 ```{r, include=latex}
 knitr::asis_output('\\medskip')
@@ -149,7 +148,7 @@ Financialisation was an issue of such policy importance that it triggered legisl
 With the benefit of hindsight, it appears this approach was perhaps too narrow, and it now seems necessary to address the phenomenon from a broader perspective. Commodity price dynamics appear to have altered substantially in quite different ways over the financialisation and the financial crisis periods and our commodity futures asset pricing factors based approach seems able to provide new insights into the nature of these changes: financialisation was a phenomenon endogenous to the commodity markets transmitted via the commodity futures markets and which effects were particularly strong for the metals sector while the crisis and its aftermath seems to have delivered an exogenous shock across the entire cross-section of liquid commodities and thereby potentially triggering a reversion to pre-financialisation dynamics.    
 
 
-The initial view of financialisation was that it consisted of speculative flows which had the effect of driving up and creating bubble like conditions in commodity futures prices^[@masters_testimony_2008; @masters_accidental_2008; @unctad_global_2009; @deschutter_food_2010; @gilbert_how_2010; @gilbert_speculative_2010; @herman_not_2011; @schumann_hunger_2011; @singleton_investor_2013.]. However, the fundamental question of the nature of the impact of financialisation across the entire cross-section of commodity futures markets has not yet been completely answered. We provide an empirical complement to a new stream of theoretical studies that try to model the impact of financialisation on various aspects of commodity futures markets^[@etula_broker-dealer_2013, @acharya_limits_2013, @cheng_convective_2014, @leclercq_equilibrium_2014, @sockin_informational_2015, @goldstein_speculation_2014, @ekeland_speculation_2016, @goldstein_commodity_2017.] and demonstrate that the effects of financialisation extend beyond the mechanical effects induced by indexation as outlined in @tang_index_2012 and @basak_model_2016.
+The initial view of financialisation was that it consisted of speculative flows which had the effect of driving up and creating bubble like conditions in commodity futures prices^[@masters_testimony_2008; @masters_accidental_2008; @unctad_global_2009; @deschutter_food_2010; @gilbert_how_2010; @gilbert_speculative_2010; @herman_not_2011; @schumann_hunger_2011; @singleton_investor_2013.]. However, the fundamental question of the nature of the impact of financialisation across the entire cross-section of commodity futures markets has not yet been completely answered. We provide an empirical complement to a new stream of theoretical studies that try to model the impact of financialisation on various aspects of commodity futures markets^[@etula_broker-dealer_2013, @acharya_limits_2013, @cheng_convective_2014, @leclercq_equilibrium_2014, @sockin_informational_2015, @goldstein_speculation_2014, @ekeland_speculation_2016, @goldstein_commodity_2017, @ekeland_hedging_2019, @isleimeyyeh_role_2020.] and demonstrate that the effects of financialisation extend beyond the mechanical effects induced by indexation as outlined in @tang_index_2012 and @basak_model_2016.
 
 
 ```{r, include=latex}
