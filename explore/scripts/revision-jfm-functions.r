@@ -476,11 +476,8 @@ compute_pairwise_correlations_between_tickers <- function(
 make_pairwise_correlations_for_ticker_combinations_dataframe <- function(
     combinations, commodity_futures_data, aggregate_CHP_regimes, period_dates
     ){
-  
-  p <- progressr::progressor(steps = nrow(combinations))
-  
+
   correlations <- furrr::future_map(combinations$tickers, ~{
-    p()
     compute_pairwise_correlations_between_tickers(
       .x, commodity_futures_data, aggregate_CHP_regimes, period_dates
     )
@@ -489,10 +486,59 @@ make_pairwise_correlations_for_ticker_combinations_dataframe <- function(
   dplyr::mutate(combinations, correlations = correlations)
 }
 
+extract_top_n_pairwise_correlations_from_correlation_matrix <- function(correlation_matrix, n = 3){
+  
+  pairwise_correlations <- tibble::rownames_to_column(as.data.frame(correlation_matrix), var = "ticker 1") %>%
+    tidyr::pivot_longer(-`ticker 1`, names_to = "ticker 2", values_to = "correlation") %>%
+    dplyr::filter(`ticker 1` != `ticker 2`) %>% 
+    dplyr::mutate(pair = pmin(`ticker 1`, `ticker 2`) %>% paste(pmax(`ticker 1`, `ticker 2`), sep = "-")) %>%
+    dplyr::distinct(pair, .keep_all = TRUE) %>% dplyr::select(-pair)
+  
+  top_n <- dplyr::slice_max(pairwise_correlations, correlation, n = n)
+  bottom_n <- dplyr::slice_min(pairwise_correlations, correlation, n = n)
 
+  dplyr::bind_rows(top_n, bottom_n)
+}
 
+compute_average_pairwise_correlations_from_correlation_matrix <- function(correlation_matrix){
 
+  pairwise_correlations <- tibble::rownames_to_column(as.data.frame(correlation_matrix), var = "ticker 1") %>%
+    tidyr::pivot_longer(-`ticker 1`, names_to = "ticker 2", values_to = "correlation") %>%
+    dplyr::filter(`ticker 1` != `ticker 2`) %>% 
+    dplyr::mutate(pair = pmin(`ticker 1`, `ticker 2`) %>% paste(pmax(`ticker 1`, `ticker 2`), sep = "-")) %>%
+    dplyr::distinct(pair, .keep_all = TRUE) %>% dplyr::select(-pair)
+  
+  mean(pairwise_correlations$correlation, na.rm = T)
+}
 
+add_summary_to_pairwise_correlations_for_ticker_combinations_dataframe <- function(
+    pairwise_correlations_for_ticker_combinations_dataframe, summary_label, summary_function
+){
+  
+  dplyr::mutate(
+    pairwise_correlations_for_ticker_combinations_dataframe, 
+    !!summary_label := purrr::map(correlations, function(correlations){
+      dplyr::mutate(correlations, results = purrr::map(results, function(results){
+        dplyr::mutate(
+          results, 
+          !!summary_label := furrr::future_map(correlations, summary_function)
+        ) %>% dplyr::select(-c("data", "correlations"))
+      }))
+    })) 
+}
+
+add_top_3_and_average_to_pairwise_correlations_for_ticker_combinations_dataframe <- function(
+    pairwise_correlations_for_ticker_combinations_dataframe
+){
+  
+  add_summary_to_pairwise_correlations_for_ticker_combinations_dataframe(
+    pairwise_correlations_for_ticker_combinations_dataframe, "top 3",
+    extract_top_n_pairwise_correlations_from_correlation_matrix
+  ) %>%
+    add_summary_to_pairwise_correlations_for_ticker_combinations_dataframe(
+      "average", compute_average_pairwise_correlations_from_correlation_matrix
+    )
+}
 
 
 
