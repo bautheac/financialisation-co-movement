@@ -97,16 +97,18 @@ plan(multisession, workers = parallel::detectCores())
 commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(commodity_futures_tickers)
 
 ## correlations ####
-progressr::with_progress({
-  correlations_raw <- make_pairwise_correlations_for_ticker_combinations_dataframe(
-    commodity_pool_tickers, commodity_futures_data, aggregate_CHP_regimes, period_dates
-  )
-  correlations_top_3s_and_averages <- 
-    add_top_3_and_average_to_pairwise_correlations_for_ticker_combinations_dataframe(correlations_raw)
+correlations_raw <- make_pairwise_correlations_for_ticker_combinations_dataframe(
+  commodity_pool_tickers, commodity_futures_data, aggregate_CHP_regimes, period_dates
+)
+correlations_top_3s_and_averages <- 
+  add_top_3_and_average_to_pairwise_correlations_for_ticker_combinations_dataframe(correlations_raw)
   
-})
 
-
+## regressions ####
+regressions_raw <- make_regressions_for_ticker_combinations_dataframe(
+  commodity_pool_tickers, commodity_futures_data, commodity_futures_index_returns, 
+  aggregate_CHP_regimes, period_dates
+)
 
 
 
