@@ -18,6 +18,37 @@ make_periods_data_frame <- function(period_bounds){
 }
 
 ## functions ####
+get_commodity_futures_individual_data_levels <- function(
+    commodity_futures_tickers, start, end, storethat_db_path
+    ){
+  
+  raw_data_object <- pullit::pull_futures_market(
+    source = "storethat", type = "term structure", 
+    active_contract_tickers = commodity_futures_tickers, start = start, end = end, 
+    TS_positions = 1L:2L, roll_type = "A", roll_days = 0L, roll_months = 0L,
+    roll_adjustment = "N", file = storethat_db_path
+  )
+  
+  raw_data <- pullit::get_data(raw_data_object)
+  term_structure_tickers <- dplyr::select(
+    pullit::get_term_structure_tickers(raw_data_object), `active contract ticker`, ticker, `TS position`
+  )
+  
+    dplyr::left_join(raw_data, term_structure_tickers, by = "ticker") %>% 
+    dplyr::select( `active contract ticker`, ticker, `TS position`, field, date, value)
+}
+
+get_commodity_futures_aggregate_data_levels <- function(
+    commodity_futures_tickers, start, end, storethat_db_path
+    ){
+  
+  pullit::pull_futures_market(
+    source = "storethat", type = "aggregate", 
+    active_contract_tickers = commodity_futures_tickers, 
+    start = start, end = end, file = storethat_db_path
+  )
+}
+
 get_period_boundaries <- function(periods, period_id){
   start <- dplyr::filter(periods, period == period_id, bound == "start") %>% 
     dplyr::select(date) %>% purrr::flatten_chr()
@@ -292,8 +323,17 @@ make_aggregate_CHP_regimes_by_period_dataframe <- function(
 
 #### aggregate CHP regimes ####
 ##### local functions ####
-make_aggregate_CHP_regimes_dataframe <- function(years, periods){
-  tibble::tibble(timespan = c("years", "periods"), regimes = list(years, periods))
+make_aggregate_CHP_regimes_dataframe <- function(){
+  
+  aggregate_CHP <- make_aggregate_CHP()
+  
+  regimes_years <- make_aggregate_CHP_regimes_by_year(aggregate_CHP, commodity_futures_data)
+  
+  regimes_periods <- make_aggregate_CHP_regimes_by_period_dataframe(
+    aggregate_CHP, commodity_futures_data, periods
+  )
+  
+  tibble::tibble(timespan = c("years", "periods"), regimes = list(regimes_years, regimes_periods))
 }
 
 ## construct commodity index returns ####
@@ -310,7 +350,7 @@ compute_commodity_futures_index_returns <- function(price_levels){
 make_commodity_futures_index_returns_dataframe <- function(
     dataset, tickers, date_start, date_end
 ){
-  
+
   price_levels_daily <- dplyr::filter(
     dataset, `active contract ticker` %in% tickers, `TS position` == 1L, 
     field == "PX_LAST", date >= date_start, date <= date_end

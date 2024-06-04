@@ -1,5 +1,6 @@
 {
   "nuxt.isNuxtApp": false,
+  "peacock.remoteColor": "#007fff",
   "workbench.colorCustomizations": {
     "activityBar.activeBackground": "#3399ff",
     "activityBar.background": "#3399ff",
@@ -18,6 +19,5 @@
     "titleBar.activeForeground": "#e7e7e7",
     "titleBar.inactiveBackground": "#007fff99",
     "titleBar.inactiveForeground": "#e7e7e799"
-  },
-  "peacock.remoteColor": "#007fff"
+  }
 }

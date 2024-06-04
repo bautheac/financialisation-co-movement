@@ -9,3 +9,4 @@ others/
 !others/journal*submissions/
 explore/results
 explore/shiny
+.vscode/settings.json

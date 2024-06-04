@@ -37,28 +37,13 @@ commodity_futures_tickers <- c(
 
 ## commodity futures levels data ####
 ### individual data ####
-raw <- pullit::pull_futures_market(
-  source = "storethat", type = "term structure", 
-  active_contract_tickers = commodity_futures_tickers, start = start, end = end, 
-  TS_positions = 1L:2L, roll_type = "A", roll_days = 0L, roll_months = 0L,
-  roll_adjustment = "N", file = storethat_db_path
-)
-
-commodity_futures_individual_data_levels <- pullit::get_data(raw) %>%
-  dplyr::left_join(
-    dplyr::select(
-      pullit::get_term_structure_tickers(raw), `active contract ticker`, ticker, `TS position`
-      ), 
-    by = "ticker"
-  ) %>% 
-  dplyr::select( `active contract ticker`, ticker, `TS position`, field, date, value)
-remove(raw)
+commodity_futures_individual_data_levels <- get_commodity_futures_individual_data_levels(
+  commodity_futures_tickers, start, end, storethat_db_path
+    )
 
 ### aggregate data ####
-commodity_futures_aggregate_data_levels <- pullit::pull_futures_market(
-  source = "storethat", type = "aggregate", 
-  active_contract_tickers = commodity_futures_tickers, 
-  start = start, end = end, file = storethat_db_path
+commodity_futures_aggregate_data_levels <- get_commodity_futures_aggregate_data_levels(
+  commodity_futures_tickers, start, end, storethat_db_path
 )
 
 ### both ####
@@ -89,22 +74,8 @@ commodity_CFTC_data <- pullit::pull_futures_CFTC(
   start = start, end = end, file = storethat_db_path
 )
 
-## aggregate CHP ####
-### aggregate CHP data ####
-aggregate_CHP <- make_aggregate_CHP()
-
-### aggregate CHP regimes ####
-#### aggregate CHP regimes by year ####
-regimes_years <- make_aggregate_CHP_regimes_by_year(aggregate_CHP, commodity_futures_data)
-
-
-#### aggregate CHP regimes by subperiod ####
-regimes_periods <- make_aggregate_CHP_regimes_by_period_dataframe(
-  aggregate_CHP, commodity_futures_data, periods
-)
-
-#### aggregate CHP regimes ####
-aggregate_CHP_regimes <- make_aggregate_CHP_regimes_dataframe(regimes_years, regimes_periods)
+## aggregate CHP regimes ####
+aggregate_CHP_regimes <- make_aggregate_CHP_regimes_dataframe()
 
 ## construct commodity index returns ####
 US_commodity_futures_tickers <- filter_commodity_futures_tickers(
@@ -113,36 +84,27 @@ US_commodity_futures_tickers <- filter_commodity_futures_tickers(
 
 first_period_boundaries <- get_period_boundaries(periods, "past")
 last_period_boundaries <- get_period_boundaries(periods, "present")
-period_start_date <- first_period_boundaries$start
-period_end_date <- last_period_boundaries$end
 
 commodity_futures_index_returns <- make_commodity_futures_index_returns_dataframe(
-  commodity_futures_individual_data_levels, US_commodity_futures_tickers, period_start_date, period_end_date
+  commodity_futures_individual_data_levels, US_commodity_futures_tickers, 
+  first_period_boundaries$start, last_period_boundaries$end
 )
 
 # analysis ####
 library(furrr)
 plan(multisession, workers = parallel::detectCores())
 
-## correlations ####
 commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(commodity_futures_tickers)
 
+## correlations ####
 progressr::with_progress({
   correlations_raw <- make_pairwise_correlations_for_ticker_combinations_dataframe(
     commodity_pool_tickers, commodity_futures_data, aggregate_CHP_regimes, period_dates
   )
-  correlations_top_3_averages <- 
+  correlations_top_3s_and_averages <- 
     add_top_3_and_average_to_pairwise_correlations_for_ticker_combinations_dataframe(correlations_raw)
   
 })
-
-
-
-
-
-
-
-
 
 
 
