@@ -100,9 +100,6 @@ commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(commodity_future
 correlations_raw <- make_pairwise_correlations_for_ticker_combinations_dataframe(
   commodity_pool_tickers, commodity_futures_data, aggregate_CHP_regimes, period_dates
 )
-correlations_top_3s_and_averages <- 
-  add_top_3_and_average_to_pairwise_correlations_for_ticker_combinations_dataframe(correlations_raw)
-  
 
 ## regressions ####
 regressions_raw <- make_regressions_for_ticker_combinations_dataframe(
@@ -110,6 +107,26 @@ regressions_raw <- make_regressions_for_ticker_combinations_dataframe(
   aggregate_CHP_regimes, period_dates
 )
 
+## save raw results ####
+path_correlations_raw_file <- paste0(
+  here::here(), "/explore/results/revision-jfm/correlations-raw.rds"
+  )
+path_regressions_raw_file <- paste0(
+  here::here(), "/explore/results/revision-jfm/regressions-raw.rds"
+  )
+
+saveRDS(correlations_raw, path_correlations_raw_file)
+saveRDS(regressions_raw, path_regressions_raw_file)
+
+# summary ####
+
+## load raw dataset (optional) ####
+correlations_raw <- readr::read_rds(path_correlations_raw_file)
+regressions_raw <- readr::read_rds(path_regressions_raw_file)
+  
+## correlations ####  
+correlations_top_3s_and_averages <- 
+  add_top_3_and_average_to_pairwise_correlations_for_ticker_combinations_dataframe(correlations_raw)
 
 
 
