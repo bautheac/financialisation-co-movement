@@ -544,7 +544,7 @@ make_pairwise_correlations_for_ticker_combinations_dataframe <- function(
     compute_correlations
   )
   
-  dplyr::mutate(combinations, correlations = analysis)
+  dplyr::mutate(combinations, results = analysis)
 }
 
 make_commodity_futures_dataset_for_regression_analysis <- function(
@@ -614,7 +614,7 @@ make_regressions_for_ticker_combinations_dataframe <- function(
     compute_regressions
   )
   
-  dplyr::mutate(combinations, regressions = analysis)
+  dplyr::mutate(combinations, results = analysis)
 }
 
 
@@ -645,33 +645,65 @@ compute_average_pairwise_correlations_from_correlation_matrix <- function(correl
   mean(pairwise_correlations$correlation, na.rm = T)
 }
 
-add_summary_to_pairwise_correlations_for_ticker_combinations_dataframe <- function(
-    pairwise_correlations_for_ticker_combinations_dataframe, summary_label, summary_function
+extract_top_n_betas_from_lm_models <- function(lm_models){
+  
+  dplyr::mutate(
+    lm_models, 
+    beta = purrr::map_dbl(model, ~coef(.x)[["index"]]), 
+    `p value` = purrr::map_dbl(model, ~base::summary(.x)$coefficients["index", "Pr(>|t|)"]),
+    `R squared` = purrr::map_dbl(model, ~base::summary(.x)$r.squared)
+  ) %>% 
+    dplyr::select(-model) %>% dplyr::rename(ticker = `active contract ticker`) %>% 
+    dplyr::arrange(dplyr::desc(beta)) %>% dplyr::slice(1L:3L)
+}
+
+compute_average_beta_from_lm_models <- function(lm_models){
+  
+  dplyr::mutate(lm_models, beta = purrr::map_dbl(model, ~coef(.x)[["index"]])) %>% 
+    dplyr::select(-model) %>% dplyr::summarise(average = mean(beta, na.rm = T)) %>% 
+    dplyr::pull(average)
+}
+
+add_summary_to_analysis_raw_results_for_ticker_combinations_dataframe <- function(
+    analysis_raw_results_for_ticker_combinations_dataframe, summary_label, summary_function
 ){
   
   dplyr::mutate(
-    pairwise_correlations_for_ticker_combinations_dataframe, 
-    !!summary_label := purrr::map(correlations, function(correlations){
-      dplyr::mutate(correlations, results = purrr::map(results, function(results){
+    analysis_raw_results_for_ticker_combinations_dataframe, 
+    !!summary_label := purrr::map(results, function(results){
+      dplyr::mutate(results, results = purrr::map(results, function(results){
         dplyr::mutate(
-          results, 
-          !!summary_label := furrr::future_map(correlations, summary_function)
-        ) %>% dplyr::select(-c("data", "correlations"))
+          results, !!summary_label := furrr::future_map(results, summary_function)
+        ) %>% dplyr::select(-c("data", "results"))
       }))
-    })) 
+    }))
 }
 
 add_top_3_and_average_to_pairwise_correlations_for_ticker_combinations_dataframe <- function(
     pairwise_correlations_for_ticker_combinations_dataframe
 ){
   
-  add_summary_to_pairwise_correlations_for_ticker_combinations_dataframe(
+  add_summary_to_analysis_raw_results_for_ticker_combinations_dataframe(
     pairwise_correlations_for_ticker_combinations_dataframe, "top 3",
     extract_top_n_pairwise_correlations_from_correlation_matrix
   ) %>%
-    add_summary_to_pairwise_correlations_for_ticker_combinations_dataframe(
+    add_summary_to_analysis_raw_results_for_ticker_combinations_dataframe(
       "average", compute_average_pairwise_correlations_from_correlation_matrix
-    )
+    ) %>% 
+    dplyr::select(-c("tickers", "results"))
+}
+
+add_top_3_and_average_to_regressions_for_ticker_combinations_dataframe <- function(
+    regressions_for_ticker_combinations_dataframe
+){
+  
+  add_summary_to_analysis_raw_results_for_ticker_combinations_dataframe(
+    regressions_for_ticker_combinations_dataframe, "top 3", extract_top_n_betas_from_lm_models
+  ) %>%
+    add_summary_to_analysis_raw_results_for_ticker_combinations_dataframe(
+      "average", compute_average_beta_from_lm_models
+    ) %>% 
+    dplyr::select(-c("tickers", "results"))
 }
 
 

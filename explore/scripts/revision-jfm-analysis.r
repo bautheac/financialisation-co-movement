@@ -119,7 +119,6 @@ saveRDS(correlations_raw, path_correlations_raw_file)
 saveRDS(regressions_raw, path_regressions_raw_file)
 
 # summary ####
-
 ## load raw dataset (optional) ####
 correlations_raw <- readr::read_rds(path_correlations_raw_file)
 regressions_raw <- readr::read_rds(path_regressions_raw_file)
@@ -127,6 +126,10 @@ regressions_raw <- readr::read_rds(path_regressions_raw_file)
 ## correlations ####  
 correlations_top_3s_and_averages <- 
   add_top_3_and_average_to_pairwise_correlations_for_ticker_combinations_dataframe(correlations_raw)
+
+## regressions ####  
+regressions_top_3s_and_averages <- 
+  add_top_3_and_average_to_regressions_for_ticker_combinations_dataframe(regressions_raw)
 
 
 
