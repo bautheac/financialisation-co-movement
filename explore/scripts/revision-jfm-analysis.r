@@ -124,14 +124,23 @@ correlations_raw <- readr::read_rds(path_correlations_raw_file)
 regressions_raw <- readr::read_rds(path_regressions_raw_file)
   
 ## correlations ####  
-correlations_top_3s_and_averages <- 
+correlations_summary <- 
   add_top_3_and_average_to_pairwise_correlations_for_ticker_combinations_dataframe(correlations_raw)
 
 ## regressions ####  
-regressions_top_3s_and_averages <- 
+regressions_summary <- 
   add_top_3_and_average_to_regressions_for_ticker_combinations_dataframe(regressions_raw)
 
+## save summary results ####
+path_correlations_summary_file <- paste0(
+  here::here(), "/explore/results/revision-jfm/correlations-summary.rds"
+)
+path_regressions_summary_file <- paste0(
+  here::here(), "/explore/results/revision-jfm/regressions-summary.rds"
+)
 
+saveRDS(correlations_summary, path_correlations_summary_file)
+saveRDS(regressions_summary, path_regressions_summary_file)
 
 
 
