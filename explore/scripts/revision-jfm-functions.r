@@ -330,7 +330,7 @@ make_aggregate_CHP_regimes_dataframe <- function(){
     aggregate_CHP, commodity_futures_data, periods
   )
   
-  tibble::tibble(timespan = c("years", "periods"), regimes = list(regimes_years, regimes_periods))
+  tibble::tibble(timespan = c("year", "period"), regimes = list(regimes_years, regimes_periods))
 }
 
 ## construct commodity index returns ####
@@ -502,7 +502,7 @@ compute_analysis_between_tickers <- function(
     date >= period_dates$date[[1L]], date <= period_dates$date[[length(period_dates$date)]]
     )
   
-  aggregate_CHP_regimes_by_year <- dplyr::filter(aggregate_CHP_regimes, timespan == "years") %>%
+  aggregate_CHP_regimes_by_year <- dplyr::filter(aggregate_CHP_regimes, timespan == "year") %>%
     dplyr::select(regimes) %>% purrr::flatten_df()
   analysis_by_year <- make_analysis_by_year_dataframe(
     commodity_futures_data, aggregate_CHP_regimes_by_year, analysis_function
@@ -510,14 +510,14 @@ compute_analysis_between_tickers <- function(
   
   commodity_futures_data_with_periods <- 
     add_periods_to_commodity_futures_data(commodity_futures_data, period_dates)
-  aggregate_CHP_regimes_by_period <- dplyr::filter(aggregate_CHP_regimes, timespan == "periods") %>%
+  aggregate_CHP_regimes_by_period <- dplyr::filter(aggregate_CHP_regimes, timespan == "period") %>%
     dplyr::select(regimes) %>% purrr::flatten_df()
   analysis_by_period <- make_analysis_by_period_dataframe(
     commodity_futures_data_with_periods, aggregate_CHP_regimes_by_period, period_dates, 
     analysis_function
     )
   
-  tibble::tibble(timespan = c("years", "periods"), results = list(analysis_by_year, analysis_by_period))
+  tibble::tibble(timespan = c("year", "period"), results = list(analysis_by_year, analysis_by_period))
 }
 
 make_analysis_for_ticker_combinations_dataframe <- function(
@@ -628,10 +628,12 @@ extract_top_n_pairwise_correlations_from_correlation_matrix <- function(correlat
     dplyr::mutate(pair = pmin(`ticker 1`, `ticker 2`) %>% paste(pmax(`ticker 1`, `ticker 2`), sep = "-")) %>%
     dplyr::distinct(pair, .keep_all = TRUE) %>% dplyr::select(-pair)
   
-  top_n <- dplyr::slice_max(pairwise_correlations, correlation, n = n)
-  bottom_n <- dplyr::slice_min(pairwise_correlations, correlation, n = n)
+  top_n <- dplyr::slice_max(pairwise_correlations, correlation, n = n) %>%
+    dplyr::mutate(`top-bottom 3` = rep("top", dplyr::n()))
+  bottom_n <- dplyr::slice_min(pairwise_correlations, correlation, n = n) %>%
+    dplyr::mutate(`top-bottom 3` = rep("bottom", dplyr::n()))
 
-  dplyr::bind_rows(top_n, bottom_n)
+  dplyr::bind_rows(top_n, bottom_n) %>% dplyr::relocate(`top-bottom 3`, .before = `ticker 1`)
 }
 
 compute_average_pairwise_correlations_from_correlation_matrix <- function(correlation_matrix){
@@ -706,5 +708,138 @@ add_top_3_and_average_to_regressions_for_ticker_combinations_dataframe <- functi
     dplyr::select(-c("tickers", "results"))
 }
 
+
+# format ####
+## local functions ####
+unnest_analysis_statistic_results_summary <- function(results_summary, statistic){
+  
+  dplyr::select(results_summary, country, sector, subsector, statistic) %>%
+    tidyr::unnest(statistic) %>% tidyr::unnest(results) %>% tidyr::unnest(statistic) %>%
+    dplyr::select(
+      country, sector, subsector, timespan, period, year, type, frequency, field,
+      regime, dplyr::everything()
+    )
+}
+
+field_to_name_map <- tibble::tribble(
+  ~field,               ~name,
+  "PX_LAST",            "close price",
+  "OPEN_INT",           "open interest",
+  "PX_VOLUME",          "volume",
+  "FUT_AGGTE_OPEN_INT", "aggregate open interest",
+  "FUT_AGGTE_VOL",      "aggregate volume",
+  "PX_ASK",             "ask",
+  "PX_BID",             "bid",
+  "PX_HIGH",            "high",
+  "PX_LOW",             "low",
+  "PX_MID",             "mid",
+  "PX_OPEN",            "open"
+)
+
+map_solution_to_problem_domain_jargon_in_analysis_unnested_results_summary <- function(
+    unnested_results_summary
+){
+  
+  dplyr::left_join(unnested_results_summary, field_to_name_map, by = "field") %>%
+    dplyr::select(-field) %>% dplyr::rename(field = name) %>% dplyr::relocate(field, .after = frequency)
+}
+
+## correlations ####
+### local functions ####
+mutate_appropriate_columns_to_factors_in_analysis_unnested_results_summary <- function(
+    unnested_correlations_top_3_results_summary
+){
+  
+  dplyr::mutate(
+    unnested_correlations_top_3_results_summary,
+    country = factor(country, levels = c("all", "US", "GB")),
+    timespan = factor(timespan, levels = c("period", "year")),
+    type = factor(type, levels = c("return", "level")),
+    frequency = factor(frequency, levels = c("day", "week", "month")),
+    field = factor(field, levels = c(
+      "PX_LAST", "OPEN_INT", "PX_VOLUME", "FUT_AGGTE_OPEN_INT", "FUT_AGGTE_VOL",
+      "PX_ASK", "PX_BID", "PX_HIGH", "PX_LOW", "PX_MID", "PX_OPEN"
+      )),
+    regime = factor(regime, levels = c("whole period", "backwardation", "contango"))
+    )
+}
+
+### top 3 ####
+#### local functions ####
+map_solution_to_problem_domain_jargon_in_correlation_top_3_unnested_results_summary <- function(
+    unnested_correlations_top_3_results_summary
+){
+  
+  dplyr::left_join(
+    unnested_correlations_top_3_results_summary, 
+    dplyr::select(tickers_futures, ticker, name, MIC), 
+    by = c("ticker 1" = "ticker")
+    ) %>%
+    dplyr::mutate(`ticker 1` = paste0(name, " (", MIC, ")")) %>% dplyr::select(-c(name, MIC)) %>%
+    dplyr::left_join(dplyr::select(tickers_futures, ticker, name, MIC), by = c("ticker 2" = "ticker")) %>%
+    dplyr::mutate(`ticker 2` = paste0(name, " (", MIC, ")")) %>% dplyr::select(-c(name, MIC)) %>%
+    dplyr::mutate(pair = paste(`ticker 1`, `ticker 2`, sep = " - ")) %>% 
+    dplyr::select(-c(`ticker 1`, `ticker 2`)) %>% dplyr::relocate(pair, .before = correlation)
+}
+####
+
+format_correlation_summary_statistics_into_table <- function(correlations_summary){
+  
+  top_3 <- unnest_analysis_statistic_results_summary(correlations_summary, "top 3") %>%
+    dplyr::mutate(`top-bottom 3` = factor(`top-bottom 3`, levels = c("top", "bottom"))) %>%
+    map_solution_to_problem_domain_jargon_in_correlation_top_3_unnested_results_summary()
+  
+  average <- unnest_analysis_statistic_results_summary(correlations_summary, "average")
+  
+  dplyr::left_join(
+    top_3, average, 
+    by = c("country", "sector", "subsector", "timespan", "period", "year", "type", "frequency", "field", "regime")
+    ) %>% dplyr::relocate(average, .after = regime) %>%
+    mutate_appropriate_columns_to_factors_in_analysis_unnested_results_summary() %>%
+    dplyr::arrange(
+      country, sector, subsector, timespan, period, year, type, frequency, field, regime
+    ) %>%
+    map_solution_to_problem_domain_jargon_in_analysis_unnested_results_summary() %>%
+    dplyr::mutate(correlation = round(correlation, digits = 4L))
+
+}
+
+## regressions ####
+### top 3 ####
+#### local functions ####
+map_solution_to_problem_domain_jargon_in_regressions_top_3_unnested_results_summary <- function(
+    unnested_regressions_top_3_results_summary
+){
+  
+  dplyr::left_join(
+    unnested_regressions_top_3_results_summary, 
+    dplyr::select(tickers_futures, ticker, name, MIC), 
+    by = "ticker"
+  ) %>%
+    dplyr::mutate(commodity = paste0(name, " (", MIC, ")")) %>% 
+    dplyr::select(-c(name, MIC, ticker)) %>%
+    dplyr::relocate(commodity, .after = regime)
+}
+  
+
+format_regression_summary_statistics_into_table <- function(regressions_summary){
+  
+  top_3 <- unnest_analysis_statistic_results_summary(regressions_summary, "top 3") %>%
+    map_solution_to_problem_domain_jargon_in_regressions_top_3_unnested_results_summary()
+  
+  average <- unnest_analysis_statistic_results_summary(regressions_summary, "average")
+
+  dplyr::left_join(
+    top_3, average,
+    by = c("country", "sector", "subsector", "timespan", "period", "year", "type", "frequency", "field", "regime")
+  ) %>% 
+    dplyr::relocate(average, .after = regime) %>%
+    mutate_appropriate_columns_to_factors_in_analysis_unnested_results_summary() %>%
+    dplyr::arrange(
+      country, sector, subsector, timespan, period, year, type, frequency, field, regime
+      ) %>%
+    map_solution_to_problem_domain_jargon_in_analysis_unnested_results_summary() %>%
+    dplyr::mutate(dplyr::across(c(beta, `p value`, `R squared`), ~round(.x, digits = 4L)))
+}
 
 

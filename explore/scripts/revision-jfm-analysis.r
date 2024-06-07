@@ -142,6 +142,25 @@ path_regressions_summary_file <- paste0(
 saveRDS(correlations_summary, path_correlations_summary_file)
 saveRDS(regressions_summary, path_regressions_summary_file)
 
+# format ####
+## load summary dataset (optional) ####
+correlations_summary <- readr::read_rds(path_correlations_summary_file)
+regressions_summary <- readr::read_rds(path_regressions_summary_file)
 
+## correlations ####  
+correlations_formatted <- format_correlation_summary_statistics_into_table(correlations_summary)
 
+## regressions ####  
+regressions_formatted <- format_regression_summary_statistics_into_table(regressions_summary)
+
+## save formatted results ####
+path_correlations_formatted_file <- paste0(
+  here::here(), "/explore/results/revision-jfm/correlations-formatted.rds"
+)
+path_regressions_formatted_file <- paste0(
+  here::here(), "/explore/results/revision-jfm/regressions-formatted.rds"
+)
+
+saveRDS(correlations_formatted, path_correlations_formatted_file)
+saveRDS(regressions_formatted, path_regressions_formatted_file)
 
