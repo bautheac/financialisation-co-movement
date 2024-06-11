@@ -155,10 +155,10 @@ regressions_formatted <- format_regression_summary_statistics_into_table(regress
 
 ## save formatted results ####
 path_correlations_formatted_file <- paste0(
-  here::here(), "/explore/results/revision-jfm/correlations-formatted.rds"
+  here::here(), "/explore/tables/revision-jfm/correlations.rds"
 )
 path_regressions_formatted_file <- paste0(
-  here::here(), "/explore/results/revision-jfm/regressions-formatted.rds"
+  here::here(), "/explore/tables/revision-jfm/regressions.rds"
 )
 
 saveRDS(correlations_formatted, path_correlations_formatted_file)

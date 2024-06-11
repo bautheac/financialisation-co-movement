@@ -1,0 +1,82 @@
+---
+title: "journal of futures markets - revision"
+execute:
+  echo: false
+  message: false
+  warning: false
+format:
+  html:
+    page-layout: full
+    toc: true
+    toc-title: Contents
+    toc-depth: 5
+    theme: 
+      - Minty
+      - style.css
+editor: visual
+bibliography: references.bib
+---
+
+<style>
+<!-- .main-container { -->
+<!--   max-width: 95vw; /* Adjust this value as needed */ -->
+<!--   margin: 0 auto; /* Center align the content */ -->
+<!--   padding: 0; -->
+<!-- } -->
+
+#quarto-content {
+  max-width: 95vw;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.no-wrap-table th, .no-wrap-table td {
+  white-space: nowrap;
+}
+</style>
+
+
+```{r globals, echo=FALSE}
+url_css <- "https://www.dropbox.com/scl/fi/hca7tog3830ir7ro9fszt/styles.css?rlkey=pma97454kb75qzuj9znv86zrf&dl=1"
+url_references <- "https://www.dropbox.com/scl/fi/n7t8g3hn32d8e5gf2rcti/references.bib?rlkey=xy251n44q3y0t3omxpqk0dvyf&dl=1"
+file_css <- "style.css"
+file_references <- "references.bib"
+urls <- c(url_css, url_references)
+files <- c(file_css, file_references)
+
+purrr::walk2(urls, files, ~download.file(.x, .y))
+
+####
+library(magrittr)
+
+####
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+
+####
+tables_collapse_rows_align <- "top"
+tables_cut <- TRUE
+tables_hline <- "major"
+
+output_type <- "html"
+```
+
+# Correlation analysis
+
+```{r correlations-load, echo=FALSE}
+correlations <- readr::read_rds(paste0(here::here(), "/explore/tables/revision-jfm/correlations.rds"))
+```
+
+## Pairwise relative change correlations by period
+
+```{r correlations-relative-periods, echo=FALSE}
+filtered_correlations <- dplyr::filter(correlations, timespan == "period", type == "return") %>%
+  dplyr::select(-c(timespan, year, type)) %>% dplyr::relocate(period, .before = regime) %>%
+  dplyr::relocate(field, .before = frequency)
+
+align <- "lllllllrllr"
+
+knitr::kable(filtered_correlations, format = "html", table.attr = 'class="no-wrap-table"') %>% 
+  kableExtra::kable_styling(full_width = TRUE) %>%
+  kableExtra::scroll_box(width = "100%", height = "800px")
+```
+

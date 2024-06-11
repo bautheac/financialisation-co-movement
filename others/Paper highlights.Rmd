@@ -1,0 +1,103 @@
+---
+title: "Results highlights"
+author: "Olivier Bauthéac"
+date: ""
+output: html_document
+---
+
+
+
+# Methods
+* We consider the entire cross-section of liquid commodities (24 US, 6 UK) in 
+  contrast to most other studies that focus on individual commodities or 
+  sub-sectors.
+* We use a futures-based asset pricing framework that includes factors 
+  constructed using both price (market, term structure) and non-price (CHP, 
+  open interest) attributes.   
+  Helps isolating common driving factors and detecting co-movement.
+* We extend the Keynesian individual hedging pressure paradigm by incorporating 
+  aggregate CHP (**CHP**), a market wide measure of hedging pressure first 
+  considered in @hong_what_2012.
+
+# Results
+* A non-price based factor is best able to detect the effects of commodity 
+  financialization.
+* The effects of the financial crisis and its aftermath are most clearly visible 
+  through the performance of the market factor. 
+* The effects of financialization seem to go beyond mechanical effects induced 
+  by the rise of indexing.  
+
+* Over the first period the cross sectional average returns during 
+  **backwardation** for both the US and UK commodities are positive with those 
+  for the US statistically significant, and significantly higher than during 
+  **contango**, providing broad support for an aggregate version of the 
+  Keynesian hedging pressure hypothesis. Over the second period this pattern 
+  reverses, with both the US and UK commodities having significant positive 
+  returns during **contango** with these returns being significantly higher 
+  than during **backwardation**. This change in pattern suggests the onset of 
+  financialization altered the traditional risk shifting nature of hedger’s 
+  behaviour, implied by the Keynesian hypothesis.
+  Financial investors may have been liquidity demanders, leading hedgers to 
+  become liquidity providers: because financial investors tend to be long only 
+  the are liquidity demanders on the long side. Hedgers could therefore have 
+  provided the required liquidity by being short as a group (**contango**) and 
+  been compensated correspondingly (positive returns).
+  
+* Factors constructed with US commos, performance analysis on US commos.
+  + The CHP factor shows the greatest improvement in performance in the second 
+    period. 
+  + The dramatic improvement of the CHP factor in the second period is driven by 
+    precious and precious-base metals.  
+  + The best performing commodities for the CHP factor exhibited very low 
+    pair-wise correlation in the first period, around the average for US traded 
+    commodities, while during financialization the average pairwise correlation 
+    between the top performing CHP factor commodities is higher than that for 
+    the market factor and double of the average for all the US traded 
+    commodities.
+  + This increase is due to the dramatic rise in average pairwise correlation 
+    amongst the US traded metals all of which exhibited high R^2^ with respect 
+    to the CHP factor during financialization which in turn is due to their 
+    common low level of CHP over this period.  
+  + The CHP factor model is therefore able to establish the strengthening link 
+    between a non-price attribute and price dynamics in the US metal sub-sector 
+    during financialization:
+  
+* Factors constructed with the top eight commodities for a given factor, 
+  performance analysis on commodity pool used for construction + on US commos.  
+  + Results strongly suggest the hedging pressure co-movement and price 
+    co-movement link was concentrated in the metals sub-sector.  
+
+* Factors constructed with the top eight commodities for a given factor, 
+  performance analysis on UK metals.  
+  + Results show there was co-movement in global (as opposed to US only) metals 
+    returns in the second period and that this co-movement could be detected by 
+    our hedging pressure based model. 
+  
+* Pattern of return for the US traded commodities across **CHP** regimes 
+  reverted to Keynesian paradigm over the crisis and aftermath period. 
+  
+* Pricing results indicate the emergence of a systematic factor across the 
+  entire cross-section of the US commodities as well as strong evidence of 
+  cross-market linkages.  
+
+
+# Conclusions
+* Financialization was a phenomenon endogenous to the commodity markets 
+  transmitted via the commodity futures markets and mainly concentrated in a 
+  specific sector (metals).
+* The crisis and its aftermath, in contrast, seems to have delivered an 
+  exogenous shock across the entire cross-section of global commodities.  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

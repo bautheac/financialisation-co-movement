@@ -713,8 +713,10 @@ add_top_3_and_average_to_regressions_for_ticker_combinations_dataframe <- functi
 ## local functions ####
 unnest_analysis_statistic_results_summary <- function(results_summary, statistic){
   
-  dplyr::select(results_summary, country, sector, subsector, statistic) %>%
-    tidyr::unnest(statistic) %>% tidyr::unnest(results) %>% tidyr::unnest(statistic) %>%
+  statistic_sym <- rlang::sym(statistic)
+  
+  dplyr::select(results_summary, country, sector, subsector, !!statistic_sym) %>%
+    tidyr::unnest(!!statistic_sym) %>% tidyr::unnest(results) %>% tidyr::unnest(!!statistic_sym) %>%
     dplyr::select(
       country, sector, subsector, timespan, period, year, type, frequency, field,
       regime, dplyr::everything()
@@ -744,6 +746,17 @@ map_solution_to_problem_domain_jargon_in_analysis_unnested_results_summary <- fu
     dplyr::select(-field) %>% dplyr::rename(field = name) %>% dplyr::relocate(field, .after = frequency)
 }
 
+arrange_columns_in_analysis_results_summary <- function(formatted_analysis_results_summary){
+  
+  dplyr::select(
+    formatted_analysis_results_summary,
+    field, type, frequency, country, sector, subsector, timespan, period, year, regime, dplyr::everything()
+  ) %>%
+    dplyr::arrange(
+      field, type, frequency, country, sector, subsector, timespan, period, year, regime
+    )
+}
+
 ## correlations ####
 ### local functions ####
 mutate_appropriate_columns_to_factors_in_analysis_unnested_results_summary <- function(
@@ -757,8 +770,8 @@ mutate_appropriate_columns_to_factors_in_analysis_unnested_results_summary <- fu
     type = factor(type, levels = c("return", "level")),
     frequency = factor(frequency, levels = c("day", "week", "month")),
     field = factor(field, levels = c(
-      "PX_LAST", "OPEN_INT", "PX_VOLUME", "FUT_AGGTE_OPEN_INT", "FUT_AGGTE_VOL",
-      "PX_ASK", "PX_BID", "PX_HIGH", "PX_LOW", "PX_MID", "PX_OPEN"
+      "close price", "open interest", "volume", "aggregate open interest", 
+      "aggregate volume", "ask", "bid", "high", "low", "mid", "open"
       )),
     regime = factor(regime, levels = c("whole period", "backwardation", "contango"))
     )
@@ -792,16 +805,13 @@ format_correlation_summary_statistics_into_table <- function(correlations_summar
   average <- unnest_analysis_statistic_results_summary(correlations_summary, "average")
   
   dplyr::left_join(
-    top_3, average, 
-    by = c("country", "sector", "subsector", "timespan", "period", "year", "type", "frequency", "field", "regime")
+    top_3, average, by = c("country", "sector", "subsector", "timespan",
+                           "period", "year", "type", "frequency", "field", "regime")
     ) %>% dplyr::relocate(average, .after = regime) %>%
-    mutate_appropriate_columns_to_factors_in_analysis_unnested_results_summary() %>%
-    dplyr::arrange(
-      country, sector, subsector, timespan, period, year, type, frequency, field, regime
-    ) %>%
     map_solution_to_problem_domain_jargon_in_analysis_unnested_results_summary() %>%
-    dplyr::mutate(correlation = round(correlation, digits = 4L))
-
+    mutate_appropriate_columns_to_factors_in_analysis_unnested_results_summary() %>%
+    dplyr::mutate(dplyr::across(.cols = c(average, correlation), ~round(.x, digits = 4L))) %>%
+    arrange_columns_in_analysis_results_summary()
 }
 
 ## regressions ####
@@ -822,6 +832,17 @@ map_solution_to_problem_domain_jargon_in_regressions_top_3_unnested_results_summ
 }
   
 
+arrange_columns_in_regression_results_summary <- function(formatted_regression_results_summary){
+  
+  dplyr::select(
+    formatted_regression_results_summary,
+    country, sector, subsector, timespan, period, year, regime, dplyr::everything()
+  ) %>%
+    dplyr::arrange(
+      country, sector, subsector, timespan, period, year, regime
+    )
+}
+
 format_regression_summary_statistics_into_table <- function(regressions_summary){
   
   top_3 <- unnest_analysis_statistic_results_summary(regressions_summary, "top 3") %>%
@@ -834,12 +855,10 @@ format_regression_summary_statistics_into_table <- function(regressions_summary)
     by = c("country", "sector", "subsector", "timespan", "period", "year", "type", "frequency", "field", "regime")
   ) %>% 
     dplyr::relocate(average, .after = regime) %>%
-    mutate_appropriate_columns_to_factors_in_analysis_unnested_results_summary() %>%
-    dplyr::arrange(
-      country, sector, subsector, timespan, period, year, type, frequency, field, regime
-      ) %>%
     map_solution_to_problem_domain_jargon_in_analysis_unnested_results_summary() %>%
-    dplyr::mutate(dplyr::across(c(beta, `p value`, `R squared`), ~round(.x, digits = 4L)))
+    mutate_appropriate_columns_to_factors_in_analysis_unnested_results_summary() %>%
+    dplyr::mutate(dplyr::across(c(average, beta, `p value`, `R squared`), ~round(.x, digits = 4L))) %>%
+    arrange_columns_in_analysis_results_summary()
 }
 
 

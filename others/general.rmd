@@ -1,0 +1,875 @@
+---
+title: "Results - notes"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Descriptive stats  
+
+### Raw
+
+#### Mean returns 
+
+##### Crisis vs. financialisation (US)
+
+###### higher mean returns
+* Lean hogs (XCME)
+* Cotton-#2 (IFUS)
+* Lumber (XCME)
+* Orange juice (IFUS)
+* Palladium (XNYM)
+* Silver (XCEC)
+Total: 6.  
+Difference significant for none.
+
+###### Lower mean returns
+* Corn-#2 yellow (XCBT). 
+* Oats (XCBT)
+* Soybean meal (XCBT)
+* Soybean oil (XCBT)
+* Soybeans (XCBT)
+* Wheat-SRW (XCBT)
+* Cattle-feeder (XCME)
+* Cattle-live (XCME)
+* Cocoa (IFUS)
+* Coffee-C (IFUS)
+* Sugar-#11 (IFUS)
+* Natural gas (XNYM)
+* Crude oil-WTI (XNYM)
+* Gasoline (XNYM)
+* Heating oil (XNYM)
+* Copper (XCEC)
+* Gold (XCEC)
+* Platinum (XNYM)
+Total: 18.  
+Difference significant for none.
+
+##### Crisis vs. financialisation (UK)
+
+###### Higher mean returns
+Total: 0.
+
+###### Lower mean returns
+* Aluminium (XLME)
+* Copper (XLME)
+* Lead (XLME)
+* Nickel-primary (XLME)
+* Tin-refined (XLME)
+* Zinc (XLME)
+Total: 6.  
+Difference significant for none.
+
+##### Crisis vs. financialisation (EW)
+
+###### Higher mean returns
+Total: 0.
+
+###### Lower mean returns.
+* EW portfolio (US)  
+* EW portfolio (GB)
+Total: 2.  
+Difference significant for none.
+
+##### post-crisis vs. crisis (US): 
+
+###### Higher mean returns.
+* Cocoa (IFUS)
+* Natural gas (XNYM)
+Total: 2.  
+Difference significant for none.
+
+###### Lower mean returns.
+* Corn-#2 yellow (XCBT)
+* Oats (XCBT)
+* Soybean meal (XCBT)
+* Soybean oil (XCBT)
+* Soybeans (XCBT)
+* Wheat-SRW (XCBT)
+* Cattle-feeder (XCME)
+* Cattle-live (XCME)
+* Lean hogs (XCME)
+* Coffee-C (IFUS)
+* Cotton-#2 (IFUS)
+* Lumber (XCME)
+* Orange juice (IFUS)
+* Sugar-#11 (IFUS)
+* Crude oil-WTI (XNYM)
+* Gasoline (XNYM)
+* Heating oil (XNYM)
+* Copper (XCEC)
+* Gold (XCEC)
+* Palladium (XNYM)
+* Platinum (XNYM)
+* Silver (XCEC)
+Total: 22.  
+Difference significant for none.
+
+##### post-crisis vs. crisis (UK)
+
+###### Higher mean returns.
+* Aluminium (XLME)
+* Zinc (XLME)
+Total: 2.  
+Difference significant for none.
+
+###### Lower mean returns.
+* Copper (XLME)
+* Lead (XLME)
+* Nickel-primary (XLME)
+* Tin-refined (XLME)
+Total: 4.  
+Difference significant for none.
+
+##### post-crisis vs. crisis (EW): 
+
+###### Higher mean returns
+Total: 0.
+
+##### Lower mean returns
+* EW portfolio (US)  
+* EW portfolio (GB)
+Total: 2.  
+Difference significant for none.
+
+##### post-crisis vs. financialisation (US)
+
+###### Higher mean returns.
+* Lean hogs (XCME)
+* Wheat-SRW (XCBT)
+Total: 2.  
+Difference significant for none.
+
+###### Lower mean returns.
+* Corn-#2 yellow (XCBT)
+* Oats (XCBT)
+* Soybean meal (XCBT)
+* Soybean oil (XCBT)
+* Soybeans (XCBT)
+* Wheat-SRW (XCBT)
+* Cattle-feeder (XCME)
+* Cattle-live (XCME)
+* Cocoa (IFUS)
+* Coffee-C (IFUS)
+* Cotton-#2 (IFUS)
+* Lumber (XCME)
+* Orange juice (IFUS)
+* Sugar-#11 (IFUS)
+* Natural gas (XNYM)
+* Crude oil-WTI (XNYM)
+* Gasoline (XNYM)
+* Heating oil (XNYM)
+* Copper (XCEC)
+* Gold (XCEC)
+* Platinum (XNYM)
+* Silver (XCEC)
+Total: 22.  
+Difference significant at the
+* 10% level for 2 (Crude oil-WTI (XNYM), Copper (XCEC)).
+
+
+##### post-crisis vs. financialisation (UK)
+
+###### Higher mean returns
+Total: 0.
+
+##### Lower mean returns.
+* Aluminium (XLME)
+* Copper (XLME)
+* Lead (XLME)
+* Nickel-primary (XLME)
+* Tin-refined (XLME)
+* Zinc (XLME)
+Total: 6.  
+Difference significant at the
+* 10% level for 2 (Copper (XLME), Tin-refined (XLME)).
+
+##### post-crisis vs. financialisation (EW): 
+
+###### Higher mean returns
+Total: 0.
+
+##### Lower mean returns.
+* EW portfolio (US)  
+* EW portfolio (GB)
+Total: 2.  
+Difference significant at the
+* 5% level for 1 (EW portfolio (US)).
+
+
+
+#### Volatilities
+
+##### Crisis vs. financialisation (US)
+
+###### Higher volatility
+* Corn-#2 yellow (XCBT)***
+* Oats (XCBT)***
+* Wheat-SRW (XCBT)***
+* Cattle-feeder (XCME)
+* Cocoa (IFUS)
+* Cotton-#2 (IFUS)***
+* Lumber (XCME)***
+* Orange juice (IFUS)
+* Sugar-#11 (IFUS)***
+* Crude oil-WTI (XNYM)***
+* Copper (XCEC)***
+* Palladium (XNYM)***
+* Platinum (XNYM)***
+* Gold (XCEC)***
+* Silver (XCEC)***
+Total: 15
+Difference significant at the
+* 1% level for 12
+
+###### Lower volatility
+* Soybean meal (XCBT)
+* Soybean oil (XCBT)***
+* Soybeans (XCBT)**
+* Cattle-live (XCME)**
+* Lean hogs (XCME)*
+* Coffee-C (IFUS)**
+* Natural gas (XNYM)
+* Gasoline (XNYM)
+* Heating oil (XNYM)*
+Total: 9
+Difference significant at the
+* 1% level for 1 (Soybean oil (XCBT))
+* 5% level for 3 (Soybeans (XCBT), Cattle-live (XCME), Coffee-C (IFUS))
+* 10% level for 2 (Lean hogs (XCME), Heating oil (XNYM))
+
+##### Crisis vs. financialisation (UK)
+
+##### Higher volatility
+* Aluminium (XLME)
+* Copper (XLME)***
+* Tin-refined (XLME)***
+Total: 3.  
+Difference significant at the
+* 1% level for 2
+
+##### Lower volatility
+* Lead (XLME)
+* Nickel-primary (XLME)**
+* Zinc (XLME)**
+Total: 3.  
+Difference significant at the
+* 5% level for 2
+
+##### Crisis vs. financialisation (EW)
+
+###### Higher volatility.
+* EW portfolio (US)***  
+* EW portfolio (GB)***
+Total: 2.
+Difference significant at the
+* 1% level for 2
+
+
+##### Post-crisis vs. crisis (US)
+
+###### Higher volatility
+* Cattle-feeder (XCME)***
+* Cattle-live (XCME)***
+* Lean hogs (XCME)***
+* Coffee-C (IFUS)**
+Total: 4.
+Difference significant at the
+* 1% level for 3 (meat complex).
+* 5% level for 1 (Coffee-C (IFUS))
+
+###### Lower volatility
+* Corn-#2 yellow (XCBT)***
+* Oats (XCBT)***
+* Soybean meal (XCBT)
+* Soybean oil (XCBT)***
+* Soybeans (XCBT)***
+* Wheat-SRW (XCBT)***
+* Cocoa (IFUS)***
+* Cotton-#2 (IFUS)***
+* Lumber (XCME)***
+* Orange juice (IFUS)***
+* Sugar-#11 (IFUS)***
+* Natural gas (XNYM)
+* Crude oil-WTI (XNYM)***
+* Gasoline (XNYM)***
+* Heating oil (XNYM)***
+* Copper (XCEC)***
+* Gold (XCEC)***
+* Palladium (XNYM)***
+* Platinum (XNYM)***
+* Silver (XCEC)***
+Total: 20
+Difference significant at the
+* 1% level for 20
+
+##### Post-crisis vs. crisis (UK)
+
+###### Higher volatility.
+Total: 0.  
+
+###### Lower volatility.
+* Aluminium (XLME)***  
+* Copper (XLME)*** 
+* Lead (XLME)*** 
+* Nickel-primary (XLME)*** 
+* Tin-refined (XLME)*** 
+* Zinc (XLME)*** 
+Total: 6.  
+Difference significant at the
+* 1% level for all 6.
+
+##### Post-crisis vs. crisis (EW)
+###### Higher volatility.
+Total: 0.  
+
+###### Lower volatility.
+* EW portfolio (US)***  
+* EW portfolio (GB)***
+Total: 2.  
+Difference significant for both
+
+
+##### Post-crisis vs. financialisation (US)
+
+###### Higher volatility
+* Cattle-feeder (XCME)***
+* Cattle-live (XCME)*
+* Lean hogs (XCME)***
+* Crude oil-WTI (XNYM)**
+Total: 4.
+Difference significant at the
+* 1%level for 2 (Cattle-feeder (XCME), Lean hogs (XCME))
+* 5% level for 1 (Crude oil-WTI (XNYM))
+* 10% level for 1 (Cattle-live (XCME))
+
+###### Lower volatility
+* Corn-#2 yellow (XCBT)***
+* Oats (XCBT)*
+* Soybean meal (XCBT)***
+* Soybean oil (XCBT)***
+* Soybeans (XCBT)***
+* Wheat-SRW (XCBT)***
+* Cocoa (IFUS)***
+* Coffee-C (IFUS)
+* Cotton-#2 (IFUS)***
+* Lumber (XCME)***
+* Orange juice (IFUS)***
+* Sugar-#11 (IFUS)***
+* Natural gas (XNYM)***
+* Gasoline (XNYM)***
+* Heating oil (XNYM)***
+* Copper (XCEC)***
+* Gold (XCEC)***
+* Palladium (XNYM)***
+* Platinum (XNYM)***
+* Silver (XCEC)***
+Total: 20
+Difference significant at the
+* 1% level for 18
+* 10% level for 1 (Oats (XCBT))
+
+##### Post-crisis vs. financialisation (UK)
+
+###### Higher volatility.
+Total: 0.  
+
+###### Lower volatility.
+* Aluminium (XLME)***  
+* Copper (XLME)*** 
+* Lead (XLME)*** 
+* Nickel-primary (XLME)*** 
+* Tin-refined (XLME)*** 
+* Zinc (XLME)*** 
+Total: 6.  
+Difference significant at the
+* 1% level for all 6.
+
+##### Post-crisis vs. financialisation (EW)
+###### Higher volatility.
+Total: 0.  
+
+###### Lower volatility.
+* EW portfolio (US)***  
+* EW portfolio (GB)***
+Total: 2.  
+Difference significant for both
+
+
+### Regimes
+
+#### Mean returns
+
+##### Past (US) (backwardation > contango).
+* Soybean meal (XCBT)   
+* Soybean oil (XCBT)   
+* Soybeans (XCBT)   
+* Cattle-feeder (XCME)   
+* Cattle-live (XCME)   
+* Lean hogs (XCME)   
+* Cocoa (IFUS)   
+* Coffee-C (IFUS)   
+* Cotton-#2 (IFUS)   
+* Sugar-#11 (IFUS)   
+* Natural gas (XNYM)   
+* Crude oil-WTI (XNYM)   
+* Gasoline (XNYM)   
+* Heating oil (XNYM)   
+* Copper (XCEC)   
+* Gold (XCEC)   
+* Palladium (XNYM)   
+* Platinum (XNYM)   
+Total: 18.  
+Difference significant at the  
+* 10% level for 2 (Cotton-#2 (IFUS), Platinum (XNYM)).
+* 5% level for 1 (Natural gas (XNYM)).
+* 1% level for 1 (Palladium (XNYM)).
+
+#### past (UK) (backwardation > contango).
+* Aluminium (XLME)  
+* Copper (XLME)
+* Lead (XLME)
+* Nickel-primary (XLME)
+* Tin-refined (XLME)
+Total: 5.  
+Difference significant at the  
+* 10% level for 1 (Tin-refined (XLME)).
+
+
+#### past (EW) (backwardation > contango).
+* EW portfolio (US)  
+* EW portfolio (GB)
+Total: 2.  
+Difference significant at the  
+* 5% level for 1 (EW portfolio (US)).
+
+#### Financialization (US) (contango > backwardation).
+* Corn-#2 yellow (XCBT)	
+* Oats (XCBT)
+* Soybean meal (XCBT)
+* Soybean oil (XCBT)
+* Soybeans (XCBT)
+* Cattle-live (XCME)
+* Cocoa (IFUS)
+* Orange juice (IFUS)
+* Natural gas (XNYM)
+* Gasoline (XNYM)
+* Heating oil (XNYM)
+* Copper (XCEC)
+* Gold (XCEC)
+* Silver (XCEC)
+Total: 14.  
+Difference significant for none.
+
+
+#### Financialization (UK) (contango > backwardation).
+* Copper (XLME)  
+* Lead (XLME)  
+* Nickel-primary (XLME)  
+* Zinc (XLME)  
+Total: 4.  
+Difference significant at the  
+* 5% level for 1 (Tin-refined (XLME)).
+
+#### Financialization (EW) (contango > backwardation).
+* EW portfolio (US)  
+* EW portfolio (GB)
+Total: 2.  
+Difference significant for none. 
+
+#### Crisis (US) (backwardation > contango).
+* Corn-#2 yellow (XCBT)   
+* Soybean meal (XCBT)  
+* Soybean oil (XCBT)   
+* Soybeans (XCBT)  
+* Cattle-feeder (XCME)
+* Cattle-live (XCME)  
+* Lean hogs (XCME)  
+* Cotton-#2 (IFUS)  
+* Lumber (XCME)  
+* Orange juice (IFUS)   
+* Crude oil-WTI (XNYM)   
+* Gasoline (XNYM)   
+* Heating oil (XNYM)   
+* Copper (XCEC)   
+* Platinum (XNYM)   
+Total: 15.  
+Difference significant for none
+
+
+#### Crisis (UK) (backwardation > contango).
+* Aluminum (XLME)
+* Copper (XLME)  
+* Nickel-primary (XLME)  
+* Tin (XLME)
+* Zinc (XLME)  
+Total: 5.  
+Difference significant for none although aluminum is close to 10% threshold. 
+
+
+#### Crisis (EW) (backwardation > contango).
+* EW portfolio (US)  
+* EW portfolio (GB)
+Total: 2.  
+Difference significant for none
+
+#### Post-crisis (US)
+
+##### contango > backwardation
+* Corn-#2 yellow (XCBT)
+* Soybean meal (XCBT)
+* Soybean oil (XCBT)
+* Soybeans (XCBT)
+* Cattle-live (XCME)
+* Cocoa (IFUS)
+* Sugar-#11 (IFUS)
+Total: 7.  
+Difference significant for none.
+
+##### backwardation > contango
+* Oats (XCBT)
+* Wheat-SRW (XCBT)
+* Cattle-feeder (XCME)
+* Lean hogs (XCME)
+* Coffee-C (IFUS)
+* Cotton-#2 (IFUS)
+* Lumber (XCME)
+* Orange juice (IFUS)
+* Natural gas (XNYM)
+* Crude oil-WTI (XNYM)
+* Gasoline (XNYM)
+* Heating oil (XNYM)
+* Copper (XCEC)
+* Gold (XCEC)
+* Palladium (XNYM)
+* Platinum (XNYM)
+* Silver (XCEC)
+Total: 17.  
+Difference significant at the  
+* 5% level for 1 (Lumber (XCME)).
+* 10% level for 1 (Palladium (XNYM)).
+
+#### Post-crisis
+
+##### contango > backwardation
+Total 0.
+
+##### backwardation > contango
+* Aluminum (XLME)
+* Copper (XLME)  
+* Lead (XLME)
+* Nickel-primary (XLME)  
+* Tin (XLME)
+* Zinc (XLME)  
+Total: 6.  
+Difference significant at the  
+* 1% level for 1 (Nickel-primary (XLME)).
+* 5% level for 1 (Aluminium (XLME)).
+* 10% level for 1 (Zinc (XLME)).
+
+#### Post-crisis (EW)
+
+##### contango > backwardation
+Total 0.
+
+##### backwardation > contango
+* EW portfolio (US)  
+* EW portfolio (GB)
+Total: 2.  
+Difference significant at the 5% level for GB; US close to 10% threshold.
+
+
+#### Volatilities
+
+##### Past (US)
+
+###### backwardation > contango
+* Corn-#2 yellow (XCBT)
+* Soybean meal (XCBT)   
+* Soybeans (XCBT)   
+* Wheat-SRW (XCBT)**
+* Cocoa (IFUS)   
+* Coffee-C (IFUS)***   
+* Natural gas (XNYM)*   
+* Heating oil (XNYM)   
+* Gold (XCEC)***   
+Total: 9.  
+Difference significant at the  
+* 1% level for 2 (Coffee-C (IFUS), Gold (XCEC)).
+* 5% level for 1 (Wheat-SRW (XCBT)).
+* 10% level for 1 (Natural gas (XNYM)).
+
+###### contango > backwardation
+* Oats (XCBT)***
+* Soybean oil (XCBT)
+* Cattle-feeder (XCME)*
+* Cattle-live (XCME)
+* Lean hogs (XCME)
+* Cotton-#2 (IFUS)
+* Lumber (XCME)
+* Orange juice (IFUS)***
+* Sugar-#11 (IFUS)***
+* Crude oil-WTI (XNYM)***
+* Gasoline (XNYM)
+* Copper (XCEC)
+* Palladium (XNYM)***
+* Platinum (XNYM)
+* Silver (XCEC)**
+Total: 15.  
+Difference significant at the  
+* 1% level for 3 (Orange juice (IFUS), Crude oil-WTI (XNYM), Palladium (XNYM)).
+* 5% level for 1 (Silver (XCEC)).
+* 10% level for 2 (Cattle-feeder (XCME)).
+
+##### past (UK)
+
+###### backwardation > contango
+Total: 0.
+
+###### contango > backwardation
+* Aluminum (XLME)***
+* Copper (XLME)***  
+* Lead (XLME)
+* Nickel-primary (XLME)***  
+* Tin (XLME)
+* Zinc (XLME)  
+Total: 6.  
+Difference significant at the  
+* 1% level for 3 (Aluminum (XLME), Copper (XLME), Nickel-primary (XLME)).
+
+#### past (EW)
+
+###### backwardation > contango
+Total: 0.
+
+###### contango > backwardation
+* EW portfolio (US)  
+* EW portfolio (GB)
+Total: 2.  
+Difference significant at the  
+* 1% level for 1 (EW portfolio (GB)).
+
+#### Financialization (US)
+
+###### backwardation > contango
+* Oats (XCBT)***
+* Soybean meal (XCBT)
+* Soybean oil (XCBT)
+* Soybeans (XCBT)***
+* Wheat-SRW (XCBT)***
+* Cattle-live (XCME)
+* Lean hogs (XCME)***
+* Cocoa (IFUS)*
+* Coffee-C (IFUS)
+* Cotton-#2 (IFUS)
+* Lumber (XCME)**
+* Sugar-#11 (IFUS)
+* Gold (XCEC)
+* Palladium (XNYM)**
+Total: 14.  
+Difference significant at the  
+* 1% level for 4 (Oats (XCBT), Soybeans (XCBT), Soybeans (XCBT), Lean hogs (XCME)).
+* 5% level for 2 (Lumber (XCME), Palladium (XNYM)).
+* 10% level for 1 (Cocoa (IFUS)).
+
+###### contango > backwardation
+* Corn-#2 yellow (XCBT)
+* Cattle-feeder (XCME)
+* Orange juice (IFUS)
+* Natural gas (XNYM)***
+* Crude oil-WTI (XNYM)
+* Gasoline (XNYM)***
+* Heating oil (XNYM)**
+* Copper (XCEC)***
+* Platinum (XNYM)
+* Silver (XCEC)**
+Total: 10.  
+Difference significant at the  
+* 1% level for 3 (Natural gas (XNYM), Gasoline (XNYM), Copper (XCEC)).
+* 5% level for 2 (Heating oil (XNYM), Silver (XCEC)).
+
+##### Financialization (UK)
+
+###### backwardation > contango
+Total: 0.
+
+###### contango > backwardation
+* Aluminum (XLME)
+* Copper (XLME)***  
+* Lead (XLME)**
+* Nickel-primary (XLME)***  
+* Tin (XLME)
+* Zinc (XLME)**  
+Total: 6.  
+Difference significant at the  
+* 1% level for 2 (Copper (XLME), Nickel-primary (XLME)).
+* 5% level for 2 (Lead (XLME), Zinc (XLME)).
+
+#### Financialization (EW)
+
+###### backwardation > contango
+* EW portfolio (US)
+Total: 1.
+Difference significant at the 5% level for 1 (EW portfolio (GB)).
+
+###### contango > backwardation
+* EW portfolio (GB)
+Total: 2.  
+Difference significant at the 10% level for 1 (EW portfolio (GB)).
+
+
+#### Crisis (US)
+
+###### backwardation > contango
+* Sugar-#11 (IFUS)***
+Total: 1.  
+Difference significant at the 
+
+###### contango > backwardation
+* Corn-#2 yellow (XCBT)***
+* Oats (XCBT)***
+* Soybean meal (XCBT)***
+* Soybean oil (XCBT)***
+* Soybeans (XCBT)***
+* Wheat-SRW (XCBT)
+* Cattle-feeder (XCME)***
+* Cattle-live (XCME)***
+* Lean hogs (XCME)***
+* Cocoa (IFUS)***
+* Coffee-C (IFUS)
+* Cotton-#2 (IFUS)
+* Lumber (XCME)
+* Orange juice (IFUS)***
+* Natural gas (XNYM)***
+* Crude oil-WTI (XNYM)***
+* Gasoline (XNYM)***
+* Heating oil (XNYM)***
+* Copper (XCEC)***
+* Gold (XCEC)***
+* Palladium (XNYM)***
+* Platinum (XNYM)***
+* Silver (XCEC)***
+Total: 23.  
+Difference significant at the  
+* 1% level for 19.
+
+##### Crisis (UK)
+
+###### backwardation > contango
+Total: 0.
+
+###### contango > backwardation
+* Aluminum (XLME)***  
+* Copper (XLME)***  
+* Lead (XLME)***
+* Nickel-primary (XLME)***  
+* Tin (XLME)***  
+* Zinc (XLME)***  
+Total: 6.  
+Difference significant at the 1% level for all.
+
+#### Crisis (EW)
+
+###### backwardation > contango
+Total: 0.
+
+###### contango > backwardation
+* EW portfolio (US)***
+* EW portfolio (GB)***
+Total: 2.  
+Difference significant at the 1% level for both.
+
+
+#### Post-crisis (US)
+
+###### backwardation > contango
+* Oats (XCBT)***
+* Soybean meal (XCBT)
+* Soybeans (XCBT)*
+* Cattle-feeder (XCME)***
+* Cattle-live (XCME)***
+* Cocoa (IFUS)**
+* Cotton-#2 (IFUS)*
+Total: 7.  
+Difference significant at the 
+* 1% level for 3 (Oats (XCBT), Cattle-feeder (XCME), Cattle-live (XCME)).
+* 5% level for 1 (Cocoa (IFUS)).
+* 10% level for 2 (Soybeans (XCBT), Cotton-#2 (IFUS)).
+
+###### contango > backwardation
+* Corn-#2 yellow (XCBT)**
+* Soybean oil (XCBT)**
+* Wheat-SRW (XCBT)
+* Lean hogs (XCME)*
+* Coffee-C (IFUS)
+* Lumber (XCME)***
+* Orange juice (IFUS)
+* Sugar-#11 (IFUS)*
+* Natural gas (XNYM)**
+* Crude oil-WTI (XNYM)***
+* Gasoline (XNYM)***
+* Heating oil (XNYM)***
+* Copper (XCEC)***
+* Gold (XCEC)***
+* Palladium (XNYM)***
+* Platinum (XNYM)***
+* Silver (XCEC)***
+Total: 17.  
+Difference significant at the  
+* 1% level for 9.
+* 5% level for 3 (Corn-#2 yellow (XCBT), Soybean oil (XCBT), Natural gas (XNYM)).
+* 10% level for 2 (Lean hogs (XCME), Sugar-#11 (IFUS)).
+
+##### Post-crisis (UK)
+
+###### backwardation > contango
+* Aluminum (XLME)
+* Lead (XLME)
+* Nickel-primary (XLME)
+Total: 3.
+Difference significant for none.
+
+###### contango > backwardation
+* Copper (XLME)***  
+* Tin (XLME)***  
+* Zinc (XLME)**
+Total: 3.  
+Difference significant at the 1% level for all.
+* 1% level for 2 (Copper (XLME), Tin (XLME).
+* 5% level for 1 (Zinc (XLME)).
+
+#### Post-crisis (EW)
+
+###### backwardation > contango
+Total: 0.
+
+###### contango > backwardation
+* EW portfolio (US)***
+* EW portfolio (GB)***
+Total: 2.  
+Difference significant at the 1% level for both.
+
+
+
+
+
+
+
+## Regressions 
+
+### Time series  
+
+#### US commodity returns ~ US commodity individual CHP
+
+* Explanatory power decreases over financialisation relative to the previous period with the average rsquared falling from 25.8% down to 20.8%.  
+* Bounces back in the crisis period with average rsquared rising to 22.5% and continues into the post-crisis period with average rsquared reaching 27.2%, slightly beyond pre-financialisation level.
+* Drop is strongest for the metals sector with an average rsquared of 19.1% over the financialisation period against 28.2% over the previous period and the drop driven by the base metals subsector where the rsquared for the financialisation period is 25.9% againt 47.4% over the previous period. In that case the decrease in explanatory power continues into the crisis with the average rsquared falling down to 18.1% before bouncing back to 34.5% into the post-crisis period.
+
+#### US commodity returns ~ factors from all US commodities
+
+* Attribute co-movement-return co-cmovement
+
+
+

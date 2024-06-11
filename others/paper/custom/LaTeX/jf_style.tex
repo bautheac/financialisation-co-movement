@@ -1,0 +1,101 @@
+% --------------------------------------------------------------------------------------------
+%:JF STYLE COMMANDS START HERE --- START CUTTING FROM HERE
+
+% (1) The line below says asks LaTeX to use the ``article'' class for typesetting,
+%      with the options being: 11pt font, letterpaper, and double-spacing 
+% \documentclass[11pt, letterpaper, doublespacing]{article}
+
+
+
+% (2) This package enables the ``doublespacing'' option in the first line
+\usepackage{setspace} 
+
+% (3) Changing format of Section number and formatting of section headers
+
+% The ``makatletter'' command is a special LaTeX switch
+%  that changes the meaning of the ``@'' character, so that
+%  this character can be used in the commands that follow.
+% The ``makeatletter'' switch will be turned off using
+%  the ``makeatother'' command below.
+
+\makeatletter  
+
+% (3.1)  Put a period after section number
+\renewcommand{\@seccntformat}[1]{\@nameuse{the#1}.~{}}
+
+% Change format of numbers
+\renewcommand{\thesection}{\Roman{section}}
+\renewcommand{\thesubsection}{\Alph{subsection}}
+\renewcommand{\thesubsubsection}{\arabic{subsubsection}}
+
+% (3.2)  Change format of header text
+\renewcommand{\section}{\@startsection {section}{1}{\z@}%
+  {-3.5ex \@plus -1ex \@minus -.2ex}%
+  {2.3ex \@plus.2ex}%
+  {\centering\normalfont\large\bfseries}}
+
+\renewcommand{\subsection}{\@startsection{subsection}{2}{\z@}%
+  {-3.25ex\@plus -1ex \@minus -.2ex}%
+  {1.5ex \@plus .2ex}%
+  {\normalfont\large\slshape}}
+
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{\z@}%
+  {-3.25ex\@plus -1ex \@minus -.2ex}%
+  {1.5ex \@plus .2ex}%
+  {\centering\normalfont\slshape}}
+
+% (3.3)  The next command turns of the switch that changed the meaning of the “@” character.
+\makeatother
+
+%: (4) Changing formatting of theorem-like structures
+
+% The next command loads the ``amstheorem'' package
+% to adjust formatting of theorem-like structures
+\usepackage{amsthm}
+
+%Define ``plain'' style
+\newtheoremstyle{plain}{9pt}{9pt}{\itshape}{0pt}{\scshape}{:}{3pt}{}
+
+% Load ``plain'' style, so that it will apply to all theorem-style structures
+% that are defined after this command
+\theoremstyle{plain} 
+
+% Then, for the Assumption, Corollary, Proposition, etc. ``plain'' style is active
+% You can add more of these structures to suit your needs
+\newtheorem{assumption}{Assumption}
+\newtheorem{corollary}{Corollary}
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}  
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\newtheorem{theorem}{Theorem}
+
+% (5)  Caption headings are bold and small
+\usepackage[bf,small,nooneline,normal]{caption2}
+\renewcommand*{\captionlabeldelim}{\nobreak}
+\renewcommand*\captionlabeldelim{.}
+\renewcommand{\captionfont}{\bfseries}
+
+% (6) Table numbers are uppercase roman
+\renewcommand{\thetable}{\Roman{table}}
+
+% (7) First paragraphs are indented except the very first (unlabeled) section
+\usepackage{indentfirst}
+
+% (8) Change the formatting of the section header for Abstract
+\renewcommand{\abstractname}{\bf \small ABSTRACT}
+
+% (9) Change the formatting of the section header for References
+\renewcommand{\refname}{\bf \small REFERENCES}
+
+% (10) To move footnotes to the end of the text
+\usepackage{endnotes}
+\renewcommand{\footnote}{\endnote}
+\renewcommand{\notesname}{\bf Footnotes}
+
+% (11) Try to make the damn this compile
+\usepackage{longtable}
+
+
+% --------------------------------------------------------------------------------------------
+%:JF STYLE COMMANDS END HERE --- STOP CUTTING HERE

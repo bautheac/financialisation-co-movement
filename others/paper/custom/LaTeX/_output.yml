@@ -1,0 +1,18 @@
+bookdown::pdf_document2:
+# fontsize: 11pt
+#  classoption: [letterpaper, doublespacing]
+  citation_package: natbib
+  df_print: kable
+  fig_caption: yes
+  keep_tex: yes
+  latex_engine: pdflatex
+  number_sections: TRUE
+  includes:
+    in_header: jf_style.tex
+bookdown::gitbook:
+  split_by: section
+  config:
+    toolbar:
+      position: static
+  toc: yes
+  toc_float: yes
