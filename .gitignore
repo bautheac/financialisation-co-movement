@@ -5,8 +5,7 @@
 renv.lock
 renv/
 data/
-others/
 !others/journal*submissions/
 explore/results
-explore/shiny
+explore/shiny/financialization-asset-pricing/results/
 .vscode/settings.json
