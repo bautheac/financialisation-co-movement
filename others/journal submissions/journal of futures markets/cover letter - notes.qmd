@@ -1,0 +1,131 @@
+---
+title: "cover letter"
+format: docx
+editor: visual
+bibliography: literature_files/references.bib
+---
+
+```{r globals, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+
+folder <- "literature_files"; dir.create(folder); path <- paste(folder, "references.bib", sep = "/")
+download.file("https://www.dropbox.com/s/htnd7o9nnkk8ng8/references.bib?dl=1", path)
+
+```
+
+## How does your paper advance the ongoing debates in the Journal of Futures Markets? (Clearly state the connection with previous research in the journal)
+
+### Notes
+
+Our paper studies the finanialisation phenomnon from a broad perspective. Our results suggest that the phenomenon had deep impact, in multiple aspects across the commodity complex as a whole. Particularly we shows that the phenomnon had strong effects on commodity co-movement within and between commodity sectors, sub-sectors and amongst individual markets. These findings complement those of @liu_analyzing_2021, @sehgal_who_2021, @yang_volatility_2021, @gong_time_2022. This phenomnon fueled by financialisation extended beyong the commodity complex by fueling market integration with legacy asset classes, including equity markets with those findings complementing those of @conghui_liquidity_2020, @isleimeyyeh_role_2020, @daskalaki_new_2021, @han_trend_2022, @saishree_exploring_2022. We futher show that financialisation had onthonlogical consequences for the commodity complex, effectivelely aletering the fundamentals of these markets in various aspect, as demonstrated in @isleimeyyeh_role_2020, @marechal_tale_2020, @yin_intermediary_2021. In particular, the risk transfer and price formation functions were particularly affected as discussed in @ahmadi_theory_2020 and @adammer_price_2018, @merkoulova_predictive_2020, @kupabado_financialisation_2021, @sehgal_who_2021 respectively. we outlined that the phenomenon therefore affected the properties of the complex as an investment device, as pointed out in @daskalaki_new_2021. As we point out, financialisation was mostly about index investments, our study therefore complement the body of work on idex investment in the comtext of commodity markets including @glover_financially_2022. We carry out our analysis using asset pricing techniques effectively complementing the body of work using asset pricing technique to study the financialisation phenomenon, including @fan_untold_2020, @marechal_tale_2020, @yin_intermediary_2020 and @han_trend_2022. In this context our analysis complement the literature studying commodity market fundamentals (@brooks_samuelson_2020, @llorente_trading_2020, @marechal_do_2021, @li_hedging_2022) including risk transfer (@fan_speculative_2020, @oglend_futures_2020, @huang_good_2023) and price formation (@bohmann_price_2019, @janardanan_commodity_2019, @arroyo_old_2020, @bohl_return_2020, @frino_sensitivity_2020, @siklos_metal_2020, @andersen_efficiency_2021, @figuerola_oil_2021, @geyer_determinants_2021, @gilbert_regional_2021, @yang_price_2021, @fuertes_risk_2022, @li_robust_2022, @bandyopadhyay_impact_2023, @chen_temperature_2023, @fan_wisdom_2023, @filippidis_evaluating_2023) as well as a that studying co-movement and market integration both within the commodity complex ( @xiao_estimating_2020, @yang_return_2020, @luo_how_2021, @prokopczuk_dynamics_2021, @deBoer_intraday_2022, @dhaene_volatility_2022, @zhang_impact_2022) as well as across asset classes (@alquist_effect_2020, @kang_commodity_2020, @wong_impact_2020, @dark_lead_2021, @li_forecasting_2021, @liu_does_2022, @ming_contagion_2022, @zhang_do_2022, @zhang_influence_2023). We further extend the body of recent empirical studies using asset pricing/factor models in the context of commodity markets, including @kang_commodity_2020 and @yuan_pobability_2023. We stress the importance of consequences the phenomenon in terms of regulatory oversight, effectively adding to the body of literature on institutional oversight including @janardanan_commodity_2019, @fan_untold_2020, @hu_impact_2020, @mixon_us_2022, @szabo_margin_2022.
+
+-   Advances the debate on the effects of financialisation on various aspects of the commodity spectrum. our result suggest that financialisation fueled market integration both within and between commodity sectors, sub-sectors and amongst individual markets effectively complementing @yang_volatility_2021 and @gong_time_2022.
+-   Our results further suggest had ontological consequences for the commodity complex with an impact on fundamentals in general, confirming the findings in @marechal_tale_2020
+
+and favored market integration both within the commodity complex as well as with legacy asset classes - Financialisation had ontological consequences for the commodity complex. Confirms the findings of @marechal_tale_2020 who find that financialisation had a stronger impact on risk transfer capabilities of the commodity complex than of commodity futures prices at the individual or aggregate level.
+
+-   We provide an empirical complement to a new stream of theoretical studies that try to model the impact of financialisation on various aspects of commodity futures markets including @isleimeyyeh_role_2020.
+
+### Links to literature from the Journal of Futures markets
+
+-   Financialisation
+    -   Effect on
+        -   Co-movement and market integration.
+            -   Within commodity complex: @liu_analyzing_2021, @sehgal_who_2021, @yang_volatility_2021, @gong_time_2022.
+            -   Across asset classes (equities in particular): @conghui_liquidity_2020, @isleimeyyeh_role_2020, @daskalaki_new_2021, @han_trend_2022, @saishree_exploring_2022.
+        -   Commodity fundamentals: @isleimeyyeh_role_2020, @marechal_tale_2020, @yin_intermediary_2021.
+            -   Risk transfer: @ahmadi_theory_2020.\
+            -   Price formation: @adammer_price_2018, @merkoulova_predictive_2020, @kupabado_financialisation_2021, @sehgal_who_2021.\
+        -   Commodity investment: @daskalaki_new_2021, @han_trend_2022.\
+    -   Asset pricing studies of the phenomenon: @fan_untold_2020, @marechal_tale_2020, @yin_intermediary_2020, @han_trend_2022.\
+-   Commodity markets fundamentals: @brooks_samuelson_2020, @llorente_trading_2020, @marechal_do_2021, @li_hedging_2022.
+    -   Risk transfer: @fan_speculative_2020, @oglend_futures_2020, @huang_good_2023.
+    -   Price formation: @bohmann_price_2019, @janardanan_commodity_2019, @arroyo_old_2020, @bohl_return_2020, @frino_sensitivity_2020, @siklos_metal_2020, @andersen_efficiency_2021, @figuerola_oil_2021, @geyer_determinants_2021, @gilbert_regional_2021, @yang_price_2021, @fuertes_risk_2022, @li_robust_2022, @bandyopadhyay_impact_2023, @chen_temperature_2023, @fan_wisdom_2023, @filippidis_evaluating_2023.\
+-   Co-movement and market integration.
+    -   Within commodity complex: @xiao_estimating_2020, @yang_return_2020, @luo_how_2021, @prokopczuk_dynamics_2021, @deBoer_intraday_2022, @dhaene_volatility_2022, @zhang_impact_2022.
+    -   Across asset classes (equities in particular): @alquist_effect_2020, @kang_commodity_2020, @wong_impact_2020, @dark_lead_2021, @li_forecasting_2021, @liu_does_2022, @ming_contagion_2022, @zhang_do_2022, @zhang_influence_2023.
+-   Asset pricing/factor models in the context of commodity markets: @kang_commodity_2020, @yuan_pobability_2023.\
+-   Futures markets oversight: @janardanan_commodity_2019, @fan_untold_2020, @hu_impact_2020, @mixon_us_2022, @szabo_margin_2022.
+-   Index investment in the context of futures markets: @glover_financially_2022.\
+-   Unclassified: @alturki_market_2022, @cao_market_2022, @zhang_can_2022, @zhang_hedging_2022, @ONeill_effects_2023.
+
+### Talking points
+
+-   Drawing upon the issues and methodologies discussed in these studies, our research extends the dialogue by ...
+
+-   Building upon these seminal works, our research provides further empirical evidence and offers a novel perspective on the co-movement between commodity futures markets and traditional financial assets in the context of increasing financialisation.
+
+-   Building upon seminal works such as ... our research provides further empirical evidence on ...\
+
+-   Moreover, our paper aligns with asset pricing studies on the financialisation phenomenon, such as ...\
+
+-   Our research provides a comprehensive analysis of ... which serves as a unique contribution to the literature.
+
+-   Our paper contributes to the ongoing debates in the Journal of Futures Markets by providing a broader perspective on the phenomenon of financialisation.\
+
+-   We build upon previous research in the journal by examining the impact of financialisation on a large cross-section of liquid commodities, rather than focusing on individual markets. This approach allows us to capture the global nature of financialisation and its effects on market fundamentals, which we believe have been overlooked in previous studies.
+
+### Draft
+
+Our paper advances the ongoing debates in the Journal of Futures Markets by providing an alternative examination of the financialisation phenomenon which serves as a unique contribution to the literature. Specifically, our research extends the dialogue on its impact on various aspects of the commodity complex including on co-movement and market integration both within the commodity space [@liu_analyzing_2021, @sehgal_who_2021, @yang_volatility_2021, @gong_time_2022] and with legacy asset classes [@conghui_liquidity_2020, @isleimeyyeh_role_2020, @daskalaki_new_2021, @han_trend_2022, @saishree_exploring_2022]; on market fundamentals [@isleimeyyeh_role_2020, @marechal_tale_2020, @yin_intermediary_2021], particularly risk transfer [@ahmadi_theory_2020] and price formation [@adammer_price_2018, @merkoulova_predictive_2020, @kupabado_financialisation_2021, @sehgal_who_2021]; as well as on investment in the sector [@daskalaki_new_2021, @han_trend_2022]. The paper also addresses the consequences of the phenomenon from a regulatory perspective, effectively contributing to the debate on futures markets oversight: @janardanan_commodity_2019, @fan_untold_2020, @hu_impact_2020, @mixon_us_2022, @szabo_margin_2022. Additionally, the study further extends the collection of recent seminal works that study financialisation using asset pricing techniques [@fan_untold_2020, @marechal_tale_2020, @yin_intermediary_2020, @han_trend_2022]. More generally, the paper provides an empirical complement to the growing body of research on co-movement and market integration within the commodity complex [@xiao_estimating_2020, @yang_return_2020, @luo_how_2021, @prokopczuk_dynamics_2021, @deBoer_intraday_2022, @dhaene_volatility_2022, @zhang_impact_2022] and beyond [@alquist_effect_2020, @kang_commodity_2020, @wong_impact_2020, @dark_lead_2021, @li_forecasting_2021, @liu_does_2022, @ming_contagion_2022, @zhang_do_2022, @zhang_influence_2023]; on commodity market fundamentals [@brooks_samuelson_2020, @llorente_trading_2020, @marechal_do_2021, @li_hedging_2022] including risk transfer [@fan_speculative_2020, @oglend_futures_2020, @huang_good_2023] and price formation [@bohmann_price_2019, @janardanan_commodity_2019, @arroyo_old_2020, @bohl_return_2020, @frino_sensitivity_2020, @siklos_metal_2020, @andersen_efficiency_2021, @figuerola_oil_2021, @geyer_determinants_2021, @gilbert_regional_2021, @yang_price_2021, @fuertes_risk_2022, @li_robust_2022, @bandyopadhyay_impact_2023, @chen_temperature_2023, @fan_wisdom_2023, @filippidis_evaluating_2023]; and on asset pricing in the context of commodity markets [@kang_commodity_2020, @yuan_pobability_2023].
+
+## What is the novelty that the reader will learn from this paper and why is this knowledge important?
+
+### Notes
+
+-   Impact of financialisation went beyond mechanical effects that the main body of literature on financialisation focused on.
+    -   The onset of financialisation altered the traditional risk shifting nature of hedger's behaviour, implied by the Keynesian hypothesis.\
+-   Our results suggesting that financial investors may have been liquidity demanders leading hedgers to become liquidity providers.
+-   The CHP factor model thus seems able to establish the strengthening link between a non-price attribute and price dynamics in the US metal sub-sector during financialisation.\
+-   The results of this exercise provide evidence of convergence of Keynesian and Working's theories of the term structure in detecting price co-movement during financialisation and strongly suggest that the term structure related attributes (hedging pressure/roll) co-movement and price co-movement link was concentrated in the metals sub-sector.\
+-   The results show that there was co-movement in global metals returns in the second period and that this co-movement could be detected by our term structure related models, particularly so by our hedging pressure-based model.\
+-   Commodity price dynamics appear to have altered substantially in quite different ways over the financialisation and the financial crisis periods and our commodity futures asset pricing factors based approach seems able to provide new insights into the nature of these changes: financialisation was a phenomenon endogenous to the commodity markets transmitted via the commodity futures markets and which effects were particularly strong for the metals sector while the crisis and its aftermath seems to have delivered an exogenous shock across the entire cross-section of liquid commodities and thereby potentially triggering a reversion to pre-financialisation dynamics.
+-   Demonstrate that the effects of financialisation extend beyond the mechanical effects induced by indexation as outlined in Tang and Xiong (2012) and Basak and Pavlova (2016).
+
+### Talking points
+
+-   ... which have not been extensively studied in this context before.
+
+-   Our paper equips readers with new, practical insights that combine these two frontier areas of financial research.\
+
+-   The knowledge gained from this research can influence trading strategies, improve risk management practices, and spur further exploration of ...
+
+-   The uniqueness of our paper lies in our comprehensive analysis of the co-movement dynamics across multiple commodity markets.\
+
+-   Our study provides a nuanced understanding of how financialisation influences these relationships, thereby addressing a crucial gap in the literature.\
+
+-   This understanding is crucial for investors, regulators, and policymakers in shaping risk management practices and investment strategies in the age of heightened financialisation.
+
+-   We delve into the implications of increased financialisation.\
+
+-   The importance of this research lies in the insights it provides for investors, regulators, and policymakers, helping them to shape risk management practices and investment strategies.
+
+-   The novelty of our paper lies in our use of a futures-based asset pricing framework that includes factors constructed using both theoretical fundamentals and liquidity considerations. We argue that the global nature of financialisation makes cross-sectional co-movement a cornerstone issue, and we provide new insights into this issue through our analysis. We believe that this knowledge is important because it helps to deepen our understanding of the effects of financialisation on commodity markets and provides a more nuanced perspective on the debate about the impact of increased market participation.
+
+### Draft
+
+Drawing upon the issues and methods discussed in these studies, our research provides a broader perspective on the phenomenon of financialisation by examining its effects on a large cross-section of liquid commodities, rather than focusing on individual markets. This approach allows us to capture the global nature of financialisation and its influence on market fundamentals, an area of research that we believed has not yet been fully explored. We argue that the global nature of the phenomenon makes cross-sectional co-movement a cornerstone issue and we provide new insights into this issue through our novel approach, using a bespoke futures-based asset pricing framework. We deem this knowledge important because it helps to deepen our understanding of the consequences of financialisation for commodity markets and provides a more nuanced perspective on the debates about the phenomenon. We further believe this understanding is beneficial for regulator, policymakers and investors in shaping risk management practices and investment strategies in the age of heightened market participation.
+
+## If published, what will this paper be cited for?
+
+### Talking points
+
+-   Additionally, our results provide compelling evidence on ..., offering a strong reference point for related debates in futures market research.
+
+-   If published, our paper is likely to be cited for its meticulous analysis of the impact of financialisation on the co-movement between commodity futures.\
+
+-   ... our findings that highlight ..., provide a solid reference for future studies on financialisation and commodity markets.
+
+-   Upon publication, our paper is likely to be cited for its meticulous analysis of the impact of financialisation.
+
+-   Specifically, our econometric approach and findings, which reveal ... provide a key reference for future research on financialisation and commodity markets.\
+
+-   Furthermore, our study contributes to the discourse on futures markets oversight and index investment in futures markets, areas explored by ...
+
+-   If published, we believe that this paper will be cited for its innovative approach to studying the phenomenon of financialisation. Our paper challenges the conventional focus on individual markets and instead emphasizes the importance of considering the global and cross-sectional effects of financialisation. We also introduce a new futures-based asset pricing framework that we believe will be of interest to other researchers in this field.
+
+### Draft
+
+If published, we believe that this paper will be cited for its innovative approach to studying the phenomenon of commodity markets financialisation. The paper challenges the conventional focus on individual markets and instead emphasises the importance of considering the global and cross-sectional impact of financialisation. Our results provide compelling evidence that the phenomenon had ontological consequences for the commodity complex, offering a key reference for future studies on financialisation and commodity markets. By further emphasising the regulatory implications of financialisation, our study also contributes to the discourse on futures markets oversight, offering an additional strong reference point.
+
+## References

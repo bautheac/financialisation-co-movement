@@ -1,0 +1,298 @@
+---
+title: "Commodity returns ~ commodity CHP"
+output: 
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(kableExtra)
+tables <- readr::read_rds(here::here("explore", "results", "regressions-time-series-clean.rds")) %>%
+  dplyr::filter(stringr::str_detect(analysis, "CHP")) %>%
+  dplyr::mutate(results = purrr::map(results, function(x){
+    dplyr::mutate(
+      x,
+      period = as.character(period),
+      period = ifelse(period == "present", "post.crisis", period),
+      period = factor(period, levels = c("past", "financialization", "crisis", "post.crisis"))
+    ) %>%
+      dplyr::arrange(
+        sector, subsector, commodity, regressor, period, regime.CHP.type, CHP.regime
+      )
+  }))
+# tables$results[[1]]
+percentize <- function(value) paste0(round(value, digits = 4L) * 100, "%")
+```
+
+## Individual CHP ####
+
+Individual commodity returns ~ individual commodity CHP.
+
+* Overall
+  + Highest explanatory power: pressure relative change, contemporaneous.  
+  + Explanatory power decreases over financialisation relative to the previous period with the average $R^{2}$ falling from 25.8% down to 20.8%.  
+  + Bounces back in the crisis period with average $R^{2}$ rising to 22.5% and continues into the post-crisis period with average $R^{2}$ reaching 27.2%, slightly beyond pre-financialisation level.
+  + Drop is strongest for the metals sector with an average $R^{2}$ of 19.1% over the financialisation period against 28.2% over the previous period and the drop driven by the base metals subsector where the $R^{2}$ for the financialisation period is 25.9% against 47.4% over the previous period. In that case the decrease continues into the crisis with the average $R^{2}$ falling down to 18.1% before bouncing back to 34.5% into the post-crisis period.  
+* Regimes  
+  + Based on individual CHP.  
+    + Kenesian pattern in past period. Flips to contanto in financialisation; continues into crisis. Flips bask to backwardation post-crisis.
+    + Difference very pronounced in financialisation period for energy. and base metals although for the latter the pattern is kenesian...
+  + Based on aggregate CHP.  
+    + Explanatory power slightly better over contango phases in all periods. 
+    + Flips to backwardation for energy sector in financialisation. continues into crisis and post-crisis periods.
+    + Difference small over the past period for the metals sector. Flips to contango in financialisation. Continues into crisis and post-crisis periods. More pronounced and interesting pattern for the base metals with larger difference in past period where backwardation dominates, flips to contango in financialisation, back to backwardation in crisis with difference very pronounced (32% vs 12%) and back to contango post-crisis albeit with difference less pronounced (37% vs 32%).
+    
+
+
+### Full Cross-section (US) ####
+```{r individual-cross-section}
+table <- dplyr::filter(
+  tables, analysis == "US commodity returns ~ US commodity individual CHP"
+) %>% dplyr::select(results) %>% tidyr::unnest(results) %>%
+  dplyr::select(-c(coefficients, country)) %>%
+  dplyr::group_by(regressor, regime.CHP.type, period, CHP.regime) %>%
+  dplyr::summarise(average.rsquared = mean(rsquared, na.rm = TRUE)) %>%
+  dplyr::mutate(average.rsquared = percentize(average.rsquared)) %>%
+  tidyr::pivot_wider(names_from = "period", values_from = "average.rsquared")
+
+kbl(
+  table, longtable = T, booktabs = T, full_width = TRUE, 
+  # caption = "This table shows mean returns and volatility (sd) for the 24 individual US commodities and the 6 LME metals considered in the study as well as for two equally weighted portfolios formed from the US commodities and the LME metals respectively across the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). Mean values significant at the 1%, 5% and 10% level are marked with \\*\\*\\*, \\*\\* and \\* respectively.",
+  # col.names = c(
+  #   "asset", "estimate", "past", "financialisation", "crisis", "post-crisis"
+  # ),
+  align = c("llllr")
+) %>%
+  kable_paper("striped") %>% 
+  collapse_rows(columns = 1L:4L, valign = "top")
+```
+
+### Grouped by sectors ####
+```{r individual-sector}
+table <- dplyr::filter(
+  tables, analysis == "US commodity returns ~ US commodity individual CHP"
+) %>% dplyr::select(results) %>% tidyr::unnest(results) %>%
+  dplyr::select(-c(coefficients, country)) %>%
+  dplyr::group_by(sector, regressor, regime.CHP.type, period, CHP.regime) %>%
+  dplyr::summarise(average.rsquared = mean(rsquared, na.rm = TRUE)) %>%
+  dplyr::mutate(average.rsquared = percentize(average.rsquared)) %>%
+  tidyr::pivot_wider(names_from = "period", values_from = "average.rsquared")
+
+kbl(
+  table, longtable = T, booktabs = T, full_width = TRUE, 
+  # caption = "This table shows mean returns and volatility (sd) for the 24 individual US commodities and the 6 LME metals considered in the study as well as for two equally weighted portfolios formed from the US commodities and the LME metals respectively across the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). Mean values significant at the 1%, 5% and 10% level are marked with \\*\\*\\*, \\*\\* and \\* respectively.",
+  # col.names = c(
+  #   "asset", "estimate", "past", "financialisation", "crisis", "post-crisis"
+  # ),
+  align = c("lllllr")
+) %>%
+  kable_paper("striped") %>% 
+  collapse_rows(columns = 1L:5L, valign = "top")
+```
+
+### Grouped by subsectors ####
+```{r individual-subsector}
+table <- dplyr::filter(
+  tables, analysis == "US commodity returns ~ US commodity individual CHP"
+) %>% dplyr::select(results) %>% tidyr::unnest(results) %>%
+  dplyr::select(-c(coefficients, country)) %>%
+  dplyr::group_by(sector, subsector, regressor, regime.CHP.type, period, CHP.regime) %>%
+  dplyr::summarise(average.rsquared = mean(rsquared, na.rm = TRUE)) %>%
+  dplyr::mutate(average.rsquared = percentize(average.rsquared)) %>%
+  tidyr::pivot_wider(names_from = "period", values_from = "average.rsquared")
+
+kbl(
+  table, longtable = T, booktabs = T, full_width = TRUE, 
+  # caption = "This table shows mean returns and volatility (sd) for the 24 individual US commodities and the 6 LME metals considered in the study as well as for two equally weighted portfolios formed from the US commodities and the LME metals respectively across the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). Mean values significant at the 1%, 5% and 10% level are marked with \\*\\*\\*, \\*\\* and \\* respectively.",
+  # col.names = c(
+  #   "asset", "estimate", "past", "financialisation", "crisis", "post-crisis"
+  # ),
+  align = c("lllllr")
+) %>%
+  kable_paper("striped") %>% 
+  collapse_rows(columns = 1L:6L, valign = "top")
+```
+
+### Individual commodities ####
+```{r individual}
+table <- dplyr::filter(
+  tables, analysis == "US commodity returns ~ US commodity individual CHP"
+) %>% dplyr::select(results) %>% tidyr::unnest(results) %>%
+  dplyr::select(-c(coefficients, country)) %>%
+  dplyr::mutate(rsquared = percentize(rsquared)) %>%
+  tidyr::pivot_wider(names_from = "period", values_from = "rsquared")
+
+kbl(
+  table, longtable = T, booktabs = T, full_width = TRUE, 
+  # caption = "This table shows mean returns and volatility (sd) for the 24 individual US commodities and the 6 LME metals considered in the study as well as for two equally weighted portfolios formed from the US commodities and the LME metals respectively across the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). Mean values significant at the 1%, 5% and 10% level are marked with \\*\\*\\*, \\*\\* and \\* respectively.",
+  # col.names = c(
+  #   "asset", "estimate", "past", "financialisation", "crisis", "post-crisis"
+  # ),
+  align = c("lllllllr")
+) %>%
+  kable_paper("striped") %>% 
+  collapse_rows(columns = 1L:6L, valign = "top")
+```
+
+
+
+
+## Aggregate CHP ####
+
+Individual commodity returns ~ aggregate commodity CHP.
+
+### US ####
+
+* Overall
+  + Explanatory power increases over financialisation relative to the previous period with the average $R^{2}$ rising from 5.4% up to 7.1%. 
+  + Increase further in the crisis (14.7%) before pulling back post-crisis (7.5%).   
+  + Increase particularly pronounced in relative sense for metals (15.7% vs 8.4%; strongest for precious: 16.4% vs 7.9%) and energy (6.3% vs 3.4%).
+* Regimes  
+  + Based on individual CHP.  
+    + Difference not marked in past period. Contango starts slightly dominating in financialisation and continues in crisis and post-crisis.  
+  + Based on aggregate CHP.  
+    + Difference not marked in past period. Contango starts dominating markedly in financialisation and continues in crisis and post-crisis.  
+    + Stronger pattern for metals: marked Kenesian paradigm in past period, flips to contango in financialisation with substantial difference (23.4% vs 10%), difference narrows into the crisis (23.7% vs 20.4%) before growing back wide post-crisis (21.4% vs 10.3%).  
+    + Pattern for base metals: backwardation (15.4% vs 5.6%), contango (16.19% vs 10.2%), backwardation (30.7% vs 20.2%), contango (18.5% vs 1.1%).  
+
+#### Full Cross-section ####
+```{r aggregate-US-cross-section}
+table <- dplyr::filter(
+  tables, analysis == "US commodity returns ~ US commodity aggregate CHP"
+) %>% dplyr::select(results) %>% tidyr::unnest(results) %>%
+  dplyr::select(-c(coefficients, country)) %>%
+  dplyr::group_by(regressor, regime.CHP.type, period, CHP.regime) %>%
+  dplyr::summarise(average.rsquared = mean(rsquared, na.rm = TRUE)) %>%
+  dplyr::mutate(average.rsquared = percentize(average.rsquared)) %>%
+  tidyr::pivot_wider(names_from = "period", values_from = "average.rsquared")
+
+kbl(
+  table, longtable = T, booktabs = T, full_width = TRUE, 
+  # caption = "This table shows mean returns and volatility (sd) for the 24 individual US commodities and the 6 LME metals considered in the study as well as for two equally weighted portfolios formed from the US commodities and the LME metals respectively across the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). Mean values significant at the 1%, 5% and 10% level are marked with \\*\\*\\*, \\*\\* and \\* respectively.",
+  # col.names = c(
+  #   "asset", "estimate", "past", "financialisation", "crisis", "post-crisis"
+  # ),
+  align = c("llllr")
+) %>%
+  kable_paper("striped") %>% 
+  collapse_rows(columns = 1L:4L, valign = "top")
+```
+
+#### Grouped by sectors ####
+```{r aggregate-US-sector}
+table <- dplyr::filter(
+  tables, analysis == "US commodity returns ~ US commodity aggregate CHP"
+) %>% dplyr::select(results) %>% tidyr::unnest(results) %>%
+  dplyr::select(-c(coefficients, country)) %>%
+  dplyr::group_by(sector, regressor, regime.CHP.type, period, CHP.regime) %>%
+  dplyr::summarise(average.rsquared = mean(rsquared, na.rm = TRUE)) %>%
+  dplyr::mutate(average.rsquared = percentize(average.rsquared)) %>%
+  tidyr::pivot_wider(names_from = "period", values_from = "average.rsquared")
+
+kbl(
+  table, longtable = T, booktabs = T, full_width = TRUE, 
+  # caption = "This table shows mean returns and volatility (sd) for the 24 individual US commodities and the 6 LME metals considered in the study as well as for two equally weighted portfolios formed from the US commodities and the LME metals respectively across the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). Mean values significant at the 1%, 5% and 10% level are marked with \\*\\*\\*, \\*\\* and \\* respectively.",
+  # col.names = c(
+  #   "asset", "estimate", "past", "financialisation", "crisis", "post-crisis"
+  # ),
+  align = c("lllllr")
+) %>%
+  kable_paper("striped") %>% 
+  collapse_rows(columns = 1L:5L, valign = "top")
+```
+
+#### Grouped by subsectors ####
+```{r aggregate-US-subsector}
+table <- dplyr::filter(
+  tables, analysis == "US commodity returns ~ US commodity aggregate CHP"
+) %>% dplyr::select(results) %>% tidyr::unnest(results) %>%
+  dplyr::select(-c(coefficients, country)) %>%
+  dplyr::group_by(sector, subsector, regressor, regime.CHP.type, period, CHP.regime) %>%
+  dplyr::summarise(average.rsquared = mean(rsquared, na.rm = TRUE)) %>%
+  dplyr::mutate(average.rsquared = percentize(average.rsquared)) %>%
+  tidyr::pivot_wider(names_from = "period", values_from = "average.rsquared")
+
+kbl(
+  table, longtable = T, booktabs = T, full_width = TRUE, 
+  # caption = "This table shows mean returns and volatility (sd) for the 24 individual US commodities and the 6 LME metals considered in the study as well as for two equally weighted portfolios formed from the US commodities and the LME metals respectively across the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). Mean values significant at the 1%, 5% and 10% level are marked with \\*\\*\\*, \\*\\* and \\* respectively.",
+  # col.names = c(
+  #   "asset", "estimate", "past", "financialisation", "crisis", "post-crisis"
+  # ),
+  align = c("lllllr")
+) %>%
+  kable_paper("striped") %>% 
+  collapse_rows(columns = 1L:6L, valign = "top")
+```
+
+#### Individual commodities ####
+```{r aggregate-US}
+table <- dplyr::filter(
+  tables, analysis == "US commodity returns ~ US commodity aggregate CHP"
+) %>% dplyr::select(results) %>% tidyr::unnest(results) %>%
+  dplyr::select(-c(coefficients, country)) %>%
+  dplyr::mutate(rsquared = percentize(rsquared)) %>%
+  tidyr::pivot_wider(names_from = "period", values_from = "rsquared")
+
+kbl(
+  table, longtable = T, booktabs = T, full_width = TRUE, 
+  # caption = "This table shows mean returns and volatility (sd) for the 24 individual US commodities and the 6 LME metals considered in the study as well as for two equally weighted portfolios formed from the US commodities and the LME metals respectively across the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). Mean values significant at the 1%, 5% and 10% level are marked with \\*\\*\\*, \\*\\* and \\* respectively.",
+  # col.names = c(
+  #   "asset", "estimate", "past", "financialisation", "crisis", "post-crisis"
+  # ),
+  align = c("lllllllr")
+) %>%
+  kable_paper("striped") %>% 
+  collapse_rows(columns = 1L:6L, valign = "top")
+```
+
+
+### UK ####
+
+Nothing much there.  
+
+#### Full Cross-section ####
+```{r aggregate-UK-cross-section}
+table <- dplyr::filter(
+  tables, analysis == "UK commodity returns ~ US commodity aggregate CHP"
+) %>% dplyr::select(results) %>% tidyr::unnest(results) %>%
+  dplyr::select(-c(coefficients, country)) %>%
+  dplyr::group_by(regressor, regime.CHP.type, period, CHP.regime) %>%
+  dplyr::summarise(average.rsquared = mean(rsquared, na.rm = TRUE)) %>%
+  dplyr::mutate(average.rsquared = percentize(average.rsquared)) %>%
+  tidyr::pivot_wider(names_from = "period", values_from = "average.rsquared")
+
+kbl(
+  table, longtable = T, booktabs = T, full_width = TRUE, 
+  # caption = "This table shows mean returns and volatility (sd) for the 24 individual US commodities and the 6 LME metals considered in the study as well as for two equally weighted portfolios formed from the US commodities and the LME metals respectively across the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). Mean values significant at the 1%, 5% and 10% level are marked with \\*\\*\\*, \\*\\* and \\* respectively.",
+  # col.names = c(
+  #   "asset", "estimate", "past", "financialisation", "crisis", "post-crisis"
+  # ),
+  align = c("llllr")
+) %>%
+  kable_paper("striped") %>% 
+  collapse_rows(columns = 1L:4L, valign = "top")
+```
+
+#### Individual commodities ####
+```{r aggregate-UK}
+table <- dplyr::filter(
+  tables, analysis == "UK commodity returns ~ US commodity aggregate CHP"
+) %>% dplyr::select(results) %>% tidyr::unnest(results) %>%
+  dplyr::select(-c(coefficients, country)) %>%
+  dplyr::mutate(rsquared = percentize(rsquared)) %>%
+  tidyr::pivot_wider(names_from = "period", values_from = "rsquared")
+
+kbl(
+  table, longtable = T, booktabs = T, full_width = TRUE, 
+  # caption = "This table shows mean returns and volatility (sd) for the 24 individual US commodities and the 6 LME metals considered in the study as well as for two equally weighted portfolios formed from the US commodities and the LME metals respectively across the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). Mean values significant at the 1%, 5% and 10% level are marked with \\*\\*\\*, \\*\\* and \\* respectively.",
+  # col.names = c(
+  #   "asset", "estimate", "past", "financialisation", "crisis", "post-crisis"
+  # ),
+  align = c("lllllllr")
+) %>%
+  kable_paper("striped") %>% 
+  collapse_rows(columns = 1L:6L, valign = "top")
+```
+

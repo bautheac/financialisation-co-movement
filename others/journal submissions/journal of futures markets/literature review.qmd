@@ -1,0 +1,395 @@
+---
+title: "Literature review"
+format: docx
+editor: visual
+bibliography: literature_files/references.bib
+---
+
+```{r globals, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+
+folder <- "literature_files"; dir.create(folder); path <- paste(folder, "references.bib", sep = "/")
+download.file("https://www.dropbox.com/s/htnd7o9nnkk8ng8/references.bib?dl=1", path)
+```
+
+### [Price discovery dynamics in European agricultural markets](https://doi.org/10.1002/fut.21891 "@adammer_price_2018")
+
+- The impact of the futures markets was high during the first period of price spikes (2007 to 2009) but lower during the second one (2010 to 2013).  
+- More trading activity in futures markets did not lead to a higher influence on spot prices.
+
+### [The theory of storage in the crude oil futures market, the role of financial conditions](https://doi.org/10.1002/fut.22113 "@ahmadi_theory_2020")
+
+- Validates theory of storage in the crude oil market.
+
+### [The effect of oil price shocks on asset markets: Evidence from oil inventory news](https://doi.org/10.1002/fut.22096 "@alquist_effect_2020")
+
+- Equity prices decrease in response to higher oil prices before the 2007/2008 crisis but increase after it.  
+- Positive oil price shocks cause a depreciation of the U.S. dollar against a broad range of currencies.  
+- Positive oil price shocks have only a modest effect on bond futures returns.  
+- Changes in risk premia help to explain the time‐varying effect of oil price shocks on U.S. equity returns.
+
+### [Market inefficiencies surrounding energy announcements](https://doi.org/10.1002/fut.22264 "@alturki_market_2022")
+
+- Evidence of inefficiency in crude oil futures and stock markets.
+
+### [Efficiency in the Atlantic salmon futures market](https://doi.org/10.1002/fut.22204 "@andersen_efficiency_2021")
+
+- Futures prices are efficient and unbiased in the long‐run, while being biased and inefficient in the short‐run.  
+- Futures prices provide an adequate price discovery function for most contracts, while suffering from magnified risk premiums due to few noncommercial traders.
+
+### [Old crop versus new crop prices: Explaining the correlation](https://doi.org/10.1002/fut.22106 "@arroyo_old_2020")
+
+- Data shows high correlation between future prices with delivery dates before and after the harvest.  
+- Correcting standard models by assuming that harvests appear continuously rather than at a single moment allows to to link preharvest and postharvest markets to the same source of supply, and hence obtain the empirically observed high correlation.
+
+### [The impact of Sino–US trade war on price discovery of soybean: A double-edged sword?](https://doi.org/10.1002/fut.22415 "@bandyopadhyay_impact_2023")
+
+- Negative impact of trade war on the leading role of US soybean futures in price discovery.  
+- The trade war may have given some temporary economic and strategic benefit to the United States although it nearly killed the soybean market of the United States.
+
+### [Return dynamics during periods of high speculation in a thinly traded commodity market](https://doi.org/10.1002/fut.22063 "@bohl_return_2020")
+
+- Chicago Mercantile Exchange feeder cattle futures returns are predominantly explained by fundamentals.
+- Volatility in this market is significantly driven by the speculation ratio.
+
+### [Price discovery in commodity derivatives: Speculation or hedging?](https://doi.org/10.1002/fut.22021 "@bohmann_price_2019")
+
+- Both commodity futures and option markets make a meaningful contribution to price discovery in recent times in the six most actively traded commodity markets.  
+- On average, options lead futures in reflecting new information for a majority of these commodities.  
+- Increased speculation, rather than hedging activity, in commodity derivatives is a key determinant of price discovery in the options markets.
+
+### [Samuelson hypothesis, arbitrage activity, and futures term premiums](https://doi.org/10.1002/fut.22128 "@brooks_samuelson_2020")
+
+- Samuelson hypothesis (or maturity effect): futures volatility increases as maturity decreases.\
+- In most markets the slope factor is strongly negative in certain periods and at best only weakly negative in other periods.
+- High inventory levels are found to correspond to flatter volatility term structures in seven futures, consistent with with the linkage between carry arbitrage and the Samuelson hypothesis.\
+- Flatter volatility term structure corresponds to lower absolute futures term premiums.
+
+### [Market uncertainty and sentiment around USDA announcements](https://doi.org/10.1002/fut.22283 "@cao_market_2022")
+
+- Corn and soybean IVols are significantly lower for several trading days after a report.\
+- The IVol response to a release depends on agricultural market experts' disagreement and sentiment before the USDA report, and on the extent to which the USDA information surprises the market.\
+- IVols are generally positively related to the to financial‐market sentiment and macroeconomic uncertainty (VIX). This comovement breaks down on report days.
+
+### [Temperature, storage, and natural gas futures prices](https://doi.org/10.1002/fut.22402 "@chen_temperature_2023")
+
+- The authors' proposed measures of HDD (heating degree day) and CDD (cooling degree day) and temperature changes are important for explaining weekly changes in NG in storage and daily changes in NG futures prices and their variance.
+
+### [Liquidity shocks, commodity financialization, and market comovements](https://doi.org/10.1002/fut.22127 "@conghui_liquidity_2020")
+
+- Liquidity shocks, including both funding liquidity and market liquidity, are positively associated with comovements between commodity and stock markets after 2000.  
+- The effect of liquidity on cross‐market correlations is state‐dependent and intensifies when liquidity conditions deteriorate and asset returns sustain substantial declines.  
+- The structural change indicates that financialization creates a role for adverse liquidity shocks to increase cross‐market correlations.  
+- A growing body of literature explores the risk transfers between commodity markets and stock markets (e.g., @buyuksahin_speculators_2014; @cheng_convective_2015; @ordu_food_2018). While these studies have different research issues, they all imply that liquidity (broadly defined) matters for risk transfers across markets with the financialization of commodity markets.  
+- We provide direct evidence that financialization is a precondition for liquidity shocks to be passed through to commodity markets and that the risk transfer between commodity and stock markets intensifies when liquidity tightens and asset returns are poor.\
+- We add to the debate on the driving forces behind the dynamics of correlations between commodity and stock markets.
+    - First, business cycles do not explain the structural change of liquidity's role in accounting for cross‐market correlations that happened in the early 2000s.\
+    - Second, we show that aside from funding liquidity, stock market liquidity also matters in predicting cross‐market correlations.\
+    - Third, the significant association between corporate spreads and cross‐market correlations might not be driven by business cycles.
+
+### [The lead of oil price rises on US equity market beliefs and preferences](https://doi.org/10.1002/fut.22247 "@dark_lead_2021")
+
+- Oil price rises from a strengthening global economy have a state‐dependent lead on US equity market beliefs and preferences.
+
+### [New evidence on commodity stocks](https://doi.org/10.1002/fut.22197 "@daskalaki_new_2021")
+
+- Commodity futures provided superior diversification benefits pre-financialisation.
+- Commodity stock investing is more profitable post-financialisation.
+- Price‐based signals from futures markets can be used to achieve high commodity stock returns.
+
+### [Intraday liquidity in soybean complex futures markets](https://doi.org/10.1002/fut.22325 "@deBoer_intraday_2022")
+
+- Traders' order placement influenced by the liquidity of related markets.\
+- Liquidity persistence and positive liquidity spillovers mainly occur within 30s. Spillovers for longer horizons are mostly negative.
+
+### [Volatility spillovers: A sparse multivariate GARCH approach with an application to commodity markets](https://doi.org/10.1002/fut.22312 "@dhaene_volatility_2022")
+
+- Correlation spillovers from metals and energy to agricultural commodities even though the latter tend to settle somewhat later
+
+### [The untold story of commodity futures in China](https://doi.org/10.1002/fut.22087 "@fan_untold_2020")
+
+- In the presence of retail‐dominance and barriers‐to‐entry, the term structure and momentum premia remain persistent, whereas hedging pressure, skewness, volatility, and liquidity premia are distorted by time‐varying margins and strict position limits.  
+- Open interest, currency, and inflation premia are sensitive to institutional settings.  
+- The observed premia cannot be attributed to common risks, sentiment, transactions costs, or data‐snooping, but are related to liquidity, anchoring, and regulation‐induced limits‐to‐arbitrage.
+
+### [Speculative pressure](https://doi.org/10.1002/fut.22085 "@fan_speculative_2020")
+
+- Long-short portfolios of futures contracts sorted by speculative pressure capture a significant premium in commodity, currency, and equity markets but not in fixed income markets.\
+- Exposure to commodity, currency, and equity index futures' speculative pressure is priced in the broad cross-section after controlling for momentum, carry, global liquidity, and volatility risks.\
+- There is an efficient hedgers-speculators risk transfer in commodity, currency, and equity index futures markets.\
+- Contribution to literature.
+    - Provides the first empirical investigation of the ability of tradeable long-short portfolios based on speculative pressure to capture premia in futures markets on instruments beyond commodities.\
+    - We contribute to an "everywhere" pricing literature that has so far focused on the momentum, value and carry factors.\
+    - Adds to the literature that investigates the potentially harmful impact of speculators on futures prices [@fattouh_role_2013; @irwin_devil_2009; @stoll_commodity_2010]. Finding that equity index, currency and commodity futures markets facilitate risk transfer and reward suggests that calls to regulate excessive speculation are unwarranted; speculators do not destabilize these futures markets, rather they are important providers of liquidity and risk-bearing facility to hedgers.
+
+### [Wisdom of crowds and commodity pricing](https://doi.org/10.1002/fut.22393 "@fan_wisdom_2023")
+
+- Commodities with lower (higher) sentiment shifts tend to be overvalued (undervalued) when the aggregate market is in backwardation (contango).  
+- The sentiment premium is more pronounced during periods of macro contraction and deteriorating funding liquidity.  
+- While the premium concentrates in commodities with higher tweet intensity, sentiment extracted from influential tweets (i.e., high number of retweets/ likes) does not exhibit stronger predictive ability than low‐attention tweets.  
+- Consistent with the overreaction hypothesis, the sentiment premium fully reverses 3 years postformation.
+
+### [Oil price analysts' forecasts](https://doi.org/10.1002/fut.22225 "@figuerola_oil_2021")
+
+- Futures prices supersede analyst forecasts and elaborate a performance‐ based ranking of analyst firms.
+
+### [Oil price analysts' forecasts](https://doi.org/10.1002/fut.22225 "@filippidis_evaluating_2023")
+
+- The convenience yield, the global economic activity index, and the government bond yields act as the main factors that exercise a persistent and significant impact, for the largest part of the study period, although at different magnitude.\
+- At different time periods there are additional factors that exercise a significant impact on the oil price differential, such as refining constraints, stock market volatility, trading volume, and geopolitical risk.\
+- Unless a dynamic modeling framework is employed, the full spectrum of the related effects cannot be revealed.
+
+### [The sensitivity of trading to the cost of information](https://doi.org/10.1002/fut.22152 "@frino_sensitivity_2020")
+
+- Decrease in price discovery following two events that increase data access costs.
+
+### [Risk-neutral skewness and commodity futures pricing](https://doi.org/10.1002/fut.22308 "@fuertes_risk_2022")
+
+- The risk-neutral skewness (RNSK) signal exhibits a more stable and prolonged predictive ability.
+
+### [Determinants of the WTI-Brent price spread revisited](https://doi.org/10.1002/fut.22184 "@geyer_determinants_2021")
+
+- Important spread determinants are the convenience yield, as a proxy for crude oil inventories, the trading activity in crude oil paper markets, shipping costs, as well as the stock market development in the United States and Europe.  
+- After the break in 2010, the paper market activity, open interest, and shipping costs have become more important spread drivers.
+
+### [Regional premiums in nonferrous metals markets](https://doi.org/10.1002/fut.22245 "@gilbert_regional_2021")
+
+- Transaction prices also include a regional premium that can account for a substantial component of the full price.
+- In well-supplied markets, premiums measure the cost of intermediating exchange warehouses and consumers. In periods of tight demand they reflect the urgency of consumer requirements.
+
+### [Financially constrained index futures arbitrage](https://doi.org/10.1002/fut.22293 "@glover_financially_2022")
+
+- The price of an index futures contract and the value of its underlying index should deviate further from their theoretical cost-of-carry relationship when (a) the contract has a long time to go before expiry, and (b) volatility is high.  
+- These predictions enjoy considerable empirical support which highlights the importance of financing constraints for explaining index futures mispricing.
+
+### [Time-varying pure contagion effect between energy and nonenergy commodity markets](https://doi.org/10.1002/fut.22366 "@gong_time_2022")
+
+- Significant pure contagion effects between energy and industrial metals markets in most periods.
+- Pure contagion effects between energy and precious metals and agricultural markets occur only in a few specific periods.
+- Energy is the main price transmitter.
+- Financialisation gradually increases the frequency and harm of pure contagion effects.
+- The COVID-19 pandemic exacerbates the pure contagion effects between energy and precious metals and agricultural markets.
+
+### [A trend factor in commodity futures markets: Any economic gains from using information over investment horizons?](https://doi.org/10.1002/fut.22291 "@han_trend_2022")
+
+- The trend factor generates statistically and economically large returns during the post-financialization period 2004--2020.  
+- The trend factor cannot be explained by the existing factor models and is priced cross-sectionally.
+- The trend factor is correlated with funding liquidity measured by the TED spread.  
+- There are significant economic gains from using the information on historical prices in commodity futures markets.
+
+### [The impact of trading restrictions and margin requirements on stock index futures](https://doi.org/10.1002/fut.22111 "@hu_impact_2020")
+
+- The divergence of stock index futures prices from their theoretical values may be due to various trading and regulatory constraints, such as position limits and margin requirements, which play significant roles in Chinese market.
+
+### [A good hedge or safe haven? The hedging ability of China's commodity futures market under extreme market conditions](https://doi.org/10.1002/fut.22423 "@huang_good_2023")
+
+- Most futures products are good hedges and safe havens for the corresponding spot prices.
+- The hedge ratios of most commodities should increase moderately in both bearish and bullish markets.
+- Participating in the futures market can effectively manage risk. [...] investors pay attention to market dynamics and adjust their portfolios promptly.
+
+### [The role of financial investors in determining the commodity futures risk premium](https://doi.org/10.1002/fut.22122 "@isleimeyyeh_role_2020")
+
+- The effect of the stock market on the energy market became significantly greater for the futures risk premium in the period following the 2008 crisis.  
+- This study extends studies that broadly address the financialization of commodities and specifically the risk premium in commodity markets.
+
+### [On commodity price limits](https://doi.org/10.1002/fut.21999, "@janardanan_commodity_2019")
+
+- Limits events are associated with shocks to fundamentals that lead to persistent price changes.  
+- When futures trading halts price discovery migrates to options markets, but option prices provide a biased estimate of subsequent future prices when trading resumes.
+
+### [Can commodity futures risk factors predict economic growth?](https://doi.org/10.1002/fut.22155 "@kang_commodity_2020")
+
+- Three factors capturing term premia on the basis-momentum, basis, and change in slope are robust predictors for future economic growth, especially for long horizons.  
+- Findings highlight the importance of the term premia, rather than the spot premia on which the literature has mainly focused.
+
+### [Financialization, common stochastic trends, and commodity prices](https://doi.org/10.1002/fut.22269 "@kupabado_financialisation_2021")
+
+- Financialization has contributed to the price movements of these commodities.
+
+### [Forecasting equity returns: The role of commodity futures along the supply chain](https://doi.org/10.1002/fut.22167 "@li_forecasting_2021")
+
+- A considerable number of commodities exhibit significant in-sample forecasting ability at the daily horizon, especially for supplier-side equity returns.  
+- The macroeconomic risk premium effect, captured by the aggregate commodity prices, is an important source for this predictability.
+- Results remain significant out-of-sample with forecasting performance improving substantially during recessions or with economic constraints.
+
+### [The hedging pressure hypothesis and the risk premium in the soybean reverse crush spread](https://doi.org/10.1002/fut.22285 "@li_hedging_2022")
+
+- Strong evidence of a positive return to speculators who provide futures liquidity for the soybean crush.
+
+### [Robust information share measures with an application on the international crude oil markets](https://doi.org/10.1002/fut.22292 "@li_robust_2022")
+
+- Authors develop an information share measure that is robust to large price movements.
+
+### [Analyzing the frequency dynamics of volatility spillovers across precious and industrial metal markets](https://doi.org/10.1002/fut.22217 "@liu_analyzing_2021")
+
+- While volatility spillovers across industrial metals are higher than across precious metals, the opposite occurs during crisis periods where precious metals cause net volatility spillovers to industrial metals.  
+- Volatility spillovers of the two metal groups show different dynamics in the short-, medium- and long-term components, especially in the short- and medium-term components.
+
+### [Does clean energy matter? Revisiting the spillovers between energy and foreign exchange markets](https://doi.org/10.1002/fut.22340 "@liu_does_2022")
+
+- During the collapse of oil prices from 2014 to 2016, crude oil futures were at the center of the risk contagion.  
+- Since the COVID-19 pandemic broke out, the spillovers of clean energy metal futures have become one of the main sources of the risk contagion.  
+- Crude oil and the US dollar are the most important contributors to the spillovers, but further spillovers are emerging between the Chinese yuan, euro, and Japanese yen with clean energy metals.
+
+### [Trading and information in futures markets](https://doi.org/10.1002/fut.22079 "@llorente_trading_2020")
+
+- Nonmembers (CTI4) consume most of the intraday liquidity while local traders (CTI1) as market makers are its main provider. Both groups combine most of the intraday trading volume.  
+- Changes in the overnight positions of the general public (CTI4) and clearing members (CTI2) contribute mostly to daily price discovery, while the positions of CTI3 group reflect possible information advantage about future price movements.
+
+### [How trading in commodity futures option markets impacts commodity futures prices](https://doi.org/10.1002/fut.22221 "@luo_how_2021")
+
+- For both commercial traders and noncommercial traders, options position changes impact the futures price in the same direction as futures position changes.\
+- The nonmomentum of position changes of options market contributes overwhelmingly relative to the idiosyncratic risk and hedging pressure in the case of noncommercial trading.
+
+### [A tale of two premiums revisited](https://doi.org/10.1002/fut.22396 "@marechal_tale_2020")
+
+- An optimal asset‐pricing model for commodity futures consist of 4 factors: (i) the basis, (ii) basis‐momentum, (iii) momentum, and (iv) the "crowding".
+- Financialization has not influenced prices but plays a role in the reorganization of futures markets as an insurance market in which the index traders supply insurance to
+producers, thereby decreasing the insurance premium. Conversely, this market reorganization does not affect the premium captured by producers in providing liquidity to speculators. Given these results, the financialization would benefit the producers both ways.  
+
+### [Do economic variables forecast commodity futures volatility?](https://doi.org/10.1002/fut.22250 "@marechal_do_2021")
+
+- Support found for the "uncertainty resolution" and the "theory of storage" hypotheses.   
+- The "time to maturity" hypothesis is rejected.   
+
+### [Predictive abilities of speculators in energy markets](https://doi.org/10.1002/fut.22058 "@merkoulova_predictive_2020")
+
+- Speculators are successful in taking profitable positions in energy futures markets.  
+    The magnitude of this effect is lower than that for agricultural markets.
+- Energy speculators’ returns are due to the existence of the risk premiums rather than to speculators’ forecasting abilities.  
+- Futures risk premium is highly time-variant.
+    Energy investors’ profits have been very limited in the GFC and post-GFC period, which coincided with the financialization of commodity markets.
+
+### [Contagion or flight-to-quality? The linkage between oil price and the US dollar based on the local Gaussian approach](https://doi.org/10.1002/fut.22307 "@ming_contagion_2022")
+
+- Evidence found of a contagion effect the prices of West Texas Intermediate futures and the US dollar in the 1990 Gulf War.  
+- Evidence found that flight-to-quality phenomena from oil to the US dollar is a common feature for the 2008 and 2014 oil crashes.  
+    Implicitly emphasizes the safe-haven role of the US dollar during oil market turmoil.  
+
+### [US experience with futures transaction taxes](https://doi.org/10.1002/fut.22276 "@mixon_us_2022")
+
+- The transaction tax on futures reduced trading volume during the 1920s and 1930s but had no apparent effect on volatility or open interest.
+- The relative magnitude of the tax was highest for intermediaries and appears to have substantially reduced intra-day trading, but it did not dramatically affect hedging activity or the level of cash or futures prices.
+
+### [Futures market hedging efficiency in a new futures exchange: Effects of trade partner diversification](https://doi.org/10.1002/fut.22088 "@oglend_futures_2020")
+
+- Larger firms with greater trade partner diversification have lower basis risk.   
+    Such firms align their internal transaction price closer to the common spot price in the market, which encourages greater futures market participation.
+
+### [Effects of nondiscretionary trading on futures prices](https://doi.org/10.1002/fut.22377 "@ONeill_effects_2023")
+
+- The ETPs' informationless, mechanical rebalancing of futures positions to maintain the constant maturity of the index and the promised leverage ratios of the VIX ETPs have significantly positive predictive power for end-of-day futures returns.  
+- The impact on price has diminished through time from increased liquidity provided by hedge funds, and the “natural” hedging of the issuers' inverse products.
+
+### [The dynamics of commodity return comovements](https://doi.org/10.1002/fut.22222 "@prokopczuk_dynamics_2021")
+
+- A simple one-factor model based on the first principal component extracted from a panel of commodity returns outperforms a macroeconomic model, and explains most of the realized comovements.  
+- Intersectoral correlations display more time variations than intrasectoral correlations.  
+- Comovements are driven by the variation of the factor as opposed to exposure to it.  
+- Results cast doubt on the persistence of the effects of financialization and emphasize the importance of the dynamics of the factor variance.
+
+### [Exploring the dynamics of the equity–commodity nexus: A study of base metal futures](https://doi.org/10.1002/fut.22358 "@saishree_exploring_2022")
+
+- 36\% of the return forecast error variance originates from spillovers, to which the contribution of equity indices is minimal.
+    Indicates segmentation between the two markets which offer the scope for potential diversification.
+- Base metal futures are the net transmitters and equity indices are the net recipients of spillovers.
+
+### [Who leads in intraday gold price discovery and volatility connectedness: Spot, futures, or exchange-traded fund?](https://doi.org/10.1002/fut.22208 "@sehgal_who_2021")
+
+- Gold futures are a global leader in price discovery and volatility spillover.  
+- Intraday variation in price discovery leadership is due to liquidity, hedging effectiveness, price jumps, investor attention, and macroeconomic states.
+
+### [Metal prices made in China? A network analysis of industrial metal futures](https://doi.org/10.1002/fut.22125 "@siklos_metal_2020")
+
+- China, despite its role as key actor in both real and financial industrial metal markets, is a price taker.
+
+### [Margin requirements based on a stochastic correlation model](https://doi.org/10.1002/fut.22360 "@szabo_margin_2022")
+
+- An unnecessarily large overmargin requirement is set by regulators when the applied risk measure is not calculated via a portfoliowise treatment.
+- Accounting for the correlation structure of the assets during the margining process would not lead to an overly prudent method, nor would it cause greater procyclicality.
+
+### [Impact of international energy prices on China's industries](https://doi.org/10.1002/fut.22090 "@wong_impact_2020")
+
+- Evidence found that crude oil futures have the most significant influence.  
+- Stock returns of oil-related companies are more closely align to Brent and WTI's futures returns following China's key oil pricing reform on March 27, 2013.  
+  Overall, Chinese industries are also more exposed to global crude oil futures volatility after this event.
+
+### [Estimating the connectedness of commodity futures using a network approach](https://doi.org/10.1002/fut.22086 "@xiao_estimating_2020")
+
+- Metal futures are net transmitters of shocks to other futures, and agricultural futures are vulnerable to shocks from the others.  
+- Almost two-thirds of the volatility uncertainty for commodity futures are due to the connectedness of shocks across the futures market.  
+- Connectedness always increases in times of turmoil.  
+- Investors could be forewarned that the connectedness of various classes of futures could threaten their portfolios.
+
+### [Return and volatility transmission between China's and international crude oil futures markets: A first look](https://doi.org/10.1002/fut.22103 "@yang_return_2020")
+
+- Evidence found of cointegration relationships among crude oil futures in China and international major crude oil futures markets.  
+  Both China's and Oman's oil futures markets react to deviations from their long-run equilibrium with West Texas Intermediate and Brent oil futures.   
+- Evidence found of asymmetric volatilities and correlations across these oil futures markets.   
+- The Chinese oil futures have stronger linkages with the international major futures markets than Oman futures.   
+
+### [Price discovery in chinese agricultural futures markets: A comprehensive look](https://doi.org/10.1002/fut.22179 "@yang_price_2021")
+
+- China's agricultural futures markets generally play a more dominant role in the price discovery process as the markets become mature.  
+
+### [Volatility spillovers in commodity futures markets: A network approach](https://doi.org/10.1002/fut.22270 "@yang_volatility_2021")
+
+- The total volatility connectedness across commodities is substantial and fluctuates within the range of 30\%–60\%, which is largely driven by low-frequency volatility connectedness.  
+- Energy futures as a group and crude oil and soybeans as individual commodities play dominant roles as net senders of volatility shocks in the system of 25 commodities.  
+- Commodity volatility spillovers at medium and particularly low frequency account for over 40\% of the total volatility connectedness, which can be significantly explained by economic factors related to broad economic conditions.  
+  Implies that the effect of the financialization of commodities might be more limited than previously assumed.
+
+### [Probability weighting in commodity futures markets](https://doi.org/10.1002/fut.22400 "@yuan_pobability_2023")
+
+- Commodities with a high probability-weighting value significantly underperform their low-value pairs by 11\% per annum.
+  Neither conventional commodity risk factors nor existing characteristics explain this predictability.   
+  The predictability is more pronounced when arbitrage constraints are more binding.  
+- Commodities with a high probability-weighting value also attract excess demand from non-commercial traders.  
+- Collectively, these findings support a prospect theory-based explanation for the cross-section of commodity returns.
+
+### [Intermediary asset pricing in commodity futures returns](https://doi.org/10.1002/fut.22099 "@yin_intermediary_2020")
+
+- The intermediary capital (IC) effect is substantially positive and continues to grow as the financialization of commodities deepens.  
+- The effect of the positive IC risk factor varies significantly.  
+- Portfolios with low basis, low open interest, low momentum, and low liquidity earn significantly higher returns than counterparty portfolios.
+
+### [Intermediary capital risk and commodity futures volatility](https://doi.org/10.1002/fut.22185 "@yin_intermediary_2021")
+
+- The overall effect of intermediary capital risk (ICR) is negative and more significant for the post-2008 period, although positive and negative ICR play asymmetric roles.  
+- Evidence of heterogeneous structure of dependence across the volatility distribution:  
+  - ICR strengthens toward upper volatility percentiles.
+  - Financialization in commodities flattens this dynamic trace.
+- The ability of ICR to convey economic news is the most economically important source of the dependence.
+
+### [Can a rational expectation storage model explain the USDA ending grain stocks forecast errors?](https://doi.org/10.1002/fut.22282 "@zhang_can_2022")
+
+- There is a predictable component of forecast errors from 1980/81 to 2018/19 that can partially be explained by the temporal basis and monthly stocks, two important factors from a rational expectation storage model that codetermines carry.  
+- The USDA ending stocks forecasts can be improved by 7.1\%, 7.2\%, and 4.5\% for corn, soybean, and wheat, respectively.  
+  The improvement is most significant when the last year's carry is small.  
+
+### [Do oil shocks impact stock liquidity?](https://doi.org/10.1002/fut.22289 "@zhang_do_2022")
+
+- Evidence that differentiated oil shocks have distinctive influence on stock liquidity.  
+  Oil shocks driven by demand lower stock liquidity, whereas oil supply shocks have the opposite effect.  
+- Generally large corporations are more affected by oil demand and supply shocks.  
+- That oil, oil-related, oil-user and the broad market categories are most affected by oil shocks, but the effects on oil-substitutes are minimum.
+
+### [Hedging pressure and liquidity provision in commodity options markets](https://doi.org/10.1002/fut.22327 "@zhang_hedging_2022")
+
+- There are significant hedging pressure effects in commodity options markets.  
+- The empirical results indicate that commercials (swap dealers) provide liquidity to non-commercials (money managers) in commodity options markets in the short run.
+
+### [The impact of COVID-19 on the interdependence between US and Chinese oil futures markets](https://doi.org/10.1002/fut.22326 "@zhang_impact_2022")
+
+- The COVID-19 pandemic enhanced the long-run correlation between the two oil markets.  
+  In contrast, daily changes in pandemic severity had a negative effect on the short-term transient correlation.  
+- COVID-19 changed the one-direction causality from the US oil market to the Chinese market in the pre-COVID period to a bidirectional causal relation between the two markets during the COVID period.  
+  It strengthened the volatility spillover effect from the Chinese to US markets.  
+
+### [The influence of oil price uncertainty on stock liquidity](https://doi.org/10.1002/fut.22383 "@zhang_influence_2023")
+
+- Elevated oil price uncertainty has a significant and negative influence on stock liquidity.  
+  Large oil-related corporations are most affected, followed by small-listed firms more generally.  
+- Liquidity providers widen the bid-ask spreads to protect themselves during periods of high oil price uncertainty for large-listed firms, particularly those in the oil industry.
+
+## References

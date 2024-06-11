@@ -1,0 +1,66 @@
+---
+documentclass: article
+# classoption: letterpaper
+geometry: "letterpaper, left = 1in, right = 1in, top = 1.5in, bottom = 1.5in"
+link-citations: TRUE
+bibliography: BibTeX.bib
+biblio-style: jf
+fontsize: 12pt
+
+output:
+  pdf_document:
+    template: "template.tex"
+    citation: natbib
+    fig_caption: TRUE
+    keep_tex: TRUE
+    number_sections: TRUE
+    latex_engine: pdflatex
+    includes:
+     in_header: preamble.tex
+
+title: 'Financialization of Commodities: an Asset Pricing Perspective'
+
+author: 
+  - name: Devraj Basu
+    surname: Basu (corresponding author)
+    email: devraj.basu@strath.ac.uk
+    affiliation: University of Strathclyde, Glasgow, UK
+  - name: Olivier Bauthéac
+    surname: Bauthéac
+    email: olivier.bautheac@strath.ac.uk
+    affiliation: University of Strathclyde, Glasgow, UK
+
+    
+
+acknowledgements: |
+  We thank seminar participants at IIM Ahmedabad, IIM Calcutta, SKEMA Business School and University of Gottingen, as well as Griffith inaugural alternative investment conference attendants for their feedback. We also thank Joelle Miffre, Martijn Boons, John Fan, Robert Bianchi, Chardin Wese Simen, Andrew Kaleel and particularly Olaf Korn for their extremely useful comments and suggestions.
+  
+---
+
+\newpage
+
+
+**Disclosure**  
+
+* Devraj Basu: 
+  I am a co-author of this paper and wish to state that I have no conflict of interest, financial or otherwise. I do not hold paid or unpaid positions at any organization whose goals relate to the article.  
+  ![](pics/signature - Devraj.png)\
+
+
+\newpage
+
+
+**Disclosure**  
+
+* Olivier Bauthéac:
+  I am a co-author of this paper and wish to state that I have no conflict of interest, financial or otherwise. I do not hold paid or unpaid positions at any organization whose goals relate to the article.  
+  ![](pics/signature - Olivier.png)\
+
+
+\newpage
+
+
+
+
+
+
