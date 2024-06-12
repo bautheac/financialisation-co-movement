@@ -1,11 +1,15 @@
-
 library(shinydashboard)
 library(shiny)
-library(magrittr)
 
-linebreaks <- function(n){HTML(strrep(br(), n))}
 
-source("datasets.r")
+
+path_directory <- file.path(here::here(), "explore", "shiny", "revision-jfm")
+
+source(file.path(path_directory, "datasets.r"))
+source(file.path(path_directory, "functions.r"))
+source(file.path(path_directory, "modules", "results_summary_table.r"))
+source(file.path(path_directory, "modules", "results_summary_category.r"))
+source(file.path(path_directory, "modules", "results_summary.r"))
 
 
 sidebar <- dashboardSidebar(
@@ -15,63 +19,24 @@ sidebar <- dashboardSidebar(
   )
 )
 
-
-
 body <- dashboardBody(
   tabItems(
-    tabItem(
-      tabName = "correlations",
-      h2("By period"),
-      p(linebreaks(3L)),
-      h3("Averages"),
-      fluidRow(DT::dataTableOutput('correlations_periods_average'), width = "100%", height = "auto", fill = TRUE),
-      p(linebreaks(3L)),
-      h3("Top-bottom 3"),
-      fluidRow(DT::dataTableOutput('correlations_periods_top_bottom_3'), width = "100%", height = "auto", fill = TRUE),
-      p(linebreaks(7L)),
-      h2("By year"),
-      p(linebreaks(3L)),
-      h3("Averages"),
-      fluidRow(DT::dataTableOutput('correlations_years_average'), width = "100%", height = "auto", fill = TRUE),
-      p(linebreaks(3L)),
-      h3("Top-bottom 3"),
-      fluidRow(DT::dataTableOutput('correlations_years_top_bottom_3'), width = "100%", height = "auto", fill = TRUE),
-      
-    ),
-    tabItem(
-      tabName = "regressions",
-      fluidRow(DT::dataTableOutput('regressions'), width = "100%", height = "auto", fill = TRUE)
-    )
+    tabItem(tabName = "correlations", results_summary_UI("correlations")),
+    tabItem(tabName = "regressions", results_summary_UI("regressions"))
   )
 )
-      
-
-
-
 
 ui <- dashboardPage(
+  
   dashboardHeader(title = "Co-movement"), sidebar, body, skin = "black"
 )
 
-server <- function(input, output) {
 
-  output$correlations_periods_average <- DT::renderDataTable(
-    correlations_periods_average, filter = 'top', options = list(scrollX = TRUE)
-  )
-  output$correlations_periods_top_bottom_3 <- DT::renderDataTable(
-    correlations_periods_top_bottom_3, filter = 'top', options = list(scrollX = TRUE)
-  )
-  output$correlations_years_average <- DT::renderDataTable(
-    correlations_years_average, filter = 'top', options = list(scrollX = TRUE)
-  )
-  output$correlations_years_top_bottom_3 <- DT::renderDataTable(
-    correlations_years_top_bottom_3, filter = 'top', options = list(scrollX = TRUE)
-  )
+server <- function(input, output) {
   
-  
-  output$regressions <- DT::renderDataTable(
-    regressions, filter = 'top', options = list(scrollX = TRUE)
-  )
+  results_summary_Server("correlations", results$correlations)
+  results_summary_Server("regressions", results$regressions)
 }
+
 
 shinyApp(ui, server)
