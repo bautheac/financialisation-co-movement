@@ -34,10 +34,25 @@ split_analysis_summary_results_into_category_dataframes <- function(analysis_sum
 }
 
 
-correlations_raw <- readr::read_rds(paste0(here::here(), "/explore/tables/revision-jfm/correlations.rds"))
+construct_path <- function() {
+  shiny_env <- Sys.getenv("SHINY_ENV")
+  if (shiny_env == "local") {
+    # Local machine
+    path_directory <- here::here("explore", "shiny", "revision-jfm")
+  } else {
+    # Server
+    path_directory <- here::here()
+  }
+  print(paste("Constructed path:", path_directory))
+  return(path_directory)
+}
+path_directory <- construct_path()
+
+
+correlations_raw <- readr::read_rds(file.path(path_directory, "results", "correlations.rds"))
 correlations_split <- split_analysis_summary_results_into_category_dataframes(correlations_raw)
 
-regressions_raw <- readr::read_rds(paste0(here::here(), "/explore/tables/revision-jfm/regressions.rds"))
+regressions_raw <- readr::read_rds(file.path(path_directory, "results", "regressions.rds"))
 regressions_split <- split_analysis_summary_results_into_category_dataframes(regressions_raw)
 
 results <- list(correlations = correlations_split, regressions = regressions_split)

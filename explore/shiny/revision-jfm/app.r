@@ -1,15 +1,24 @@
 library(shinydashboard)
 library(shiny)
 
-
-
-path_directory <- file.path(here::here(), "explore", "shiny", "revision-jfm")
+construct_path <- function() {
+  
+  shiny_env <- Sys.getenv("SHINY_ENV")
+  if (shiny_env == "local") {
+    path_directory <- here::here("explore", "shiny", "revision-jfm")
+  } else { path_directory <- here::here() }
+  
+  return(path_directory)
+}
+path_directory <- construct_path()
 
 source(file.path(path_directory, "datasets.r"))
 source(file.path(path_directory, "functions.r"))
 source(file.path(path_directory, "modules", "results_summary_table.r"))
 source(file.path(path_directory, "modules", "results_summary_category.r"))
 source(file.path(path_directory, "modules", "results_summary.r"))
+
+
 
 
 sidebar <- dashboardSidebar(
