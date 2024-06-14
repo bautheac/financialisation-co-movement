@@ -43,7 +43,7 @@ construct_path <- function() {
     # Server
     path_directory <- here::here()
   }
-  print(paste("Constructed path:", path_directory))
+
   return(path_directory)
 }
 path_directory <- construct_path()
