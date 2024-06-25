@@ -10,7 +10,7 @@ results_summary_category_UI <- function(id, category_name){
     p(linebreaks(3L)),
     results_summary_table_UI(ns("average"), "Average"),
     p(linebreaks(3L)),
-    results_summary_table_UI(ns("top_bottom_3"), "Top-bottom 3"),
+    results_summary_table_UI(ns("top_bottom_3"), "Top(-bottom) 3"),
   )
 }
 

@@ -201,7 +201,7 @@ return_frequency <- "day"
 ranking_period <- 26L
 long_threshold <- 2/3
 short_threshold <- 1/3
-weighted = TRUE
+weighted = FALSE
 
 market <- factorem::market_factor(
   data = `commodity futures data`, return_frequency = return_frequency, long = T
