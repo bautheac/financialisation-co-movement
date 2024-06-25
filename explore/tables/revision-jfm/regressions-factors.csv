@@ -1,0 +1,31 @@
+factor,leg,regime,past,financialization,crisis,present
+market,factor,all,11.68%,21.6%,30.72%,15.57%
+market,factor,backwardation,11.28%,23.51%,28.95%,13.12%
+market,factor,contango,12.23%,19.96%,32.47%,17.66%
+CHP,factor,all,2.39%,5.81%,5.41%,4.51%
+CHP,factor,backwardation,3.18%,5.96%,4.72%,5.54%
+CHP,factor,contango,1.91%,6.09%,6.14%,4.79%
+CHP,long,all,6.82%,17.75%,25.18%,11.53%
+CHP,long,backwardation,6.58%,19.07%,23.39%,8.94%
+CHP,long,contango,7.46%,16.8%,26.75%,14.1%
+CHP,short,all,6.6%,11.8%,22.46%,8.94%
+CHP,short,backwardation,6.43%,12.47%,20.61%,8.23%
+CHP,short,contango,7.49%,11.71%,24.26%,10.22%
+`OI nearby`,factor,all,7.45%,6.87%,4.57%,5.29%
+`OI nearby`,factor,backwardation,7.1%,6.62%,4.5%,5%
+`OI nearby`,factor,contango,7.95%,7.61%,5.23%,5.83%
+`OI nearby`,long,all,10%,15.88%,24.65%,11.34%
+`OI nearby`,long,backwardation,9.83%,17.14%,23.22%,9.63%
+`OI nearby`,long,contango,10.28%,15.06%,26.21%,12.71%
+`OI nearby`,short,all,7.48%,15.64%,23.19%,9.45%
+`OI nearby`,short,backwardation,6.8%,18.02%,21.14%,7.84%
+`OI nearby`,short,contango,8.3%,13.36%,25.12%,11.33%
+`term structure`,factor,all,1.9%,2.89%,5.11%,1.7%
+`term structure`,factor,backwardation,2.32%,2.82%,4.79%,2.85%
+`term structure`,factor,contango,2.02%,3.41%,5.72%,1.34%
+`term structure`,long,all,6.79%,13.35%,21.01%,9.91%
+`term structure`,long,backwardation,6.26%,14.97%,19.22%,9.15%
+`term structure`,long,contango,7.61%,12.13%,23.1%,10.85%
+`term structure`,short,all,6.48%,16.34%,26.1%,9.16%
+`term structure`,short,backwardation,6.8%,18.16%,24.63%,6.43%
+`term structure`,short,contango,6.53%,14.91%,27.56%,11.86%
