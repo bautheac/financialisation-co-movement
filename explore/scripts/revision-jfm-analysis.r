@@ -65,21 +65,22 @@ commodity_futures_data <- make_commodity_futures_dataframe(
 ## period dates ####
 period_dates <- make_period_dates_timeseries(commodity_futures_data, periods)
 
-## commodity CFTC tickers ####
+## aggregate CHP ####
+### commodity CFTC tickers ####
 commodity_CFTC_tickers <- commodity_futures_tickers[
   commodity_futures_tickers %in% tickers_cftc$`active contract ticker`
 ]
 
-## commodity CFTC data ####
+### commodity CFTC data ####
 commodity_CFTC_data <- pullit::pull_futures_CFTC(
   source = "storethat", active_contract_tickers = commodity_CFTC_tickers, 
   start = start, end = end, file = storethat_db_path
 )
 
-## aggregate CHP regimes ####
+### regimes ####
 aggregate_CHP_regimes <- make_aggregate_CHP_regimes_dataframe()
 
-## construct commodity index returns ####
+## commodity index returns ####
 US_commodity_futures_tickers <- filter_commodity_futures_tickers(
   commodity_futures_tickers, filter_country = "US"
 )
@@ -91,6 +92,31 @@ commodity_futures_index_returns <- make_commodity_futures_index_returns_datafram
   commodity_futures_individual_data_levels, US_commodity_futures_tickers, 
   first_period_boundaries$start, last_period_boundaries$end
 )
+
+## commodity factor returns ####
+### futures params ####
+TS_positions <- 1L:2L
+roll_type <- "A"
+roll_days = 0L
+roll_months = 0L
+roll_adjustment = "N"
+data_file = storethat_db_path
+### factor params ####
+update_frequency = "week"
+return_frequency <- "day"
+ranking_period <- 26L
+long_threshold <- 2/3
+short_threshold <- 1/3
+weighted = FALSE
+
+commodity_futures_factor_returns <- make_commodity_futures_factor_returns_dataframe(
+  US_commodity_futures_tickers, start, end, TS_positions, 
+  roll_type, roll_days, roll_months, roll_adjustment, data_file,
+  update_frequency, return_frequency, ranking_period, long_threshold, 
+  short_threshold, weighted
+  )
+
+
 
 # analysis ####
 library(furrr)
@@ -179,7 +205,7 @@ path_regressions_index_formatted_file <- paste0(
 )
 saveRDS(regressions_index_formatted, path_regressions_index_formatted_file)
 
-
+### factors ####
 
 
 ################################################################################

@@ -367,6 +367,114 @@ make_commodity_futures_index_returns_dataframe <- function(
   )
 }
 
+## construct commodity factor returns ####
+### local functions ####
+get_data_for_factor_construction <- function(
+    tickers, start_date, end_date, 
+    TS_positions, roll_type, roll_days, roll_months, roll_adjustment, data_file
+){
+  
+  commodity_futures_data <- pullit::pull_futures_market(
+    source = "storethat", type = "term structure", active_contract_tickers = tickers,
+    start = start_date, end = end_date, TS_positions = TS_positions, 
+    roll_type = roll_type, roll_days = roll_days, roll_months = roll_months, 
+    roll_adjustment = roll_adjustment, file = data_file
+  )
+  
+  commodity_aggregate_data <- pullit::pull_futures_market(
+    source = "storethat", type = "aggregate", active_contract_tickers = tickers,
+    start = start_date, end = end_date, file = data_file
+  )
+  
+  commodity_CFTC_tickers <- tickers[tickers %in% tickers_cftc$`active contract ticker`]
+  
+  commodity_CFTC_data <- pullit::pull_futures_CFTC(
+    source = "storethat", active_contract_tickers = commodity_CFTC_tickers, 
+    start = start_date, end = end_date, file = data_file
+  )
+  
+  list(
+    `futures individual` = commodity_futures_data, `futures aggregate` = commodity_aggregate_data,
+    cftc = commodity_CFTC_data
+    )
+}
+
+construct_factor_objects <- function(
+    data, update_frequency, return_frequency, ranking_period, long_threshold, 
+    short_threshold, weighted
+){
+  
+  market <- factorem::market_factor(
+    data = data$`futures individual`, return_frequency = return_frequency, long = T
+  )
+  
+  CHP <- factorem::CHP_factor(
+    price_data = data$`futures individual`, CHP_data = data$cftc, 
+    update_frequency = update_frequency, return_frequency = return_frequency,
+    ranking_period = ranking_period, 
+    long_threshold = long_threshold, short_threshold = short_threshold, 
+    weighted = weighted
+  )
+  
+  `open interest nearby` <- factorem::OI_nearby_factor(
+    data = data$`futures individual`, update_frequency = update_frequency,
+    return_frequency = return_frequency, ranking_period = ranking_period,
+    long_threshold = long_threshold, short_threshold = short_threshold,
+    weighted = weighted
+  )
+
+  `open interest aggregate` <- factorem::OI_aggregate_factor(
+    price_data = data$`futures individual`, aggregate_data = data$`futures aggregate`,
+    update_frequency = update_frequency, return_frequency = return_frequency,
+    ranking_period = ranking_period,
+    long_threshold = long_threshold, short_threshold = short_threshold,
+    weighted = weighted
+  )
+
+  `term structure` <- factorem::TS_factor(
+    data = data$`futures individual`, update_frequency = update_frequency,
+    return_frequency = return_frequency, front = 1L, back = 2L,
+    ranking_period = ranking_period, long_threshold = long_threshold,
+    short_threshold = short_threshold, weighted = weighted
+  )
+
+  list(
+    market = market, CHP = CHP, `open interest nearby` = `open interest nearby`,
+    `open interest aggregate` = `open interest aggregate`, `term structure` = `term structure`
+  )
+}
+
+extract_factor_returns_into_dataframe <- function(factor_objects){
+  
+  furrr::future_imap_dfr(
+    factor_objects, function(factor_object, factor_name){
+      tidyr::gather(factor_object@returns, leg, return, -date) %>%
+        dplyr::filter(! is.na(return)) %>%
+        dplyr::mutate(name = gsub("`", "", factor_name))
+    }
+  ) %>% dplyr::relocate(name, .before = 1L) %>% tibble::as_tibble()
+}
+
+make_commodity_futures_factor_returns_dataframe <- function(
+    tickers, start_date, end_date, 
+    TS_positions, roll_type, roll_days, roll_months, roll_adjustment, data_file,
+    update_frequency, return_frequency, ranking_period, long_threshold, 
+    short_threshold, weighted
+    ){
+  
+  data <- get_data_for_factor_construction(
+    tickers, start_date, end_date, 
+    TS_positions, roll_type, roll_days, roll_months, roll_adjustment, data_file
+  )
+
+  factors <- construct_factor_objects(
+    data, update_frequency, return_frequency, ranking_period, long_threshold, 
+    short_threshold, weighted
+  )
+  
+  extract_factor_returns_into_dataframe(factors)
+}
+
 # analysis ####
 ## local functions ####
 get_all_tickers <- function(`futures individual dataset`) {
