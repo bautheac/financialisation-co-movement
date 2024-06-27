@@ -531,6 +531,8 @@ make_analysis_for_ticker_combinations_dataframe <- function(
   })
 }
 
+## correlations ####
+### local functions ####
 compute_correlations <- function(df) {
   cor( dplyr::select(df, -date), use = "pairwise.complete.obs")
 }
@@ -547,6 +549,9 @@ make_pairwise_correlations_for_ticker_combinations_dataframe <- function(
   dplyr::mutate(combinations, results = analysis)
 }
 
+## regressions ####
+### index ####
+#### local functions ####
 make_commodity_futures_dataset_for_regression_analysis <- function(
     commodity_futures_data, commodity_futures_index_returns
 ){
@@ -566,7 +571,7 @@ make_commodity_futures_dataset_for_regression_analysis <- function(
   dplyr::bind_rows(commodity_futures_individual_returns, commodity_futures_index_returns)
 }
 
-make_sanitised_data_list_for_regressions <- function(df){
+make_sanitised_data_list_for_regressions_index <- function(df){
   
   tickers <- dplyr::setdiff(names(df), c("date", "index")) %>%
     make.names(unique = TRUE)
@@ -575,10 +580,10 @@ make_sanitised_data_list_for_regressions <- function(df){
   list(sanitised_commodity_futures_tickers = tickers, df = df)
 }
 
-compute_regressions <- function(df) {
+compute_regressions_index <- function(df) {
   
   unsanitised_commodity_futures_tickers <- dplyr::setdiff(names(df), c("date", "index"))
-  data <- make_sanitised_data_list_for_regressions(df)
+  data <- make_sanitised_data_list_for_regressions_index(df)
   
   models <- purrr::map(data$sanitised_commodity_futures_tickers, function(ticker) {
     
@@ -598,7 +603,7 @@ add_index_to_commodity_pool_tickers_dataframe <- function(commodity_pool_tickers
   commodity_pool_tickers_dataframe
 }
 
-make_regressions_for_ticker_combinations_dataframe <- function(
+make_regressions_index_for_ticker_combinations_dataframe <- function(
     combinations, commodity_futures_data, commodity_futures_index_returns, 
     aggregate_CHP_regimes, period_dates
     ){
@@ -611,7 +616,7 @@ make_regressions_for_ticker_combinations_dataframe <- function(
   
   analysis <- make_analysis_for_ticker_combinations_dataframe(
     combinations$tickers, commodity_futures_data, aggregate_CHP_regimes, period_dates, 
-    compute_regressions
+    compute_regressions_index
   )
   
   dplyr::mutate(combinations, results = analysis)
@@ -695,7 +700,7 @@ add_top_3_and_average_to_pairwise_correlations_for_ticker_combinations_dataframe
     dplyr::select(-c("tickers", "results"))
 }
 
-add_top_3_and_average_to_regressions_for_ticker_combinations_dataframe <- function(
+add_top_3_and_average_to_regressions_index_for_ticker_combinations_dataframe <- function(
     regressions_for_ticker_combinations_dataframe
 ){
   
@@ -817,7 +822,7 @@ format_correlation_summary_statistics_into_table <- function(correlations_summar
 ## regressions ####
 ### top 3 ####
 #### local functions ####
-map_solution_to_problem_domain_jargon_in_regressions_top_3_unnested_results_summary <- function(
+map_solution_to_problem_domain_jargon_in_regressions_index_top_3_unnested_results_summary <- function(
     unnested_regressions_top_3_results_summary
 ){
   
@@ -832,7 +837,7 @@ map_solution_to_problem_domain_jargon_in_regressions_top_3_unnested_results_summ
 }
   
 
-arrange_columns_in_regression_results_summary <- function(formatted_regression_results_summary){
+arrange_columns_in_regression_index_results_summary <- function(formatted_regression_results_summary){
   
   dplyr::select(
     formatted_regression_results_summary,
@@ -843,10 +848,10 @@ arrange_columns_in_regression_results_summary <- function(formatted_regression_r
     )
 }
 
-format_regression_summary_statistics_into_table <- function(regressions_summary){
+format_regression_index_summary_statistics_into_table <- function(regressions_summary){
   
   top_3 <- unnest_analysis_statistic_results_summary(regressions_summary, "top 3") %>%
-    map_solution_to_problem_domain_jargon_in_regressions_top_3_unnested_results_summary()
+    map_solution_to_problem_domain_jargon_in_regressions_index_top_3_unnested_results_summary()
   
   average <- unnest_analysis_statistic_results_summary(regressions_summary, "average")
 
@@ -860,5 +865,4 @@ format_regression_summary_statistics_into_table <- function(regressions_summary)
     dplyr::mutate(dplyr::across(c(average, beta, `p value`, `R squared`), ~round(.x, digits = 4L))) %>%
     arrange_columns_in_analysis_results_summary()
 }
-
 

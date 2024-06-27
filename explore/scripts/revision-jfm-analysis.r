@@ -19,6 +19,8 @@ period_bounds <- list(
 )
 periods <- make_periods_data_frame(period_bounds)
 
+rf <- readr::read_rds(here::here("data", "risk-free-rate.rds"))
+
 # load data ####
 ## time boundaries ####
 start <- "1996-01-01"; end <- "2018-12-14"
@@ -97,72 +99,85 @@ plan(multisession, workers = parallel::detectCores())
 commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(commodity_futures_tickers)
 
 ## correlations ####
+### compute raw results ####
 correlations_raw <- make_pairwise_correlations_for_ticker_combinations_dataframe(
   commodity_pool_tickers, commodity_futures_data, aggregate_CHP_regimes, period_dates
 )
 
+### save raw results ####
+path_correlations_raw_file <- paste0(
+  here::here(), "/explore/results/revision-jfm/correlations-raw.rds"
+)
+saveRDS(correlations_raw, path_correlations_raw_file)
+
+### summarise results ####
+#### load raw dataset (optional) ####
+correlations_raw <- readr::read_rds(path_correlations_raw_file)
+
+#### summarise ####
+correlations_summary <- 
+  add_top_3_and_average_to_pairwise_correlations_for_ticker_combinations_dataframe(correlations_raw)
+
+#### save summary results ####
+path_correlations_summary_file <- paste0(
+  here::here(), "/explore/results/revision-jfm/correlations-summary.rds"
+)
+saveRDS(correlations_summary, path_correlations_summary_file)
+
+### format results ####
+#### load summary dataset (optional) ####
+correlations_summary <- readr::read_rds(path_correlations_summary_file)
+
+#### format ####
+correlations_formatted <- format_correlation_summary_statistics_into_table(correlations_summary)
+
+#### save formatted results ####
+path_correlations_formatted_file <- paste0(
+  here::here(), "/explore/tables/revision-jfm/correlations.rds"
+)
+
+saveRDS(correlations_formatted, path_correlations_formatted_file)
+
 ## regressions ####
-regressions_raw <- make_regressions_for_ticker_combinations_dataframe(
+### index ####
+#### raw ####
+regressions_index_raw <- make_regressions_index_for_ticker_combinations_dataframe(
   commodity_pool_tickers, commodity_futures_data, commodity_futures_index_returns, 
   aggregate_CHP_regimes, period_dates
 )
 
-## save raw results ####
-path_correlations_raw_file <- paste0(
-  here::here(), "/explore/results/revision-jfm/correlations-raw.rds"
+#### save raw results ####
+path_regressions_index_raw_file <- paste0(
+  here::here(), "/explore/results/revision-jfm/regressions-index-raw.rds"
   )
-path_regressions_raw_file <- paste0(
-  here::here(), "/explore/results/revision-jfm/regressions-raw.rds"
-  )
+saveRDS(regressions_index_raw, path_regressions_index_raw_file)
 
-saveRDS(correlations_raw, path_correlations_raw_file)
-saveRDS(regressions_raw, path_regressions_raw_file)
+#### summarise results ####
+##### load raw dataset (optional) ####
+# regressions_index_raw <- readr::read_rds(path_regressions_index_raw_file)
 
-# summary ####
-## load raw dataset (optional) ####
-correlations_raw <- readr::read_rds(path_correlations_raw_file)
-regressions_raw <- readr::read_rds(path_regressions_raw_file)
-  
-## correlations ####  
-correlations_summary <- 
-  add_top_3_and_average_to_pairwise_correlations_for_ticker_combinations_dataframe(correlations_raw)
+##### summarise ####  
+regressions_index_summary <- 
+  add_top_3_and_average_to_regressions_index_for_ticker_combinations_dataframe(regressions_index_raw)
 
-## regressions ####  
-regressions_summary <- 
-  add_top_3_and_average_to_regressions_for_ticker_combinations_dataframe(regressions_raw)
-
-## save summary results ####
-path_correlations_summary_file <- paste0(
-  here::here(), "/explore/results/revision-jfm/correlations-summary.rds"
+##### save summary results ####
+path_regressions_index_summary_file <- paste0(
+  here::here(), "/explore/results/revision-jfm/regressions-index-summary.rds"
 )
-path_regressions_summary_file <- paste0(
-  here::here(), "/explore/results/revision-jfm/regressions-summary.rds"
+saveRDS(regressions_index_summary, path_regressions_index_summary_file)
+
+#### format ####
+##### load summary dataset (optional) ####
+# regressions_index_summary <- readr::read_rds(path_regressions_index_summary_file)
+
+##### format ####  
+regressions_index_formatted <- format_regression_index_summary_statistics_into_table(regressions_index_summary)
+
+##### save formatted results ####
+path_regressions_index_formatted_file <- paste0(
+  here::here(), "/explore/tables/revision-jfm/regressions-index.rds"
 )
-
-saveRDS(correlations_summary, path_correlations_summary_file)
-saveRDS(regressions_summary, path_regressions_summary_file)
-
-# format ####
-## load summary dataset (optional) ####
-correlations_summary <- readr::read_rds(path_correlations_summary_file)
-regressions_summary <- readr::read_rds(path_regressions_summary_file)
-
-## correlations ####  
-correlations_formatted <- format_correlation_summary_statistics_into_table(correlations_summary)
-
-## regressions ####  
-regressions_formatted <- format_regression_summary_statistics_into_table(regressions_summary)
-
-## save formatted results ####
-path_correlations_formatted_file <- paste0(
-  here::here(), "/explore/tables/revision-jfm/correlations.rds"
-)
-path_regressions_formatted_file <- paste0(
-  here::here(), "/explore/tables/revision-jfm/regressions.rds"
-)
-
-saveRDS(correlations_formatted, path_correlations_formatted_file)
-saveRDS(regressions_formatted, path_regressions_formatted_file)
+saveRDS(regressions_index_formatted, path_regressions_index_formatted_file)
 
 
 
@@ -170,163 +185,6 @@ saveRDS(regressions_formatted, path_regressions_formatted_file)
 ################################################################################
 # Rerun regressions with equally weighted factors
 ################################################################################
-library(finRes); library(magrittr); library(doParallel); library(lubridate)
-
-
-# start cluster ####
-cluster <- makeCluster(detectCores() - 1L, outfile = "")
-registerDoParallel(cluster, cores = detectCores() - 1L)
-
-
-# globals ####
-data("tickers_futures", "tickers_cftc", package = "BBGsymbols")
-data("exchanges", package = "fewISOs")
-rf <- readr::read_rds(here::here("data", "risk-free-rate.rds"))
-
-storethat <- here::here("data", "storethat.sqlite")
-
-
-periods <- tibble::tibble(
-  period = c(
-    rep("past", 2L), rep("financialization", 2L), 
-    rep("crisis", 2L), rep("present", 2L)
-  ), 
-  bound = rep(c("start", "end"), 4L),
-  date = c(
-    "1997-07-01", "2003-12-31", "2004-01-01", "2008-09-14", "2008-09-15", 
-    "2013-06-19", "2013-06-20", "2018-12-31"
-  )
-)
-# load data ####
-start <- "1996-01-01"; end <- "2018-12-31"
-# could add COA Comdty (Crude oil-brent - IFEU) ENA Comdty (Crude oil-WTI - IFEU), 
-# PGA Comdty (Gasoline-RBOB - IFEU), NVA Comdty (Heating oil - IFEU), 
-# FNA Comdty (Natural gas - IFEU), QSA Comdty (Gasoil-low sulfur - IFEU)
-`commodity futures tickers` <- c(
-  "BOA Comdty", "C A Comdty", "CCA Comdty", "CLA Comdty", "CTA Comdty", 
-  "FCA Comdty", "GCA Comdty", "HGA Comdty", "HOA Comdty", "JOA Comdty", 
-  "KCA Comdty", "LAA Comdty", "LBA Comdty", "LCA Comdty", "LHA Comdty", 
-  "LLA Comdty", "LNA Comdty", "LPA Comdty", "LTA Comdty", "LXA Comdty", 
-  "NGA Comdty", "O A Comdty", "PAA Comdty", "PLA Comdty", "S A Comdty", 
-  "SBA Comdty", "SIA Comdty", "SMA Comdty", "W A Comdty", "XBWA Comdty"
-)
-
-`US commodity futures tickers` <- dplyr::left_join(
-  dplyr::select(tickers_futures, ticker, MIC), 
-  dplyr::select(exchanges, MIC, country), 
-  by = "MIC"
-) %>% 
-  dplyr::filter(ticker %in% `commodity futures tickers`, country == "US") %>% 
-  dplyr::select(ticker) %>% purrr::flatten_chr()
-
-`commodity futures data` <- pullit::pull_futures_market(
-  source = "storethat", type = "term structure", 
-  active_contract_tickers = `US commodity futures tickers`,
-  start = start, end = end, TS_positions = 1L:2L, roll_type = "A", 
-  roll_days = 0L, roll_months = 0L,roll_adjustment = "N", file = storethat
-)
-`commodity futures data` <- pullit::get_data(`commodity futures data`) %>%
-  dplyr::left_join(
-    dplyr::select(
-      pullit::get_term_structure_tickers(`commodity futures data`), 
-      `active contract ticker`, ticker, `TS position`
-    ),
-    by = "ticker"
-  ) %>% 
-  dplyr::select(
-    `active contract ticker`, ticker, `TS position`, field, date, value
-  )
-
-`commodity aggregate data` <- pullit::pull_futures_market(
-  source = "storethat", type = "aggregate", 
-  active_contract_tickers = `US commodity futures tickers`,
-  start = start, end = end, file = storethat
-)
-
-`commodity CFTC tickers` <- `US commodity futures tickers`[
-  `US commodity futures tickers` %in% tickers_cftc$`active contract ticker`
-]
-`commodity CFTC data` <- pullit::pull_futures_CFTC(
-  source = "storethat", active_contract_tickers = `commodity CFTC tickers`, 
-  start = start, end = end, file = storethat
-)
-
-# aggregate CHP ####
-`aggregate CHP` <- dplyr::left_join(
-  pullit::get_data(`commodity CFTC data`), 
-  dplyr::select(
-    tickers_cftc, MIC, format, underlying, unit, participant, position, ticker
-  ),
-  by = "ticker"
-) %>% 
-  dplyr::filter(
-    format == "legacy", participant == "commercial", underlying == "futures only", 
-    unit == "contracts", position %in% c("long", "short")
-  ) %>%
-  dplyr::select(`active contract ticker`, position, date, value) %>% 
-  dplyr::group_by(`active contract ticker`) %>%
-  tidyr::spread(position, value) %>% 
-  dplyr::mutate(pressure = long / (long + short)) %>% 
-  dplyr::select(`active contract ticker`, date, pressure) %>% 
-  dplyr::ungroup() %>% dplyr::group_by(date) %>% 
-  dplyr::summarise(`aggregate CHP` = mean(pressure, na.rm = T))
-
-years <- dplyr::mutate(
-  `aggregate CHP`, year = lubridate::year(date), week = lubridate::week(date)
-) %>% dplyr::group_by(year) %>% 
-  dplyr::mutate(
-    regime = ifelse(
-      `aggregate CHP` < median(`aggregate CHP`), 
-      "backwardation", 
-      "contango")
-  ) %>% dplyr::ungroup() %>%
-  dplyr::mutate(period = NA) %>% 
-  dplyr::select(period, year, week, regime)
-
-years <- dplyr::mutate(
-  dplyr::distinct(`commodity futures data`, date), 
-  year = lubridate::year(date), 
-  week = lubridate::week(date)
-) %>%
-  dplyr::left_join(years, by = c("year", "week")) %>% 
-  dplyr::select(-week) %>% dplyr::filter(! is.na(regime))
-
-subperiods <- lapply(
-  unique(periods$period), 
-  function(x){
-    
-    start <- dplyr::filter(periods, period == x, bound == "start") %>% 
-      dplyr::select(date) %>% purrr::flatten_chr()
-    
-    end <- dplyr::filter(periods, period == x, bound == "end") %>% 
-      dplyr::select(date) %>% purrr::flatten_chr()
-    
-    dates <- dplyr::distinct(`commodity futures data`, date) %>% 
-      dplyr::filter(date >= as.Date(start), date <= as.Date(end)) %>% 
-      dplyr::mutate(year = lubridate::year(date), week = lubridate::week(date))
-    
-    regimes <- dplyr::filter(
-      `aggregate CHP`, date >= as.Date(start), date <= as.Date(end)
-    ) %>% 
-      dplyr::mutate(
-        regime = ifelse(
-          `aggregate CHP` < median(`aggregate CHP`), "backwardation", "contango"
-        ),
-        period = x, year = lubridate::year(date), week = lubridate::week(date)
-      ) %>% 
-      dplyr::select(year, week, regime)
-    
-    dplyr::left_join(dates, regimes, by = c("year", "week")) %>% 
-      dplyr::filter(! is.na(regime)) %>%
-      dplyr::mutate(period = x, year = NA) %>% 
-      dplyr::select(-week)
-    
-  }) %>% 
-  dplyr::bind_rows() %>% 
-  dplyr::select(date, period, year, regime)
-
-`aggregate CHP regimes` <- dplyr::bind_rows(years, subperiods) %>% 
-  dplyr::arrange(period, year, date)
 
 
 # factor data - asset pool: US commodities ####

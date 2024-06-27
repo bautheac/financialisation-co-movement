@@ -52,10 +52,10 @@ path_directory <- construct_path()
 correlations_raw <- readr::read_rds(file.path(path_directory, "results", "correlations.rds"))
 correlations_split <- split_analysis_summary_results_into_category_dataframes(correlations_raw)
 
-regressions_raw <- readr::read_rds(file.path(path_directory, "results", "regressions.rds"))
-regressions_split <- split_analysis_summary_results_into_category_dataframes(regressions_raw)
+regressions_index_raw <- readr::read_rds(file.path(path_directory, "results", "regressions-index.rds"))
+regressions_index_split <- split_analysis_summary_results_into_category_dataframes(regressions_index_raw)
 
-results <- list(correlations = correlations_split, regressions = regressions_split)
+results <- list(correlations = correlations_split, `regressions index` = regressions_index_split)
 
 
 
