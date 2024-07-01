@@ -33,6 +33,16 @@ split_analysis_summary_results_into_category_dataframes <- function(analysis_sum
   )
 }
 
+split_regressions_factor_summary_results_into_category_dataframes <- function(regressions_factor_summary_results){
+  
+  analysis_periods <- dplyr::filter(regressions_factor_summary_results, timespan == "period") %>%
+    dplyr::select(-c(timespan, year))
+  
+  analysis_years <- dplyr::filter(regressions_factor_summary_results, timespan == "year") %>%
+    dplyr::select(-c(timespan, period))
+  
+  list(periods = analysis_periods, years = analysis_years)
+}
 
 construct_path <- function() {
   shiny_env <- Sys.getenv("SHINY_ENV")
@@ -52,10 +62,13 @@ path_directory <- construct_path()
 correlations_raw <- readr::read_rds(file.path(path_directory, "results", "correlations.rds"))
 correlations_split <- split_analysis_summary_results_into_category_dataframes(correlations_raw)
 
-regressions_raw <- readr::read_rds(file.path(path_directory, "results", "regressions.rds"))
-regressions_split <- split_analysis_summary_results_into_category_dataframes(regressions_raw)
+regressions_index_raw <- readr::read_rds(file.path(path_directory, "results", "regressions-index.rds"))
+regressions_index_split <- split_analysis_summary_results_into_category_dataframes(regressions_index_raw)
 
-results <- list(correlations = correlations_split, regressions = regressions_split)
+regressions_factor_raw <- readr::read_rds(file.path(path_directory, "results", "regressions-factor.rds"))
+regressions_factor_split <- split_regressions_factor_summary_results_into_category_dataframes(regressions_index_raw)
+
+results <- list(correlations = correlations_split, regressions = list(index = regressions_index_split))
 
 
 
