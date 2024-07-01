@@ -1,31 +1,79 @@
-factor,leg,regime,past,financialization,crisis,present
-market,factor,all,11.68%,21.6%,30.72%,15.57%
-market,factor,backwardation,11.28%,23.51%,28.95%,13.12%
-market,factor,contango,12.23%,19.96%,32.47%,17.66%
-CHP,factor,all,2.39%,5.81%,5.41%,4.51%
-CHP,factor,backwardation,3.18%,5.96%,4.72%,5.54%
-CHP,factor,contango,1.91%,6.09%,6.14%,4.79%
-CHP,long,all,6.82%,17.75%,25.18%,11.53%
-CHP,long,backwardation,6.58%,19.07%,23.39%,8.94%
-CHP,long,contango,7.46%,16.8%,26.75%,14.1%
-CHP,short,all,6.6%,11.8%,22.46%,8.94%
-CHP,short,backwardation,6.43%,12.47%,20.61%,8.23%
-CHP,short,contango,7.49%,11.71%,24.26%,10.22%
-`OI nearby`,factor,all,7.45%,6.87%,4.57%,5.29%
-`OI nearby`,factor,backwardation,7.1%,6.62%,4.5%,5%
-`OI nearby`,factor,contango,7.95%,7.61%,5.23%,5.83%
-`OI nearby`,long,all,10%,15.88%,24.65%,11.34%
-`OI nearby`,long,backwardation,9.83%,17.14%,23.22%,9.63%
-`OI nearby`,long,contango,10.28%,15.06%,26.21%,12.71%
-`OI nearby`,short,all,7.48%,15.64%,23.19%,9.45%
-`OI nearby`,short,backwardation,6.8%,18.02%,21.14%,7.84%
-`OI nearby`,short,contango,8.3%,13.36%,25.12%,11.33%
-`term structure`,factor,all,1.9%,2.89%,5.11%,1.7%
-`term structure`,factor,backwardation,2.32%,2.82%,4.79%,2.85%
-`term structure`,factor,contango,2.02%,3.41%,5.72%,1.34%
-`term structure`,long,all,6.79%,13.35%,21.01%,9.91%
-`term structure`,long,backwardation,6.26%,14.97%,19.22%,9.15%
-`term structure`,long,contango,7.61%,12.13%,23.1%,10.85%
-`term structure`,short,all,6.48%,16.34%,26.1%,9.16%
-`term structure`,short,backwardation,6.8%,18.16%,24.63%,6.43%
-`term structure`,short,contango,6.53%,14.91%,27.56%,11.86%
+country,factor,leg,regime,past,financialization,crisis,present
+US,market,factor,whole period,11.67%,21.7%,30.69%,15.73%
+US,market,factor,backwardation,11.26%,23.68%,28.95%,13.12%
+US,market,factor,contango,12.22%,19.97%,32.48%,17.66%
+US,CHP,factor,whole period,2.4%,5.8%,5.39%,4.47%
+US,CHP,factor,backwardation,3.19%,5.94%,4.72%,5.54%
+US,CHP,factor,contango,1.91%,6.1%,6.14%,4.79%
+US,CHP,long,whole period,6.81%,17.84%,25.15%,11.66%
+US,CHP,long,backwardation,6.59%,19.23%,23.39%,8.94%
+US,CHP,long,contango,7.45%,16.81%,26.77%,14.1%
+US,CHP,short,whole period,6.61%,11.92%,22.44%,9.03%
+US,CHP,short,backwardation,6.43%,12.73%,20.61%,8.23%
+US,CHP,short,contango,7.49%,11.7%,24.26%,10.22%
+US,open interest nearby,factor,whole period,7.45%,6.95%,4.57%,5.29%
+US,open interest nearby,factor,backwardation,7.1%,6.79%,4.5%,5%
+US,open interest nearby,factor,contango,7.95%,7.61%,5.24%,5.82%
+US,open interest nearby,long,whole period,9.99%,15.94%,24.63%,11.44%
+US,open interest nearby,long,backwardation,9.81%,17.26%,23.22%,9.63%
+US,open interest nearby,long,contango,10.28%,15.07%,26.22%,12.71%
+US,open interest nearby,short,whole period,7.49%,15.71%,23.17%,9.58%
+US,open interest nearby,short,backwardation,6.8%,18.16%,21.14%,7.84%
+US,open interest nearby,short,contango,8.31%,13.35%,25.12%,11.33%
+US,open interest aggregate,factor,whole period,0.26%,1.26%,0.64%,0.28%
+US,open interest aggregate,factor,backwardation,0.46%,1.12%,0.46%,0.87%
+US,open interest aggregate,factor,contango,0.82%,1.93%,1.8%,0.71%
+US,open interest aggregate,long,whole period,5.79%,13.99%,25.11%,9.36%
+US,open interest aggregate,long,backwardation,5.1%,16.89%,22.43%,6.46%
+US,open interest aggregate,long,contango,6.88%,11.5%,27.21%,11.69%
+US,open interest aggregate,short,whole period,6.14%,16.17%,23.81%,9.87%
+US,open interest aggregate,short,backwardation,5.76%,18.25%,21.74%,8.2%
+US,open interest aggregate,short,contango,6.83%,14.56%,25.96%,11.34%
+US,term structure,factor,whole period,1.89%,2.87%,5.12%,1.71%
+US,term structure,factor,backwardation,2.3%,2.78%,4.79%,2.85%
+US,term structure,factor,contango,2.01%,3.41%,5.73%,1.34%
+US,term structure,long,whole period,6.79%,13.44%,20.99%,9.99%
+US,term structure,long,backwardation,6.26%,15.13%,19.22%,9.15%
+US,term structure,long,contango,7.6%,12.14%,23.1%,10.85%
+US,term structure,short,whole period,6.48%,16.39%,26.05%,9.2%
+US,term structure,short,backwardation,6.8%,18.24%,24.63%,6.44%
+US,term structure,short,contango,6.53%,14.92%,27.56%,11.86%
+GB,market,factor,whole period,1.74%,11.71%,33.71%,10.75%
+GB,market,factor,backwardation,2.14%,13.03%,34.39%,6.62%
+GB,market,factor,contango,1.48%,10.88%,33.45%,14.35%
+GB,CHP,factor,whole period,0.08%,3.74%,0.57%,1.02%
+GB,CHP,factor,backwardation,0.24%,4.26%,1.09%,0.72%
+GB,CHP,factor,contango,0.03%,3.33%,0.4%,1.31%
+GB,CHP,long,whole period,1.6%,13.39%,26.76%,10.07%
+GB,CHP,long,backwardation,2.59%,15.03%,26.56%,6.34%
+GB,CHP,long,contango,0.96%,12.24%,27.05%,12.89%
+GB,CHP,short,whole period,0.63%,4.76%,26.11%,4.26%
+GB,CHP,short,backwardation,0.75%,5.55%,22.42%,1.59%
+GB,CHP,short,contango,0.58%,4.26%,28.51%,7.62%
+GB,open interest nearby,factor,whole period,0.07%,0.34%,2.17%,0.42%
+GB,open interest nearby,factor,backwardation,0.08%,0.18%,1.44%,0.57%
+GB,open interest nearby,factor,contango,0.22%,0.59%,2.7%,0.39%
+GB,open interest nearby,long,whole period,0.64%,7.14%,27.52%,5.83%
+GB,open interest nearby,long,backwardation,0.57%,8.33%,29.3%,4.16%
+GB,open interest nearby,long,contango,0.82%,6.35%,26.53%,7.17%
+GB,open interest nearby,short,whole period,0.71%,7.34%,23.72%,5.36%
+GB,open interest nearby,short,backwardation,1.23%,8.02%,22.51%,1.91%
+GB,open interest nearby,short,contango,0.4%,7.1%,24.73%,9.56%
+GB,open interest aggregate,factor,whole period,0.01%,0.91%,0.32%,0.03%
+GB,open interest aggregate,factor,backwardation,0.02%,0.18%,0.39%,0.15%
+GB,open interest aggregate,factor,contango,0.03%,2%,1.44%,0.11%
+GB,open interest aggregate,long,whole period,0.72%,7.63%,26.98%,7.46%
+GB,open interest aggregate,long,backwardation,1%,11.13%,24.8%,4.9%
+GB,open interest aggregate,long,contango,0.54%,5.03%,28.28%,9.64%
+GB,open interest aggregate,short,whole period,0.9%,10.15%,25.08%,6.14%
+GB,open interest aggregate,short,backwardation,0.85%,9.85%,27.04%,3.18%
+GB,open interest aggregate,short,contango,0.98%,10.67%,24.33%,9.04%
+GB,term structure,factor,whole period,0.04%,3.28%,5.5%,0.09%
+GB,term structure,factor,backwardation,0.17%,2.37%,3.67%,0.09%
+GB,term structure,factor,contango,0.02%,4.34%,6.72%,0.24%
+GB,term structure,long,whole period,0.72%,3.39%,16.65%,3.05%
+GB,term structure,long,backwardation,1.21%,4.7%,15.18%,1.63%
+GB,term structure,long,contango,0.44%,2.49%,17.9%,4.66%
+GB,term structure,short,whole period,0.46%,13.27%,30.34%,4.95%
+GB,term structure,short,backwardation,0.42%,12.5%,29.81%,2.05%
+GB,term structure,short,contango,0.53%,14.56%,30.48%,7.99%
