@@ -24,14 +24,14 @@ source(file.path(path_directory, "modules", "results_summary.r"))
 sidebar <- dashboardSidebar(
   sidebarMenu(
     menuItem("Correlations", tabName = "correlations", icon = icon("table")),
-    menuItem("Regressions (index)", tabName = "regressions-index", icon = icon("table"))
+    menuItem("Regressions", tabName = "regressions-index", icon = icon("table"))
   )
 )
 
 body <- dashboardBody(
   tabItems(
     tabItem(tabName = "correlations", results_summary_UI("correlations")),
-    tabItem(tabName = "regressions-index", results_summary_UI("regressions-index"))
+    tabItem(tabName = "regressions-index", results_summary_UI("regressions-index")),
   )
 )
 

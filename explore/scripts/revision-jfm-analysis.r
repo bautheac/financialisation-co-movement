@@ -204,9 +204,6 @@ path_regressions_index_formatted_file <- paste0(
 saveRDS(regressions_index_formatted, path_regressions_index_formatted_file)
 
 ### factors ####
-commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(commodity_futures_tickers) %>% 
-  dplyr::filter(country %in% c("US", "GB"), sector == "all")
-
 #### raw ####
 regressions_factor_raw <- make_regressions_factor_for_ticker_combinations_dataframe(
   commodity_pool_tickers, commodity_futures_data, commodity_futures_factor_returns, 
