@@ -802,7 +802,7 @@ add_factors_to_commodity_pool_tickers_dataframe <- function(factors, commodity_p
   commodity_pool_tickers_dataframe
 }
 
-make_regressions_factor_for_ticker_combinations_dataframe <- function(
+make_regressions_factors_for_ticker_combinations_dataframe <- function(
     combinations, commodity_futures_data, commodity_futures_factor_returns, 
     aggregate_CHP_regimes, period_dates
 ){
@@ -916,9 +916,9 @@ add_top_3_and_average_to_regressions_index_for_ticker_combinations_dataframe <- 
 }
 
 ### factor ####
-average_Rsquared_by_factor_leg_for_each_type_frequency_field_period_regime_combination <- function(regressions_factor_raw){
+average_Rsquared_by_factor_leg_for_each_type_frequency_field_period_regime_combination <- function(regressions_factors_raw){
   
-  dplyr::mutate(regressions_factor_raw, averages = purrr::map(results, function(averages){
+  dplyr::mutate(regressions_factors_raw, averages = purrr::map(results, function(averages){
     dplyr::mutate(averages, averages = purrr::map(results, function(averages){
       dplyr::mutate(averages, averages = purrr::map(results, function(averages){
         dplyr::mutate(averages, r.squared = purrr::map_dbl(model, ~base::summary(.x)$r.squared)) %>%
@@ -1084,7 +1084,7 @@ format_regression_index_summary_statistics_into_table <- function(regressions_su
 }
 
 ### factor ####
-unnest_regressions_factor_averages <- function(regressions_summary){
+unnest_regressions_factors_averages <- function(regressions_summary){
   
   tidyr::unnest(regressions_summary, averages) %>% tidyr::unnest(averages) %>%
     dplyr::select(
@@ -1095,7 +1095,7 @@ unnest_regressions_factor_averages <- function(regressions_summary){
 
 format_regression_factor_summary_statistics_into_table <- function(regressions_summary){
   
-  unnest_regressions_factor_averages(regressions_summary) %>%
+  unnest_regressions_factors_averages(regressions_summary) %>%
     map_solution_to_problem_domain_jargon_in_analysis_unnested_results_summary() %>%
     mutate_appropriate_columns_to_factors_in_analysis_unnested_results_summary() %>%
     arrange_columns_in_analysis_results_summary()
