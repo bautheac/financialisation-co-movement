@@ -28,8 +28,8 @@ split_analysis_summary_results_into_category_dataframes <- function(analysis_sum
   analysis_years_top_bottom_3 <- dplyr::select(analysis_years, -average)
   
   list(
-    periods = list(average = analysis_periods_average, top_bottom_3 = analysis_periods_top_bottom_3),
-    years = list(average = analysis_years_average, top_bottom_3 = analysis_years_top_bottom_3)
+    periods = list(Average = analysis_periods_average, `Top(-bottom) 3` = analysis_periods_top_bottom_3),
+    years = list(Average = analysis_years_average, `Top(-bottom) 3` = analysis_years_top_bottom_3)
   )
 }
 

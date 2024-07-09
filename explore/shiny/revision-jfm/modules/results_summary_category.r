@@ -1,26 +1,26 @@
 library(shinydashboard)
 library(shiny)
 
-results_summary_category_UI <- function(id, category_name){
+results_summary_category_UI <- function(id, category_name, table_list){
   
   ns <- NS(id)
   
   tagList(
     h2(paste("By", category_name)),
     p(linebreaks(3L)),
-    results_summary_table_UI(ns("average"), "Average"),
-    p(linebreaks(3L)),
-    results_summary_table_UI(ns("top_bottom_3"), "Top(-bottom) 3"),
+    lapply(seq_along(table_list), function(i) {
+      results_summary_table_UI(ns(names(table_list)[i]), names(table_list)[i])
+    }),
   )
 }
 
-
-results_summary_category_Server <- function(id, results) {
+results_summary_category_Server <- function(id, table_list) {
   moduleServer(id, function(input, output, session) {
     
     ns <- session$ns
     
-    results_summary_table_Server("average", results$average)
-    results_summary_table_Server("top_bottom_3", results$top_bottom_3)
+    lapply(seq_along(table_list), function(i) {
+      results_summary_table_Server(names(table_list)[i], table_list[[i]])
+    })
   })
 }

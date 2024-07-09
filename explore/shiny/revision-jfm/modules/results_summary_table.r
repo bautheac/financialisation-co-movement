@@ -12,6 +12,7 @@ results_summary_table_UI <- function(id, table_name){
       )
     ),
     fluidRow(DT::dataTableOutput(ns("table")), width = "100%", height = "auto", fill = TRUE),
+    p(linebreaks(3L))
   )
 }
 
