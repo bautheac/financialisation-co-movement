@@ -44,7 +44,7 @@ ui <- dashboardPage(
 server <- function(input, output) {
   
   results_summary_Server("correlations", results$correlations)
-  results_summary_Server("regressions", results$regressions)
+  results_summary_Server("regressions", results$regressions$index)
 }
 
 
