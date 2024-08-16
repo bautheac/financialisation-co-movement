@@ -802,7 +802,7 @@ add_factors_to_commodity_pool_tickers_dataframe <- function(factors, commodity_p
   commodity_pool_tickers_dataframe
 }
 
-make_regressions_factor_for_ticker_combinations_dataframe <- function(
+make_regressions_factors_for_ticker_combinations_dataframe <- function(
     combinations, commodity_futures_data, commodity_futures_factor_returns, 
     aggregate_CHP_regimes, period_dates
 ){
@@ -892,7 +892,9 @@ extract_top_n_betas_from_lm_models <- function(lm_models){
     `R squared` = purrr::map_dbl(model, ~base::summary(.x)$r.squared)
   ) %>% 
     dplyr::select(-model) %>% dplyr::rename(ticker = `active contract ticker`) %>% 
-    dplyr::arrange(dplyr::desc(beta)) %>% dplyr::slice(1L:3L)
+    dplyr::arrange(dplyr::desc(beta)) %>% dplyr::slice(1L:3L) %>%
+    dplyr::mutate(`top-bottom 3` = factor("top")) %>%
+    dplyr::relocate(`top-bottom 3`, .before = dplyr::everything())
 }
 
 compute_average_beta_from_lm_models <- function(lm_models){
@@ -916,9 +918,9 @@ add_top_3_and_average_to_regressions_index_for_ticker_combinations_dataframe <- 
 }
 
 ### factor ####
-average_Rsquared_by_factor_leg_for_each_type_frequency_field_period_regime_combination <- function(regressions_factor_raw){
+average_Rsquared_by_factor_leg_for_each_type_frequency_field_period_regime_combination <- function(regressions_factors_raw){
   
-  dplyr::mutate(regressions_factor_raw, averages = purrr::map(results, function(averages){
+  dplyr::mutate(regressions_factors_raw, averages = purrr::map(results, function(averages){
     dplyr::mutate(averages, averages = purrr::map(results, function(averages){
       dplyr::mutate(averages, averages = purrr::map(results, function(averages){
         dplyr::mutate(averages, r.squared = purrr::map_dbl(model, ~base::summary(.x)$r.squared)) %>%
@@ -967,6 +969,24 @@ map_solution_to_problem_domain_jargon_in_analysis_unnested_results_summary <- fu
     dplyr::select(-field) %>% dplyr::rename(field = name) %>% dplyr::relocate(field, .after = frequency)
 }
 
+mutate_appropriate_columns_to_factors_in_analysis_unnested_results_summary <- function(
+    unnested_top_3_results_summary
+){
+  
+  dplyr::mutate(
+    unnested_top_3_results_summary,
+    country = factor(country, levels = c("all", "US", "GB")),
+    timespan = factor(timespan, levels = c("period", "year")),
+    type = factor(type, levels = c("return", "level")),
+    frequency = factor(frequency, levels = c("day", "week", "month")),
+    field = factor(field, levels = c(
+      "close price", "open interest", "volume", "aggregate open interest", 
+      "aggregate volume", "ask", "bid", "high", "low", "mid", "open"
+    )),
+    regime = factor(regime, levels = c("whole period", "backwardation", "contango"))
+  )
+}
+
 arrange_columns_in_analysis_results_summary <- function(formatted_analysis_results_summary){
   
   dplyr::select(
@@ -979,25 +999,6 @@ arrange_columns_in_analysis_results_summary <- function(formatted_analysis_resul
 }
 
 ## correlations ####
-### local functions ####
-mutate_appropriate_columns_to_factors_in_analysis_unnested_results_summary <- function(
-    unnested_correlations_top_3_results_summary
-){
-  
-  dplyr::mutate(
-    unnested_correlations_top_3_results_summary,
-    country = factor(country, levels = c("all", "US", "GB")),
-    timespan = factor(timespan, levels = c("period", "year")),
-    type = factor(type, levels = c("return", "level")),
-    frequency = factor(frequency, levels = c("day", "week", "month")),
-    field = factor(field, levels = c(
-      "close price", "open interest", "volume", "aggregate open interest", 
-      "aggregate volume", "ask", "bid", "high", "low", "mid", "open"
-      )),
-    regime = factor(regime, levels = c("whole period", "backwardation", "contango"))
-    )
-}
-
 ### top 3 ####
 #### local functions ####
 map_solution_to_problem_domain_jargon_in_correlation_top_3_unnested_results_summary <- function(
@@ -1084,7 +1085,7 @@ format_regression_index_summary_statistics_into_table <- function(regressions_su
 }
 
 ### factor ####
-unnest_regressions_factor_averages <- function(regressions_summary){
+unnest_regressions_factors_averages <- function(regressions_summary){
   
   tidyr::unnest(regressions_summary, averages) %>% tidyr::unnest(averages) %>%
     dplyr::select(
@@ -1093,12 +1094,33 @@ unnest_regressions_factor_averages <- function(regressions_summary){
     ) %>% dplyr::relocate(regime, .before = average)
 }
 
+mutate_appropriate_columns_to_factors_in_factors_analysis_unnested_results_summary <- function(
+    unnested_top_3_results_summary
+){
+  
+  dplyr::mutate(
+    unnested_top_3_results_summary,
+    factor = factor(
+      factor, levels = c("market", "CHP", "open interest nearby", "open interest aggregate", "term structure")
+      ),
+    leg = factor(leg, levels = c("factor", "long", "short")),
+  )
+}
+
 format_regression_factor_summary_statistics_into_table <- function(regressions_summary){
   
-  unnest_regressions_factor_averages(regressions_summary) %>%
+  unnest_regressions_factors_averages(regressions_summary) %>%
     map_solution_to_problem_domain_jargon_in_analysis_unnested_results_summary() %>%
     mutate_appropriate_columns_to_factors_in_analysis_unnested_results_summary() %>%
-    arrange_columns_in_analysis_results_summary()
+    mutate_appropriate_columns_to_factors_in_factors_analysis_unnested_results_summary() %>%
+    dplyr::mutate(average = round(average, digits = 4L)) %>%
+    dplyr::select(
+      field, type, frequency, country, sector, subsector, timespan, period, year, factor, leg, regime, 
+      dplyr::everything()
+    ) %>%
+    dplyr::arrange(
+      field, type, frequency, country, sector, subsector, timespan, period, year, factor, leg, regime
+    )
 }
 
 

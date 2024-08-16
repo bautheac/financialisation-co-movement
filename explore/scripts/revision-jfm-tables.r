@@ -30,3 +30,24 @@ formatted <- dplyr::filter(raw, factor %in% factors, timespan == "period") %>%
 path <- paste0(here::here(), "/explore/tables/revision-jfm/regressions-factors.csv")
 readr::write_csv(formatted, path)
 
+# `all commodities ~ factors from US commodities ####
+path <- paste0(here::here(), "/explore/results/revision-jfm/regressions-factors.rds")
+raw <- readRDS(path)
+
+formatted <- dplyr::filter(raw, factor %in% factors, timespan == "period") %>%
+  dplyr::select(-c(timespan, year, field, type, frequency)) %>%
+  dplyr::mutate(
+    country = factor(country, levels = c("all", "US", "GB")),
+    sector = factor(sector, levels = c("all", "agriculturals", "energy", "metals")),
+    subsector = factor(subsector, levels = c("all", "grains", "livestock", "petroleum", "precious", "softs")),
+    period = factor(period, levels = c("past", "financialization", "crisis", "present")),
+    factor = factor(factor, levels = factors),
+    average = percentize(average)
+  ) %>% dplyr::relocate(regime, .after = leg) %>% 
+  dplyr::arrange(country, sector, subsector, factor, leg, period, regime) %>%
+  tidyr::pivot_wider(names_from = "period", values_from = "average") %>%
+  dplyr::filter(factor != "open interest aggregate")
+
+path <- paste0(here::here(), "/explore/tables/revision-jfm/regressions-factors.csv")
+readr::write_csv(formatted, path)
+

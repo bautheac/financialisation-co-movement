@@ -204,46 +204,43 @@ path_regressions_index_formatted_file <- paste0(
 saveRDS(regressions_index_formatted, path_regressions_index_formatted_file)
 
 ### factors ####
-commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(commodity_futures_tickers) %>% 
-  dplyr::filter(country %in% c("US", "GB"), sector == "all")
-
 #### raw ####
-regressions_factor_raw <- make_regressions_factor_for_ticker_combinations_dataframe(
+regressions_factors_raw <- make_regressions_factors_for_ticker_combinations_dataframe(
   commodity_pool_tickers, commodity_futures_data, commodity_futures_factor_returns, 
   aggregate_CHP_regimes, period_dates
 )
 
 #### save raw results ####
-path_regressions_factor_raw_file <- paste0(
-  here::here(), "/explore/results/revision-jfm/regressions-factor-raw.rds"
+path_regressions_factors_raw_file <- paste0(
+  here::here(), "/explore/results/revision-jfm/regressions-factors-raw.rds"
 )
-saveRDS(regressions_factor_raw, path_regressions_factor_raw_file)
+saveRDS(regressions_factors_raw, path_regressions_factors_raw_file)
 
 #### summarise results ####
 ##### load raw dataset (optional) ####
-# regressions_factor_raw <- readr::read_rds(path_regressions_factor_raw_file)
+# regressions_factors_raw <- readr::read_rds(path_regressions_factors_raw_file)
 
 ##### summarise ####  
-regressions_factor_summary <- 
-  average_Rsquared_by_factor_leg_for_each_type_frequency_field_period_regime_combination(regressions_factor_raw)
+regressions_factors_summary <- 
+  average_Rsquared_by_factor_leg_for_each_type_frequency_field_period_regime_combination(regressions_factors_raw)
 
 ##### save summary results ####
-path_regressions_factor_summary_file <- paste0(
-  here::here(), "/explore/results/revision-jfm/regressions-factor-summary.rds"
+path_regressions_factors_summary_file <- paste0(
+  here::here(), "/explore/results/revision-jfm/regressions-factors-summary.rds"
 )
-saveRDS(regressions_factor_summary, path_regressions_factor_summary_file)
+saveRDS(regressions_factors_summary, path_regressions_factors_summary_file)
 
 #### format ####
 ##### load summary dataset (optional) ####
-# regressions_factor_summary <- readr::read_rds(path_regressions_factor_summary_file)
+# regressions_factors_summary <- readr::read_rds(path_regressions_factors_summary_file)
 
 ##### format ####  
-regressions_factor_formatted <- 
-  format_regression_factor_summary_statistics_into_table(regressions_factor_summary)
+regressions_factors_formatted <- 
+  format_regression_factor_summary_statistics_into_table(regressions_factors_summary)
 
 ##### save formatted results ####
-path_regressions_factor_formatted_file <- paste0(
-  here::here(), "/explore/results/revision-jfm/regressions-factor.rds"
+path_regressions_factors_formatted_file <- paste0(
+  here::here(), "/explore/tables/revision-jfm/regressions-factors.rds"
 )
-saveRDS(regressions_factor_formatted, path_regressions_factor_formatted_file)
+saveRDS(regressions_factors_formatted, path_regressions_factors_formatted_file)
 
