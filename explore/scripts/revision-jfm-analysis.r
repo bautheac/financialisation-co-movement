@@ -240,7 +240,7 @@ regressions_factors_formatted <-
 
 ##### save formatted results ####
 path_regressions_factors_formatted_file <- paste0(
-  here::here(), "/explore/results/revision-jfm/regressions-factors.rds"
+  here::here(), "/explore/tables/revision-jfm/regressions-factors.rds"
 )
 saveRDS(regressions_factors_formatted, path_regressions_factors_formatted_file)
 

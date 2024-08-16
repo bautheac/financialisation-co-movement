@@ -22,17 +22,23 @@ source(file.path(path_directory, "modules", "results_summary.r"))
 sidebar <- dashboardSidebar(
   sidebarMenu(
     menuItem("Correlations", tabName = "correlations", icon = icon("table")),
-    menuItem("Regressions", tabName = "regressions", icon = icon("table"))
+    menuItem("Regressions", icon = icon("table"),
+             menuSubItem("Index", tabName = "regressions-index"),
+             menuSubItem("Factors", tabName = "regressions-factors")
+    )
   )
 )
 
 body <- dashboardBody(
   tabItems(
     tabItem(tabName = "correlations", results_summary_UI("correlations", list(
-      period = results$correlations$periods, year = results$correlations$years
+      period = results$correlations$period, year = results$correlations$year
     ))),
-    tabItem(tabName = "regressions", results_summary_UI("regressions", list(
-      period = results$regressions$index$periods, year = results$regressions$index$years
+    tabItem(tabName = "regressions-index", results_summary_UI("regressions-index", list(
+      period = results$regressions$index$period, year = results$regressions$index$year
+    ))),
+    tabItem(tabName = "regressions-factors", results_summary_UI("regressions-factors", list(
+      period = results$regressions$factors$period, year = results$regressions$factors$year
     )))
   )
 )
@@ -43,11 +49,15 @@ ui <- dashboardPage(
 
 server <- function(input, output) {
   results_summary_Server("correlations", list(
-    period = results$correlations$periods, year = results$correlations$years
+    period = results$correlations$period, year = results$correlations$year
   ))
   
-  results_summary_Server("regressions", list(
-    period = results$regressions$index$periods, year = results$regressions$index$years
+  results_summary_Server("regressions-index", list(
+    period = results$regressions$index$period, year = results$regressions$index$year
+  ))
+
+  results_summary_Server("regressions-factors", list(
+    period = results$regressions$factors$period, year = results$regressions$index$year
   ))
 }
 
