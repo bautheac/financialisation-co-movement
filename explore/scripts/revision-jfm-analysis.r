@@ -120,9 +120,11 @@ commodity_futures_factor_returns <- make_commodity_futures_factor_returns_datafr
 library(furrr)
 plan(multisession, workers = parallel::detectCores())
 
-commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(commodity_futures_tickers)
-
 ## correlations ####
+commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(
+  commodity_futures_tickers, analysis = "correlations"
+  )
+
 ### compute raw results ####
 correlations_raw <- make_pairwise_correlations_for_ticker_combinations_dataframe(
   commodity_pool_tickers, commodity_futures_data, aggregate_CHP_regimes, period_dates
@@ -163,6 +165,10 @@ path_correlations_formatted_file <- paste0(
 saveRDS(correlations_formatted, path_correlations_formatted_file)
 
 ## regressions ####
+commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(
+  commodity_futures_tickers, analysis = "regressions"
+)
+
 ### index ####
 #### raw ####
 regressions_index_raw <- make_regressions_index_for_ticker_combinations_dataframe(
