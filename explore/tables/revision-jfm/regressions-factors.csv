@@ -209,6 +209,36 @@ US,energy,all,term structure,long,contango,8.25%,16.49%,26.62%,22.7%
 US,energy,all,term structure,short,whole period,18.89%,24.16%,29.45%,15.98%
 US,energy,all,term structure,short,backwardation,24.16%,29.2%,24.56%,7.46%
 US,energy,all,term structure,short,contango,14.6%,20.04%,32.02%,22.4%
+US,energy,gas,market,factor,whole period,19.37%,18.38%,10.88%,7.86%
+US,energy,gas,market,factor,backwardation,21.36%,17.54%,12.6%,7.17%
+US,energy,gas,market,factor,contango,17.12%,20.07%,9.92%,7.96%
+US,energy,gas,CHP,factor,whole period,5.37%,3.62%,12.6%,16.2%
+US,energy,gas,CHP,factor,backwardation,10.16%,2.14%,11.42%,19.3%
+US,energy,gas,CHP,factor,contango,1.59%,5.26%,13.46%,13.84%
+US,energy,gas,CHP,long,whole period,0.82%,2.32%,2.94%,0.27%
+US,energy,gas,CHP,long,backwardation,1.14%,3.88%,3.71%,0%
+US,energy,gas,CHP,long,contango,0.54%,1.42%,2.5%,0.77%
+US,energy,gas,CHP,short,whole period,11.64%,16.97%,28.17%,27.12%
+US,energy,gas,CHP,short,backwardation,21.17%,17.18%,29.98%,27.08%
+US,energy,gas,CHP,short,contango,4.16%,17.55%,27.1%,27.24%
+US,energy,gas,open interest nearby,factor,whole period,22.08%,27.47%,15.46%,16.03%
+US,energy,gas,open interest nearby,factor,backwardation,23.23%,21.16%,14.53%,16.64%
+US,energy,gas,open interest nearby,factor,contango,20.54%,32.65%,16.18%,15.41%
+US,energy,gas,open interest nearby,long,whole period,31.9%,39.69%,22.04%,21.45%
+US,energy,gas,open interest nearby,long,backwardation,32.43%,37.37%,25.08%,23.63%
+US,energy,gas,open interest nearby,long,contango,30.88%,41.67%,20.55%,19.86%
+US,energy,gas,open interest nearby,short,whole period,0.35%,2.01%,3.06%,0.36%
+US,energy,gas,open interest nearby,short,backwardation,0.19%,2.99%,2.92%,0.02%
+US,energy,gas,open interest nearby,short,contango,0.53%,1.43%,3.15%,0.78%
+US,energy,gas,term structure,factor,whole period,0.41%,4.24%,7.16%,5.22%
+US,energy,gas,term structure,factor,backwardation,0.36%,2.03%,11.66%,5.9%
+US,energy,gas,term structure,factor,contango,0.48%,6.51%,4.6%,4.55%
+US,energy,gas,term structure,long,whole period,12.57%,23.43%,19.88%,13.16%
+US,energy,gas,term structure,long,backwardation,11.74%,21.16%,24.87%,14.04%
+US,energy,gas,term structure,long,contango,13.26%,26.09%,16.54%,11.98%
+US,energy,gas,term structure,short,whole period,7.22%,7.01%,2.65%,2%
+US,energy,gas,term structure,short,backwardation,6.39%,8.98%,2.71%,1.47%
+US,energy,gas,term structure,short,contango,7.95%,5.9%,2.65%,2.23%
 US,energy,petroleum,market,factor,whole period,28.98%,35.97%,48.3%,31.91%
 US,energy,petroleum,market,factor,backwardation,27.65%,37.22%,40.79%,25.53%
 US,energy,petroleum,market,factor,contango,30.08%,35.26%,52.9%,35.71%
@@ -269,6 +299,36 @@ US,metals,all,term structure,long,contango,0.8%,5.87%,13.84%,5.58%
 US,metals,all,term structure,short,whole period,6.21%,28.22%,41%,7.2%
 US,metals,all,term structure,short,backwardation,4.31%,26.63%,48.14%,3.12%
 US,metals,all,term structure,short,contango,8.31%,30.47%,37.9%,10.75%
+US,metals,base,market,factor,whole period,5.39%,23.13%,50.77%,19.74%
+US,metals,base,market,factor,backwardation,4.96%,25.38%,48.58%,10.15%
+US,metals,base,market,factor,contango,5.66%,21.55%,52.45%,27.5%
+US,metals,base,CHP,factor,whole period,0.58%,5.78%,0.57%,0.6%
+US,metals,base,CHP,factor,backwardation,1.4%,5.18%,1.91%,0.29%
+US,metals,base,CHP,factor,contango,0.1%,6.42%,0.21%,0.88%
+US,metals,base,CHP,long,whole period,6.28%,25.22%,39.45%,15.36%
+US,metals,base,CHP,long,backwardation,7.48%,27.28%,39.22%,7.43%
+US,metals,base,CHP,long,contango,5.25%,23.76%,40.23%,21.43%
+US,metals,base,CHP,short,whole period,1.49%,10.55%,40.48%,9.32%
+US,metals,base,CHP,short,backwardation,0.66%,13.69%,31.38%,3.02%
+US,metals,base,CHP,short,contango,2.68%,8.15%,46.09%,16.67%
+US,metals,base,open interest nearby,factor,whole period,0.18%,1.01%,2.78%,0.46%
+US,metals,base,open interest nearby,factor,backwardation,0.1%,0.34%,1.84%,0.61%
+US,metals,base,open interest nearby,factor,contango,0.24%,1.82%,3.42%,0.37%
+US,metals,base,open interest nearby,long,whole period,1.76%,15.14%,40.08%,9.79%
+US,metals,base,open interest nearby,long,backwardation,1.43%,17.25%,40.59%,5.75%
+US,metals,base,open interest nearby,long,contango,1.99%,13.6%,40.18%,12.68%
+US,metals,base,open interest nearby,short,whole period,1.66%,14.19%,35.83%,10.32%
+US,metals,base,open interest nearby,short,backwardation,1.6%,16.43%,31.66%,3.02%
+US,metals,base,open interest nearby,short,contango,1.67%,12.69%,39.46%,18.73%
+US,metals,base,term structure,factor,whole period,0.06%,9.72%,9.63%,0.24%
+US,metals,base,term structure,factor,backwardation,0.37%,7.74%,7.44%,0.12%
+US,metals,base,term structure,factor,contango,0.02%,11.67%,11.07%,0.43%
+US,metals,base,term structure,long,whole period,1.99%,4.78%,23.83%,4.54%
+US,metals,base,term structure,long,backwardation,2.45%,6.81%,19.6%,1.07%
+US,metals,base,term structure,long,contango,1.51%,3.3%,27.35%,8.4%
+US,metals,base,term structure,short,whole period,1.17%,28.22%,46.98%,9.35%
+US,metals,base,term structure,short,backwardation,0.55%,26.42%,45.72%,2.86%
+US,metals,base,term structure,short,contango,1.98%,30.74%,48.01%,16.1%
 US,metals,precious,market,factor,whole period,8.08%,32.7%,35.06%,18.3%
 US,metals,precious,market,factor,backwardation,8.13%,33.37%,41.54%,11.89%
 US,metals,precious,market,factor,contango,8.12%,32.35%,32.07%,21.88%

@@ -92,13 +92,24 @@ filter_commodity_futures_tickers <- function(
   tickers$ticker
 }
 
-make_US_commodity_pool_combinations <- function(){
+make_US_commodity_pool_combinations_for_correlations_analysis <- function(){
   
   tibble::tibble(
     country = rep("US", 8L),
     sector = c(rep("agriculturals", 4L), rep("energy", 2L), rep("metals", 2L)),
     subsector = c(
       "all", "grains", "livestock", "softs", "all", "petroleum", "all", "precious"
+      )
+  )
+}
+
+make_US_commodity_pool_combinations_for_regressions_analysis <- function(){
+  
+  tibble::tibble(
+    country = rep("US", 10L),
+    sector = c(rep("agriculturals", 4L), rep("energy", 3L), rep("metals", 3L)),
+    subsector = c(
+      "all", "grains", "livestock", "softs", "all", "gas", "petroleum", "all", "base", "precious"
       )
   )
 }
@@ -111,7 +122,7 @@ make_commodity_pool_tickers_dataframe_for_country_sectors_subsectors_combination
     )
 }
 
-make_commodity_pool_tickers_dataframe <- function(all_tickers){
+make_commodity_pool_tickers_dataframe <- function(all_tickers, analysis = c("correlations", "regressions")){
   
   all_all_all <- tibble::tibble(
     country = "all", sector = "all", subsector = "all", 
@@ -122,16 +133,23 @@ make_commodity_pool_tickers_dataframe <- function(all_tickers){
     country = "US", sector = "all", subsector = "all", 
     tickers = list(filter_commodity_futures_tickers(all_tickers, "US"))
   )
+
+  US_combinations <- if(analysis == "correlations"){
+    make_US_commodity_pool_combinations_for_correlations_analysis()
+  } else {
+    make_US_commodity_pool_combinations_for_regressions_analysis()
+  }
+  US_combinations <-
+    make_commodity_pool_tickers_dataframe_for_country_sectors_subsectors_combinations(
+      US_combinations, all_tickers
+    )
   
-  US_combinations <- make_US_commodity_pool_combinations() %>%
-    make_commodity_pool_tickers_dataframe_for_country_sectors_subsectors_combinations(all_tickers)
-  
-  GB <- tibble::tibble(
+  GB_all_all <- tibble::tibble(
     country = "GB", sector = "all", subsector = "all", 
     tickers = list(filter_commodity_futures_tickers(all_tickers, "GB"))
   )
-  
-  dplyr::bind_rows(all_all_all, US_all_all, US_combinations, GB)
+
+  dplyr::bind_rows(all_all_all, US_all_all, US_combinations, GB_all_all)
 }
 
 ## commodity futures levels data ####

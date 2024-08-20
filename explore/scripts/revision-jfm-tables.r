@@ -31,7 +31,7 @@ path <- paste0(here::here(), "/explore/tables/revision-jfm/regressions-factors.c
 readr::write_csv(formatted, path)
 
 # `all commodities ~ factors from US commodities ####
-path <- paste0(here::here(), "/explore/results/revision-jfm/regressions-factors.rds")
+path <- paste0(here::here(), "/explore/tables/revision-jfm/regressions-factors.rds")
 raw <- readRDS(path)
 
 formatted <- dplyr::filter(raw, factor %in% factors, timespan == "period") %>%
@@ -39,7 +39,7 @@ formatted <- dplyr::filter(raw, factor %in% factors, timespan == "period") %>%
   dplyr::mutate(
     country = factor(country, levels = c("all", "US", "GB")),
     sector = factor(sector, levels = c("all", "agriculturals", "energy", "metals")),
-    subsector = factor(subsector, levels = c("all", "grains", "livestock", "petroleum", "precious", "softs")),
+    subsector = factor(subsector, levels = c("all", "base", "gas", "grains", "livestock", "petroleum", "precious", "softs")),
     period = factor(period, levels = c("past", "financialization", "crisis", "present")),
     factor = factor(factor, levels = factors),
     average = percentize(average)
