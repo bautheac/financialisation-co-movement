@@ -1,0 +1,75 @@
+---
+title: "revision-jfm - notes"
+output: html_document
+date: '2024-08-20'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Factor regressions results overview ####
+
+### All, all, all ####
+
+#### First period ####
+
+##### Market factor ####
+
+- Best overall performance: fits story.
+- Overall performance consistent across periods of high and low CHP: fits story.
+
+##### CHP factor ####
+
+- Lower performance relative to market factor: fits story.
+- Higher performance in backwardation: fits overall story but not current text, rewrite.
+
+##### Open interest nearby factor ####
+
+- Lower performance relative to market factor but higher than CHP.
+- Higher performance in contango.
+- Not included in story yet, could potentially include, not sure how.
+
+##### Open interest aggregate factor ####
+
+- Lowest performance overall for the factor itself.
+- Moderate performance (slightly lower than that for OI nearby) for both legs. Indicates that the legs are negatively correlated.
+- Higher performance in contango.
+- Not included in story yet, could potentially include, not sure how.
+
+##### Term structure factor ####
+
+- Similar pattern to OI aggregate.
+- Not included in story yet, could potentially include, not sure how.
+
+#### Second period ####
+
+##### Market factor ####
+
+- Substantial improvement in performance (19.70% vs. 9.69%) albeit not as strong as that for the CHP factor in a relative sense: fits story.
+- Stronger performance in backwardation: not included in story.
+
+##### CHP factor ####
+
+- Strongest improvement in performance in relative sense (5.39% vs 1.93%). Improvement comes from long leg (16.95% vs. 5.77%), not as strong for short leg (10.49% vs. 5.41%): fits story.
+- Stronger performance in backwardation: not included in story.
+
+##### Open interest nearby factor ####
+
+- No notable change in performance for the factor itself (5.63% vs 5.98%).
+- Both legs show substantial improvement however (long: 14.18% vs 8.12%; short: 14.04% vs. 6.13%), indicating that they become negatively correlated.
+- Stronger performance switches to backwardation.
+- Not included in story, include?
+
+##### Open interest aggregate factor ####
+
+- Increase in performance similar in a relative sense for the factor itself and the legs indicating legs maintain similar level of negative correlation.
+- Performance of the factor itself remains low.
+- Not included in story, include?
+
+##### Term structure factor ####
+
+- Increase in performance (2.95%vs 1.52%) although performance remains low. Better performance switches to contango.
+- More pronouced increase for the short leg (15.77% vs. 5.28%).
+- Gap widens between performance of factor itselfs and that of legs; indicates legs become less positively correlated.
+- Better performance switches to backwardation on both legs.
