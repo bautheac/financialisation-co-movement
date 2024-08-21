@@ -101,7 +101,7 @@ knitr::asis_output('\\bigskip')
 knitr::asis_output('\\setlength{\\parindent}{0pt}')
 ```
 
-We study the performance of these models on a set of twenty-four US traded commodities and six UK traded (London Metal Exchange) base metals over the 1997/2018 period that we divide into four distinct sub-periods: pre-financialisation (1997/2003); financialisation (2004/2008^[Starting point based on earlier studies [@baker_financialisation_2014; @christoffersen_factor_2014].]); financial crisis and aftermath, including loose monetary policy regimes that followed (2008/2013); and post-crisis (2014-2018).   
+We study the performance of these models on a set of twenty-four US traded commodities and six UK traded (London Metal Exchange) base metals over the 1997/2018 period that we divide into four distinct sub-periods: pre-financialisation (1997/2003); financialisation (2004/2008^[Starting point based on earlier studies [@baker_financialization_2021; @christoffersen_factor_2014].]); financial crisis and aftermath, including loose monetary policy regimes that followed (2008/2013); and post-crisis (2014-2018).   
 Consistent with earlier studies, we observe that mean returns for the US traded commodities are sharply higher over the financialisation period compared to pre-financialisation and this pattern extends to UK traded metals.  
   
 ```{r, include=latex}
