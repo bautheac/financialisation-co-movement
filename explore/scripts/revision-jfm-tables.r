@@ -69,12 +69,37 @@ countries <- dplyr::filter(commodities_market_countries, regime == "all") %>%
     cols = c("mean", "sd"), names_to = "estimate", values_to = "value"
   ) %>% tidyr::pivot_wider(names_from = "period", values_from = "value")
 
-whole <- dplyr::bind_rows(commodities, countries)
+descriptive_stats_whole <- dplyr::bind_rows(commodities, countries)
 
 
-tables <- tibble::tibble(
-  analysis = "descriptive statistics (no regimes)", results = list(whole)
-)
+## regimes ####
+commodities <- dplyr::filter(commodities_market_individuals, regime != "all") %>%
+  dplyr::select(-c(min, max)) %>% 
+  dplyr::mutate(
+    mean = percentize(mean), sd = percentize(sd),
+    mean = purrr::map2_chr(p.value, mean, ~ significance(.x, .y))
+  ) %>% dplyr::select(-p.value) %>%
+  tidyr::pivot_longer(
+    cols = c("mean", "sd"), names_to = "estimate", values_to = "value"
+  ) %>% tidyr::pivot_wider(names_from = "period", values_from = "value") %>%
+  dplyr::arrange(dplyr::desc(country), sector, subsector, commodity) %>%
+  dplyr::select(-c(country, sector, subsector)) %>%
+  dplyr::rename(asset = commodity)
+
+countries <- dplyr::filter(commodities_market_countries, regime != "all") %>%
+  dplyr::select(-c(min, max, sector, subsector)) %>% 
+  dplyr::mutate(asset = paste(country, "commodities", sep = " ")) %>%
+  dplyr::select(-country) %>% 
+  dplyr::mutate(
+    mean = percentize(mean), sd = percentize(sd),
+    mean = purrr::map2_chr(p.value, mean, ~ significance(.x, .y))
+  ) %>% dplyr::select(-p.value) %>%
+  tidyr::pivot_longer(
+    cols = c("mean", "sd"), names_to = "estimate", values_to = "value"
+  ) %>% tidyr::pivot_wider(names_from = "period", values_from = "value")
+
+descriptive_stats_regimes <- dplyr::bind_rows(commodities, countries)
+
 
 
 path <- here::here("explore", "tables", "revision-jfm", "regressions-factors.csv")
