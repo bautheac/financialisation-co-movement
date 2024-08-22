@@ -16,6 +16,21 @@ percentize <- function(value) paste0(round(value, digits = 4L) * 100, "%")
 factors <- c("market", "CHP", "open interest nearby", "open interest aggregate", "term structure")
 sector_levels <- c("all", "agriculturals", "energy", "metals")
 subsector_levels <- c("all", "grains", "livestock", "softs", "gas", "petroleum", "base", "precious")
+sort_levels <- c(
+  "all-all-all", "US-all-all", "US-agriculturals-all", "US-agriculturals-grains",
+  "US-agriculturals-livestock", "US-agriculturals-softs", "US-energy-all", 
+  "US-energy-gas", "US-energy-petroleum", "US-metals-all", "US-metals-base", 
+  "US-metals-precious", "GB-all-all"
+)
+
+sort_table_by_country_sector_subsector <- function(tb, sort_levels){
+  dplyr::mutate(
+    tb,
+    sort = paste(country, sector, subsector, sep = "-"),
+    sort = factor(sort, levels = sort_levels)
+  ) %>% dplyr::arrange(sort) %>% dplyr::select(-sort)
+}
+
 
 
 # descriptive stats ####
@@ -110,20 +125,18 @@ correlations <- readr::read_rds(
   paste_forward_slash(results_directory_path, "correlations.rds")
 )
 
-averages_periods <- dplyr::filter(
+## By period ####
+correlations_periods <- dplyr::filter(
   correlations, field == "close price", type == "return", frequency == "day", timespan == "period"
 ) %>%
   dplyr::select(country, sector, subsector, period, regime, average) %>%
   dplyr::group_by(country, sector, subsector, period, regime) %>%
   dplyr::slice_tail(n = 1L) %>% dplyr::ungroup() %>%
-  tidyr::pivot_wider(names_from = "period", values_from = "average")
+  tidyr::pivot_wider(names_from = "period", values_from = "average") %>%
+  sort_table_by_country_sector_subsector(sort_levels)
 
-levels <- c(
-  "all-all-all", "US-all-all", "US-agriculturals-all", "US-agriculturals-grains",
-  "US-agriculturals-livestock", "US-agriculturals-softs", "US-energy-all", 
-  "US-energy-petroleum", "US-metals-all", "US-metals-precious", "GB-all-all"
-  )
-averages_years <- dplyr::filter(
+## By year ####
+correlations_years <- dplyr::filter(
   correlations, field == "close price", type == "return", frequency == "day", 
   timespan == "year", regime == "whole period"
 ) %>%
@@ -131,14 +144,7 @@ averages_years <- dplyr::filter(
   dplyr::group_by(country, sector, subsector, year) %>%
   dplyr::slice_tail(n = 1L) %>% dplyr::ungroup() %>%
   tidyr::pivot_wider(names_from = "year", values_from = "average") %>%
-  dplyr::mutate(
-    sort = paste(country, sector, subsector, sep = "-"),
-    sort = factor(sort, levels = levels)
-  ) %>% dplyr::arrange(sort) %>% dplyr::select(-sort)
-remove(levels)
-
-
-
+  sort_table_by_country_sector_subsector(sort_levels)
 
 
 # regressions ####
@@ -228,7 +234,21 @@ countries <- dplyr::filter(
   `US commodity returns ~ US commodity aggregate CHP`
   )
 
+## all commodity returns ~ market index ####
+regressions_index <- readr::read_rds(
+  here::here("explore", "results", "revision-jfm", "regressions-index.rds")
+)
 
+`all commodity returns ~ market index` <- dplyr::filter(
+  regressions_index, field == "close price", type == "return", frequency == "day", 
+  timespan == "period", regime == "whole period",
+  !(country == "US" & sector == "all" & subsector == "all")
+) %>%
+  dplyr::select(country, sector, subsector, period, average) %>%
+  dplyr::group_by(country, sector, subsector, period) %>%
+  dplyr::slice_tail(n = 1L) %>% dplyr::ungroup() %>%
+  tidyr::pivot_wider(names_from = "period", values_from = "average") %>%
+  sort_table_by_country_sector_subsector(sort_levels)
 
 
 
