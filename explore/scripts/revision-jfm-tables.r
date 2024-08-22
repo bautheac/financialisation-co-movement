@@ -1,5 +1,9 @@
 library(magrittr)
 
+results_directory_path <- here::here("explore", "results", "revision-jfm")
+tables_directory_path <- here::here("explore", "tables", "revision-jfm")
+paste_forward_slash <- function(...) paste(..., sep = "/")
+
 significance <- function(p.value, estimate){
   if(p.value <= 0.01) paste0("***", estimate)
   else if (p.value > 0.01 && p.value <= 0.05) paste0("**", estimate)
@@ -16,8 +20,8 @@ subsector_levels <- c("all", "grains", "livestock", "softs", "gas", "petroleum",
 
 # descriptive stats ####
 stats <- readr::read_rds(
-  here::here("explore", "results", "revision-jfm", "descriptive-statistics-clean.rds")
-)
+  paste_forward_slash(results_directory_path, "descriptive-statistics-clean.rds")
+  )
 
 commodities_market_individuals <- dplyr::filter(stats, analysis == "commodity futures") %>%
   dplyr::select(results) %>% tidyr::unnest(results) %>%
@@ -101,28 +105,66 @@ countries <- dplyr::filter(commodities_market_countries, regime != "all") %>%
 descriptive_stats_regimes <- dplyr::bind_rows(commodities, countries)
 
 
+# correlations ####
+correlations <- readr::read_rds(
+  paste_forward_slash(results_directory_path, "correlations.rds")
+)
+
+averages_periods <- dplyr::filter(
+  correlations, field == "close price", type == "return", frequency == "day", timespan == "period"
+) %>%
+  dplyr::select(country, sector, subsector, period, regime, average) %>%
+  dplyr::group_by(country, sector, subsector, period, regime) %>%
+  dplyr::slice_tail(n = 1L) %>% dplyr::ungroup() %>%
+  tidyr::pivot_wider(names_from = "period", values_from = "average")
+
+levels <- c(
+  "all-all-all", "US-all-all", "US-agriculturals-all", "US-agriculturals-grains",
+  "US-agriculturals-livestock", "US-agriculturals-softs", "US-energy-all", 
+  "US-energy-petroleum", "US-metals-all", "US-metals-precious", "GB-all-all"
+  )
+averages_years <- dplyr::filter(
+  correlations, field == "close price", type == "return", frequency == "day", 
+  timespan == "year", regime == "whole period"
+) %>%
+  dplyr::select(country, sector, subsector, year, average) %>%
+  dplyr::group_by(country, sector, subsector, year) %>%
+  dplyr::slice_tail(n = 1L) %>% dplyr::ungroup() %>%
+  tidyr::pivot_wider(names_from = "year", values_from = "average") %>%
+  dplyr::mutate(
+    sort = paste(country, sector, subsector, sep = "-"),
+    sort = factor(sort, levels = levels)
+  ) %>% dplyr::arrange(sort) %>% dplyr::select(-sort)
+remove(levels)
+
+
+
+
+
 # regressions ####
-regressions <- readr::read_rds(
+
+## US commodity returns ~ CHP ####
+regressions_CHP <- readr::read_rds(
   here::here("explore", "results", "revision-jfm", "regressions-time-series-clean.rds")
 )
 
-## US commodity returns ~ US commodity individual CHP ####
+### US commodity returns ~ US commodity individual CHP ####
 subsectors <- dplyr::filter(
-  regressions, analysis == "US commodity returns ~ US commodity individual CHP"
+  regressions_CHP, analysis == "US commodity returns ~ US commodity individual CHP"
 ) %>% dplyr::select(results) %>% tidyr::unnest(results) %>% 
   dplyr::filter(regressor == "pressure change contemporaneous") %>%
   dplyr::group_by(country, sector, subsector, period, regressor, regime.CHP.type, CHP.regime) %>%
   dplyr::summarise(`average rsquared` = mean(rsquared, na.rm = TRUE)) %>%
   dplyr::ungroup()
 sectors <- dplyr::filter(
-  regressions, analysis == "US commodity returns ~ US commodity individual CHP"
+  regressions_CHP, analysis == "US commodity returns ~ US commodity individual CHP"
 ) %>% dplyr::select(results) %>% tidyr::unnest(results) %>% 
   dplyr::filter(regressor == "pressure change contemporaneous") %>%
   dplyr::group_by(country, sector, period, regressor, regime.CHP.type, CHP.regime) %>%
   dplyr::summarise(`average rsquared` = mean(rsquared, na.rm = TRUE)) %>%
   dplyr::mutate(subsector = "all") %>% dplyr::ungroup()
 countries <- dplyr::filter(
-  regressions, analysis == "US commodity returns ~ US commodity individual CHP"
+  regressions_CHP, analysis == "US commodity returns ~ US commodity individual CHP"
 ) %>% dplyr::select(results) %>% tidyr::unnest(results) %>% 
   dplyr::filter(regressor == "pressure change contemporaneous") %>%
   dplyr::group_by(country, period, regressor, regime.CHP.type, CHP.regime) %>%
@@ -143,9 +185,9 @@ countries <- dplyr::filter(
   dplyr::arrange(sector, subsector, period) %>%
   tidyr::pivot_wider(names_from = period, values_from = `average rsquared`)
 
-## US commodity returns ~ US commodity aggregate CHP ####
+### US commodity returns ~ US commodity aggregate CHP ####
 subsectors <- dplyr::filter(
-  regressions, analysis == "US commodity returns ~ US commodity aggregate CHP"
+  regressions_CHP, analysis == "US commodity returns ~ US commodity aggregate CHP"
   ) %>% dplyr::select(results) %>% tidyr::unnest(results) %>% 
   dplyr::filter(regressor == "pressure change contemporaneous") %>%
   dplyr::group_by(
@@ -153,14 +195,14 @@ subsectors <- dplyr::filter(
   ) %>% dplyr::summarise(`average rsquared` = mean(rsquared, na.rm = TRUE)) %>%
   dplyr::ungroup()
 sectors <- dplyr::filter(
-  regressions, analysis == "US commodity returns ~ US commodity aggregate CHP"
+  regressions_CHP, analysis == "US commodity returns ~ US commodity aggregate CHP"
 ) %>% dplyr::select(results) %>% tidyr::unnest(results) %>% 
   dplyr::filter(regressor == "pressure change contemporaneous") %>%
   dplyr::group_by(country, sector, period, regressor, regime.CHP.type, CHP.regime) %>%
   dplyr::summarise(`average rsquared` = mean(rsquared, na.rm = TRUE)) %>%
   dplyr::mutate(subsector = "all") %>% dplyr::ungroup()
 countries <- dplyr::filter(
-  regressions, analysis == "US commodity returns ~ US commodity aggregate CHP"
+  regressions_CHP, analysis == "US commodity returns ~ US commodity aggregate CHP"
 ) %>% dplyr::select(results) %>% tidyr::unnest(results) %>% 
   dplyr::filter(regressor == "pressure change contemporaneous") %>%
   dplyr::group_by(country, period, regressor, regime.CHP.type, CHP.regime) %>%
@@ -185,6 +227,9 @@ countries <- dplyr::filter(
   `US commodity returns ~ US commodity individual CHP`, 
   `US commodity returns ~ US commodity aggregate CHP`
   )
+
+
+
 
 
 
