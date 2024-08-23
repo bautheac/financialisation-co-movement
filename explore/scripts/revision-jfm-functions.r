@@ -1,3 +1,6 @@
+# utils ####
+paste_forward_slash <- function(...) paste(..., sep = "/")
+
 # globals ####
 ## variables ####
 ### local function ####

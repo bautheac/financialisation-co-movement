@@ -1,7 +1,7 @@
 library(finRes); library(magrittr)
 
 # source functions ####
-source(paste0(here::here(), "/explore/scripts/revision-jfm-functions.r"))
+source(here::here("explore", "scripts", "revision-jfm-functions.r"))
 
 # globals ####
 ## datasets ####
@@ -10,6 +10,7 @@ data("exchanges", package = "fewISOs")
 
 ## variables ####
 storethat_db_path <- make_path_to_storethat_database()
+results_directory_path <- here::here("explore", "results", "revision-jfm")
 
 period_bounds <- list(
   past = list(start = "1997-07-01", end = "2003-12-31"),
@@ -131,9 +132,7 @@ correlations_raw <- make_pairwise_correlations_for_ticker_combinations_dataframe
 )
 
 ### save raw results ####
-path_correlations_raw_file <- paste0(
-  here::here(), "/explore/results/revision-jfm/correlations-raw.rds"
-)
+path_correlations_raw_file <- paste_forward_slash(results_directory_path, "correlations-raw.rds")
 saveRDS(correlations_raw, path_correlations_raw_file)
 
 ### summarise results ####
@@ -145,9 +144,8 @@ correlations_summary <-
   add_top_3_and_average_to_pairwise_correlations_for_ticker_combinations_dataframe(correlations_raw)
 
 #### save summary results ####
-path_correlations_summary_file <- paste0(
-  here::here(), "/explore/results/revision-jfm/correlations-summary.rds"
-)
+path_correlations_summary_file <- 
+  paste_forward_slash(results_directory_path, "correlations-summary.rds")
 saveRDS(correlations_summary, path_correlations_summary_file)
 
 ### format results ####
@@ -158,10 +156,8 @@ correlations_summary <- readr::read_rds(path_correlations_summary_file)
 correlations_formatted <- format_correlation_summary_statistics_into_table(correlations_summary)
 
 #### save formatted results ####
-path_correlations_formatted_file <- paste0(
-  here::here(), "/explore/tables/revision-jfm/correlations.rds"
-)
-
+path_correlations_formatted_file <- 
+  paste_forward_slash(results_directory_path, "correlations.rds")
 saveRDS(correlations_formatted, path_correlations_formatted_file)
 
 ## regressions ####
@@ -177,9 +173,8 @@ regressions_index_raw <- make_regressions_index_for_ticker_combinations_datafram
 )
 
 #### save raw results ####
-path_regressions_index_raw_file <- paste0(
-  here::here(), "/explore/results/revision-jfm/regressions-index-raw.rds"
-  )
+path_regressions_index_raw_file <- 
+  paste_forward_slash(results_directory_path, "regressions-index-raw.rds")
 saveRDS(regressions_index_raw, path_regressions_index_raw_file)
 
 #### summarise results ####
@@ -191,9 +186,8 @@ regressions_index_summary <-
   add_top_3_and_average_to_regressions_index_for_ticker_combinations_dataframe(regressions_index_raw)
 
 ##### save summary results ####
-path_regressions_index_summary_file <- paste0(
-  here::here(), "/explore/results/revision-jfm/regressions-index-summary.rds"
-)
+path_regressions_index_summary_file <- 
+  paste_forward_slash(results_directory_path, "regressions-index-summary.rds")
 saveRDS(regressions_index_summary, path_regressions_index_summary_file)
 
 #### format ####
@@ -201,12 +195,12 @@ saveRDS(regressions_index_summary, path_regressions_index_summary_file)
 # regressions_index_summary <- readr::read_rds(path_regressions_index_summary_file)
 
 ##### format ####  
-regressions_index_formatted <- format_regression_index_summary_statistics_into_table(regressions_index_summary)
+regressions_index_formatted <- 
+  format_regression_index_summary_statistics_into_table(regressions_index_summary)
 
 ##### save formatted results ####
-path_regressions_index_formatted_file <- paste0(
-  here::here(), "/explore/tables/revision-jfm/regressions-index.rds"
-)
+path_regressions_index_formatted_file <- 
+  paste_forward_slash(results_directory_path, "regressions-index.rds")
 saveRDS(regressions_index_formatted, path_regressions_index_formatted_file)
 
 ### factors ####
@@ -217,9 +211,8 @@ regressions_factors_raw <- make_regressions_factors_for_ticker_combinations_data
 )
 
 #### save raw results ####
-path_regressions_factors_raw_file <- paste0(
-  here::here(), "/explore/results/revision-jfm/regressions-factors-raw.rds"
-)
+path_regressions_factors_raw_file <- 
+  paste_forward_slash(results_directory_path, "regressions-factors-raw.rds")
 saveRDS(regressions_factors_raw, path_regressions_factors_raw_file)
 
 #### summarise results ####
@@ -231,9 +224,8 @@ regressions_factors_summary <-
   average_Rsquared_by_factor_leg_for_each_type_frequency_field_period_regime_combination(regressions_factors_raw)
 
 ##### save summary results ####
-path_regressions_factors_summary_file <- paste0(
-  here::here(), "/explore/results/revision-jfm/regressions-factors-summary.rds"
-)
+path_regressions_factors_summary_file <- 
+  paste_forward_slash(results_directory_path, "regressions-factors-summary.rds")
 saveRDS(regressions_factors_summary, path_regressions_factors_summary_file)
 
 #### format ####
@@ -245,8 +237,7 @@ regressions_factors_formatted <-
   format_regression_factor_summary_statistics_into_table(regressions_factors_summary)
 
 ##### save formatted results ####
-path_regressions_factors_formatted_file <- paste0(
-  here::here(), "/explore/tables/revision-jfm/regressions-factors.rds"
-)
+path_regressions_factors_formatted_file <- 
+  paste_forward_slash(results_directory_path, "regressions-factors.rds")
 saveRDS(regressions_factors_formatted, path_regressions_factors_formatted_file)
 
