@@ -250,6 +250,20 @@ regressions_index <- readr::read_rds(
   tidyr::pivot_wider(names_from = "period", values_from = "average") %>%
   sort_table_by_country_sector_subsector(sort_levels)
 
+## all commodity returns ~ factors ####
+regressions_factors <- readr::read_rds(
+  here::here("explore", "results", "revision-jfm", "regressions-factors.rds")
+)
+
+`all commodity returns ~ factors` <- dplyr::filter(
+  regressions_factors, field == "close price", type == "return", frequency == "day", 
+  timespan == "period", factor != "open interest aggregate"
+) %>%
+  dplyr::select(country, sector, subsector, period, factor, leg, regime, average) %>%
+  dplyr::mutate(average = percentize(average)) %>%
+  tidyr::pivot_wider(names_from = "period", values_from = "average") %>%
+  sort_table_by_country_sector_subsector(sort_levels)
+
 
 
 
