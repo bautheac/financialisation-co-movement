@@ -1,18 +1,10 @@
 library(magrittr)
 
+# Globals ####
+
+## variables ####
 results_directory_path <- here::here("explore", "results", "revision-jfm")
 tables_directory_path <- here::here("explore", "tables", "revision-jfm")
-paste_forward_slash <- function(...) paste(..., sep = "/")
-
-significance <- function(p.value, estimate){
-  if(p.value <= 0.01) paste0("***", estimate)
-  else if (p.value > 0.01 && p.value <= 0.05) paste0("**", estimate)
-  else if (p.value > 0.05 && p.value <= 0.10) paste0("*", estimate)
-  else estimate
-}
-
-percentize <- function(value) paste0(round(value, digits = 4L) * 100, "%")
-
 factors <- c("market", "CHP", "open interest nearby", "open interest aggregate", "term structure")
 sector_levels <- c("all", "agriculturals", "energy", "metals")
 subsector_levels <- c("all", "grains", "livestock", "softs", "gas", "petroleum", "base", "precious")
@@ -23,6 +15,15 @@ sort_levels <- c(
   "US-metals-precious", "GB-all-all"
 )
 
+## functions ####
+paste_forward_slash <- function(...) paste(..., sep = "/")
+significance <- function(p.value, estimate){
+  if(p.value <= 0.01) paste0("***", estimate)
+  else if (p.value > 0.01 && p.value <= 0.05) paste0("**", estimate)
+  else if (p.value > 0.05 && p.value <= 0.10) paste0("*", estimate)
+  else estimate
+}
+percentize <- function(value) paste0(round(value, digits = 4L) * 100, "%")
 sort_table_by_country_sector_subsector <- function(tb, sort_levels){
   dplyr::mutate(
     tb,
@@ -30,7 +31,6 @@ sort_table_by_country_sector_subsector <- function(tb, sort_levels){
     sort = factor(sort, levels = sort_levels)
   ) %>% dplyr::arrange(sort) %>% dplyr::select(-sort)
 }
-
 
 
 # descriptive stats ####
@@ -89,7 +89,6 @@ countries <- dplyr::filter(commodities_market_countries, regime == "all") %>%
   ) %>% tidyr::pivot_wider(names_from = "period", values_from = "value")
 
 descriptive_stats_whole <- dplyr::bind_rows(commodities, countries)
-
 
 ## regimes ####
 commodities <- dplyr::filter(commodities_market_individuals, regime != "all") %>%
@@ -151,7 +150,7 @@ correlations_years <- dplyr::filter(
 
 ## US commodity returns ~ CHP ####
 regressions_CHP <- readr::read_rds(
-  here::here("explore", "results", "revision-jfm", "regressions-time-series-clean.rds")
+  paste_forward_slash(results_directory_path, "regressions-time-series-clean.rds")
 )
 
 ### US commodity returns ~ US commodity individual CHP ####
@@ -181,7 +180,7 @@ countries <- dplyr::filter(
   countries, sectors, subsectors 
 ) %>%
   dplyr::mutate(
-    regressor = "Δ commodity CHP",
+    regressor = "Δ commodity CHP", 
     `average rsquared` = percentize(`average rsquared`),
     sector = factor(sector, levels = sector_levels),
     subsector = factor(subsector, levels = subsector_levels)
@@ -236,7 +235,7 @@ countries <- dplyr::filter(
 
 ## all commodity returns ~ market index ####
 regressions_index <- readr::read_rds(
-  here::here("explore", "results", "revision-jfm", "regressions-index.rds")
+  paste_forward_slash(results_directory_path, "regressions-index.rds")
 )
 
 `all commodity returns ~ market index` <- dplyr::filter(
@@ -252,7 +251,7 @@ regressions_index <- readr::read_rds(
 
 ## all commodity returns ~ factors ####
 regressions_factors <- readr::read_rds(
-  here::here("explore", "results", "revision-jfm", "regressions-factors.rds")
+  paste_forward_slash(results_directory_path, "regressions-factors.rds")
 )
 
 `all commodity returns ~ factors` <- dplyr::filter(
@@ -265,5 +264,18 @@ regressions_factors <- readr::read_rds(
   sort_table_by_country_sector_subsector(sort_levels)
 
 
+# export ####
+tables <- tibble::tribble(
+    ~analysis,                                 ~results,
+    "stats - whole",                           descriptive_stats_whole,
+    "stats - regimes",                         descriptive_stats_regimes,
+    "regressions - US returns ~ US CHP",       `US commodity returns ~ CHP`,
+    "correlations - periods",                  correlations_periods,
+    "correlations - years",                    correlations_years,
+    "regressions - all returns ~ marke index", `all commodity returns ~ market index`,
+    "regressions - all returns ~ factors",     `all commodity returns ~ factors`
+  )
 
-
+readr::write_rds(
+  tables, paste_forward_slash(tables_directory_path, "tables-formatted.rds")
+  )
