@@ -224,7 +224,7 @@ countries <- dplyr::filter(
     subsector = factor(subsector, levels = subsector_levels)
   ) %>% 
   dplyr::filter(regime.CHP.type == "none") %>%
-  dplyr::select(sector, subsector, period, `average rsquared`) %>%
+  dplyr::select(regressor, sector, subsector, period, `average rsquared`) %>%
   dplyr::arrange(sector, subsector, period) %>%
   tidyr::pivot_wider(names_from = period, values_from = `average rsquared`)
 
