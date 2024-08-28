@@ -180,7 +180,7 @@ countries <- dplyr::filter(
   countries, sectors, subsectors 
 ) %>%
   dplyr::mutate(
-    regressor = "Δ commodity CHP", 
+    regressor = "Δ% commodity CHP", 
     `average rsquared` = percentize(`average rsquared`),
     sector = factor(sector, levels = sector_levels),
     subsector = factor(subsector, levels = subsector_levels)
@@ -218,7 +218,7 @@ countries <- dplyr::filter(
   countries, sectors, subsectors 
 ) %>%
   dplyr::mutate(
-    regressor = "Δ aggregate CHP",
+    regressor = "Δ% aggregate CHP",
     `average rsquared` = percentize(`average rsquared`),
     sector = factor(sector, levels = sector_levels),
     subsector = factor(subsector, levels = subsector_levels)
