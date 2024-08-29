@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.6.23)  27 AUG 2024 10:49
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.6.23)  29 AUG 2024 11:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -487,8 +487,13 @@ Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 \Gm@layouthoffset=\dimen192
 \Gm@layoutvoffset=\dimen193
 \Gm@dimlist=\toks32
-) (/usr/local/texlive/texmf-dist/tex/latex/graphics/lscape.sty
+) (/usr/local/texlive/texmf-dist/tex/latex/pdflscape/pdflscape.sty
+Package: pdflscape 2019/12/05 v0.12 Display of landscape pages in PDF (HO)
+(/usr/local/texlive/texmf-dist/tex/latex/graphics/lscape.sty
 Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
+)
+Package pdflscape Info: Auto-detected driver: dvipdfm (xetex) on input line 98.
+
 ) (/usr/local/texlive/texmf-dist/tex/latex/caption/caption.sty
 Package: caption 2022/03/01 v3.6b Customizing captions (AR)
 (/usr/local/texlive/texmf-dist/tex/latex/caption/caption3.sty
@@ -543,10 +548,6 @@ Package color Info: Driver file: xetex.def on input line 149.
 )
 \everycr=\toks36
 \minrowclearance=\skip71
-) (/usr/local/texlive/texmf-dist/tex/latex/pdflscape/pdflscape.sty
-Package: pdflscape 2019/12/05 v0.12 Display of landscape pages in PDF (HO)
-Package pdflscape Info: Auto-detected driver: dvipdfm (xetex) on input line 98.
-
 ) (/usr/local/texlive/texmf-dist/tex/latex/tabu/tabu.sty
 Package: tabu 2019/01/11 v2.9 - flexible LaTeX tabulars (FC+tabu-fixed)
 (/usr/local/texlive/texmf-dist/tex/latex/varwidth/varwidth.sty
@@ -896,7 +897,11 @@ Overfull \hbox (8.31902pt too wide) in alignment at lines 567--827
  [] [] [] [] [] [] [] 
  []
 
-[24] [25] [26] [27] [28] [29] [30] [31] [32] (./paper.aux)
+[24] [25] [26] [27] [28] [29
+
+] [30
+
+] [31] [32] [33] (./paper.aux)
 
 LaTeX Warning: There were undefined references.
 
@@ -904,12 +909,12 @@ Package rerunfilecheck Info: File `paper.out' has not changed.
 (rerunfilecheck)             Checksum: 40F2F707CA4F84246892CACAFAF29713;463.
  ) 
 Here is how much of TeX's memory you used:
- 20420 strings out of 478150
- 371283 string characters out of 5854083
- 784091 words of memory out of 5000000
- 40729 multiletter control sequences out of 15000+600000
+ 20422 strings out of 478150
+ 371311 string characters out of 5854083
+ 784319 words of memory out of 5000000
+ 40731 multiletter control sequences out of 15000+600000
  508478 words of font info for 76 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 72i,11n,77p,3143b,509s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 72i,11n,77p,3143b,538s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on paper.pdf (32 pages).
+Output written on paper.pdf (33 pages).

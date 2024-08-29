@@ -50,7 +50,7 @@ folder <- "literature_files"; dir.create(folder); path <- paste(folder, "referen
 download.file("https://www.dropbox.com/scl/fi/n7t8g3hn32d8e5gf2rcti/references.bib?rlkey=xy251n44q3y0t3omxpqk0dvyf&dl=1", path)
 
 tables_directory_path <- here::here("explore", "tables", "revision-jfm")
-paste_forward_slash <- function(...) paste(..., sep = "/")
+
 
 tables_collapse_rows_align <- "top"
 tables_cut <- TRUE
@@ -499,16 +499,17 @@ tables <- readr::read_rds(paste_forward_slash(tables_directory_path, "tables-for
 caption <- "This table shows mean returns and volatility (sd) for the twenty four individual US commodities and the six GB metals considered in the study as well as for two equally weighted portfolios formed from the US commodities and the GB metals respectively across the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). Mean values significant at the 1%, 5% and 10% level are marked with \\*\\*\\*, \\*\\* and \\* respectively. The results are discussed in section \\@ref(results)."
 caption <- if (latex) caption_latex(x = caption) else if (html) caption
 colnames <- c("asset", "estimate", "past", "financialisation", "crisis", "post-crisis")
-align <- c("llrrrr")
+align <- make_series_of_repeated_chars(list(l = 2L, r = 4L))
 
 table <- get_results(tables, "stats - whole") %>%
   kbl(format = output_type, booktabs = T, longtable = T, caption = caption, col.names = colnames, align = align) %>%
   column_spec(1L, bold = TRUE) %>%
   collapse_rows(columns = 1L, valign = tables_collapse_rows_align, longtable_clean_cut = tables_cut, latex_hline = tables_hline) %>%
-  pack_rows("individual commodities", 1, 60) %>%
-  pack_rows("equally weighted portfolios", 61, 64)
+  pack_rows("individual commodities", 1, 60) %>% 
+  pack_rows("equally weighted portfolios", 61, 64) %>%
+  style_table(output_type)
 
-style_table(output_type, table)
+table
 ``` 
 
 ```{r, include=html}
@@ -524,16 +525,17 @@ knitr::asis_output('\\newpage')
 caption <- "This table shows mean returns and volatility (sd) for the twenty four individual US commodities and the six GB metals considered in the study as well as for two equally weighted portfolios formed from the US commodities and the GB metals respectively across the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). Figures are shown independently for phases of aggregate backwardation (aggregate CHP $\\leq$ period median) and aggregate contango (aggregate CHP > period median). Mean values significant at the 1%, 5% and 10% level are marked with \\*\\*\\*, \\*\\* and \\* respectively. Aggregate CHP construction and corresponding regime definitions are discussed in section \\@ref(methods) while the results are discussed in section \\@ref(results)."
 caption <- if (latex) caption_latex(x = caption) else if (html) caption
 colnames <- c("asset", "regime", "estimate", "past", "financialisation", "crisis", "post-crisis")
-align <- c("lllrrrr")
+align <- make_series_of_repeated_chars(list(l = 3L, r = 4L))
 
 table <- get_results(tables, "stats - regimes") %>% 
   kbl(format = output_type, booktabs = T, longtable = T, caption = caption, col.names = colnames, align = align) %>%
   column_spec(1L, bold = TRUE) %>%
   collapse_rows(columns = 1L:2L, valign = tables_collapse_rows_align, longtable_clean_cut = tables_cut, latex_hline = tables_hline) %>%
   pack_rows("individual commodities", 1, 120) %>%
-  pack_rows("equally weighted portfolios", 121, 128)
+  pack_rows("equally weighted portfolios", 121, 128) %>%
+  style_table(output_type)
 
-style_table(output_type, table)
+table
 ``` 
 
 ```{r, include=html}
@@ -548,14 +550,15 @@ knitr::asis_output('\\newpage')
 caption <- "This table shows the average time series $R^{2}$ for models where the returns series for the twenty four individual US commodities are independently regressed against relative change in their own commercial hedging pressure (CHP) series as well as against that in aggregate CHP, a market wide measure of CHP which calculation method is discussed in section \\@ref(methods). Averages are calculated independently across the whole cross-section of US traded commodity assets considered in the study as well as across commodity sectors and subsectors for the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). The results are discussed in section \\@ref(results)."
 caption <- if (latex) caption_latex(x = caption) else if (html) caption
 colnames <- c("regressor", "sector", "subsector", "past", "financialisation", "crisis", "post-crisis")
-align <- c("lllrrrr")
+align <- make_series_of_repeated_chars(list(l = 3L, r = 4L))
 
 table <- get_results(tables, "regressions - US returns ~ US CHP") %>% 
   kbl(format = output_type, booktabs = T, longtable = T, caption = caption, col.names = colnames, align = align) %>%
   column_spec(1L, bold = TRUE) %>%
-  collapse_rows(columns = 1L:3L, valign = tables_collapse_rows_align, longtable_clean_cut = tables_cut, latex_hline = tables_hline)
+  collapse_rows(columns = 1L:3L, valign = tables_collapse_rows_align, longtable_clean_cut = tables_cut, latex_hline = tables_hline) %>%
+  style_table(output_type)
 
-style_table(output_type, table)
+table
 ``` 
 
 ```{r, include=html}
@@ -570,15 +573,40 @@ knitr::asis_output('\\newpage')
 caption <- "This table shows the average pairwise correlation coefficients calculated independently across the whole cross-section of commodity assets considered in the study as well as across countries and commodity sectors and subsectors for the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). For each period, the results are calculated independently over the entire period as well as over phases of aggregate backwardation and contango. Aggregate CHP construction and corresponding regime definitions are discussed in section \\@ref(methods) while the results are discussed in section \\@ref(results)."
 caption <- if (latex) caption_latex(x = caption) else if (html) caption
 colnames <- c("country", "sector", "subsector", "past", "regime", "financialisation", "crisis", "post-crisis")
-align <- c("lllrrrrr")
+align <- make_series_of_repeated_chars(list(l = 3L, r = 5L))
 
 table <- get_results(tables, "correlations - periods") %>% 
   kbl(format = output_type, booktabs = T, longtable = T, caption = caption, col.names = colnames, align = align) %>%
   column_spec(1L, bold = TRUE) %>%
-  collapse_rows(columns = 1L:3L, valign = tables_collapse_rows_align, longtable_clean_cut = tables_cut, latex_hline = tables_hline)
+  collapse_rows(columns = 1L:3L, valign = tables_collapse_rows_align, longtable_clean_cut = tables_cut, latex_hline = tables_hline) %>%
+  style_table(output_type)
 
-style_table(output_type, table)
+table
 ``` 
+
+```{r, include=html}
+knitr::asis_output('<br/><br/>')
+```
+```{r, include=latex}
+knitr::asis_output('\\newpage')
+```
+
+
+
+```{r correlations-years}
+caption <- "This table shows the average pairwise correlation coefficients calculated independently across the whole cross-section of commodity assets considered in the study as well as across countries and commodity sectors and subsectors by year for the whole periods of interest (1997-2018). For each year, the results are calculated independently over the entire year as well as over phases of aggregate backwardation and contango. Aggregate CHP construction and corresponding regime definitions are discussed in section \\@ref(methods) while the results are discussed in section \\@ref(results)."
+caption <- if (latex) caption_latex(x = caption) else if (html) caption
+colnames <- c("country", "sector", "subsector", "decade", 0L:9L)
+align <- make_series_of_repeated_chars(list(l = 4L, r = 10L))
+
+table <- get_results(tables, "correlations - years") %>% 
+  kbl(format = output_type, booktabs = T, longtable = T, caption = caption, col.names = colnames, align = align) %>%
+  column_spec(1L, bold = TRUE) %>%
+  collapse_rows(columns = 1L:4L, valign = tables_collapse_rows_align, longtable_clean_cut = tables_cut, latex_hline = tables_hline) %>%
+  style_table(output_type)
+
+landscape(table, margin = NULL)
+```
 
 ```{r, include=html}
 knitr::asis_output('<br/><br/>')

@@ -142,8 +142,17 @@ correlations_years <- dplyr::filter(
   dplyr::select(country, sector, subsector, year, average) %>%
   dplyr::group_by(country, sector, subsector, year) %>%
   dplyr::slice_tail(n = 1L) %>% dplyr::ungroup() %>%
+  dplyr::mutate(
+    decade = slituR::floor_year_to_nearest_decade(year),
+    year = slituR::remove_decade_from_year(year)
+    ) %>%
+  sort_table_by_country_sector_subsector(sort_levels) %>%
   tidyr::pivot_wider(names_from = "year", values_from = "average") %>%
-  sort_table_by_country_sector_subsector(sort_levels)
+  dplyr::relocate(`0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, .after = dplyr::last_col()) %>%
+  dplyr::mutate(
+    dplyr::across(c(`0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`), ~ format(.x, scientific = FALSE)),
+    dplyr::across(c(`0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`), ~ stringr::str_replace_all(.x, "    NA", ""))
+    )
 
 
 # regressions ####
