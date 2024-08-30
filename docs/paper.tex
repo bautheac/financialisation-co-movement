@@ -899,12 +899,12 @@ regressor & sector & subsector & past & financialisation & crisis & post-crisis\
 \begin{longtable}[t]{>{}lllrrrrr}
 \caption{\label{tab:correlations-periods}This table shows the average pairwise correlation coefficients calculated independently across the whole cross-section of commodity assets considered in the study as well as across countries and commodity sectors and subsectors for the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). For each period, the results are calculated independently over the entire period as well as over phases of aggregate backwardation and contango. Aggregate CHP construction and corresponding regime definitions are discussed in section \ref{methods} while the results are discussed in section \ref{results}.}\\
 \toprule
-country & sector & subsector & past & regime & financialisation & crisis & post-crisis\\
+country & sector & subsector & regime & past & financialisation & crisis & post-crisis\\
 \midrule
 \endfirsthead
 \caption[]{\textit{(continued)}}\\
 \toprule
-country & sector & subsector & past & regime & financialisation & crisis & post-crisis\\
+country & sector & subsector & regime & past & financialisation & crisis & post-crisis\\
 \midrule
 \endhead
 
@@ -1066,6 +1066,51 @@ country & sector & subsector & decade & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9\\
 \end{longtable}
 \endgroup{}
 \end{landscape}
+
+\newpage
+
+\begingroup\fontsize{9}{11}\selectfont
+
+\begin{longtable}[t]{>{}lllrrrr}
+\caption{\label{tab:regressions-index}This table shows the average time series regression coefficients for models where the returns series for all the commodity assets considered in the study are independently regressed against the return series for our market factor, an equally weighted portfolio of the 24 US commodities considered in the study. The results are calculated independently across countries as well as commodity sectors and subsectors for the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). The market factor construction is discussed in section \ref{methods} while the results are discussed in section \ref{results}.}\\
+\toprule
+country & sector & subsector & past & financialisation & crisis & post-crisis\\
+\midrule
+\endfirsthead
+\caption[]{\textit{(continued)}}\\
+\toprule
+country & sector & subsector & past & financialisation & crisis & post-crisis\\
+\midrule
+\endhead
+
+\endfoot
+\bottomrule
+\endlastfoot
+\textbf{all} & all &  & 0.8556 & 0.9709 & 1.0352 & 0.9438\\
+\nopagebreak
+ &  & \multirow[t]{-2}{*}{\raggedright\arraybackslash all} & 0.7706 & 0.7965 & 0.8535 & 0.8252\\
+\nopagebreak
+ &  & grains & 0.9891 & 1.1982 & 1.1727 & 1.0301\\
+\nopagebreak
+ &  & livestock & 0.4320 & 0.2059 & 0.3317 & 0.5484\\
+\nopagebreak
+ & \multirow[t]{-4}{*}{\raggedright\arraybackslash agriculturals} & softs & 0.7213 & 0.6900 & 0.7953 & 0.7589\\
+\nopagebreak
+ &  & all & 2.3308 & 1.6106 & 1.3977 & 1.7639\\
+\nopagebreak
+ &  & gas & 2.6992 & 1.7090 & 1.0044 & 1.2585\\
+\nopagebreak
+ & \multirow[t]{-3}{*}{\raggedright\arraybackslash energy} & petroleum & 2.2080 & 1.5778 & 1.5288 & 1.9324\\
+\nopagebreak
+ &  & all & 0.6320 & 1.1252 & 1.1212 & 0.9131\\
+\nopagebreak
+ &  & base & 0.4902 & 1.1178 & 1.4140 & 0.8780\\
+\nopagebreak
+\multirow[t]{-10}{*}{\raggedright\arraybackslash \textbf{US}} & \multirow[t]{-3}{*}{\raggedright\arraybackslash metals} & precious & 0.6674 & 1.1271 & 1.0480 & 0.9219\\
+\cmidrule{1-7}\pagebreak[0]
+\textbf{GB} & all & all & 0.2713 & 0.8520 & 1.1761 & 0.7192\\*
+\end{longtable}
+\endgroup{}
 
 \newpage
 

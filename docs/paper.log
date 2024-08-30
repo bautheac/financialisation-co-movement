@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.6.23)  29 AUG 2024 11:13
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.6.23)  30 AUG 2024 09:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -901,7 +901,7 @@ Overfull \hbox (8.31902pt too wide) in alignment at lines 567--827
 
 ] [30
 
-] [31] [32] [33] (./paper.aux)
+] [31] [32] [33] [34] (./paper.aux)
 
 LaTeX Warning: There were undefined references.
 
@@ -909,12 +909,12 @@ Package rerunfilecheck Info: File `paper.out' has not changed.
 (rerunfilecheck)             Checksum: 40F2F707CA4F84246892CACAFAF29713;463.
  ) 
 Here is how much of TeX's memory you used:
- 20422 strings out of 478150
- 371311 string characters out of 5854083
- 784319 words of memory out of 5000000
- 40731 multiletter control sequences out of 15000+600000
+ 20424 strings out of 478150
+ 371339 string characters out of 5854083
+ 784451 words of memory out of 5000000
+ 40733 multiletter control sequences out of 15000+600000
  508478 words of font info for 76 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  72i,11n,77p,3143b,538s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on paper.pdf (33 pages).
+Output written on paper.pdf (34 pages).

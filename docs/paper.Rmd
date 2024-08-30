@@ -572,7 +572,7 @@ knitr::asis_output('\\newpage')
 ```{r correlations-periods}
 caption <- "This table shows the average pairwise correlation coefficients calculated independently across the whole cross-section of commodity assets considered in the study as well as across countries and commodity sectors and subsectors for the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). For each period, the results are calculated independently over the entire period as well as over phases of aggregate backwardation and contango. Aggregate CHP construction and corresponding regime definitions are discussed in section \\@ref(methods) while the results are discussed in section \\@ref(results)."
 caption <- if (latex) caption_latex(x = caption) else if (html) caption
-colnames <- c("country", "sector", "subsector", "past", "regime", "financialisation", "crisis", "post-crisis")
+colnames <- c("country", "sector", "subsector", "regime", "past", "financialisation", "crisis", "post-crisis")
 align <- make_series_of_repeated_chars(list(l = 3L, r = 5L))
 
 table <- get_results(tables, "correlations - periods") %>% 
@@ -615,6 +615,28 @@ knitr::asis_output('<br/><br/>')
 knitr::asis_output('\\newpage')
 ```
 
+
+```{r regressions-index}
+caption <- "This table shows the average time series regression coefficients for models where the returns series for all the commodity assets considered in the study are independently regressed against the return series for our market factor, an equally weighted portfolio of the 24 US commodities considered in the study. The results are calculated independently across countries as well as commodity sectors and subsectors for the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). The market factor construction is discussed in section \\@ref(methods) while the results are discussed in section \\@ref(results)."
+caption <- if (latex) caption_latex(x = caption) else if (html) caption
+colnames <- c("country", "sector", "subsector", "past", "financialisation", "crisis", "post-crisis")
+align <- make_series_of_repeated_chars(list(l = 3L, r = 4L))
+
+table <- get_results(tables, "regressions - all returns ~ marke index") %>% 
+  kbl(format = output_type, booktabs = T, longtable = T, caption = caption, col.names = colnames, align = align) %>%
+  column_spec(1L, bold = TRUE) %>%
+  collapse_rows(columns = 1L:3L, valign = tables_collapse_rows_align, longtable_clean_cut = tables_cut, latex_hline = tables_hline) %>%
+  style_table(output_type)
+
+table
+``` 
+
+```{r, include=html}
+knitr::asis_output('<br/><br/>')
+```
+```{r, include=latex}
+knitr::asis_output('\\newpage')
+```
 
 
 # References {#references .unnumbered}
