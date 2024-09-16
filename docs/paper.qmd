@@ -389,7 +389,7 @@ make_table("regressions - US returns ~ US CHP", colnames, align, 1L:7L, 4L:7L)
 
 ```{r}
 #| label: tbl-correlations-periods
-#| tbl-cap: "This table shows the average time series $R^{2}$ for models where the returns series for the twenty four individual US commodities are independently regressed against relative change in their own commercial hedging pressure (CHP) series as well as against that in aggregate CHP, a market wide measure of CHP which calculation method is discussed in section \\@sec-methods. Averages are calculated independently across the whole cross-section of US traded commodity assets considered in the study as well as across commodity sectors and subsectors for the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). The results are discussed in section \\@sec-results."
+#| tbl-cap: "This table shows the average pairwise correlation coefficients calculated independently across the whole cross-section of commodity assets considered in the study as well as across countries and commodity sectors and subsectors for the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). For each period, the results are calculated independently over the entire period as well as over phases of aggregate backwardation and contango. Aggregate CHP construction and corresponding regime definitions are discussed in section \\@sec-methods while the results are discussed in section \\@sec-results."
 
 colnames <- c(sectors, "regime", periods)
 align <- make_series_of_repeated_chars(list(l = 3L, r = 5L))
@@ -401,7 +401,7 @@ make_table("correlations - periods", colnames, align, 1L:8L, 5L:8L)
 
 ```{r}
 #| label: tbl-correlations-years
-#| tbl-cap: "This table shows the average pairwise correlation coefficients calculated independently across the whole cross-section of commodity assets considered in the study as well as across countries and commodity sectors and subsectors by year for the whole periods of interest (1997-2018). For each year, the results are calculated independently over the entire year as well as over phases of aggregate backwardation and contango. Aggregate CHP construction and corresponding regime definitions are discussed in section \\@sec-methods while the results are discussed in section \\@sec-results."
+#| tbl-cap: "This table shows the average pairwise correlation coefficients calculated independently across the whole cross-section of commodity assets considered in the study as well as across countries and commodity sectors and subsectors by year for the whole period of interest (1997-2018). The results are discussed in section \\@sec-results."
 
 colnames <- c(sectors, "decade", 0L:9L)
 align <- make_series_of_repeated_chars(list(l = 4L, r = 10L))
