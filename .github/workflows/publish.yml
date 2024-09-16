@@ -9,10 +9,12 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Copy paper.html to index.html
-        run: cp docs/paper.html docs/index.html
       - name: Checkout 🛎️
         uses: actions/checkout@v3
+
+      - name: Copy paper.html to index.html
+        run: cp docs/paper.html docs/index.html
+
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
