@@ -267,6 +267,9 @@ regressions_factors <- readr::read_rds(
   regressions_factors, field == "close price", type == "return", frequency == "day", 
   timespan == "period", factor != "open interest aggregate", leg == "factor"
 ) %>%
+  dplyr::mutate(
+    factor = factor %>% stringr::str_replace_all("open interest nearby", "open interest")
+    ) %>%
   dplyr::select(country, sector, subsector, period, factor, regime, average) %>%
   dplyr::mutate(average = percentize(average)) %>%
   tidyr::pivot_wider(names_from = "period", values_from = "average") %>%
