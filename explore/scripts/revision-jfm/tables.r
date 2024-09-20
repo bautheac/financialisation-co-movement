@@ -278,14 +278,14 @@ regressions_factors <- readr::read_rds(
 
 # export ####
 tables <- tibble::tribble(
-    ~analysis,                                 ~results,
-    "stats - whole",                           descriptive_stats_whole,
-    "stats - regimes",                         descriptive_stats_regimes,
-    "regressions - US returns ~ US CHP",       `US commodity returns ~ CHP`,
-    "correlations - periods",                  correlations_periods,
-    "correlations - years",                    correlations_years,
-    "regressions - all returns ~ marke index", `all commodity returns ~ market index`,
-    "regressions - all returns ~ factors",     `all commodity returns ~ factors`
+    ~analysis,                                  ~results,
+    "stats - whole",                            descriptive_stats_whole,
+    "stats - regimes",                          descriptive_stats_regimes,
+    "regressions - US returns ~ US CHP",        `US commodity returns ~ CHP`,
+    "correlations - periods",                   correlations_periods,
+    "correlations - years",                     correlations_years,
+    "regressions - all returns ~ market index", `all commodity returns ~ market index`,
+    "regressions - all returns ~ factors",      `all commodity returns ~ factors`
   )
 
 readr::write_rds(
