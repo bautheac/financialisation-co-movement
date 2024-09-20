@@ -1,0 +1,23 @@
+we strive to shed new light on the phenomenon by
+
+In this respect, there is a contrast between the first and second periods
+
+It is also interesting to note that US traded metals returns were negatively correlated with the rest of US traded commodities in the first period and positively in the second.
+
+Taken together with the previous results showing that the metal complex predominantly loads on the long and short legs of the original CHP and term structure factors respectively, these results provide evidence of convergence of Keynesian and Working’s theories of the term structure in detecting price co-movement during financialisation perhaps as a result of spillover effects between the corresponding futures and spot markets as suggested in Basak and Pavlova (2016).
+
+Taken together, the results in tables and suggest that the onset of financialisation had a major impact on the dynamics of US traded precious and precious-base metals.
+
+These figures drastically increase across the board in the financialisation period and show a pattern similar to that observed in the US complex.
+
+providing further evidence of concentration of co-movement in the metals sector during financialisation.  
+
+Taken together these results emphasise the global nature of the impact of financialisation on the metals
+complex and provide further evidence that global metals co-movement could be detected by US based factor
+models that combine the Keynesian and Working’s term structure paradigms. There seems thus to be
+information in the factor constructed from hedging pressure based on the Keynesian paradigm relevant to
+the term structure factor built on the Working paradigm and these findings therefore appear to complement
+the results of Kang et al. (2020) who find that hedging pressure both conveys information about liquidity
+provision in the short term (Working paradigm) and risk transfer in the longer term (Keynesian paradigm).
+
+
