@@ -628,7 +628,11 @@ gasoline data series, we consider unleaded gasoline up to September
 liquidity for the latter overtook that for the former.\\
 We also consider the UK metal complex with aluminium (XLME), copper
 (XLME), lead (XLME), nickel-primary (XLME), tin-refined (XLME) and zinc
-(XLME).
+(XLME). This sample cross-section of assets is further divided into
+groups for the purpose of the analysis by country (US, GB), sector
+(agriculturals, energy, metals) and by sub-sector (agriculturals:
+grains, livestock, softs; energy: gas, petroleum; metals: base,
+precious).
 
 \medskip
 
@@ -668,12 +672,51 @@ and ``Other reportable'' as well as in the supplemental commitment of
 trader report (SCOT) that details commodity index trader aggregate
 positions for thirteen agricultural commodity futures markets. Data for
 DCOT and SCOT date back to 2006 and 2007 respectively.\\
-We study the 1997/2018 period where we observe futures only position
-data from the COT report, the only CFTC report with data available for
-the whole period of interest; as well as futures term structure price
-and open interest data from Bloomberg.
+We examine the period from 1997 to 2018, during which we utilize
+futures-only position data from the COT report---the only CFTC report
+providing data for the entire duration of interest---as well as futures
+term structure price and open interest data sourced from Bloomberg. The
+sample period is further divided into four distinct intervals. The
+pre-financialisation era spans the 1997-2003 period and is naturally
+followed by the financialisation phase running from 2004 to 2008 which
+in turn leads into the financial crisis and its aftermath, covering 2008
+to 2013. The final interval starts in 2013 with the onset of tapering
+and the conclusion of the US Quantitative Easing (QE) program.
 
 \subsection{Methods}\label{sec-methods}
+
+For each commodity asset we compute the weekly front futures return and
+commercial hedging pressure (CHP) time series with the CHP calculated as
+the ratio of the number of long commercial positions to the total number
+of commercial positions for the considered asset-week combination. For
+each asset-period combination we compute the average return and
+corresponding volatility over the entire period as well as over phases
+of cross-sectional low and high CHP\footnote{Aggregate CHP or
+  \textbf{CHP}: see below for a formal definition and description of the
+  phase construction process.}. These statistics are also computed for
+equally weighted portfolios of the US and GB traded commodity assets
+independently.
+
+For each period, the return series for the individual US-traded assets
+are regressed on both the relative change on their respective CHP series
+and that on the cross-sectional CHP independently. The resulting
+\(R^{2}\) values are then averaged by sector and subsector.
+Additionally, pairwise correlations are computed for each combination of
+assets across the periods of interest and for each individual year
+within the full sample period. These correlation coefficients are
+subsequently averaged across the entire cross-section of assets, as well
+as by country, sector, and subsector. For each period, the coefficients
+are also calculated and averaged across phases of low and high
+cross-sectional CHP.
+
+This approach sheds light on the evolving interconnectedness among
+commodity assets as the complex transitions from traditional market
+dynamics---where commodity producers and speculators had distinct
+roles---to a more intricate landscape shaped by the influx of financial
+investors.
+
+\bigskip
+\bigskip
 
 On the one hand, futures markets have a long history of serving
 commodity producers to alleviate their commodity price and output risks.
@@ -716,50 +759,27 @@ analysis of market fundamentals
 \citep{schwartz_short_2000, miffre_momentum_2007, gorton_fundamentals_2012, cortazar_commodity_2013, yang_investment_2013, daskalaki_factors_2014, szymanowska_anatomy_2014, fernandez_skewness_2018, bakshi_understanding_2019, boons_basis_2019, sakkas_factor_2020}.
 We therefore develop a futures-based asset pricing framework that
 includes factors constructed using both theoretical and liquidity
-considerations and use this framework to carry out our analysis over
-four periods of interest. The first, the pre-financialisation period,
-starts in 1997 and is naturally followed by financialisation, spanning
-the 2004/2008 period, and the financial crisis and its aftermath,
-spanning the 2008/2013 period. The last period spans the 2014/2018
-period starting with the beginning of the tapering/end of the US
-Quantitative Easing program (QE).\\
-Using the weekly price, open interest and market position data described
-above we construct market portfolios of individual commodity nearby
-futures as well as mimicking portfolios for market, commercial hedging
-pressure, term structure and liquidity risk factors in returns. While
-our market portfolios are long only, equally weighted portfolios of
-particular commodity sets, our other mimicking portfolios for risk
-factors are constructed as combinations of two sub-portfolios (legs),
-one held long, one held short, which respective constituents are pooled
-on a weekly basis according to risk factor specific criteria.\\
-For each leg, the position weight for a particular asset for a
-particular period is contingent on the value of the corresponding
-sorting variable and its rank relative to the other assets in the pool.
-The sorting variable values for the asset pool are first rescaled so
-that the highest (lowest) value becomes 1 (0). Weights are then
-determined pairwise, starting from the extremes with the highest and
-lowest figures. A coefficient \(\alpha\) is determined by dividing their
-difference (1 in this case) by the mean of the rescaled values. The high
-figure is attributed a score of \(\frac{1}{n} \times \alpha\) where
-\(n\) is the number of assets in the pool while the score for the low
-figure is \(\frac{1/n}{\alpha}\). The operation is repeated for the pair
-of assets showing the second highest and second lowest values for the
-sorting variable and so on until all the assets in the pool are
-attributed a score. The individual asset weights are then determined by
-dividing each score by the sum of the scores.\\
-The period return for a particular mimicking portfolio is calculated as
-the difference between the weighted average return for constituents of
-the long portfolio and that for the constituents of the short portfolio.
+considerations. Using the weekly price, open interest and market
+position data described above we construct market portfolios of
+individual commodity nearby futures as well as mimicking portfolios for
+market, commercial hedging pressure, term structure and liquidity risk
+factors in returns. While our market portfolios are long only
+combinations of particular commodity sets, our other mimicking
+portfolios for risk factors are constructed as combinations of two
+sub-portfolios (legs), one held long, one held short, which respective
+constituents are pooled on a weekly basis according to risk factor
+specific criteria.\\
+All portfolios are equally weighted and returns for the two-legged
+factors are calculated as the difference between the average return for
+constituents of the long leg and that for the constituents of the short.
 i.e, return on the mimicking portfolio for risk factor \(i\) (\(f_{i}\))
 for period \(t\):
 
-\[r_{t}^{f_{i}}=\sum_{j=1}^{x}w^{long}_{j,t} \times r_{j,t}-\sum_{j=n-x}^{n}w^{short}_{j,t} \times r_{j,t}\]
+\[r_{t}^{f_{i}} = \frac{1}{x} \left ( \sum_{j=1}^{x}r_{j,t} - \sum_{j=n-x}^{n} r_{j,t} \right )\]
 \(n\equiv\) number of commodities in the set considered for mimicking
 portfolio construction.\\
 \(x = n \cdot s\).\\
 \(s\equiv\) selection threshold (\(\frac{1}{3}\) here).\\
-\(w^{*}_{j,t}\equiv\) period \(t\) weight for commodity \(j\) on the
-long or short leg.\\
 \(r_{j,t}\equiv\) period \(t\) front contract return for commodity
 \(j\).\\
 \(j\equiv\) commodity rank in the ordered set \(Y_{t}^{f_{i}}\).\\
@@ -815,35 +835,24 @@ the long leg of the portfolio while the top third form the short leg.
 
 \medskip
 
-We use a time series regression approach where we start with regressions
-of the US traded individual commodity weekly front contract returns on
-returns to the mimicking portfolio for a particular risk factor where
-the portfolio is constructed using the whole cross-section of US traded
-commodities. The corresponding \(R^{2}\)s are averaged and the process
-is repeated for each of our four risk factors (market, hedging pressure,
-term structure and liquidity) and periods (1997/2003, 2004/2008,
-2008/2013 and 2014/2018). For the long-short factors the results are
-reported independently for models where the regressor is the factor
-itself or one of its legs (long vs.~short). The same operation is
-repeated for the two (\(p=2\)) and three (\(p=3\)) factor model cases,
-where regressors include in turn all combinations of any two and three
-risk factors respectively, as well as for the four (\(p=4\)) factor
-model case where all the risk factor mimicking portfolios are included.
-Results are reported for the one-factor model case with the other
-results available upon request.
+We use a time series regression approach where individual commodity
+weekly front futures contract returns are regressed on returns to the
+mimicking portfolio for a particular risk factor with the corresponding
+\(\beta\)s and \(R^{2}\)s averaged. For the long-short factors the
+results are reported independently for models where the regressor is the
+factor itself or one of its legs (results available upon request).
 
-\medskip
-
-For each period we also implement the analysis described above over
-periods of low and high aggregate CHP (\textbf{CHP}), a notion that we
-believe is particularly relevant in the context of financialisation
-where issues of co-movement and aggregate market behaviour play a
-central role. We define \textbf{CHP} as the cross-sectional average of
-individual CHPs for a particular pool of assets. i.e., period \(t\)
-\textbf{CHP} for asset pool \(x\):
-
-\[\mathbf{CHP}_{t}^{x}=\frac{1}{n}\sum_{j=1}^{n}CHP_{j,t}\] \(n\equiv\)
-number of commodities in set \(x\).\\
+For each time period considered in the study, being one of the four
+multi-year periods described above or any individual year over the
+entire sample time period, we carry out our analysis over the entire
+period as well as over phases of low and high aggregate CHP
+(\textbf{CHP}) over the period; a notion that we believe is particularly
+relevant in the context of financialisation where issues of co-movement
+and aggregate market behaviour play a central role. We define
+\textbf{CHP} as the cross-sectional average of individual CHPs for a
+particular pool of assets. i.e., period \(t\) \textbf{CHP} for asset
+pool \(x\): \[\mathbf{CHP}_{t}^{x}=\frac{1}{n}\sum_{j=1}^{n}CHP_{j,t}\]
+\(n\equiv\) number of commodities in set \(x\).\\
 \(CHP_{i,t}\equiv\) period \(t\) CHP for commodity \(i\) as defined
 above.
 
@@ -853,54 +862,8 @@ We further define aggregate backwardation (\textbf{backwardation}) and
 contango (\textbf{contango}) \textbf{CHP} regimes as, for a given
 period, \textbf{CHP} levels below and above the period's median
 respectively and, in contrast with \citep{hong_what_2012} who aggregate
-across sub-sectors, the asset pool we consider for \textbf{CHP}
-construction include the whole cross-section of US traded commodities.
-
-\medskip
-
-In the next part of the analysis, our mimicking portfolios for risk
-factors, constructed from the set of all US traded commodities are used
-as commodity picking devices on the latter commodity set. For each risk
-factor and period, individual US traded commodity front returns are
-regressed on returns for the corresponding mimicking portfolio.
-Individual commodities are sorted by \(R^{2}\) accordingly from highest
-to lowest and the top third (highest \(R^{2}\)s) are selected as
-commodity picks for the risk factor for the period. i.e, set of picks
-\(P_{t}^{f_{i}}\) for risk factor \(i\) (\(f_{i}\)) over period \(t\):
-
-\[P_{t}^{f_{i}}\equiv\left \{ P_{1}, P_{2}, ..., P_{x} \right \}\]
-\(x = n \cdot s\).\\
-\(n\equiv\) number of commodities in the set considered for the picking
-exercise (twenty-four here).\\
-\(s\equiv\) selection threshold (\(\frac{1}{3}\) here).\\
-\(P_{j}\equiv\) commodity pick \(j\) for risk factor \(f_{i}\) over
-period \(t\)\\
-\(j\equiv\) rank in the ordered set \(Y_{t}^{f_{i}}\)\\
-\[Y_{t}^{f_{i}}\equiv\left \{ \left \{ \tilde{R_{1}^{2}}, \tilde{R_{2}^{2}}, ..., \tilde{R_{n}^{2}} \right \}, \geq \right \}\]
-\(n\equiv\) number of commodities in the set considered for picking
-(twenty-four here).\\
-\(\tilde{R_{j}^{2}}\equiv\) risk factor \(f_{i}\) returns' explanatory
-power on commodity \(j\) nearby futures returns over period \(t\) as
-defined above.
-
-\medskip
-
-For each period we report the proportion of time each pick is held in
-the long and (/or) short leg of the corresponding risk factor mimicking
-portfolio as well as the average pairwise correlation amongst every set
-of picks.
-
-\medskip
-
-In the last part of the analysis, for each period our mimicking
-portfolios for risk factors in returns are constructed using each set of
-commodity picks independently as the asset pool for portfolio
-construction. A similar time series approach to that described above is
-then implemented using these newly formed mimicking portfolios. In this
-case, a first set of dependent variables includes the sets of commodity
-picks themselves, a second set includes the whole cross-section of US
-traded commodities while a third set includes the six UK traded metals
-considered in the study.
+across sub-sectors, our \textbf{CHP} construction draws on the full
+cross-section of US-traded assets considered in the study.
 
 \bigskip
 \bigskip
@@ -942,10 +905,7 @@ volatility: Oats (XCBT), Lean hogs (XCME), Cocoa (IFUS), Coffee-C
 oil-WTI (XNYM), Gasoline (XNYM), Heating oil (XNYM), Palladium (XNYM).
 Financialisation seems however to have impacted the commodity complex
 beyond these mechanical effects of increased long participation ensuing
-from the entry on index type investments as our results suggest next.
-
-\medskip
-
+from the entry on index type investments as our results suggest next.\\
 The cross-sectional nature of financialisation naturally leads us to
 extend the individual hedging pressure paradigm by incorporating
 aggregate CHP (\textbf{CHP}), a market wide measure of hedging pressure.
@@ -1046,21 +1006,21 @@ suggesting a return to legacy commodity specific dynamics.
 
 \medskip
 
-Financialisation was a global phenomenon that, through the channel of
-index investment, simultaneously influenced the entire spectrum of
-liquid commodities. This sweeping impact spurred the transformation of
+Financialisation was a global phenomenon, through the channel of index
+investment it simultaneously influenced the entire spectrum of liquid
+commodities; this sweeping impact spurred the transformation of
 commodity markets from a collection of idiosyncratic markets into a
 unified asset class with interconnectedness emerging as a crucial aspect
 that warrants thorough examination.\\
-We set out to address this issue by first examining the average of
-weekly pairwise correlations between commodities across the entire
+We strive to address this issue by first examining the average of weekly
+returns pairwise correlations between commodities across the entire
 cross-section of the commodity assets considered in the study as well as
 by country, sector and sub-sector. Table~\ref{tbl-correlations-periods}
 shows the results for the four periods of interest with the results
 reported for the entire period as well as for periods of
 \textbf{backwardation} and \textbf{contango}. For the entire sample the
 average pairwise correlation jumps from 0.07 in the first period to 0.16
-over financialisation. These findings indicate higher interdependence
+over financialisation. This finding indicate higher interdependence
 within the full cross-section of commodities starting with the
 financialisation period, consistent with the empirical findings in
 \citet{fryMcKibbin_evolution_2023} and
@@ -1070,7 +1030,7 @@ the driving force behind these changes. The US metals see the sharpest
 increase in pairwise correlations going from 0.22 over the past period
 to 0.56 over financialisation while the three other sectors see a much
 smaller percentage increase during financialisation relative to the past
-period. These findings thus suggest that the US metals sector was the
+period. These results thus suggest that the US metals sector was the
 driving force behind increased average pairwise correlations during
 financialisation, a new observation to the best of our knowledge. The
 pattern of correlations is very similar across phases of
@@ -1101,7 +1061,7 @@ for an individual commodity against those for the market factor is
 driven by covariances while the denominator is driven by the individual
 commodity variance. Thus, an increase in a commodity's correlation with
 other commodities should lead to an increase in its beta relative to the
-market factor portfolio. We therefore regress the weekly individual
+market factor portfolio. We accordingly regress the weekly individual
 commodity front futures returns against those for our market factor
 portfolio and average the resulting betas across the entire set of
 commodity assets considered as well as by country, sector and sub-sector
@@ -1113,7 +1073,7 @@ sub-sector (GB traded assets) in a relative sense. The group had a much
 lower beta of 0.27 over the past period, suggesting a low level of
 correlation with US commodities; this figure increases to 0.85 over the
 financialisation period, even beyond that for the US agricultural sector
-of 0.80. In contrast, the corresponding figures for the energy sector
+of 0.80. In contrast, the corresponding figure for the energy sector
 show a substantial decrease, down to 1.61 during financialisation from
 2.33 over the past period.\\
 The corresponding pricing performance displays a similar pattern as
@@ -1128,7 +1088,7 @@ with the rise driven by the metals sector at large. The sector average
 for the US traded assets jumps to 31\% during financialisation from
 7.5\% over the past period while for the GB traded assets the
 corresponding figure increases from less than 2\%, or virtually no
-explanatory power for the (US based) market factor to almost 12\% over
+explanatory power for the (US based) market factor, to almost 12\% over
 the financialisation period. The results for our other risk factor
 mimicking portfolios show a similar pattern and provide a deeper
 insights into co-movement dynamics in this context. All three
@@ -1142,8 +1102,8 @@ performance of the CHP factor with its average \(R^{2}\), albeit still
 small at 5.4\%, almost tripling from the past to the financialisation
 period in contrast to the other factors that show weaker dynamics with a
 slight decrease and a much smaller increase for the open interest and
-term structure factors respectively. Here again the dramatic increase in
-pricing performance for the CHP factor is driven by the metals sector,
+term structure factors respectively. Here again the increase in pricing
+performance for the CHP factor is driven by the metals sector,
 particularly the precious sub-sector with the average \(R^{2}\) for the
 group jumping to almost 26\% during financialisation from 1.2\% over the
 past period. The corresponding figures of 22\% and 1.1\% for the entire
@@ -1158,14 +1118,14 @@ itself driven by the metals, the precious sub-sector in particular. The
 average \(R^{2}\) for the group jumps to 55\% during financialisation
 from less than 12\% over the past period while the short leg sees a far
 smaller increase, up to 8.9\% from 3.3\% over the past period.
-Interestingly, although the factor itself only sees a very modest
-increase, its short leg (low roll-yield assets: Working's backwardation)
-shows a sizeable rise in pricing performance, yet again driven the
-metals sector, with the average \(R^{2}\) for the group's US traded
-assets jumping to 28.2\% during financialisation from 6.2\% over the
-past period. The pattern of results for both factors extends to the GB
-trade assets and suggest a convergence of Keneysian and Working's term
-structure perspective over the financialisation period.\\
+Interestingly, although the term structure factor itself only sees a
+very modest increase, its short leg (low roll-yield assets: Working's
+backwardation) shows a sizeable rise in pricing performance, yet again
+driven the metals sector, with the average \(R^{2}\) for the group's US
+traded assets jumping to 28.2\% during financialisation from 6.2\% over
+the past period. The pattern of results for both factors extends to the
+GB trade assets and suggest a convergence of Keneysian and Working's
+term structure perspective over the financialisation period.\\
 Taken together these results emphasise the global nature of the impact
 of financialisation on the metals complex and provide further evidence
 that global metals co-movement could be detected by US based factor
@@ -1173,7 +1133,7 @@ models that combine the Keynesian and Working's term structure
 paradigms. There seems thus to be information in the factor constructed
 from hedging pressure based on the Keynesian paradigm relevant to the
 term structure factor built on the Working paradigm and these findings
-therefore appear to complement the results of Kang et al.~(2020) who
+therefore appear to complement the results of \citet{kang_tale_2020} who
 find that hedging pressure both conveys information about liquidity
 provision in the short term (Working paradigm) and risk transfer in the
 longer term (Keynesian paradigm).
@@ -1203,17 +1163,51 @@ the US cross-sectional average \(R^{2}\) at the individual level
 bouncing back up (22.5\% vs 20.8\%) while that at the aggregate level
 rises further (14.7\% vs 7.1\%).
 
-// TODO Add correlation results discussion here.
+\medskip
 
-The performance of the market factor dominates the US commodity complex
-over the period with a 50\% increase in mean average \(R^{2}\) to over
-30\% (Table~\ref{tbl-regressions-factors}) while that of the CHP factor
-decreases and, although increasing, remains modest for the open interest
-growth and term structure factors. Taken together, these results
-indicate the presence of a systematic factor across the entire
-cross-section of the US commodities.
+The average pairwise correlation for the entire cross-section of
+commodities considered in the study
+(Table~\ref{tbl-correlations-periods}) increases further into the crisis
+to 0.28 indicating an intensification of the higher interdependence
+within the full cross-section of commodities prompted by
+financialisation. The result is consistent with the greater
+interdependence between equity and commodity markets over this period
+documented in \citet{silvennoinen_financialisation_2013}. The figure for
+the US traded section of the metals sector only progresses modestly to
+0.59 after peaking at 0.63 in 2006 (Table~\ref{tbl-correlations-years}).
+In contrast, the GB traded assets see a sharp increase to over 0.65 in
+the crisis starting in 2007 up to a peak of 0.69 in 2010. The
+agricultural sector on the other hand shows a substantial rise in the
+crisis period with the sharpest increase in 2008 when the average
+pairwise correlation for the sector jumps to 0.30. Meanwhile, the energy
+sector also shows a notable progression starting in 2007 and peaking at
+0.63 in 2008 before levelling back down over the rest of the period. The
+onset of the financial crisis seems therefore to have had an across the
+board impact on the interdependence of commodities in contrast with
+financialisation, much more closely related to the metals sector.
 
 \medskip
+
+The entire cross-section sees an increase in average regression
+coefficient relative to the market factor over the crisis period with
+the strongest progression for the GB traded metals followed by the
+agricultural sector (Table~\ref{tbl-regressions-index}). The pricing
+performance of the factor dominates the US commodity complex over the
+period (Table~\ref{tbl-regressions-factors}), showing a 50\% increase in
+mean average \(R^{2}\) to over 31\%, while that for both the CHP and
+open interest factor decreases and, although increasing, remains modest
+for the term structure factors; the increase is strongest for the GB
+traded metal assets with an average \(R^{2}\) of almost 34\% for the
+period. Taken together, these results indicate the presence of a
+systematic factor across the entire cross-section of the US commodities.
+For both the CHP and term structure factors, both legs show an increase
+in average \(R^{2}\) and while substantially diverging over the
+preceding financialisation period the pricing performance for both legs
+seems to converge back to a pattern closer to that observed
+pre-financialisation.
+
+\bigskip
+\bigskip
 
 The returns pull-back continues into the post-crisis period
 (Table~\ref{tbl-stats-no-regimes}) with twenty-two US and four UK traded
@@ -1277,12 +1271,59 @@ for the energy sector in a relative sense: 2.5\% vs.~14.8\%.
 
 \medskip
 
-Taken together the patterns of results over the crisis and post-crisis
-periods echo those in \citet{basu_definancialisation} in suggesting that
-the exogenous shock delivered by the financial crisis combined with the
-accommodative monetary policy that ensued seem to have initiated a
-reversion toward pre-financialisation fundamentals in the commodity
-futures complex.
+The average pairwise correlations fall across the board in the
+post-crisis period, below the levels observed during financialisation,
+with the figure for the entire cross-section
+(Table~\ref{tbl-correlations-periods}) dropping down to 0.12 from 0.28
+over the crisis. This substantial decline, that does not appear to have
+been widely noted, appears to begin in the latter part of the crisis
+period, around 2012 (Table~\ref{tbl-correlations-years}), before
+levelling down over the whole post-crisis period.
+
+\medskip
+
+In a similar vein, the average market factor beta for the entire
+cross-section drops down to 0.94 (Table~\ref{tbl-regressions-index}),
+below the level observed during financialization. The decline seems
+driven by the metals sector, particularly the GB traded segment, with
+the figures for the US and GB traded assets at 0.91 and 0.72, down from
+1.12 and 1.18, respectively. Meanwhile, the pricing performance of the
+market factor also retreats to below financialisation levels with the
+average \(R^{2}\) for the entire cross-section dropping down to 14.7\%
+(Table~\ref{tbl-regressions-factors}). All sectors seem affected with
+agriculturals, energy and metals all seeing their average \(R^{2}\)
+decline below the levels observed during the financialisation period
+albeit remaining above 10\% for the GB traded metals against less than
+2\% pre-financialisation. Similarly, the performance for both the CHP
+and term structure factors falls back to levels below those attained
+over financialisation while the gap between their long and short legs
+remains narrower than observed during that period. These results, along
+with those from the crisis period, suggest that the exogenous shock of
+the financial crisis, combined with the subsequent accommodative
+monetary policy, may have triggered a reversion toward
+pre-financialization fundamentals in the commodity futures complex; an
+issue that, to our knowledge, has not been widely discussed in the
+existing literature.\\
+The phases analysis further documents the emerging role/dominance of the
+\textbf{contango} regime post-crisis with average correlations higher
+during those phases and the pattern stronger for the metal assets both
+US and GB traded. Similarly, for the latter the pricing performance of
+the market factor is considerably better during phase of
+\textbf{contango} in contrast with the previous periods that showed no
+substantial difference between phase of \textbf{contango} and
+\textbf{backwardation}. The figures for the US and GB traded segments of
+the sector are 23\% (\textbf{contango}) vs 11.5\%
+(\textbf{backwardation}) against 36.2\% vs 43\% during financialisation
+and 14.4\% (\textbf{contango}) vs 6.6\% (\textbf{backwardation}) against
+33.5\% vs 34.4\% during financialisation respectively. Taken together,
+these results indicate some recent changes in the correlation structure
+within the sector and along with the decline in interdependence in the
+commodity sector at large documented above, this observation could form
+a valuable basis for future research.\\
+These findings further providence additional evidence that the
+interdependence effects of financialization seems to have been strongest
+for the entire cross-section of the metals sector with a lesser impact
+for the other sectors.
 
 \newpage
 
@@ -1367,7 +1408,7 @@ weighted portfolios formed from the US commodities and the GB metals
 respectively across the four periods of interest (past: 1997-2003;
 financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018).
 Mean values significant at the 1\%, 5\% and 10\% level are marked with
-***, ** and * respectively. The results are discussed in section
+***, ** and * respectively. The results are discussed in
 Section~\ref{sec-results}.}
 
 \tabularnewline
@@ -1474,8 +1515,8 @@ Figures are shown independently for phases of aggregate backwardation
 CHP \textgreater{} period median). Mean values significant at the 1\%,
 5\% and 10\% level are marked with ***, ** and * respectively. Aggregate
 CHP construction and corresponding regime definitions are discussed in
-section Section~\ref{sec-methods} while the results are discussed in
-section Section~\ref{sec-results}.}
+Section~\ref{sec-methods} while the results are discussed in
+Section~\ref{sec-results}.}
 
 \tabularnewline
 
@@ -1652,13 +1693,12 @@ series \(R^{2}\) for models where the returns series for the twenty four
 individual US commodities are independently regressed against relative
 change in their own commercial hedging pressure (CHP) series as well as
 against that in aggregate CHP, a market wide measure of CHP which
-calculation method is discussed in section Section~\ref{sec-methods}.
-Averages are calculated independently across the whole cross-section of
-US traded commodity assets considered in the study as well as across
-commodity sectors and subsectors for the four periods of interest (past:
+calculation method is discussed in Section~\ref{sec-methods}. Averages
+are calculated independently across the whole cross-section of US traded
+commodity assets considered in the study as well as across commodity
+sectors and subsectors for the four periods of interest (past:
 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis:
-2013-2018). The results are discussed in section
-Section~\ref{sec-results}.}
+2013-2018). The results are discussed in Section~\ref{sec-results}.}
 
 \tabularnewline
 
@@ -1712,8 +1752,8 @@ crisis: 2008-2013; post-crisis: 2013-2018). For each period, the results
 are calculated independently over the entire period as well as over
 phases of aggregate backwardation and contango. Aggregate CHP
 construction and corresponding regime definitions are discussed in
-section Section~\ref{sec-methods} while the results are discussed in
-section Section~\ref{sec-results}.}
+Section~\ref{sec-methods} while the results are discussed in
+Section~\ref{sec-results}.}
 
 \tabularnewline
 
@@ -1776,7 +1816,7 @@ pairwise correlation coefficients calculated independently across the
 whole cross-section of commodity assets considered in the study as well
 as across countries and commodity sectors and subsectors by year for the
 whole period of interest (1997-2018). The results are discussed in
-section Section~\ref{sec-results}.}
+Section~\ref{sec-results}.}
 
 \tabularnewline
 
@@ -1843,8 +1883,8 @@ weighted portfolio of the 24 US commodities considered in the study. The
 results are calculated independently across countries as well as
 commodity sectors and subsectors for the four periods of interest (past:
 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis:
-2013-2018). The market factor construction is discussed in section
-Section~\ref{sec-methods} while the results are discussed in section
+2013-2018). The market factor construction is discussed in
+Section~\ref{sec-methods} while the results are discussed in
 Section~\ref{sec-results}.}
 
 \tabularnewline
@@ -1890,8 +1930,8 @@ interest (past: 1997-2003; financialisation: 2004-2008; crisis:
 calculated independently over the entire period as well as over phases
 of aggregate backwardation and contango. Factors as well as aggregate
 CHP construction and corresponding regime definitions are discussed in
-section Section~\ref{sec-methods} while the results are discussed in
-section Section~\ref{sec-results}.}
+Section~\ref{sec-methods} while the results are discussed in
+Section~\ref{sec-results}.}
 
 \tabularnewline
 
