@@ -1,29 +1,51 @@
 library(magrittr)
 
 # Globals ####
+## datasets ####
+data("tickers_futures", "tickers_cftc", package = "BBGsymbols")
+data("exchanges", package = "fewISOs")
 
 ## variables ####
-results_directory_path <- here::here("explore", "results", "revision-jfm")
-tables_directory_path <- here::here("explore", "tables", "revision-jfm")
 factors <- c("market", "CHP", "open interest nearby", "open interest aggregate", "term structure")
+results_directory_path <- here::here("explore", "results", "revision-jfm")
 sector_levels <- c("all", "agriculturals", "energy", "metals")
-subsector_levels <- c("all", "grains", "livestock", "softs", "gas", "petroleum", "base", "precious")
 sort_levels <- c(
   "all-all-all", "US-all-all", "US-agriculturals-all", "US-agriculturals-grains",
   "US-agriculturals-livestock", "US-agriculturals-softs", "US-energy-all", 
   "US-energy-gas", "US-energy-petroleum", "US-metals-all", "US-metals-base", 
   "US-metals-precious", "GB-all-all"
 )
+subsector_levels <- c("all", "grains", "livestock", "softs", "gas", "petroleum", "base", "precious")
+tables_directory_path <- here::here("explore", "tables", "revision-jfm")
+commodity_futures_tickers <- c(
+  "BOA Comdty", "C A Comdty", "CCA Comdty", "CLA Comdty", "CTA Comdty", 
+  "FCA Comdty", "GCA Comdty", "HGA Comdty", "HOA Comdty", "JOA Comdty", 
+  "KCA Comdty", "LAA Comdty", "LBA Comdty", "LCA Comdty", "LHA Comdty", 
+  "LLA Comdty", "LNA Comdty", "LPA Comdty", "LTA Comdty", "LXA Comdty", 
+  "NGA Comdty", "O A Comdty", "PAA Comdty", "PLA Comdty", "S A Comdty", 
+  "SBA Comdty", "SIA Comdty", "SMA Comdty", "W A Comdty", "XBWA Comdty",
+  "LAA Comdty", "LPA Comdty", "LLA Comdty", "LNA Comdty", "LTA Comdty",
+  "LXA Comdty"
+)
 
 ## functions ####
+make_asset_name_country_sector_subsector_dataframe <- function(tickers){
+  
+  dplyr::left_join(
+    dplyr::filter(tickers_futures, ticker %in% tickers) %>% 
+      dplyr::select(ticker, name, sector, subsector, MIC), 
+    dplyr::select(exchanges, MIC, country), 
+    by = "MIC"
+  ) %>% dplyr::select(-ticker)
+}
 paste_forward_slash <- function(...) paste(..., sep = "/")
+percentize <- function(value) paste0(round(value, digits = 4L) * 100, "%")
 significance <- function(p.value, estimate){
   if(p.value <= 0.01) paste0("***", estimate)
   else if (p.value > 0.01 && p.value <= 0.05) paste0("**", estimate)
   else if (p.value > 0.05 && p.value <= 0.10) paste0("*", estimate)
   else estimate
 }
-percentize <- function(value) paste0(round(value, digits = 4L) * 100, "%")
 sort_table_by_country_sector_subsector <- function(tb, sort_levels){
   dplyr::mutate(
     tb,
@@ -32,6 +54,23 @@ sort_table_by_country_sector_subsector <- function(tb, sort_levels){
   ) %>% dplyr::arrange(sort) %>% dplyr::select(-sort)
 }
 
+# asset taxonomy ####
+`asset taxonomy` <- 
+  make_asset_name_country_sector_subsector_dataframe(commodity_futures_tickers) %>%
+  dplyr::mutate(
+    asset = paste0(name, " (", MIC, ")"),
+    country = factor(country, levels = c("US", "GB"))
+    ) %>% dplyr::select(-c(name, MIC)) %>%
+  dplyr::relocate(asset, .before = dplyr::everything()) %>%
+  dplyr::relocate(country, .after = asset) %>%
+  dplyr::arrange(country, sector, subsector) %>%
+  dplyr::mutate(asset = dplyr::case_when(
+    asset == "Orange juice-frozen concentrated (IFUS)" ~ "Orange juice (IFUS)",
+    asset == "Lumber-random length (XCME)" ~ "Lumber (XCME)",
+    asset == "Aluminium-primary (XLME)" ~ "Aluminium (XLME)",
+    asset == "Lead-refined pig (XLME)" ~ "Lead (XLME)",
+    TRUE ~ asset
+  ))
 
 # descriptive stats ####
 stats <- readr::read_rds(
@@ -318,9 +357,12 @@ tables <- tibble::tribble(
     "correlations - periods",                   correlations_periods,
     "correlations - years",                     correlations_years,
     "regressions - all returns ~ market index", `all commodity returns ~ market index`,
-    "regressions - all returns ~ factors",      `all commodity returns ~ factors`
+    "regressions - all returns ~ factors",      `all commodity returns ~ factors`,
+    "asset taxonomy",                           `asset taxonomy`
   )
 
 readr::write_rds(
   tables, paste_forward_slash(tables_directory_path, "tables-formatted.rds")
   )
+
+rm(list = ls())
