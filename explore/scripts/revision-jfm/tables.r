@@ -142,7 +142,8 @@ countries <- dplyr::select(commodities_market_countries, -c(min, max, sector, su
     cols = c("mean", "sd"), names_to = "estimate", values_to = "value"
   ) %>% tidyr::pivot_wider(names_from = "period", values_from = "value")
 
-descriptive_stats_combined <- dplyr::bind_rows(commodities, countries)
+descriptive_stats_combined <- dplyr::bind_rows(commodities, countries) %>%
+dplyr::mutate(regime = ifelse(regime == "all", "whole period", regime))
 
 
 # correlations ####
