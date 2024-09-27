@@ -322,6 +322,18 @@ make_table <- function(table_name, colnames, align, bold_columns, coloured_colum
 ``` 
 
 ```{r}
+#| label: tbl-stats-combined
+#| tbl-cap: "This table shows mean returns and volatility (sd) for the twenty four individual US commodities and the six GB metals considered in the study as well as for two equally weighted portfolios formed from the US commodities and the GB metals respectively across the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). for each period the figures are shown independently for the entire period as well as for phases of aggregate backwardation (aggregate CHP $\\leq$ period median) and aggregate contango (aggregate CHP > period median). Mean values significant at the 1%, 5% and 10% level are marked with \\\\*\\\\*\\\\*, \\\\*\\\\* and \\\\* respectively. Aggregate CHP construction and corresponding regime definitions are discussed in \\@sec-methods while the results are discussed in \\@sec-results."
+
+colnames <- c("asset", "regime", "estimate", periods)
+align <- make_series_of_repeated_chars(list(l = 3L, r = 4L))
+
+make_table("stats - combined", colnames, align, 1L:7L, 4L:7L)
+```
+
+
+```{r}
+#| eval: false
 #| label: tbl-stats-no-regimes
 #| tbl-cap: "This table shows mean returns and volatility (sd) for the twenty four individual US commodities and the six GB metals considered in the study as well as for two equally weighted portfolios formed from the US commodities and the GB metals respectively across the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). Mean values significant at the 1%, 5% and 10% level are marked with \\\\*\\\\*\\\\*, \\\\*\\\\* and \\\\* respectively. The results are discussed in \\@sec-results."
 
@@ -334,6 +346,7 @@ make_table("stats - whole", colnames, align, 1L:6L, 3L:6L)
 \newpage
 
 ```{r}
+#| eval: false
 #| label: tbl-stats-regimes
 #| tbl-cap: "This table shows mean returns and volatility (sd) for the twenty four individual US commodities and the six GB metals considered in the study as well as for two equally weighted portfolios formed from the US commodities and the GB metals respectively across the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). Figures are shown independently for phases of aggregate backwardation (aggregate CHP $\\leq$ period median) and aggregate contango (aggregate CHP > period median). Mean values significant at the 1%, 5% and 10% level are marked with \\\\*\\\\*\\\\*, \\\\*\\\\* and \\\\* respectively. Aggregate CHP construction and corresponding regime definitions are discussed in \\@sec-methods while the results are discussed in \\@sec-results."
 
