@@ -54,8 +54,8 @@ sort_table_by_country_sector_subsector <- function(tb, sort_levels){
   ) %>% dplyr::arrange(sort) %>% dplyr::select(-sort)
 }
 
-# asset taxonomy ####
-`asset taxonomy` <- 
+# assets taxonomy ####
+`assets taxonomy` <- 
   make_asset_name_country_sector_subsector_dataframe(commodity_futures_tickers) %>%
   dplyr::mutate(
     asset = paste0(name, " (", MIC, ")"),
@@ -358,11 +358,11 @@ tables <- tibble::tribble(
     "correlations - years",                     correlations_years,
     "regressions - all returns ~ market index", `all commodity returns ~ market index`,
     "regressions - all returns ~ factors",      `all commodity returns ~ factors`,
-    "asset taxonomy",                           `asset taxonomy`
+    "assets taxonomy",                          `assets taxonomy`
   )
 
 readr::write_rds(
   tables, paste_forward_slash(tables_directory_path, "tables-formatted.rds")
   )
 
-rm(list = ls())
+# rm(list = ls())
