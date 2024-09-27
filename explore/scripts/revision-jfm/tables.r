@@ -142,8 +142,13 @@ countries <- dplyr::select(commodities_market_countries, -c(min, max, sector, su
     cols = c("mean", "sd"), names_to = "estimate", values_to = "value"
   ) %>% tidyr::pivot_wider(names_from = "period", values_from = "value")
 
+# q: this only works in the html output, μ and σ appear as blank in the pdf output; how to fix this?
+
 descriptive_stats_combined <- dplyr::bind_rows(commodities, countries) %>%
-dplyr::mutate(regime = ifelse(regime == "all", "whole period", regime))
+  dplyr::mutate(
+    regime = ifelse(regime == "all", "whole period", regime),
+    estimate = ifelse(estimate == "mean", estimate, "volatility")
+    )
 
 
 # correlations ####
