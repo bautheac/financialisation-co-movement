@@ -190,7 +190,7 @@ carry <- dplyr::filter(
 ## commodity futures ####
 ### market variables ####
 #### by single commodity ####
-combinations <- t(combn(unique(periods$period), 2L)) %>% as.data.frame() %>%
+combinations <- t(combn(unique(as.character(periods$period)), 2L)) %>% as.data.frame() %>%
   rlang::set_names(c("period 1", "period 2"))
 combinations <- tidyr::expand_grid(
   dplyr::distinct(`market data`, `active contract ticker`, field),
@@ -464,7 +464,7 @@ countries <- dplyr::left_join(
   by = "active contract ticker"
 ) %>% dplyr::distinct(country)
 
-combinations <- t(combn(unique(periods$period), 2L)) %>% as.data.frame() %>%
+combinations <- t(combn(unique(as.character(periods$period)), 2L)) %>% as.data.frame() %>%
   rlang::set_names(c("period 1", "period 2"))
 combinations <- tidyr::expand_grid(
   countries, dplyr::distinct(`market data`, field), combinations
@@ -746,7 +746,7 @@ sectors <- dplyr::left_join(
   by = "active contract ticker"
 ) %>% dplyr::distinct(country, sector) %>% dplyr::select(country, sector)
 
-combinations <- t(combn(unique(periods$period), 2L)) %>% as.data.frame() %>%
+combinations <- t(combn(unique(as.character(periods$period)), 2L)) %>% as.data.frame() %>%
   rlang::set_names(c("period 1", "period 2"))
 combinations <- tidyr::expand_grid(
   sectors, dplyr::distinct(`market data`, field), combinations
@@ -1030,7 +1030,7 @@ subsectors <- dplyr::left_join(
 ) %>% dplyr::distinct(country, sector, subsector) %>% 
   dplyr::select(country, sector, subsector)
 
-combinations <- t(combn(unique(periods$period), 2L)) %>% as.data.frame() %>%
+combinations <- t(combn(unique(as.character(periods$period)), 2L)) %>% as.data.frame() %>%
   rlang::set_names(c("period 1", "period 2"))
 combinations <- tidyr::expand_grid(
   subsectors, dplyr::distinct(`market data`, field), combinations
@@ -1352,7 +1352,7 @@ pressure <- dplyr::left_join(
 
 
 #### by single commodity ####
-combinations <- t(combn(unique(periods$period), 2L)) %>% as.data.frame() %>%
+combinations <- t(combn(unique(as.character(periods$period)), 2L)) %>% as.data.frame() %>%
   rlang::set_names(c("period 1", "period 2"))
 combinations <- tidyr::expand_grid(
   dplyr::distinct(pressure, `active contract ticker`, participant),
@@ -1564,7 +1564,7 @@ countries <- dplyr::left_join(
   by = "active contract ticker"
 ) %>% dplyr::distinct(country)
 
-combinations <- t(combn(unique(periods$period), 2L)) %>% as.data.frame() %>%
+combinations <- t(combn(unique(as.character(periods$period)), 2L)) %>% as.data.frame() %>%
   rlang::set_names(c("period 1", "period 2"))
 combinations <- tidyr::expand_grid(
   countries, dplyr::distinct(pressure, participant), combinations
@@ -1792,7 +1792,7 @@ sectors <- dplyr::left_join(
   by = "active contract ticker"
 ) %>% dplyr::distinct(country, sector) %>% dplyr::select(country, sector)
 
-combinations <- t(combn(unique(periods$period), 2L)) %>% as.data.frame() %>%
+combinations <- t(combn(unique(as.character(periods$period)), 2L)) %>% as.data.frame() %>%
   rlang::set_names(c("period 1", "period 2"))
 combinations <- tidyr::expand_grid(
   sectors, dplyr::distinct(pressure, participant), combinations
@@ -2022,7 +2022,7 @@ subsectors <- dplyr::left_join(
 ) %>% dplyr::distinct(country, sector, subsector) %>% 
   dplyr::select(country, sector, subsector)
 
-combinations <- t(combn(unique(periods$period), 2L)) %>% as.data.frame() %>%
+combinations <- t(combn(unique(as.character(periods$period)), 2L)) %>% as.data.frame() %>%
   rlang::set_names(c("period 1", "period 2"))
 combinations <- tidyr::expand_grid(
   subsectors, dplyr::distinct(pressure, participant), combinations
@@ -2376,7 +2376,7 @@ returns <- foreach(
 
 
 ## factors ####
-combinations <- t(combn(unique(periods$period), 2L)) %>% as.data.frame() %>%
+combinations <- t(combn(unique(as.character(periods$period)), 2L)) %>% as.data.frame() %>%
   rlang::set_names(c("period 1", "period 2"))
 combinations <- tidyr::expand_grid(
   dplyr::distinct(
