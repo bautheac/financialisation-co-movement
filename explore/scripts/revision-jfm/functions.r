@@ -674,8 +674,6 @@ load_global_variables <- function(){
     )
 }
 
-
-
 # analysis #####################################################################
 ## local functions #############################################################
 get_all_tickers <- function(`futures individual dataset`) {
@@ -846,7 +844,7 @@ make_analysis_for_ticker_combinations_dataframe <- function(
   })
 }
 
-## regime difference tests ############################################################
+## regime difference tests #####################################################
 make_tickers_periods_combinations <- function(){
   tidyr::expand_grid(commodity_futures_tickers, dplyr::distinct(period_dates, period))  %>%
     setNames(c("ticker", "period"))
@@ -938,14 +936,6 @@ make_regime_difference_tests <- function(){
     results = list(make_analysis_for_combination(ticker, period)) 
   )
 }
-
-extract_pvalues_from_test_objects <- function(results){
-  
-  tidyr::unnest(results, results) %>% 
-    dplyr::mutate(`p-value` = purrr::map_dbl(`test results`, ~.$p.value)) %>% 
-    dplyr::select(-`test results`)
-}
-
 
 ## correlations ################################################################
 ### local functions ############################################################
@@ -1146,6 +1136,14 @@ add_summary_to_analysis_raw_results_for_ticker_combinations_dataframe <- functio
     }))
 }
 
+## regime difference tests #####################################################
+extract_pvalues_from_test_objects <- function(results){
+  
+  tidyr::unnest(results, results) %>% 
+    dplyr::mutate(`p-value` = purrr::map_dbl(`test results`, ~.$p.value)) %>% 
+    dplyr::select(-`test results`)
+}
+
 ## correlations ################################################################
 extract_top_n_pairwise_correlations_from_correlation_matrix <- function(correlation_matrix, n = 3){
   
@@ -1289,6 +1287,12 @@ arrange_columns_in_analysis_results_summary <- function(formatted_analysis_resul
     dplyr::arrange(
       field, type, frequency, country, sector, subsector, timespan, period, year, regime
     )
+}
+
+## regime difference tests #####################################################
+format_regime_difference_tests_summary_into_table <- function(summary){
+  
+  dplyr::mutate(summary, `p-value` = scales::number(`p-value`, accuracy = 0.0001))
 }
 
 ## correlations ################################################################

@@ -24,6 +24,17 @@ regime_difference_tests_raw <- make_regime_difference_tests()
 #### summarise ####
 regime_difference_tests_summary <- extract_pvalues_from_test_objects(regime_difference_tests_raw)
 
+### formatted ####
+#### load summary dataset (optional) ####
+# path_regime_difference_tests_summary_file <- 
+#   paste_forward_slash(results_directory_path, "regime-difference-tests-summary.rds")
+# regime_difference_tests_summary <- readr::read_rds(path_regime_difference_tests_summary_file)
+
+#### format ####
+regime_difference_tests_formatted <- 
+  format_regime_difference_tests_summary_into_table(regime_difference_tests_summary)
+
+
 ## correlations ################################################################
 commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(
   commodity_futures_tickers, analysis = "correlations"
@@ -118,14 +129,17 @@ regressions_factors_formatted <-
 ### raw ####
 path_regime_difference_tests_raw_file <- 
   paste_forward_slash(results_directory_path, "regime-difference-tests-raw.rds")
-saveRDS(regime_difference_tests_raw, path_correlations_raw_file)
+saveRDS(regime_difference_tests_raw, path_regime_difference_tests_raw_file)
 
 #### summary ####
 path_regime_difference_tests_summary_file <- 
   paste_forward_slash(results_directory_path, "regime-difference-tests-summary.rds")
 saveRDS(regime_difference_tests_summary, path_regime_difference_tests_summary_file)
 
-regime_difference_tests_summary
+### formatted ####
+path_regime_difference_tests_formatted_file <- 
+  paste_forward_slash(results_directory_path, "regime-difference-tests.rds")
+saveRDS(regime_difference_tests_formatted, path_regime_difference_tests_formatted_file)
 
 ## correlations ################################################################
 ### raw ####
