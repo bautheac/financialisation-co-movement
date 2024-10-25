@@ -106,6 +106,12 @@ regressions_factors_formatted <-
 
 
 # export #######################################################################
+## regime difference tests #####################################################
+### raw ####
+path_regime_difference_tests_raw_file <- 
+  paste_forward_slash(results_directory_path, "regime-difference-tests-raw.rds")
+saveRDS(regime_difference_tests_raw, path_correlations_raw_file)
+
 ## correlations ################################################################
 ### raw ####
 path_correlations_raw_file <- paste_forward_slash(results_directory_path, "correlations-raw.rds")
