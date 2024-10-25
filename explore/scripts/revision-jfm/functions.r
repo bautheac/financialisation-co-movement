@@ -900,12 +900,12 @@ identify_dominant_regime_for_moment <- function(returns_split_by_regime, moment)
 
 test_difference_for_mean <- function(returns_split_by_regime){
   
-  t.test(returns_split_by_regime$contango, returns_split_by_regime$backwardation)$p.value
+  t.test(returns_split_by_regime$contango, returns_split_by_regime$backwardation)
 }
 
 test_difference_for_var <- function(returns_split_by_regime){
   
-  var.test(returns_split_by_regime$contango, returns_split_by_regime$backwardation)$p.value
+  var.test(returns_split_by_regime$contango, returns_split_by_regime$backwardation)
 }
 
 test_difference_for_moment <- function(returns_split_by_regime, moment){
@@ -924,7 +924,7 @@ make_analysis_for_combination <- function(ticker, period){
     tibble::tibble(
       moment = moment, 
       `dominant regime` = identify_dominant_regime_for_moment(returns_split_by_regime, moment),
-      `p-value` = test_difference_for_moment(returns_split_by_regime, moment)
+      `test results` = list(test_difference_for_moment(returns_split_by_regime, moment))
     )
   })
   
