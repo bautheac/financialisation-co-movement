@@ -939,6 +939,14 @@ make_regime_difference_tests <- function(){
   )
 }
 
+extract_pvalues_from_test_objects <- function(results){
+  
+  tidyr::unnest(results, results) %>% 
+    dplyr::mutate(`p-value` = purrr::map_dbl(`test results`, ~.$p.value)) %>% 
+    dplyr::select(-`test results`)
+}
+
+
 ## correlations ################################################################
 ### local functions ############################################################
 compute_correlations <- function(df) {

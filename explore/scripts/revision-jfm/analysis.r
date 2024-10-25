@@ -15,6 +15,14 @@ plan(multisession, workers = parallel::detectCores())
 ### raw ####
 regime_difference_tests_raw <- make_regime_difference_tests()
 
+### summary ####
+#### load raw dataset (optional) ####
+# path_regime_difference_tests_raw_file <- 
+#   paste_forward_slash(results_directory_path, "regime-difference-tests-raw.rds")
+# regime_difference_tests_raw <- readr::read_rds(path_regime_difference_tests_raw_file)
+
+#### summarise ####
+regime_difference_tests_summary <- extract_pvalues_from_test_objects(regime_difference_tests_raw)
 
 ## correlations ################################################################
 commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(
