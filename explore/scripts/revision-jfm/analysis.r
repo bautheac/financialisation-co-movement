@@ -120,6 +120,13 @@ path_regime_difference_tests_raw_file <-
   paste_forward_slash(results_directory_path, "regime-difference-tests-raw.rds")
 saveRDS(regime_difference_tests_raw, path_correlations_raw_file)
 
+#### summary ####
+path_regime_difference_tests_summary_file <- 
+  paste_forward_slash(results_directory_path, "regime-difference-tests-summary.rds")
+saveRDS(regime_difference_tests_summary, path_regime_difference_tests_summary_file)
+
+regime_difference_tests_summary
+
 ## correlations ################################################################
 ### raw ####
 path_correlations_raw_file <- paste_forward_slash(results_directory_path, "correlations-raw.rds")
