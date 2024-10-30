@@ -1,6 +1,6 @@
 library(finRes); library(magrittr)
 
-# source functions ####
+# source functions #############################################################
 source(here::here("explore", "scripts", "revision-jfm", "functions.r"))
 
 # load global variables ########################################################
