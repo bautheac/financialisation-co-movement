@@ -1,0 +1,124 @@
+---
+title: "Analysis of regime difference test results"
+format: 
+  html:
+    grid:
+      body-width: 1000px
+---
+
+```{r}
+#| label: globals
+#| include: false
+
+# Load required packages
+library(dplyr)
+library(readr)
+library(here)
+library(slituR)
+library(BBGsymbols)
+library(fewISOs)
+
+
+# Load data
+data("tickers_futures", "tickers_cftc", package = "BBGsymbols")
+data("exchanges", package = "fewISOs")
+
+results_directory_path <- here::here("explore", "results", "revision-jfm")
+commodity_futures_tickers <- c(
+  "BOA Comdty", "C A Comdty", "CCA Comdty", "CLA Comdty", "CTA Comdty", 
+  "FCA Comdty", "GCA Comdty", "HGA Comdty", "HOA Comdty", "JOA Comdty", 
+  "KCA Comdty", "LAA Comdty", "LBA Comdty", "LCA Comdty", "LHA Comdty", 
+  "LLA Comdty", "LNA Comdty", "LPA Comdty", "LTA Comdty", "LXA Comdty", 
+  "NGA Comdty", "O A Comdty", "PAA Comdty", "PLA Comdty", "S A Comdty", 
+  "SBA Comdty", "SIA Comdty", "SMA Comdty", "W A Comdty", "XBWA Comdty",
+  "LAA Comdty", "LPA Comdty", "LLA Comdty", "LNA Comdty", "LTA Comdty",
+  "LXA Comdty"
+)
+period_levels <- c("past", "financialization", "crisis", "present")
+sector_levels <- c("all", "agriculturals", "energy", "metals")
+subsector_levels <- c("all", "grains", "livestock", "softs", "gas", "petroleum", "base", "precious")
+
+
+results <- readr::read_rds(
+  slituR::paste_forward_slash(results_directory_path, "regime-difference-tests.rds")
+)
+ticker_asset_map <- dplyr::left_join(
+  dplyr::filter(tickers_futures, ticker %in% commodity_futures_tickers) %>% 
+    dplyr::select(ticker, name, sector, subsector, MIC), 
+  dplyr::select(exchanges, MIC, country), 
+  by = "MIC"
+)
+results <- 
+  dplyr::left_join(results, ticker_asset_map, by = c("ticker" = "ticker")) %>%
+  dplyr::mutate(
+    country = factor(country, levels = c("US", "GB")),
+    moment = ifelse(moment == "mean", "mean", "volatility"),
+    name = ifelse(is.na(name), ticker, name),
+    name = ifelse(is.na(MIC), name, paste0(name, " (", MIC, ")")),
+    period = factor(period, levels = period_levels),
+    sector = factor(sector, levels = sector_levels),
+    subsector = factor(subsector, levels = subsector_levels)
+  ) %>%
+  dplyr::arrange(country, sector, subsector, name, period) %>%
+  dplyr::select(country, name, moment, period, `dominant regime`, `p-value`)
+
+individuals <- dplyr::filter(results, !name %in% c("GB commodities", "US commodities"))
+countries <- dplyr::filter(results, name %in% c("GB commodities", "US commodities")) %>%
+  dplyr::select(-country)
+```
+
+
+## Individuals
+
+### Numbers
+```{r}
+#| label: individuals-numbers
+#| echo: false
+
+summary_individuals <- group_by(individuals, country, period, moment) %>%
+  summarise(
+    `10%` = sum(`p-value` > 0.05 & `p-value` <= 0.1, na.rm = TRUE),
+    `5%` = sum(`p-value` > 0.01 & `p-value` <= 0.05, na.rm = TRUE),
+    `1%` = sum(`p-value` > 0 & `p-value` <= 0.01, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+knitr::kable(summary_individuals)
+```
+
+### Names
+```{r}
+#| label: individuals-names
+#| echo: false
+
+summary_individuals <- group_by(individuals, country, period, moment) %>%
+  summarise(
+    `10%` = list(name[`p-value` >= 0.05 & `p-value` < 0.1]),
+    `5%` = list(name[`p-value` >= 0.01 & `p-value` < 0.05]),
+    `1%` = list(name[`p-value` >= 0 & `p-value` < 0.01]),
+    .groups = "drop"
+  )
+
+knitr::kable(summary_individuals)
+```
+
+## countries
+```{r}
+#| label: countries
+#| echo: false
+
+significance <- function(x) {
+  case_when(
+    x > 0.1 ~ "",
+    x > 0.05 ~ "*",
+    x > 0.01 ~ "**",
+    TRUE ~ "***"
+  )
+}
+
+summary_countries <- dplyr::mutate(
+  countries, significance = significance(as.numeric(`p-value`))
+  )
+
+knitr::kable(summary_countries)
+```
