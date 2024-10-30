@@ -106,6 +106,19 @@ make_ticker_country_sector_subsector_dataframe <- function(tickers){
   rm(tickers_futures, exchanges, envir = .GlobalEnv); return(df)
 }
 
+make_ticker_country_dataframe <- function(tickers){
+  data("tickers_futures", package = "BBGsymbols")
+  data("exchanges", package = "fewISOs")
+  
+  df <- dplyr::left_join(
+    dplyr::filter(tickers_futures, ticker %in% tickers) %>% dplyr::select(ticker, MIC), 
+    dplyr::select(exchanges, MIC, country), 
+    by = "MIC"
+  ) %>% dplyr::select(-MIC)
+  
+  rm(tickers_futures, exchanges, envir = .GlobalEnv); return(df)
+}
+
 filter_commodity_futures_tickers <- function(
     all_tickers, filter_country = "all", filter_sector = "all", filter_subsector = "all"
 ){
@@ -845,8 +858,17 @@ make_analysis_for_ticker_combinations_dataframe <- function(
 }
 
 ## regime difference tests #####################################################
+make_tickers_list_for_regime_difference_tests <- function(){
+  c(
+    commodity_futures_tickers,
+    unique(commodity_futures_country_indexes_returns$ticker)
+    )
+}
+
 make_tickers_periods_combinations <- function(){
-  tidyr::expand_grid(commodity_futures_tickers, dplyr::distinct(period_dates, period))  %>%
+  tickers <- make_tickers_list_for_regime_difference_tests()
+  
+  tidyr::expand_grid(tickers, dplyr::distinct(period_dates, period))  %>%
     setNames(c("ticker", "period"))
 }
 
@@ -857,13 +879,29 @@ make_period_boundary_dates <- function(period){
   )
 }
 
-make_returns_timseries_for_ticker_period_combination <- function(ticker, period){
-  
+extract_commodity_individual_futures_returns <- function(){
   dplyr::filter(
-    commodity_futures_data, type == "return", frequency == "day", field == "PX_LAST",
-    `active contract ticker` == ticker, date >= date_start, date <= date_end
+    commodity_futures_data, type == "return", frequency == "day", field == "PX_LAST"
+  ) %>%
+    dplyr::filter(!is.na(value)) %>%
+    dplyr::select(ticker = `active contract ticker`, date, return = value)
+}
+
+combine_commodity_individual_and_country_indexes_futures_returns <- function(){
+  individidual_returns <- extract_commodity_individual_futures_returns()
+  
+  commodity_futures_returns <<- 
+    dplyr::bind_rows(individidual_returns, commodity_futures_country_indexes_returns) %>%
+    dplyr::arrange(ticker, date)
+}
+
+make_returns_timseries_for_ticker_period_combination <- function(ticker){
+
+  dplyr::filter(
+    commodity_futures_returns, ticker == !!ticker, 
+    date >= date_start, date <= date_end
     ) %>%
-    dplyr::select(date, value) %>% dplyr::arrange(date)
+    dplyr::select(date, return) %>% dplyr::arrange(date)
 }
 
 extract_aggregate_CHP_regimes_for_period <- function(){
@@ -875,7 +913,7 @@ split_returns_by_regime <- function(returns, regimes){
   
   dplyr::left_join(returns, regimes, by = "date") %>% 
     dplyr::filter(! is.na(regime)) %>% dplyr::group_by(regime) %>% 
-    dplyr::summarise(values = list(value)) %>%  
+    dplyr::summarise(returns = list(return)) %>%  
     tibble::deframe()
 }
 
@@ -917,7 +955,7 @@ make_analysis_for_combination <- function(ticker, period){
   date_start <<- period_boundary_dates$start; date_end <<- period_boundary_dates$end
   
   returns_split_by_regime <- make_returns_list_split_by_regime_for_ticker_period_combination(ticker)
-  
+
   results <- purrr::map_df(c("mean", "var"), function(moment){
     tibble::tibble(
       moment = moment, 
@@ -929,12 +967,38 @@ make_analysis_for_combination <- function(ticker, period){
   rm(date_start, date_end, envir = .GlobalEnv); return(results)
 }
 
+make_commodity_futures_country_indexes_returns_dataframe <- function(){
+  
+  individual_commodity_returns <- dplyr::filter(
+    commodity_futures_data, type == "return", frequency == "day", field == "PX_LAST"
+  ) %>% dplyr::select(ticker = `active contract ticker`, date, return = value)
+  
+    dplyr::left_join(
+      individual_commodity_returns,
+      make_ticker_country_dataframe(unique(individual_commodity_returns$ticker)),
+      by = "ticker"
+    ) %>% dplyr::group_by(country, date) %>% 
+      dplyr::summarise(return = mean(return, na.rm = TRUE)) %>% dplyr::ungroup() %>%
+      dplyr::mutate(ticker = paste(country, "commodities", sep = " ")) %>%
+      dplyr::select(ticker, date, return)
+}
+
 make_regime_difference_tests <- function(){
+  
+  commodity_futures_country_indexes_returns <<- 
+    make_commodity_futures_country_indexes_returns_dataframe()
+  combine_commodity_individual_and_country_indexes_futures_returns()
+  
   combinations <- make_tickers_periods_combinations()
   
-  dplyr::rowwise(combinations) %>% dplyr::mutate(
+  results <- dplyr::rowwise(combinations) %>% dplyr::mutate(
     results = list(make_analysis_for_combination(ticker, period)) 
   )
+  
+  rm(
+    commodity_futures_country_indexes_returns, commodity_futures_returns, envir = .GlobalEnv
+    )
+  return(results)
 }
 
 ## correlations ################################################################
