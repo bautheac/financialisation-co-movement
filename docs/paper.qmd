@@ -334,6 +334,19 @@ make_table("stats - combined", colnames, align, 1L:7L, 4L:7L)
 \newpage
 
 ```{r}
+#| label: tbl-regime-diference-tests
+#| tbl-cap: "This table shows the results for tests of difference in mean (t-test) and variance (F-test) between phases of aggregate backwardation and contango for the twenty four individual US commodities and the six GB metals considered in the study as well as for two equally weighted portfolios formed from the US commodities and the GB metals respectively across the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). 1%, 5% and 10% p-value levels are marked with \\\\*\\\\*\\\\*, \\\\*\\\\* and \\\\* respectively in the significance column. Aggregate CHP construction and corresponding regime definitions are discussed in \\@sec-methods while the results are discussed in \\@sec-results."
+
+colnames <- c("asset", "period", "moment", "dominant regime", "p-value", "significance")
+align <- make_series_of_repeated_chars(list(l = 4L, r = 2L))
+
+make_table("regime difference tests", colnames, align, 1L:4L, 5L:6L)
+```
+
+
+\newpage
+
+```{r}
 #| label: tbl-time-reg-US-CHP
 #| tbl-cap: "This table shows the average time series $R^{2}$ for models where the returns series for the twenty four individual US commodities are independently regressed against relative change in their own commercial hedging pressure (CHP) series as well as against that in aggregate CHP, a market wide measure of CHP which calculation method is discussed in \\@sec-methods. Averages are calculated independently across the whole cross-section of US traded commodity assets considered in the study as well as across commodity sectors and subsectors for the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). The results are discussed in \\@sec-results while \\@sec-taxonomy details the taxonomy for the commodity assets considered."
 
