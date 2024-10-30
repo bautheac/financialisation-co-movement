@@ -75,8 +75,8 @@ countries <- dplyr::filter(results, name %in% c("GB commodities", "US commoditie
 #| label: individuals-numbers
 #| echo: false
 
-summary_individuals <- group_by(individuals, country, period, moment) %>%
-  summarise(
+summary_individuals <- dplyr::group_by(individuals, country, period, moment) %>%
+ dplyr::summarise(
     `10%` = sum(`p-value` > 0.05 & `p-value` <= 0.1, na.rm = TRUE),
     `5%` = sum(`p-value` > 0.01 & `p-value` <= 0.05, na.rm = TRUE),
     `1%` = sum(`p-value` > 0 & `p-value` <= 0.01, na.rm = TRUE),
@@ -91,8 +91,8 @@ knitr::kable(summary_individuals)
 #| label: individuals-names
 #| echo: false
 
-summary_individuals <- group_by(individuals, country, period, moment) %>%
-  summarise(
+summary_individuals <- dplyr::group_by(individuals, country, period, moment) %>%
+  dplyr::summarise(
     `10%` = list(name[`p-value` >= 0.05 & `p-value` < 0.1]),
     `5%` = list(name[`p-value` >= 0.01 & `p-value` < 0.05]),
     `1%` = list(name[`p-value` >= 0 & `p-value` < 0.01]),
@@ -108,12 +108,7 @@ knitr::kable(summary_individuals)
 #| echo: false
 
 significance <- function(x) {
-  case_when(
-    x > 0.1 ~ "",
-    x > 0.05 ~ "*",
-    x > 0.01 ~ "**",
-    TRUE ~ "***"
-  )
+  dplyr::case_when(x > 0.1 ~ "", x > 0.05 ~ "*", x > 0.01 ~ "**", TRUE ~ "***")
 }
 
 summary_countries <- dplyr::mutate(
