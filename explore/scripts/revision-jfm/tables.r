@@ -7,6 +7,7 @@ data("exchanges", package = "fewISOs")
 
 ## variables ####
 factors <- c("market", "CHP", "open interest nearby", "open interest aggregate", "term structure")
+period_levels <- c("past", "financialisation", "crisis", "post-crisis")
 results_directory_path <- here::here("explore", "results", "revision-jfm")
 sector_levels <- c("all", "agriculturals", "energy", "metals")
 sort_levels <- c(
@@ -209,11 +210,24 @@ regime_difference_tests <-
     significance = slituR::significance(`p-value`),
     `p-value` = slituR::percentize(as.numeric(`p-value`)),
     sector = factor(sector, levels = sector_levels),
-    subsector = factor(subsector, levels = subsector_levels)
+    subsector = factor(subsector, levels = subsector_levels),
+    period = ifelse(period == "financialization", "financialisation", period),
+    period = ifelse(period == "present", "post-crisis", period),
+    period = factor(period, levels = period_levels)
     ) %>%
-  dplyr::arrange(country, sector, subsector, name) %>%
+  dplyr::arrange(country, sector, subsector, name, period) %>%
   dplyr::select(asset = name, period, moment, `dominant regime`, `p-value`, significance)
 
+individuals <- dplyr::filter(
+    regime_difference_tests, !asset %in% c("US commodities", "GB commodities")
+  )
+countries = dplyr::filter(
+  regime_difference_tests, asset %in% c("US commodities", "GB commodities")
+  ) %>% dplyr::mutate(
+    asset = factor(asset, levels = c("US commodities", "GB commodities"))
+  ) %>% dplyr::arrange(asset, period)
+
+regime_difference_tests <- dplyr::bind_rows(individuals, countries)
 
 # correlations ####
 correlations <- readr::read_rds(
