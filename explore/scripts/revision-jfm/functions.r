@@ -280,8 +280,7 @@ compute_individual_CHP <- function(filtered_CFTC_data){
 
 compute_aggregate_CHP <- function(individual_CHP){
   dplyr::group_by(individual_CHP, date) %>% 
-    dplyr::summarise(aggregate_CHP = mean(pressure, na.rm = T)) %>%
-    dplyr::ungroup()
+    dplyr::summarise(aggregate_CHP = mean(pressure, na.rm = T), .groups = "drop") 
 }
 
 make_aggregate_CHP <- function(){
@@ -402,8 +401,7 @@ compute_commodity_futures_index_returns <- function(price_levels){
   dplyr::group_by(price_levels, `active contract ticker`) %>%
     dplyr::mutate(return = value/dplyr::lag(value) - 1L) %>%
     dplyr::select(-value) %>% dplyr::group_by(date) %>%
-    dplyr::summarise(return = mean(return, na.rm = T)) %>%
-    dplyr::ungroup()
+    dplyr::summarise(return = mean(return, na.rm = T), .groups = "drop")
 }
 
 make_commodity_futures_index_returns_dataframe <- function(
@@ -913,7 +911,7 @@ split_returns_by_regime <- function(returns, regimes){
   
   dplyr::left_join(returns, regimes, by = "date") %>% 
     dplyr::filter(! is.na(regime)) %>% dplyr::group_by(regime) %>% 
-    dplyr::summarise(returns = list(return)) %>%  
+    dplyr::summarise(returns = list(return), .groups = "drop") %>%  
     tibble::deframe()
 }
 
@@ -978,7 +976,7 @@ make_commodity_futures_country_indexes_returns_dataframe <- function(){
       make_ticker_country_dataframe(unique(individual_commodity_returns$ticker)),
       by = "ticker"
     ) %>% dplyr::group_by(country, date) %>% 
-      dplyr::summarise(return = mean(return, na.rm = TRUE)) %>% dplyr::ungroup() %>%
+      dplyr::summarise(return = mean(return, na.rm = TRUE), .groups = "drop") %>%
       dplyr::mutate(ticker = paste(country, "commodities", sep = " ")) %>%
       dplyr::select(ticker, date, return)
 }
@@ -1294,8 +1292,7 @@ average_Rsquared_by_factor_leg_for_each_type_frequency_field_period_regime_combi
       dplyr::mutate(averages, averages = purrr::map(results, function(averages){
         dplyr::mutate(averages, r.squared = purrr::map_dbl(model, ~base::summary(.x)$r.squared)) %>%
           dplyr::group_by(factor, leg) %>% 
-          dplyr::summarise(average = mean(r.squared, na.rm = T), .groups = "drop") %>% 
-          dplyr::ungroup()
+          dplyr::summarise(average = mean(r.squared, na.rm = T), .groups = "drop")
       })) %>% dplyr::select(-c(data, results)) %>% tidyr::unnest(averages)
     })) %>% dplyr::select(-results)
   })) %>% dplyr::select(-c(tickers, results))
@@ -1315,6 +1312,24 @@ unnest_analysis_statistic_results_summary <- function(results_summary, statistic
     )
 }
 
+make_field_names <- function(){
+  c(
+    "close price", "open interest", "volume", "aggregate open interest", 
+    "aggregate volume", "ask", "bid", "high", "low", "mid", "open"
+  )
+}
+
+make_field_tickers <- function(){
+  c(
+    "PX_LAST", "OPEN_INT", "PX_VOLUME", "FUT_AGGTE_OPEN_INT", 
+    "FUT_AGGTE_VOL", "PX_ASK", "PX_BID", "PX_HIGH", "PX_LOW", "PX_MID", "PX_OPEN"
+  )
+}
+
+make_field_to_name_map <- function(){
+  tibble::tibble( field = make_field_tickers(), name = make_field_names())
+}
+
 map_solution_to_problem_domain_jargon_in_analysis_unnested_results_summary <- function(
     unnested_results_summary
 ){
@@ -1324,21 +1339,31 @@ map_solution_to_problem_domain_jargon_in_analysis_unnested_results_summary <- fu
     dplyr::select(-field) %>% dplyr::rename(field = name) %>% dplyr::relocate(field, .after = frequency)
 }
 
+make_format_factor_levels <- function(){
+  list(
+    country = c("all", "US", "GB"),
+    timespan = c("period", "year"),
+    type = c("return", "level"),
+    frequency = c("day", "week", "month"),
+    field = make_field_names(),
+    regime = c("whole period", "backwardation", "contango")
+  )
+}
+
 mutate_appropriate_columns_to_factors_in_analysis_unnested_results_summary <- function(
     unnested_top_3_results_summary
 ){
   
+  levels <- make_format_factor_levels()
+  
   dplyr::mutate(
     unnested_top_3_results_summary,
-    country = factor(country, levels = c("all", "US", "GB")),
-    timespan = factor(timespan, levels = c("period", "year")),
-    type = factor(type, levels = c("return", "level")),
-    frequency = factor(frequency, levels = c("day", "week", "month")),
-    field = factor(field, levels = c(
-      "close price", "open interest", "volume", "aggregate open interest", 
-      "aggregate volume", "ask", "bid", "high", "low", "mid", "open"
-    )),
-    regime = factor(regime, levels = c("whole period", "backwardation", "contango"))
+    country = factor(country, levels = levels$country),
+    timespan = factor(timespan, levels = levels$timespan),
+    type = factor(type, levels = levels$type),
+    frequency = factor(frequency, levels = levels$frequency),
+    field = factor(field, levels = levels$field),
+    regime = factor(regime, levels = levels$regime)
   )
 }
 
