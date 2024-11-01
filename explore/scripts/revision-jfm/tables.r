@@ -7,6 +7,7 @@ data("exchanges", package = "fewISOs")
 
 ## variables ####
 factors <- c("market", "CHP", "open interest nearby", "open interest aggregate", "term structure")
+period_levels <- c("past", "financialisation", "crisis", "post-crisis")
 results_directory_path <- here::here("explore", "results", "revision-jfm")
 sector_levels <- c("all", "agriculturals", "energy", "metals")
 sort_levels <- c(
@@ -38,8 +39,6 @@ make_asset_name_country_sector_subsector_dataframe <- function(tickers){
     by = "MIC"
   ) %>% dplyr::select(-ticker)
 }
-paste_forward_slash <- function(...) paste(..., sep = "/")
-percentize <- function(value) paste0(round(value, digits = 4L) * 100, "%")
 significance <- function(p.value, estimate){
   if(p.value <= 0.01) paste0("***", estimate)
   else if (p.value > 0.01 && p.value <= 0.05) paste0("**", estimate)
@@ -74,7 +73,7 @@ sort_table_by_country_sector_subsector <- function(tb, sort_levels){
 
 # descriptive stats ####
 stats <- readr::read_rds(
-  paste_forward_slash(results_directory_path, "descriptive-statistics-clean.rds")
+  slituR::paste_forward_slash(results_directory_path, "descriptive-statistics-clean.rds")
   )
 
 commodities_market_individuals <- dplyr::filter(stats, analysis == "commodity futures") %>%
@@ -105,7 +104,7 @@ commodities_market_countries <- dplyr::filter(stats, analysis == "commodity futu
 commodities <- dplyr::filter(commodities_market_individuals, regime == "all") %>%
   dplyr::select(-c(regime, min, max)) %>% 
   dplyr::mutate(
-    mean = percentize(mean), sd = percentize(sd),
+    mean = slituR::percentize(mean), sd = slituR::percentize(sd),
     mean = purrr::map2_chr(p.value, mean, ~ significance(.x, .y))
   ) %>% dplyr::select(-p.value) %>%
   tidyr::pivot_longer(
@@ -120,7 +119,7 @@ countries <- dplyr::filter(commodities_market_countries, regime == "all") %>%
   dplyr::mutate(asset = paste(country, "commodities", sep = " ")) %>%
   dplyr::select(-country) %>% 
   dplyr::mutate(
-    mean = percentize(mean), sd = percentize(sd),
+    mean = slituR::percentize(mean), sd = slituR::percentize(sd),
     mean = purrr::map2_chr(p.value, mean, ~ significance(.x, .y))
   ) %>% dplyr::select(-p.value) %>%
   tidyr::pivot_longer(
@@ -133,7 +132,7 @@ descriptive_stats_whole <- dplyr::bind_rows(commodities, countries)
 commodities <- dplyr::filter(commodities_market_individuals, regime != "all") %>%
   dplyr::select(-c(min, max)) %>% 
   dplyr::mutate(
-    mean = percentize(mean), sd = percentize(sd),
+    mean = slituR::percentize(mean), sd = slituR::percentize(sd),
     mean = purrr::map2_chr(p.value, mean, ~ significance(.x, .y))
   ) %>% dplyr::select(-p.value) %>%
   tidyr::pivot_longer(
@@ -148,7 +147,7 @@ countries <- dplyr::filter(commodities_market_countries, regime != "all") %>%
   dplyr::mutate(asset = paste(country, "commodities", sep = " ")) %>%
   dplyr::select(-country) %>% 
   dplyr::mutate(
-    mean = percentize(mean), sd = percentize(sd),
+    mean = slituR::percentize(mean), sd = slituR::percentize(sd),
     mean = purrr::map2_chr(p.value, mean, ~ significance(.x, .y))
   ) %>% dplyr::select(-p.value) %>%
   tidyr::pivot_longer(
@@ -160,7 +159,7 @@ descriptive_stats_regimes <- dplyr::bind_rows(commodities, countries)
 ## combined ####
 commodities <- dplyr::select(commodities_market_individuals, -c(min, max)) %>% 
   dplyr::mutate(
-    mean = percentize(mean), sd = percentize(sd),
+    mean = slituR::percentize(mean), sd = slituR::percentize(sd),
     mean = purrr::map2_chr(p.value, mean, ~ significance(.x, .y))
   ) %>% dplyr::select(-p.value) %>%
   tidyr::pivot_longer(
@@ -174,7 +173,7 @@ countries <- dplyr::select(commodities_market_countries, -c(min, max, sector, su
   dplyr::mutate(asset = paste(country, "commodities", sep = " ")) %>%
   dplyr::select(-country) %>% 
   dplyr::mutate(
-    mean = percentize(mean), sd = percentize(sd),
+    mean = slituR::percentize(mean), sd = slituR::percentize(sd),
     mean = purrr::map2_chr(p.value, mean, ~ significance(.x, .y))
   ) %>% dplyr::select(-p.value) %>%
   tidyr::pivot_longer(
@@ -189,10 +188,50 @@ descriptive_stats_combined <- dplyr::bind_rows(commodities, countries) %>%
     estimate = ifelse(estimate == "mean", estimate, "volatility")
     )
 
+# regime difference tests ####
+regime_difference_tests <- readr::read_rds(
+  slituR::paste_forward_slash(results_directory_path, "regime-difference-tests.rds")
+)
+
+ticker_asset_map <- dplyr::left_join(
+    dplyr::filter(tickers_futures, ticker %in% commodity_futures_tickers) %>% 
+      dplyr::select(ticker, name, sector, subsector, MIC), 
+    dplyr::select(exchanges, MIC, country), 
+    by = "MIC"
+  )
+  
+regime_difference_tests <- 
+  dplyr::left_join(regime_difference_tests, ticker_asset_map, by = c("ticker" = "ticker")) %>%
+  dplyr::mutate(
+    name = ifelse(is.na(name), ticker, name),
+    name = ifelse(is.na(MIC), name, paste0(name, " (", MIC, ")")),
+    moment = ifelse(moment == "mean", "mean", "volatility"),
+    country = factor(country, levels = c("US", "GB")),
+    significance = slituR::significance(`p-value`),
+    `p-value` = slituR::percentize(as.numeric(`p-value`)),
+    sector = factor(sector, levels = sector_levels),
+    subsector = factor(subsector, levels = subsector_levels),
+    period = ifelse(period == "financialization", "financialisation", period),
+    period = ifelse(period == "present", "post-crisis", period),
+    period = factor(period, levels = period_levels)
+    ) %>%
+  dplyr::arrange(country, sector, subsector, name, period) %>%
+  dplyr::select(asset = name, period, moment, `dominant regime`, `p-value`, significance)
+
+individuals <- dplyr::filter(
+    regime_difference_tests, !asset %in% c("US commodities", "GB commodities")
+  )
+countries = dplyr::filter(
+  regime_difference_tests, asset %in% c("US commodities", "GB commodities")
+  ) %>% dplyr::mutate(
+    asset = factor(asset, levels = c("US commodities", "GB commodities"))
+  ) %>% dplyr::arrange(asset, period)
+
+regime_difference_tests <- dplyr::bind_rows(individuals, countries)
 
 # correlations ####
 correlations <- readr::read_rds(
-  paste_forward_slash(results_directory_path, "correlations.rds")
+  slituR::paste_forward_slash(results_directory_path, "correlations.rds")
 )
 
 ## By period ####
@@ -230,7 +269,7 @@ correlations_years <- dplyr::filter(
 
 ## US commodity returns ~ CHP ####
 regressions_CHP <- readr::read_rds(
-  paste_forward_slash(results_directory_path, "regressions-time-series-clean.rds")
+  slituR::paste_forward_slash(results_directory_path, "regressions-time-series-clean.rds")
 )
 
 ### US commodity returns ~ US commodity individual CHP ####
@@ -239,29 +278,28 @@ subsectors <- dplyr::filter(
 ) %>% dplyr::select(results) %>% tidyr::unnest(results) %>% 
   dplyr::filter(regressor == "pressure change contemporaneous") %>%
   dplyr::group_by(country, sector, subsector, period, regressor, regime.CHP.type, CHP.regime) %>%
-  dplyr::summarise(`average rsquared` = mean(rsquared, na.rm = TRUE)) %>%
-  dplyr::ungroup()
+  dplyr::summarise(`average rsquared` = mean(rsquared, na.rm = TRUE), .groups = "drop")
 sectors <- dplyr::filter(
   regressions_CHP, analysis == "US commodity returns ~ US commodity individual CHP"
 ) %>% dplyr::select(results) %>% tidyr::unnest(results) %>% 
   dplyr::filter(regressor == "pressure change contemporaneous") %>%
   dplyr::group_by(country, sector, period, regressor, regime.CHP.type, CHP.regime) %>%
-  dplyr::summarise(`average rsquared` = mean(rsquared, na.rm = TRUE)) %>%
-  dplyr::mutate(subsector = "all") %>% dplyr::ungroup()
+  dplyr::summarise(`average rsquared` = mean(rsquared, na.rm = TRUE), .groups = "drop") %>%
+  dplyr::mutate(subsector = "all")
 countries <- dplyr::filter(
   regressions_CHP, analysis == "US commodity returns ~ US commodity individual CHP"
 ) %>% dplyr::select(results) %>% tidyr::unnest(results) %>% 
   dplyr::filter(regressor == "pressure change contemporaneous") %>%
   dplyr::group_by(country, period, regressor, regime.CHP.type, CHP.regime) %>%
-  dplyr::summarise(`average rsquared` = mean(rsquared, na.rm = TRUE)) %>%
-  dplyr::mutate(sector = "all", subsector = "all") %>% dplyr::ungroup()
+  dplyr::summarise(`average rsquared` = mean(rsquared, na.rm = TRUE), .groups = "drop") %>%
+  dplyr::mutate(sector = "all", subsector = "all")
 
 `US commodity returns ~ US commodity individual CHP` <- dplyr::bind_rows(
   countries, sectors, subsectors 
 ) %>%
   dplyr::mutate(
     regressor = "Δ% commodity CHP", 
-    `average rsquared` = percentize(`average rsquared`),
+    `average rsquared` = slituR::percentize(`average rsquared`),
     sector = factor(sector, levels = sector_levels),
     subsector = factor(subsector, levels = subsector_levels)
   ) %>% 
@@ -277,29 +315,28 @@ subsectors <- dplyr::filter(
   dplyr::filter(regressor == "pressure change contemporaneous") %>%
   dplyr::group_by(
     country, sector, subsector, period, regressor, regime.CHP.type, CHP.regime
-  ) %>% dplyr::summarise(`average rsquared` = mean(rsquared, na.rm = TRUE)) %>%
-  dplyr::ungroup()
+  ) %>% dplyr::summarise(`average rsquared` = mean(rsquared, na.rm = TRUE), .groups = "drop")
 sectors <- dplyr::filter(
   regressions_CHP, analysis == "US commodity returns ~ US commodity aggregate CHP"
 ) %>% dplyr::select(results) %>% tidyr::unnest(results) %>% 
   dplyr::filter(regressor == "pressure change contemporaneous") %>%
   dplyr::group_by(country, sector, period, regressor, regime.CHP.type, CHP.regime) %>%
-  dplyr::summarise(`average rsquared` = mean(rsquared, na.rm = TRUE)) %>%
-  dplyr::mutate(subsector = "all") %>% dplyr::ungroup()
+  dplyr::summarise(`average rsquared` = mean(rsquared, na.rm = TRUE), .groups = "drop") %>%
+  dplyr::mutate(subsector = "all")
 countries <- dplyr::filter(
   regressions_CHP, analysis == "US commodity returns ~ US commodity aggregate CHP"
 ) %>% dplyr::select(results) %>% tidyr::unnest(results) %>% 
   dplyr::filter(regressor == "pressure change contemporaneous") %>%
   dplyr::group_by(country, period, regressor, regime.CHP.type, CHP.regime) %>%
-  dplyr::summarise(`average rsquared` = mean(rsquared, na.rm = TRUE)) %>%
-  dplyr::mutate(sector = "all", subsector = "all") %>% dplyr::ungroup()
+  dplyr::summarise(`average rsquared` = mean(rsquared, na.rm = TRUE), .groups = "drop") %>%
+  dplyr::mutate(sector = "all", subsector = "all")
 
 `US commodity returns ~ US commodity aggregate CHP` <- dplyr::bind_rows(
   countries, sectors, subsectors 
 ) %>%
   dplyr::mutate(
     regressor = "Δ% aggregate CHP",
-    `average rsquared` = percentize(`average rsquared`),
+    `average rsquared` = slituR::percentize(`average rsquared`),
     sector = factor(sector, levels = sector_levels),
     subsector = factor(subsector, levels = subsector_levels)
   ) %>% 
@@ -315,7 +352,7 @@ countries <- dplyr::filter(
 
 ## all commodity returns ~ market index ####
 regressions_index <- readr::read_rds(
-  paste_forward_slash(results_directory_path, "regressions-index.rds")
+  slituR::paste_forward_slash(results_directory_path, "regressions-index.rds")
 )
 
 `all commodity returns ~ market index` <- dplyr::filter(
@@ -331,7 +368,7 @@ regressions_index <- readr::read_rds(
 
 ## all commodity returns ~ factors ####
 regressions_factors <- readr::read_rds(
-  paste_forward_slash(results_directory_path, "regressions-factors.rds")
+  slituR::paste_forward_slash(results_directory_path, "regressions-factors.rds")
 )
 
 `all commodity returns ~ factors` <- dplyr::filter(
@@ -342,7 +379,7 @@ regressions_factors <- readr::read_rds(
     factor = factor %>% stringr::str_replace_all("open interest nearby", "open interest")
     ) %>%
   dplyr::select(country, sector, subsector, period, factor, regime, average) %>%
-  dplyr::mutate(average = percentize(average)) %>%
+  dplyr::mutate(average = slituR::percentize(average)) %>%
   tidyr::pivot_wider(names_from = "period", values_from = "average") %>%
   sort_table_by_country_sector_subsector(sort_levels)
 
@@ -353,6 +390,7 @@ tables <- tibble::tribble(
     "stats - whole",                            descriptive_stats_whole,
     "stats - regimes",                          descriptive_stats_regimes,
     "stats - combined",                         descriptive_stats_combined,
+    "regime difference tests",                  regime_difference_tests,
     "regressions - US returns ~ US CHP",        `US commodity returns ~ CHP`,
     "correlations - periods",                   correlations_periods,
     "correlations - years",                     correlations_years,
@@ -362,7 +400,7 @@ tables <- tibble::tribble(
   )
 
 readr::write_rds(
-  tables, paste_forward_slash(tables_directory_path, "tables-formatted.rds")
+  tables, slituR::paste_forward_slash(tables_directory_path, "tables-formatted.rds")
   )
 
-# rm(list = ls())
+rm(list = ls())

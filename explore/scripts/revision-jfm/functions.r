@@ -1,9 +1,9 @@
-# utils ####
+# utils ########################################################################
 paste_forward_slash <- function(...) paste(..., sep = "/")
 
-# globals ####
-## variables ####
-### local function ####
+# load environment variables ###################################################
+## variables ###################################################################
+### local function #############################################################
 make_path_to_storethat_database <- function(){
   paste0(here::here(), "/data/storethat.sqlite")
 }
@@ -16,7 +16,26 @@ make_periods_data_frame <- function(period_bounds){
   })
 }
 
-## functions ####
+load_variables <- function(){
+  ## variables ####
+  storethat_db_path <<- make_path_to_storethat_database() # assign to parent environment.
+  results_directory_path <<- here::here("explore", "results", "revision-jfm")
+
+  period_bounds <- list(
+    past = list(start = "1997-07-01", end = "2003-12-31"),
+    financialization = list(start = "2004-01-01", end = "2008-09-14"),
+    crisis = list(start = "2008-09-15", end = "2013-06-19"),
+    present = list(start = "2013-06-20", end = "2018-12-31")
+  )
+
+  periods <<- make_periods_data_frame(period_bounds)
+  assign(
+    "rf", readr::read_rds(here::here("data", "risk-free-rate.rds")), envir = parent.frame()
+  ) # conflict with stat::rf if parent environment; can't use <<- here.
+}
+
+## load data ###################################################################
+### functions ##################################################################
 get_commodity_futures_individual_data_levels <- function(
     commodity_futures_tickers, start, end, storethat_db_path
     ){
@@ -74,12 +93,30 @@ make_time_series <- function(data_levels, frequency){
 }
 
 make_ticker_country_sector_subsector_dataframe <- function(tickers){
+  data("tickers_futures", package = "BBGsymbols")
+  data("exchanges", package = "fewISOs")
   
-  dplyr::left_join(
-    dplyr::filter(tickers_futures, ticker %in% tickers) %>% dplyr::select(ticker, sector, subsector, MIC), 
+  df <- dplyr::left_join(
+    dplyr::filter(tickers_futures, ticker %in% tickers) %>% 
+      dplyr::select(ticker, sector, subsector, MIC), 
     dplyr::select(exchanges, MIC, country), 
     by = "MIC"
   ) %>% dplyr::select(-MIC)
+  
+  rm(tickers_futures, exchanges, envir = .GlobalEnv); return(df)
+}
+
+make_ticker_country_dataframe <- function(tickers){
+  data("tickers_futures", package = "BBGsymbols")
+  data("exchanges", package = "fewISOs")
+  
+  df <- dplyr::left_join(
+    dplyr::filter(tickers_futures, ticker %in% tickers) %>% dplyr::select(ticker, MIC), 
+    dplyr::select(exchanges, MIC, country), 
+    by = "MIC"
+  ) %>% dplyr::select(-MIC)
+  
+  rm(tickers_futures, exchanges, envir = .GlobalEnv); return(df)
 }
 
 filter_commodity_futures_tickers <- function(
@@ -155,11 +192,11 @@ make_commodity_pool_tickers_dataframe <- function(all_tickers, analysis = c("cor
   dplyr::bind_rows(all_all_all, US_all_all, US_combinations, GB_all_all)
 }
 
-## commodity futures levels data ####
-### individual data ####
-### aggregate data ####
-### both ####
-#### local functions ####
+### commodity futures levels data ##############################################
+#### individual data ####
+#### aggregate data ####
+#### both ####
+##### local functions ####
 bind_individual_and_aggregate_commodity_futures_dataframes <- function(individual, aggregate){
   dplyr::filter(individual, `TS position` == 1L) %>%
     dplyr::select(`active contract ticker`, field, date, value) %>%
@@ -168,8 +205,8 @@ bind_individual_and_aggregate_commodity_futures_dataframes <- function(individua
     )
 }
 
-## commodity futures relative changes data ####
-### local functions ####
+### commodity futures relative changes data ####################################
+#### local functions ####
 compute_commodity_futures_relative_changes <- function(levels){
 
     dplyr::group_by(levels, dplyr::across(-dplyr::all_of(c("date", "value")))) %>%
@@ -185,8 +222,8 @@ make_commodity_futures_relative_changes_dataframe <- function(commodity_futures_
   }) %>% dplyr::bind_rows() %>% dplyr::select(frequency, dplyr::everything())
 }
 
-## bind levels and relative changes ####
-### local functions ####
+### bind levels and relative changes ###########################################
+#### local functions ####
 make_commodity_futures_dataframe <- function(levels, relative_changes){
   dplyr::mutate(levels, type = "level", frequency = NA) %>%
     dplyr::bind_rows(
@@ -195,7 +232,7 @@ make_commodity_futures_dataframe <- function(levels, relative_changes){
     dplyr::arrange(type, frequency, `active contract ticker`, field, date)
 }
 
-## period dates ####
+### period dates ###############################################################
 make_period_dates_timeseries <- function(commodity_futures_data, period_boundaries){
   
   period_ids <- unique(period_boundaries$period)
@@ -210,15 +247,19 @@ make_period_dates_timeseries <- function(commodity_futures_data, period_boundari
   }) %>% dplyr::bind_rows()
 }
 
-## aggregate CHP ####
-### aggregate CHP data ####
-#### local functions ####
+### aggregate CHP ##############################################################
+#### aggregate CHP data ####
+##### local functions ####
 load_CFTC_data <- function(){
-  dplyr::left_join(
+  data("tickers_cftc", package = "BBGsymbols")
+  
+  df <- dplyr::left_join(
     commodity_CFTC_data@data, 
     dplyr::select(tickers_cftc, MIC, format, underlying, unit, participant, position, ticker), 
     by = "ticker"
   )
+  
+  rm(tickers_cftc, envir = .GlobalEnv); return(df)
 }
 
 filter_CFTC_data <- function(raw_CFTC_data){
@@ -239,8 +280,7 @@ compute_individual_CHP <- function(filtered_CFTC_data){
 
 compute_aggregate_CHP <- function(individual_CHP){
   dplyr::group_by(individual_CHP, date) %>% 
-    dplyr::summarise(aggregate_CHP = mean(pressure, na.rm = T)) %>%
-    dplyr::ungroup()
+    dplyr::summarise(aggregate_CHP = mean(pressure, na.rm = T), .groups = "drop") 
 }
 
 make_aggregate_CHP <- function(){
@@ -248,8 +288,8 @@ make_aggregate_CHP <- function(){
     compute_aggregate_CHP()
 }
 
-### aggregate CHP regimes ####
-#### local functions ####
+#### aggregate CHP regimes ####
+##### local functions ####
 match_regimes_to_futures_data_dates <- function(regimes, commodity_futures_data_dates){
   
   dplyr::mutate(
@@ -259,8 +299,8 @@ match_regimes_to_futures_data_dates <- function(regimes, commodity_futures_data_
     dplyr::select(-week) %>% dplyr::filter(! is.na(regime))
 }
 
-#### aggregate CHP regimes by year ####
-##### local functions ####
+##### aggregate CHP regimes by year ####
+###### local functions ####
 compute_regimes_by_year <- function(aggregate_CHP){
   
   dplyr::mutate(aggregate_CHP, year = lubridate::year(date), week = lubridate::week(date)) %>% 
@@ -285,8 +325,8 @@ make_aggregate_CHP_regimes_by_year <- function(aggregate_CHP_data, commodity_fut
     format_dataframe_aggregate_CHP_regimes_by_year()
 }
 
-#### aggregate CHP regimes by subperiod ####
-##### local functions ####
+##### aggregate CHP regimes by subperiod ####
+###### local functions ####
 compute_regimes_for_period <- function(aggregate_CHP_data, period_start_date, period_end_date){
   
   dplyr::filter(aggregate_CHP_data, date >= as.Date(period_start_date), date <= as.Date(period_end_date)) %>% 
@@ -339,8 +379,8 @@ make_aggregate_CHP_regimes_by_period_dataframe <- function(
   }) %>% dplyr::bind_rows()
 }
 
-#### aggregate CHP regimes ####
-##### local functions ####
+##### aggregate CHP regimes ####
+###### local functions ####
 make_aggregate_CHP_regimes_dataframe <- function(){
   
   aggregate_CHP <- make_aggregate_CHP()
@@ -354,15 +394,14 @@ make_aggregate_CHP_regimes_dataframe <- function(){
   tibble::tibble(timespan = c("year", "period"), regimes = list(regimes_years, regimes_periods))
 }
 
-## construct commodity index returns ####
-### local functions ####
+### construct commodity index returns ##########################################
+#### local functions ####
 compute_commodity_futures_index_returns <- function(price_levels){
   
   dplyr::group_by(price_levels, `active contract ticker`) %>%
     dplyr::mutate(return = value/dplyr::lag(value) - 1L) %>%
     dplyr::select(-value) %>% dplyr::group_by(date) %>%
-    dplyr::summarise(return = mean(return, na.rm = T)) %>%
-    dplyr::ungroup()
+    dplyr::summarise(return = mean(return, na.rm = T), .groups = "drop")
 }
 
 make_commodity_futures_index_returns_dataframe <- function(
@@ -388,13 +427,15 @@ make_commodity_futures_index_returns_dataframe <- function(
   )
 }
 
-## construct commodity factor returns ####
-### local functions ####
+### construct commodity factor returns #########################################
+#### local functions ####
 get_data_for_factor_construction <- function(
     tickers, start_date, end_date, 
     TS_positions, roll_type, roll_days, roll_months, roll_adjustment, data_file
 ){
+  data("tickers_cftc", package = "BBGsymbols")
   
+  message("\n pull commodity futures levels individual data")
   commodity_futures_data <- pullit::pull_futures_market(
     source = "storethat", type = "term structure", active_contract_tickers = tickers,
     start = start_date, end = end_date, TS_positions = TS_positions, 
@@ -402,6 +443,7 @@ get_data_for_factor_construction <- function(
     roll_adjustment = roll_adjustment, file = data_file
   )
   
+  message("\n pull commodity futures levels aggegate data")
   commodity_aggregate_data <- pullit::pull_futures_market(
     source = "storethat", type = "aggregate", active_contract_tickers = tickers,
     start = start_date, end = end_date, file = data_file
@@ -409,11 +451,13 @@ get_data_for_factor_construction <- function(
   
   commodity_CFTC_tickers <- tickers[tickers %in% tickers_cftc$`active contract ticker`]
   
+  message("\n pull commodity CFTC data")
   commodity_CFTC_data <- pullit::pull_futures_CFTC(
     source = "storethat", active_contract_tickers = commodity_CFTC_tickers, 
     start = start_date, end = end_date, file = data_file
   )
   
+  rm(tickers_cftc, envir = .GlobalEnv)
   list(
     `futures individual` = commodity_futures_data, `futures aggregate` = commodity_aggregate_data,
     cftc = commodity_CFTC_data
@@ -425,10 +469,12 @@ construct_factor_objects <- function(
     short_threshold, weighted
 ){
   
+  message("\n make market factor")
   market <- factorem::market_factor(
     data = data$`futures individual`, return_frequency = return_frequency, long = T
   )
   
+  message("\n make CHP factor")
   CHP <- factorem::CHP_factor(
     price_data = data$`futures individual`, CHP_data = data$cftc, 
     update_frequency = update_frequency, return_frequency = return_frequency,
@@ -437,6 +483,7 @@ construct_factor_objects <- function(
     weighted = weighted
   )
   
+  message("\n make open interest nearby factor")
   `open interest nearby` <- factorem::OI_nearby_factor(
     data = data$`futures individual`, update_frequency = update_frequency,
     return_frequency = return_frequency, ranking_period = ranking_period,
@@ -444,6 +491,7 @@ construct_factor_objects <- function(
     weighted = weighted
   )
 
+  message("\n make open interest aggregate factor")
   `open interest aggregate` <- factorem::OI_aggregate_factor(
     price_data = data$`futures individual`, aggregate_data = data$`futures aggregate`,
     update_frequency = update_frequency, return_frequency = return_frequency,
@@ -452,6 +500,7 @@ construct_factor_objects <- function(
     weighted = weighted
   )
 
+  message("\n make term structure factor")
   `term structure` <- factorem::TS_factor(
     data = data$`futures individual`, update_frequency = update_frequency,
     return_frequency = return_frequency, front = 1L, back = 2L,
@@ -496,16 +545,161 @@ make_commodity_futures_factor_returns_dataframe <- function(
   extract_factor_returns_into_dataframe(factors)
 }
 
-# analysis ####
-## local functions ####
+## load all ####################################################################
+load_futures_levels_data <- function(){
+  # individual data ####
+  message("\n pull commodity futures levels individual data")
+  commodity_futures_individual_data_levels <<- get_commodity_futures_individual_data_levels(
+    commodity_futures_tickers, date_start, date_end, storethat_db_path
+  )
+  
+  # aggregate data ####
+  message("\n pull commodity futures levels aggregate data")
+  commodity_futures_aggregate_data_levels <- get_commodity_futures_aggregate_data_levels(
+    commodity_futures_tickers, date_start, date_end, storethat_db_path
+  )
+  
+  # combined ####
+  commodity_futures_data_levels <<- bind_individual_and_aggregate_commodity_futures_dataframes(
+    commodity_futures_individual_data_levels, commodity_futures_aggregate_data_levels
+  )
+}
+
+load_commodity_futures_data <- function(){
+  message("\n load commodity futures data")
+  # commodity futures levels data ####
+  load_futures_levels_data()
+  
+  # commodity futures relative changes data ####
+  commodity_futures_relative_changes <- 
+    make_commodity_futures_relative_changes_dataframe(commodity_futures_data_levels)
+  
+  ## combined ####
+  commodity_futures_data <<- make_commodity_futures_dataframe(
+    commodity_futures_data_levels, commodity_futures_relative_changes
+  )
+}  
+
+load_aggregate_CHP_data <- function(){
+  data("tickers_cftc", package = "BBGsymbols")
+  
+  # commodity CFTC tickers ####
+  commodity_CFTC_tickers <- commodity_futures_tickers[
+    commodity_futures_tickers %in% tickers_cftc$`active contract ticker`
+  ]
+  
+  # commodity CFTC data ####
+  message("\n pull commodity CFTC data")
+  commodity_CFTC_data <<- pullit::pull_futures_CFTC(
+    source = "storethat", active_contract_tickers = commodity_CFTC_tickers, 
+    start = date_start, end = date_end, file = storethat_db_path
+  )
+  
+  # regimes ####
+  rm(tickers_cftc, envir = .GlobalEnv)
+  aggregate_CHP_regimes <<- make_aggregate_CHP_regimes_dataframe()
+} 
+
+load_commodity_index_returns <- function(){
+
+  US_commodity_futures_tickers <<- filter_commodity_futures_tickers(
+    commodity_futures_tickers, filter_country = "US"
+  )
+  
+  first_period_boundaries <- get_period_boundaries(periods, "past")
+  last_period_boundaries <- get_period_boundaries(periods, "present")
+  
+  commodity_futures_index_returns <<- make_commodity_futures_index_returns_dataframe(
+    commodity_futures_individual_data_levels, US_commodity_futures_tickers, 
+    first_period_boundaries$start, last_period_boundaries$end
+  )
+} 
+
+load_commodity_factor_returns <- function(){
+
+  # futures params ####
+  TS_positions <- 1L:2L
+  roll_type <- "A"
+  roll_days = 0L
+  roll_months = 0L
+  roll_adjustment = "N"
+  data_file = storethat_db_path
+  # factor params ####
+  update_frequency = "week"
+  return_frequency <- "day"
+  ranking_period <- 26L
+  long_threshold <- 2/3
+  short_threshold <- 1/3
+  weighted = FALSE
+  
+  message("\n load commodity factors data")
+  commodity_futures_factor_returns <<- make_commodity_futures_factor_returns_dataframe(
+    US_commodity_futures_tickers, date_start, date_end, TS_positions, 
+    roll_type, roll_days, roll_months, roll_adjustment, data_file,
+    update_frequency, return_frequency, ranking_period, long_threshold, 
+    short_threshold, weighted
+  )
+} 
+
+
+load_data <- function(){
+  ## time boundaries ####
+  date_start <<- "1996-01-01"; date_end <<- "2018-12-14"
+  
+  ## individual commodity futures tickers ####
+  commodity_futures_tickers <<- c(
+    "BOA Comdty", "C A Comdty", "CCA Comdty", "CLA Comdty", "CTA Comdty", 
+    "FCA Comdty", "GCA Comdty", "HGA Comdty", "HOA Comdty", "JOA Comdty", 
+    "KCA Comdty", "LAA Comdty", "LBA Comdty", "LCA Comdty", "LHA Comdty", 
+    "LLA Comdty", "LNA Comdty", "LPA Comdty", "LTA Comdty", "LXA Comdty", 
+    "NGA Comdty", "O A Comdty", "PAA Comdty", "PLA Comdty", "S A Comdty", 
+    "SBA Comdty", "SIA Comdty", "SMA Comdty", "W A Comdty", "XBWA Comdty"
+  )
+  
+  ## commodity futures data ####
+  load_commodity_futures_data()
+  
+  ## period dates ####
+  period_dates <<- make_period_dates_timeseries(commodity_futures_data, periods)
+  
+  ## aggregate CHP ####
+  load_aggregate_CHP_data()
+  
+  ## commodity index returns ####
+  load_commodity_index_returns()
+  
+  ## commodity factor returns ####
+  load_commodity_factor_returns()
+}
+
+load_global_variables <- function(){
+
+  load_variables()
+  load_data()
+  
+  rm(
+    commodity_CFTC_data, periods, date_start, date_end, storethat_db_path,
+    commodity_futures_data_levels, commodity_futures_individual_data_levels,
+    US_commodity_futures_tickers,
+    envir = .GlobalEnv
+    )
+}
+
+# analysis #####################################################################
+## local functions #############################################################
 get_all_tickers <- function(`futures individual dataset`) {
+  data("tickers_futures", package = "BBGsymbols")
+  data("exchanges", package = "fewISOs")
+  
   tickers <- dplyr::distinct(`futures individual dataset`, `active contract ticker`) %>% 
     purrr::flatten_chr()
-  dplyr::left_join(
+  tickers <- dplyr::left_join(
     dplyr::filter(tickers_futures, ticker %in% tickers) %>% dplyr::select(ticker, MIC),
     dplyr::select(exchanges, MIC, country), 
     by = "MIC"
   ) %>% dplyr::select(ticker) %>% purrr::flatten_chr()
+  
+  rm(tickers_futures, exchanges, envir = .GlobalEnv); return(tickers)
 }
 
 compute_analysis_by_year_whole <- function(commodity_futures_data, analysis_function){
@@ -661,8 +855,152 @@ make_analysis_for_ticker_combinations_dataframe <- function(
   })
 }
 
-## correlations ####
-### local functions ####
+## regime difference tests #####################################################
+make_tickers_list_for_regime_difference_tests <- function(){
+  c(
+    commodity_futures_tickers,
+    unique(commodity_futures_country_indexes_returns$ticker)
+    )
+}
+
+make_tickers_periods_combinations <- function(){
+  tickers <- make_tickers_list_for_regime_difference_tests()
+  
+  tidyr::expand_grid(tickers, dplyr::distinct(period_dates, period))  %>%
+    setNames(c("ticker", "period"))
+}
+
+make_period_boundary_dates <- function(period){
+  dates <- dplyr::filter(period_dates, period == !!period)$date
+  list(
+    start = dates[[1L]], end = dates[[NROW(dates)]]
+  )
+}
+
+extract_commodity_individual_futures_returns <- function(){
+  dplyr::filter(
+    commodity_futures_data, type == "return", frequency == "day", field == "PX_LAST"
+  ) %>%
+    dplyr::filter(!is.na(value)) %>%
+    dplyr::select(ticker = `active contract ticker`, date, return = value)
+}
+
+combine_commodity_individual_and_country_indexes_futures_returns <- function(){
+  individidual_returns <- extract_commodity_individual_futures_returns()
+  
+  commodity_futures_returns <<- 
+    dplyr::bind_rows(individidual_returns, commodity_futures_country_indexes_returns) %>%
+    dplyr::arrange(ticker, date)
+}
+
+make_returns_timseries_for_ticker_period_combination <- function(ticker){
+
+  dplyr::filter(
+    commodity_futures_returns, ticker == !!ticker, 
+    date >= date_start, date <= date_end
+    ) %>%
+    dplyr::select(date, return) %>% dplyr::arrange(date)
+}
+
+extract_aggregate_CHP_regimes_for_period <- function(){
+  dplyr::filter(aggregate_CHP_regimes, timespan == "period")$regimes[[1L]] %>%
+    dplyr::filter(date >= date_start, date <= date_end) %>% dplyr::select(date, regime)
+}
+
+split_returns_by_regime <- function(returns, regimes){
+  
+  dplyr::left_join(returns, regimes, by = "date") %>% 
+    dplyr::filter(! is.na(regime)) %>% dplyr::group_by(regime) %>% 
+    dplyr::summarise(returns = list(return), .groups = "drop") %>%  
+    tibble::deframe()
+}
+
+make_returns_list_split_by_regime_for_ticker_period_combination <- 
+  function(ticker){
+  
+  returns <- make_returns_timseries_for_ticker_period_combination(ticker)
+  aggregate_CHP_regimes <- extract_aggregate_CHP_regimes_for_period()
+  
+  split_returns_by_regime(returns, aggregate_CHP_regimes)
+}
+
+identify_dominant_regime_for_moment <- function(returns_split_by_regime, moment){
+  
+  moment_function <- purrr::partial(match.fun(moment), na.rm = TRUE)
+  moments <- purrr::map(returns_split_by_regime, moment_function)
+  
+  names(moments)[which.max(moments)]
+}
+
+test_difference_for_mean <- function(returns_split_by_regime){
+  
+  t.test(returns_split_by_regime$contango, returns_split_by_regime$backwardation)
+}
+
+test_difference_for_var <- function(returns_split_by_regime){
+  
+  var.test(returns_split_by_regime$contango, returns_split_by_regime$backwardation)
+}
+
+test_difference_for_moment <- function(returns_split_by_regime, moment){
+  
+  do.call(what = paste0("test_difference_for_", moment), args = list(returns_split_by_regime))
+}
+
+make_analysis_for_combination <- function(ticker, period){
+  
+  period_boundary_dates <- make_period_boundary_dates(period)
+  date_start <<- period_boundary_dates$start; date_end <<- period_boundary_dates$end
+  
+  returns_split_by_regime <- make_returns_list_split_by_regime_for_ticker_period_combination(ticker)
+
+  results <- purrr::map_df(c("mean", "var"), function(moment){
+    tibble::tibble(
+      moment = moment, 
+      `dominant regime` = identify_dominant_regime_for_moment(returns_split_by_regime, moment),
+      `test results` = list(test_difference_for_moment(returns_split_by_regime, moment))
+    )
+  })
+  
+  rm(date_start, date_end, envir = .GlobalEnv); return(results)
+}
+
+make_commodity_futures_country_indexes_returns_dataframe <- function(){
+  
+  individual_commodity_returns <- dplyr::filter(
+    commodity_futures_data, type == "return", frequency == "day", field == "PX_LAST"
+  ) %>% dplyr::select(ticker = `active contract ticker`, date, return = value)
+  
+    dplyr::left_join(
+      individual_commodity_returns,
+      make_ticker_country_dataframe(unique(individual_commodity_returns$ticker)),
+      by = "ticker"
+    ) %>% dplyr::group_by(country, date) %>% 
+      dplyr::summarise(return = mean(return, na.rm = TRUE), .groups = "drop") %>%
+      dplyr::mutate(ticker = paste(country, "commodities", sep = " ")) %>%
+      dplyr::select(ticker, date, return)
+}
+
+make_regime_difference_tests <- function(){
+  
+  commodity_futures_country_indexes_returns <<- 
+    make_commodity_futures_country_indexes_returns_dataframe()
+  combine_commodity_individual_and_country_indexes_futures_returns()
+  
+  combinations <- make_tickers_periods_combinations()
+  
+  results <- dplyr::rowwise(combinations) %>% dplyr::mutate(
+    results = list(make_analysis_for_combination(ticker, period)) 
+  )
+  
+  rm(
+    commodity_futures_country_indexes_returns, commodity_futures_returns, envir = .GlobalEnv
+    )
+  return(results)
+}
+
+## correlations ################################################################
+### local functions ############################################################
 compute_correlations <- function(df) {
   cor( dplyr::select(df, -date), use = "pairwise.complete.obs")
 }
@@ -679,8 +1017,8 @@ make_pairwise_correlations_for_ticker_combinations_dataframe <- function(
   dplyr::mutate(combinations, results = analysis)
 }
 
-## regressions ####
-### index ####
+## regressions #################################################################
+### index ######################################################################
 #### local functions ####
 make_commodity_futures_dataset_for_regression_index_analysis <- function(
     commodity_futures_data, commodity_futures_index_returns
@@ -752,7 +1090,7 @@ make_regressions_index_for_ticker_combinations_dataframe <- function(
   dplyr::mutate(combinations, results = analysis)
 }
 
-### factors ####
+### factors ####################################################################
 #### local functions ####
 make_sanitised_data_list_for_regressions_factor <- function(df){
   
@@ -843,8 +1181,8 @@ make_regressions_factors_for_ticker_combinations_dataframe <- function(
   dplyr::mutate(combinations, results = analysis)
 }
 
-# summary ####
-## local functions ####
+# summary ######################################################################
+## local functions #############################################################
 add_summary_to_analysis_raw_results_for_ticker_combinations_dataframe <- function(
     analysis_raw_results_for_ticker_combinations_dataframe, summary_label, summary_function
 ){
@@ -860,7 +1198,15 @@ add_summary_to_analysis_raw_results_for_ticker_combinations_dataframe <- functio
     }))
 }
 
-## correlations ####
+## regime difference tests #####################################################
+extract_pvalues_from_test_objects <- function(results){
+  
+  tidyr::unnest(results, results) %>% 
+    dplyr::mutate(`p-value` = purrr::map_dbl(`test results`, ~.$p.value)) %>% 
+    dplyr::select(-`test results`)
+}
+
+## correlations ################################################################
 extract_top_n_pairwise_correlations_from_correlation_matrix <- function(correlation_matrix, n = 3){
   
   pairwise_correlations <- tibble::rownames_to_column(as.data.frame(correlation_matrix), var = "ticker 1") %>%
@@ -902,8 +1248,8 @@ add_top_3_and_average_to_pairwise_correlations_for_ticker_combinations_dataframe
     dplyr::select(-c("tickers", "results"))
 }
 
-## regressions ####
-### index ####
+## regressions #################################################################
+### index ######################################################################
 extract_top_n_betas_from_lm_models <- function(lm_models){
   
   dplyr::mutate(
@@ -938,7 +1284,7 @@ add_top_3_and_average_to_regressions_index_for_ticker_combinations_dataframe <- 
     dplyr::select(-c("tickers", "results"))
 }
 
-### factor ####
+### factor #####################################################################
 average_Rsquared_by_factor_leg_for_each_type_frequency_field_period_regime_combination <- function(regressions_factors_raw){
   
   dplyr::mutate(regressions_factors_raw, averages = purrr::map(results, function(averages){
@@ -946,15 +1292,14 @@ average_Rsquared_by_factor_leg_for_each_type_frequency_field_period_regime_combi
       dplyr::mutate(averages, averages = purrr::map(results, function(averages){
         dplyr::mutate(averages, r.squared = purrr::map_dbl(model, ~base::summary(.x)$r.squared)) %>%
           dplyr::group_by(factor, leg) %>% 
-          dplyr::summarise(average = mean(r.squared, na.rm = T), .groups = "drop") %>% 
-          dplyr::ungroup()
+          dplyr::summarise(average = mean(r.squared, na.rm = T), .groups = "drop")
       })) %>% dplyr::select(-c(data, results)) %>% tidyr::unnest(averages)
     })) %>% dplyr::select(-results)
   })) %>% dplyr::select(-c(tickers, results))
 }
 
-# format ####
-## local functions ####
+# format #######################################################################
+## local functions #############################################################
 unnest_analysis_statistic_results_summary <- function(results_summary, statistic){
   
   statistic_sym <- rlang::sym(statistic)
@@ -967,44 +1312,58 @@ unnest_analysis_statistic_results_summary <- function(results_summary, statistic
     )
 }
 
-field_to_name_map <- tibble::tribble(
-  ~field,               ~name,
-  "PX_LAST",            "close price",
-  "OPEN_INT",           "open interest",
-  "PX_VOLUME",          "volume",
-  "FUT_AGGTE_OPEN_INT", "aggregate open interest",
-  "FUT_AGGTE_VOL",      "aggregate volume",
-  "PX_ASK",             "ask",
-  "PX_BID",             "bid",
-  "PX_HIGH",            "high",
-  "PX_LOW",             "low",
-  "PX_MID",             "mid",
-  "PX_OPEN",            "open"
-)
+make_field_names <- function(){
+  c(
+    "close price", "open interest", "volume", "aggregate open interest", 
+    "aggregate volume", "ask", "bid", "high", "low", "mid", "open"
+  )
+}
+
+make_field_tickers <- function(){
+  c(
+    "PX_LAST", "OPEN_INT", "PX_VOLUME", "FUT_AGGTE_OPEN_INT", 
+    "FUT_AGGTE_VOL", "PX_ASK", "PX_BID", "PX_HIGH", "PX_LOW", "PX_MID", "PX_OPEN"
+  )
+}
+
+make_field_to_name_map <- function(){
+  tibble::tibble( field = make_field_tickers(), name = make_field_names())
+}
 
 map_solution_to_problem_domain_jargon_in_analysis_unnested_results_summary <- function(
     unnested_results_summary
 ){
   
+  field_to_name_map <- make_field_to_name_map()
   dplyr::left_join(unnested_results_summary, field_to_name_map, by = "field") %>%
     dplyr::select(-field) %>% dplyr::rename(field = name) %>% dplyr::relocate(field, .after = frequency)
+}
+
+make_format_factor_levels <- function(){
+  list(
+    country = c("all", "US", "GB"),
+    timespan = c("period", "year"),
+    type = c("return", "level"),
+    frequency = c("day", "week", "month"),
+    field = make_field_names(),
+    regime = c("whole period", "backwardation", "contango")
+  )
 }
 
 mutate_appropriate_columns_to_factors_in_analysis_unnested_results_summary <- function(
     unnested_top_3_results_summary
 ){
   
+  levels <- make_format_factor_levels()
+  
   dplyr::mutate(
     unnested_top_3_results_summary,
-    country = factor(country, levels = c("all", "US", "GB")),
-    timespan = factor(timespan, levels = c("period", "year")),
-    type = factor(type, levels = c("return", "level")),
-    frequency = factor(frequency, levels = c("day", "week", "month")),
-    field = factor(field, levels = c(
-      "close price", "open interest", "volume", "aggregate open interest", 
-      "aggregate volume", "ask", "bid", "high", "low", "mid", "open"
-    )),
-    regime = factor(regime, levels = c("whole period", "backwardation", "contango"))
+    country = factor(country, levels = levels$country),
+    timespan = factor(timespan, levels = levels$timespan),
+    type = factor(type, levels = levels$type),
+    frequency = factor(frequency, levels = levels$frequency),
+    field = factor(field, levels = levels$field),
+    regime = factor(regime, levels = levels$regime)
   )
 }
 
@@ -1019,14 +1378,21 @@ arrange_columns_in_analysis_results_summary <- function(formatted_analysis_resul
     )
 }
 
-## correlations ####
-### top 3 ####
+## regime difference tests #####################################################
+format_regime_difference_tests_summary_into_table <- function(summary){
+  
+  dplyr::mutate(summary, `p-value` = scales::number(`p-value`, accuracy = 0.0001))
+}
+
+## correlations ################################################################
+### top 3 ######################################################################
 #### local functions ####
 map_solution_to_problem_domain_jargon_in_correlation_top_3_unnested_results_summary <- function(
     unnested_correlations_top_3_results_summary
 ){
+  data("tickers_futures", package = "BBGsymbols")
   
-  dplyr::left_join(
+  summary <- dplyr::left_join(
     unnested_correlations_top_3_results_summary, 
     dplyr::select(tickers_futures, ticker, name, MIC), 
     by = c("ticker 1" = "ticker")
@@ -1036,6 +1402,8 @@ map_solution_to_problem_domain_jargon_in_correlation_top_3_unnested_results_summ
     dplyr::mutate(`ticker 2` = paste0(name, " (", MIC, ")")) %>% dplyr::select(-c(name, MIC)) %>%
     dplyr::mutate(pair = paste(`ticker 1`, `ticker 2`, sep = " - ")) %>% 
     dplyr::select(-c(`ticker 1`, `ticker 2`)) %>% dplyr::relocate(pair, .before = correlation)
+  
+  rm(tickers_futures, envir = .GlobalEnv); return(summary)
 }
 ####
 
@@ -1057,15 +1425,16 @@ format_correlation_summary_statistics_into_table <- function(correlations_summar
     arrange_columns_in_analysis_results_summary()
 }
 
-## regressions ####
-### index ####
+## regressions #################################################################
+### index ######################################################################
 #### top 3 ####
 ##### local functions ####
 map_solution_to_problem_domain_jargon_in_regressions_index_top_3_unnested_results_summary <- function(
     unnested_regressions_top_3_results_summary
 ){
+  data("tickers_futures", package = "BBGsymbols")
   
-  dplyr::left_join(
+  summary <- dplyr::left_join(
     unnested_regressions_top_3_results_summary, 
     dplyr::select(tickers_futures, ticker, name, MIC), 
     by = "ticker"
@@ -1073,9 +1442,10 @@ map_solution_to_problem_domain_jargon_in_regressions_index_top_3_unnested_result
     dplyr::mutate(commodity = paste0(name, " (", MIC, ")")) %>% 
     dplyr::select(-c(name, MIC, ticker)) %>%
     dplyr::relocate(commodity, .after = regime)
+  
+  rm(tickers_futures, envir = .GlobalEnv); return(summary)
 }
   
-
 arrange_columns_in_regression_index_results_summary <- function(formatted_regression_results_summary){
   
   dplyr::select(
@@ -1105,7 +1475,7 @@ format_regression_index_summary_statistics_into_table <- function(regressions_su
     arrange_columns_in_analysis_results_summary()
 }
 
-### factor ####
+### factor #####################################################################
 unnest_regressions_factors_averages <- function(regressions_summary){
   
   tidyr::unnest(regressions_summary, averages) %>% tidyr::unnest(averages) %>%
