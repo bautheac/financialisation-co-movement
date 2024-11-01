@@ -161,7 +161,8 @@
 \hypersetup{
   pdftitle={Financialisation of Commodity Markets},
   pdfauthor={Devraj Basu; Olivier Bauthéac},
-  pdfkeywords={Commodity markets, Financialisation, Asset pricing},
+  pdfkeywords={Commodity markets, Financialisation, Co-movement, Asset
+pricing},
   colorlinks=true,
   linkcolor={blue},
   filecolor={Maroon},
@@ -222,7 +223,7 @@ pre-financialisation fundamentals.
 
 
 \begin{keyword}
-    Commodity markets \sep Financialisation \sep 
+    Commodity markets \sep Financialisation \sep Co-movement \sep 
     Asset pricing
 \end{keyword}
 \end{frontmatter}
@@ -392,14 +393,14 @@ leading hedgers to become liquidity providers.
 \medskip
 
 These entered the commodity spectrum en masse with across-the-board
-index type positions propping the transition of the complex from a
-collection of idiosyncratic markets towards a more homogeneous ensemble
+index type positions prompting the transition of the complex from a
+collection of idiosyncratic markets towards a more cohesive ensemble
 akin to an asset class. In this context of heightened cross-asset market
 participation the issue of interconnectedness stands out as paramount
 and we strive to investigate it by first examining the correlation
 structure of our sample set of assets at the global, country, sector and
-subsector levels. Our results indicate higher interdependence within the
-full cross-section of commodities over the financialisation period,
+sub-sector levels. Our results indicate higher interdependence within
+the full cross-section of commodities over the financialisation period,
 consistent with both the empirical and theoretical literature. The
 increase appears to be driven by the US metals sector, a new observation
 to the best of our knowledge, and, unlike individual commodity returns,
@@ -594,11 +595,11 @@ has since come to be known as the ``Masters' hypothesis'' and was
 largely endorsed by the final US Senate report on the issue
 \citep{senate_excessive_2009}.\\
 At this stage, the question thrust on the academic sphere was whether
-``excessive speculation'' (understood as the market activity peculiar to
-index type investors) was linked to escalating energy and agricultural
-commodity prices. A number of ensuing academic studies, most of which
-used commodity specific correlation and causality based analysis have
-since disproved this contention: \citet{irwin_devil_2009},
+``excessive speculation''\footnote{Understood as the market activity
+  peculiar to index type investors.} was linked to escalating energy and
+agricultural commodity prices. A number of ensuing academic studies,
+most of which used commodity specific correlation and causality based
+analysis have since disproved this contention: \citet{irwin_devil_2009},
 \citet{sanders_adequacy_2010}, \citet{sanders_impact_2011},
 \citet{sanders_new_2011}, \citet{irwin_commodity_2013},
 \citet{brunetti_commodity_2014}, \citet{hamilton_effects_2015} and
@@ -713,29 +714,32 @@ and the conclusion of the US Quantitative Easing (QE) program.
 
 \subsection{Methods}\label{sec-methods}
 
-For each commodity asset we compute the weekly front futures return and
-commercial hedging pressure (CHP) time series with the CHP calculated as
-the ratio of the number of long commercial positions to the total number
-of commercial positions for the considered asset-week combination. For
-each asset-period combination we compute the average return and
-corresponding volatility over the entire period as well as over phases
-of cross-sectional low and high CHP\footnote{Aggregate CHP or
-  \textbf{CHP}: see below for a formal definition and description of the
-  phase construction process.}. These statistics are also computed for
-equally weighted portfolios of the US and GB traded commodity assets
-independently.
+For each commodity asset we compute the daily and weekly front futures
+return as well as weekly commercial hedging pressure (CHP) time series
+with the CHP calculated as the ratio of the number of long commercial
+positions to the total number of commercial positions for the considered
+asset-week combination. For each asset-period combination we compute the
+average annual daily return and corresponding volatility over the entire
+period as well as over phases of cross-sectional low and high
+CHP\footnote{Aggregate CHP or \textbf{CHP}: see below for a formal
+  definition and description of the phase construction process.} and
+further test for significance in difference between the two regimes
+using t-tests for mean returns and F-test for corresponding variances.
+These statistics are also computed, and their difference between regimes
+tested, for equally weighted portfolios of the US and GB traded
+commodity assets independently.
 
-For each period, the return series for the individual US-traded assets
-are regressed on both the relative change on their respective CHP series
-and that on the cross-sectional CHP independently. The resulting
-\(R^{2}\) values are then averaged by sector and subsector.
-Additionally, pairwise correlations are computed for each combination of
-assets across the periods of interest and for each individual year
-within the full sample period. These correlation coefficients are then
-averaged across the entire cross-section of assets, as well as by
-country, sector, and subsector. For each period, the coefficients are
-also calculated and averaged across phases of low and high
-cross-sectional CHP.
+For each period, the weekly return series for the individual US-traded
+assets are regressed on both the relative change on their respective CHP
+series and that on the cross-sectional CHP independently. The resulting
+\(R^{2}\) values are then averaged by sector and sub-sector.
+Additionally, pairwise daily return correlations are computed for each
+combination of assets across the periods of interest and for each
+individual year within the full sample period. These correlation
+coefficients are then averaged across the entire cross-section of
+assets, as well as by country, sector, and sub-sector. For each period,
+the coefficients are also calculated and averaged across phases of low
+and high cross-sectional CHP.
 
 This approach sheds light on the evolving interconnectedness among
 commodity assets as the complex transitions from traditional market
@@ -864,7 +868,7 @@ the long leg of the portfolio while the top third form the short leg.
 \medskip
 
 We use a time series regression approach where individual commodity
-weekly front futures contract returns are regressed on returns to the
+front futures contract daily returns are regressed on returns to the
 mimicking portfolio for a particular risk factor with the corresponding
 \(\beta\)s and \(R^{2}\)s averaged. For the long-short factors the
 \(\beta\)s and \(R^{2}\)s are computed for models where the regressor is
@@ -1036,11 +1040,11 @@ from 8.4\% to 15.7\% at the aggregate level.
 Financialisation was a global phenomenon, through the channel of index
 investment it simultaneously influenced the entire spectrum of liquid
 commodities, eventually spurring the transformation of commodity markets
-from a collection of idiosyncratic markets into a more homogeneous
+from a collection of idiosyncratic markets into a more cohesive
 collection akin to an asset class. In this context, interconnectedness
 emerges as a crucial aspect that warrants thorough examination.\\
-We strive to address this issue by first examining the average of weekly
-returns pairwise correlations between commodities across the entire
+We strive to address this issue by first examining the average returns
+pairwise correlations between commodities across the entire
 cross-section of the commodity assets considered in the study as well as
 by country, sector and sub-sector. Table~\ref{tbl-correlations-periods}
 shows the results for the four periods of interest with the results
@@ -1089,21 +1093,21 @@ commodity against those for the market factor is driven by covariances
 while the denominator is driven by the individual commodity variance.
 Thus, an increase in a commodity's correlation with other commodities
 should lead to an increase in its beta relative to the market factor
-portfolio. We accordingly regress the weekly individual commodity front
-futures returns against those for our market factor portfolio and
-average the resulting betas across the entire set of commodity assets
-considered as well as by country, sector and sub-sector for each of the
-four periods of interest with the results shown in
-Table~\ref{tbl-regressions-index}. The average beta for the US metals
-sector jumps sharply to 1.12 over financialisation from 0.63 over the
-previous period; the increase is even more dramatic for the base metals
-sub-sector (GB traded assets) in a relative sense. The group had a much
-lower beta of 0.27 over the past period, suggesting a low level of
-correlation with US commodities; this figure increases to 0.85 over the
-financialisation period, even beyond that for the US agricultural sector
-of 0.80. In contrast, the corresponding figure for the energy sector
-show a substantial decrease, down to 1.61 during financialisation from
-2.33 over the past period.\\
+portfolio. We accordingly regress the individual commodity front futures
+returns against those for our market factor portfolio and average the
+resulting betas across the entire set of commodity assets considered as
+well as by country, sector and sub-sector for each of the four periods
+of interest with the results shown in Table~\ref{tbl-regressions-index}.
+The average beta for the US metals sector jumps sharply to 1.12 over
+financialisation from 0.63 over the previous period; the increase is
+even more dramatic for the base metals sub-sector (GB traded assets) in
+a relative sense. The group had a much lower average beta of 0.27 over
+the past period, suggesting a low level of correlation with US
+commodities; this figure increases to 0.85 over the financialisation
+period, even beyond that for the US agricultural sector of 0.80. In
+contrast, the corresponding figure for the energy sector shows a
+substantial decrease, down to 1.61 during financialisation from 2.33
+over the past period.\\
 The corresponding pricing performance displays a similar pattern as
 shown in Table~\ref{tbl-regressions-factors} where for each period the
 corresponding \(R^{2}\) values are independently averaged over the
@@ -1299,8 +1303,8 @@ observed during financialization. The decline seems driven by the metals
 sector, particularly the GB traded segment, with the figures for the US
 and GB traded assets at 0.91 and 0.72, down from 1.12 and 1.18,
 respectively. Meanwhile, the pricing performance of the market factor
-also retreats to below financialisation levels with the average
-\(R^{2}\) for the entire cross-section dropping down to 14.7\%
+also recedes to below financialisation levels with the average \(R^{2}\)
+for the entire cross-section dropping down to 14.7\%
 (Table~\ref{tbl-regressions-factors}). All sectors seem affected with
 agriculturals, energy and metals all seeing their average \(R^{2}\)
 decline below the levels observed during the financialisation period
@@ -1410,18 +1414,19 @@ legacy pre-financialisation fundamentals.
 \begin{longtable}[t]{>{}l>{}l>{}l>{}r>{}r>{}r>{}r}
 
 \caption{\label{tbl-stats-combined}This table shows mean returns and
-volatility for the twenty four individual US commodities and the six GB
-metals considered in the study as well as for two equally weighted
-portfolios formed from the US commodities and the GB metals respectively
-across the four periods of interest (past: 1997-2003; financialisation:
-2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). for each period
-the figures are shown independently for the entire period as well as for
-phases of aggregate backwardation (aggregate CHP \(\leq\) period median)
-and aggregate contango (aggregate CHP \textgreater{} period median).
-Mean values significant at the 1\%, 5\% and 10\% level are marked with
-***, ** and * respectively. Aggregate CHP construction and corresponding
-regime definitions are discussed in Section~\ref{sec-methods} while the
-results are discussed in Section~\ref{sec-results}.}
+corresponding volatility for the twenty four individual US commodities
+and the six GB metals considered in the study as well as for two equally
+weighted portfolios formed from the US commodities and the GB metals
+respectively across the four periods of interest (past: 1997-2003;
+financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018).
+for each period the figures are shown independently for the entire
+period as well as for phases of aggregate backwardation (aggregate CHP
+\(\leq\) period median) and aggregate contango (aggregate CHP
+\textgreater{} period median). Mean values significant at the 1\%, 5\%
+and 10\% level are marked with ***, ** and * respectively. Aggregate CHP
+construction and corresponding regime definitions are discussed in
+Section~\ref{sec-methods} while the results are discussed in
+Section~\ref{sec-results}.}
 
 \tabularnewline
 
@@ -2015,7 +2020,7 @@ against that in aggregate CHP, a market wide measure of CHP which
 calculation method is discussed in Section~\ref{sec-methods}. Averages
 are calculated independently across the whole cross-section of US traded
 commodity assets considered in the study as well as across commodity
-sectors and subsectors for the four periods of interest (past:
+sectors and sub-sectors for the four periods of interest (past:
 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis:
 2013-2018). The results are discussed in Section~\ref{sec-results} while
 Section~\ref{sec-taxonomy} details the taxonomy for the commodity assets
@@ -2024,7 +2029,7 @@ considered.}
 \tabularnewline
 
 \toprule
-\textcolor{black}{\textbf{regressor}} & \textcolor{black}{\textbf{sector}} & \textcolor{black}{\textbf{subsector}} & \textcolor{black}{\textbf{past}} & \textcolor{black}{\textbf{financialisation}} & \textcolor{black}{\textbf{crisis}} & \textcolor{black}{\textbf{post-crisis}}\\
+\textcolor{black}{\textbf{regressor}} & \textcolor{black}{\textbf{sector}} & \textcolor{black}{\textbf{sub-sector}} & \textcolor{black}{\textbf{past}} & \textcolor{black}{\textbf{financialisation}} & \textcolor{black}{\textbf{crisis}} & \textcolor{black}{\textbf{post-crisis}}\\
 \midrule
 \textbf{\cellcolor{gray!10}{Δ\% commodity CHP}} & \textbf{\cellcolor{gray!10}{all}} & \textbf{\cellcolor{gray!10}{all}} & \textcolor[HTML]{4285f4}{\textbf{\cellcolor{gray!10}{25.79\%}}} & \textcolor[HTML]{4285f4}{\textbf{\cellcolor{gray!10}{20.72\%}}} & \textcolor[HTML]{4285f4}{\textbf{\cellcolor{gray!10}{22.46\%}}} & \textcolor[HTML]{4285f4}{\textbf{\cellcolor{gray!10}{27.17\%}}}\\
 \textbf{Δ\% commodity CHP} & \textbf{agriculturals} & \textbf{all} & \textcolor[HTML]{4285f4}{\textbf{25.19\%}} & \textcolor[HTML]{4285f4}{\textbf{21.6\%}} & \textcolor[HTML]{4285f4}{\textbf{23.91\%}} & \textcolor[HTML]{4285f4}{\textbf{28.12\%}}\\
@@ -2065,10 +2070,10 @@ considered.}
 \begin{longtable}[t]{>{}l>{}l>{}l>{}r>{}r>{}r>{}r>{}r}
 
 \caption{\label{tbl-correlations-periods}This table shows the average
-pairwise correlation coefficients calculated independently across the
-whole cross-section of commodity assets considered in the study as well
-as across countries and commodity sectors and subsectors for the four
-periods of interest (past: 1997-2003; financialisation: 2004-2008;
+return pairwise correlation coefficients calculated independently across
+the whole cross-section of commodity assets considered in the study as
+well as across countries and commodity sectors and sub-sectors for the
+four periods of interest (past: 1997-2003; financialisation: 2004-2008;
 crisis: 2008-2013; post-crisis: 2013-2018). For each period, the results
 are calculated independently over the entire period as well as over
 phases of aggregate backwardation and contango. Aggregate CHP
@@ -2080,7 +2085,7 @@ considered is detailed in Section~\ref{sec-taxonomy}.}
 \tabularnewline
 
 \toprule
-\textcolor{black}{\textbf{country}} & \textcolor{black}{\textbf{sector}} & \textcolor{black}{\textbf{subsector}} & \textcolor{black}{\textbf{regime}} & \textcolor{black}{\textbf{past}} & \textcolor{black}{\textbf{financialisation}} & \textcolor{black}{\textbf{crisis}} & \textcolor{black}{\textbf{post-crisis}}\\
+\textcolor{black}{\textbf{country}} & \textcolor{black}{\textbf{sector}} & \textcolor{black}{\textbf{sub-sector}} & \textcolor{black}{\textbf{regime}} & \textcolor{black}{\textbf{past}} & \textcolor{black}{\textbf{financialisation}} & \textcolor{black}{\textbf{crisis}} & \textcolor{black}{\textbf{post-crisis}}\\
 \midrule
 \textbf{\cellcolor{gray!10}{all}} & \textbf{\cellcolor{gray!10}{all}} & \textbf{\cellcolor{gray!10}{all}} & \textbf{\cellcolor{gray!10}{whole period}} & \textcolor[HTML]{4285f4}{\textbf{\cellcolor{gray!10}{0.0737}}} & \textcolor[HTML]{4285f4}{\textbf{\cellcolor{gray!10}{0.1638}}} & \textcolor[HTML]{4285f4}{\textbf{\cellcolor{gray!10}{0.2849}}} & \textcolor[HTML]{4285f4}{\textbf{\cellcolor{gray!10}{0.1282}}}\\
 \textbf{all} & \textbf{all} & \textbf{all} & \textbf{backwardation} & \textcolor[HTML]{4285f4}{\textbf{0.0724}} & \textcolor[HTML]{4285f4}{\textbf{0.1790}} & \textcolor[HTML]{4285f4}{\textbf{0.2709}} & \textcolor[HTML]{4285f4}{\textbf{0.1001}}\\
@@ -2134,17 +2139,17 @@ considered is detailed in Section~\ref{sec-taxonomy}.}
 \begin{longtable}[t]{>{}l>{}l>{}l>{}l>{}r>{}r>{}r>{}r>{}r>{}r>{}r>{}r>{}r>{}r}
 
 \caption{\label{tbl-correlations-years}This table shows the average
-pairwise correlation coefficients calculated independently across the
-whole cross-section of commodity assets considered in the study as well
-as across countries and commodity sectors and subsectors by year for the
-whole period of interest (1997-2018). The results are discussed in
-Section~\ref{sec-results} while Section~\ref{sec-taxonomy} details the
-taxonomy for the commodity assets considered.}
+return pairwise correlation coefficients calculated independently across
+the whole cross-section of commodity assets considered in the study as
+well as across countries and commodity sectors and sub-sectors by year
+for the whole period of interest (1997-2018). The results are discussed
+in Section~\ref{sec-results} while Section~\ref{sec-taxonomy} details
+the taxonomy for the commodity assets considered.}
 
 \tabularnewline
 
 \toprule
-\textcolor{black}{\textbf{country}} & \textcolor{black}{\textbf{sector}} & \textcolor{black}{\textbf{subsector}} & \textcolor{black}{\textbf{decade}} & \textcolor{black}{\textbf{0}} & \textcolor{black}{\textbf{1}} & \textcolor{black}{\textbf{2}} & \textcolor{black}{\textbf{3}} & \textcolor{black}{\textbf{4}} & \textcolor{black}{\textbf{5}} & \textcolor{black}{\textbf{6}} & \textcolor{black}{\textbf{7}} & \textcolor{black}{\textbf{8}} & \textcolor{black}{\textbf{9}}\\
+\textcolor{black}{\textbf{country}} & \textcolor{black}{\textbf{sector}} & \textcolor{black}{\textbf{sub-sector}} & \textcolor{black}{\textbf{decade}} & \textcolor{black}{\textbf{0}} & \textcolor{black}{\textbf{1}} & \textcolor{black}{\textbf{2}} & \textcolor{black}{\textbf{3}} & \textcolor{black}{\textbf{4}} & \textcolor{black}{\textbf{5}} & \textcolor{black}{\textbf{6}} & \textcolor{black}{\textbf{7}} & \textcolor{black}{\textbf{8}} & \textcolor{black}{\textbf{9}}\\
 \midrule
 \textbf{\cellcolor{gray!10}{all}} & \textbf{\cellcolor{gray!10}{all}} & \textbf{\cellcolor{gray!10}{all}} & \textbf{\cellcolor{gray!10}{1990}} & \textcolor[HTML]{4285f4}{\textbf{\cellcolor{gray!10}{}}} & \textcolor[HTML]{4285f4}{\textbf{\cellcolor{gray!10}{}}} & \textcolor[HTML]{4285f4}{\textbf{\cellcolor{gray!10}{}}} & \textcolor[HTML]{4285f4}{\textbf{\cellcolor{gray!10}{}}} & \textcolor[HTML]{4285f4}{\textbf{\cellcolor{gray!10}{}}} & \textcolor[HTML]{4285f4}{\textbf{\cellcolor{gray!10}{}}} & \textcolor[HTML]{4285f4}{\textbf{\cellcolor{gray!10}{}}} & \textcolor[HTML]{4285f4}{\textbf{\cellcolor{gray!10}{0.0401}}} & \textcolor[HTML]{4285f4}{\textbf{\cellcolor{gray!10}{0.0812}}} & \textcolor[HTML]{4285f4}{\textbf{\cellcolor{gray!10}{0.0822}}}\\
 \textbf{all} & \textbf{all} & \textbf{all} & \textbf{2000} & \textcolor[HTML]{4285f4}{\textbf{0.0652}} & \textcolor[HTML]{4285f4}{\textbf{0.0719}} & \textcolor[HTML]{4285f4}{\textbf{0.0796}} & \textcolor[HTML]{4285f4}{\textbf{0.0848}} & \textcolor[HTML]{4285f4}{\textbf{0.1242}} & \textcolor[HTML]{4285f4}{\textbf{0.1247}} & \textcolor[HTML]{4285f4}{\textbf{0.1650}} & \textcolor[HTML]{4285f4}{\textbf{0.1541}} & \textcolor[HTML]{4285f4}{\textbf{0.3334}} & \textcolor[HTML]{4285f4}{\textbf{0.2913}}\\
@@ -2204,9 +2209,9 @@ all the commodity assets considered in the study are independently
 regressed against the return series for our market factor, an equally
 weighted portfolio of the 24 US commodities considered in the study. The
 results are calculated independently across countries as well as
-commodity sectors and subsectors for the four periods of interest (past:
-1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis:
-2013-2018). The market factor construction is discussed in
+commodity sectors and sub-sectors for the four periods of interest
+(past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013;
+post-crisis: 2013-2018). The market factor construction is discussed in
 Section~\ref{sec-methods} while the results are discussed in
 Section~\ref{sec-results} and the taxonomy for the commodity assets
 considered is detailed in Section~\ref{sec-taxonomy}.}
@@ -2214,7 +2219,7 @@ considered is detailed in Section~\ref{sec-taxonomy}.}
 \tabularnewline
 
 \toprule
-\textcolor{black}{\textbf{country}} & \textcolor{black}{\textbf{sector}} & \textcolor{black}{\textbf{subsector}} & \textcolor{black}{\textbf{past}} & \textcolor{black}{\textbf{financialisation}} & \textcolor{black}{\textbf{crisis}} & \textcolor{black}{\textbf{post-crisis}}\\
+\textcolor{black}{\textbf{country}} & \textcolor{black}{\textbf{sector}} & \textcolor{black}{\textbf{sub-sector}} & \textcolor{black}{\textbf{past}} & \textcolor{black}{\textbf{financialisation}} & \textcolor{black}{\textbf{crisis}} & \textcolor{black}{\textbf{post-crisis}}\\
 \midrule
 \textbf{\cellcolor{gray!10}{all}} & \textbf{\cellcolor{gray!10}{all}} & \textbf{\cellcolor{gray!10}{all}} & \textcolor[HTML]{4285f4}{\textbf{\cellcolor{gray!10}{0.8556}}} & \textcolor[HTML]{4285f4}{\textbf{\cellcolor{gray!10}{0.9709}}} & \textcolor[HTML]{4285f4}{\textbf{\cellcolor{gray!10}{1.0352}}} & \textcolor[HTML]{4285f4}{\textbf{\cellcolor{gray!10}{0.9438}}}\\
 \textbf{US} & \textbf{agriculturals} & \textbf{all} & \textcolor[HTML]{4285f4}{\textbf{0.7706}} & \textcolor[HTML]{4285f4}{\textbf{0.7965}} & \textcolor[HTML]{4285f4}{\textbf{0.8535}} & \textcolor[HTML]{4285f4}{\textbf{0.8252}}\\
@@ -2248,7 +2253,7 @@ all the commodity assets considered in the study are independently
 regressed against the return series for our mimicking portfolios for
 risk factors in returns, including the market, CHP, open interest and
 term structure factors. The results are calculated independently across
-countries and commodity sectors and subsectors for the four periods of
+countries and commodity sectors and sub-sectors for the four periods of
 interest (past: 1997-2003; financialisation: 2004-2008; crisis:
 2008-2013; post-crisis: 2013-2018); for each period the results are
 calculated independently over the entire period as well as over phases
@@ -2261,7 +2266,7 @@ considered is detailed in Section~\ref{sec-taxonomy}.}
 \tabularnewline
 
 \toprule
-\textcolor{black}{\textbf{country}} & \textcolor{black}{\textbf{sector}} & \textcolor{black}{\textbf{subsector}} & \textcolor{black}{\textbf{factor}} & \textcolor{black}{\textbf{regime}} & \textcolor{black}{\textbf{past}} & \textcolor{black}{\textbf{financialisation}} & \textcolor{black}{\textbf{crisis}} & \textcolor{black}{\textbf{post-crisis}}\\
+\textcolor{black}{\textbf{country}} & \textcolor{black}{\textbf{sector}} & \textcolor{black}{\textbf{sub-sector}} & \textcolor{black}{\textbf{factor}} & \textcolor{black}{\textbf{regime}} & \textcolor{black}{\textbf{past}} & \textcolor{black}{\textbf{financialisation}} & \textcolor{black}{\textbf{crisis}} & \textcolor{black}{\textbf{post-crisis}}\\
 \midrule
 \textbf{\cellcolor{gray!10}{all}} & \textbf{\cellcolor{gray!10}{all}} & \textbf{\cellcolor{gray!10}{all}} & \textbf{\cellcolor{gray!10}{market}} & \textbf{\cellcolor{gray!10}{whole period}} & \textcolor[HTML]{4285f4}{\textbf{\cellcolor{gray!10}{9.69\%}}} & \textcolor[HTML]{4285f4}{\textbf{\cellcolor{gray!10}{19.7\%}}} & \textcolor[HTML]{4285f4}{\textbf{\cellcolor{gray!10}{31.3\%}}} & \textcolor[HTML]{4285f4}{\textbf{\cellcolor{gray!10}{14.73\%}}}\\
 \textbf{all} & \textbf{all} & \textbf{all} & \textbf{market} & \textbf{backwardation} & \textcolor[HTML]{4285f4}{\textbf{9.44\%}} & \textcolor[HTML]{4285f4}{\textbf{21.55\%}} & \textcolor[HTML]{4285f4}{\textbf{30.04\%}} & \textcolor[HTML]{4285f4}{\textbf{11.82\%}}\\
@@ -2470,13 +2475,13 @@ considered is detailed in Section~\ref{sec-taxonomy}.}
 \caption{\label{tbl-assets-taxonomy}This table shows the detailed
 taxonomy for the thirty commodity assets considered in the study. The
 assets are classified by the country of residence of the exchange where
-they are traded as well as by sector and subsector according to the
+they are traded as well as by sector and sub-sector according to the
 nature of the asset.}
 
 \tabularnewline
 
 \toprule
-\textcolor{black}{\textbf{asset}} & \textcolor{black}{\textbf{country}} & \textcolor{black}{\textbf{sector}} & \textcolor{black}{\textbf{subsector}}\\
+\textcolor{black}{\textbf{asset}} & \textcolor{black}{\textbf{country}} & \textcolor{black}{\textbf{sector}} & \textcolor{black}{\textbf{sub-sector}}\\
 \midrule
 \textbf{\cellcolor{gray!10}{Corn-\#2 yellow (XCBT)}} & \textcolor[HTML]{4285f4}{\cellcolor{gray!10}{US}} & \textcolor[HTML]{4285f4}{\cellcolor{gray!10}{agriculturals}} & \textcolor[HTML]{4285f4}{\cellcolor{gray!10}{grains}}\\
 \textbf{Oats (XCBT)} & \textcolor[HTML]{4285f4}{US} & \textcolor[HTML]{4285f4}{agriculturals} & \textcolor[HTML]{4285f4}{grains}\\
