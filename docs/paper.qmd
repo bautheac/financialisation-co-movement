@@ -53,7 +53,7 @@ format:
 #| label: globals
 #| include: false
 
-library(kableExtra); library(slituR)
+pacman::p_load(kableExtra, magrittr, slituR)
 
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 
@@ -76,8 +76,9 @@ tables <- readr::read_rds(paste_forward_slash(tables_directory_path, "tables-for
 sectors <- c("country", "sector", "sub-sector")
 periods <- c("past", "financialisation", "crisis", "post-crisis")
 
-make_table <- function(table_name, colnames, align, bold_columns, coloured_columns){
-  get_results(tables, table_name) %>%
+make_table <- function(table_name, columns_to_collapse_rows_for, colnames, align, bold_columns, coloured_columns){
+  get_results(tables, table_name) %>% dplyr::mutate(dplyr::across(dplyr::where(is.factor), as.character)) %>%
+  collapse_rows(columns_to_collapse_rows_for) %>%
   kbl(booktabs = T, longtable = T, col.names = colnames, align = align) %>%
   kable_styling(latex_options = "striped", font_size = 7L) %>%
   row_spec(0L, bold = TRUE, color = "black") %>%
@@ -137,7 +138,7 @@ Financialisation was an issue of such policy importance that it triggered legisl
 With the benefit of hindsight, it appears this approach was perhaps too narrow, and it now seems necessary to address the phenomenon from a broader perspective. Commodity price dynamics appear to have altered substantially in quite different ways over the financialisation and the financial crisis periods and both our cross-sectional approach to examining interconnectedness in the complex as well as our commodity futures asset pricing framework together seem able to provide new insights into the nature of these changes: financialisation was a phenomenon endogenous to the commodity markets transmitted via the commodity futures markets and which effects were particularly strong for the metals sector while the crisis and its aftermath seem to have delivered an exogenous shock across the entire cross-section of liquid commodities, further altering the cross-sectional dynamics, and potentially triggering a reversion to pre-financialisation dynamics in the most recent period.  
   
   
-The initial view of financialisation was that it consisted of speculative flows which had the effect of driving up and creating bubble like conditions in commodity futures prices^[@masters_testimony_2008; @masters_accidental_2008; @unctad_global_2009; @deschutter_food_2010; @gilbert_how_2010; @gilbert_speculative_2010; @herman_not_2011; @schumann_hunger_2011; @singleton_investor_2013.]. However, the fundamental question of the nature of the impact of financialisation across the entire cross-section of commodity futures markets has not yet been completely answered. We provide an empirical complement to a new stream of theoretical studies that try to model the impact of financialisation on various aspects of commodity futures markets^[@etula_broker-dealer_2013, @acharya_limits_2013, @cheng_convective_2014, @leclercq_equilibrium_2014, @sockin_informational_2015, @goldstein_speculation_2014, @ekeland_speculation_2016, @goldstein_commodity_2022, @ekeland_hedging_2019, @isleimeyyeh_role_2020.] and demonstrate that the effects of financialisation extend beyond the mechanical effects induced by indexation as outlined in @tang_index_2012 and @basak_model_2016.  
+The initial view of financialisation was that it consisted of speculative flows which had the effect of driving up and creating bubble like conditions in commodity futures prices^[@masters_testimony_2008; @masters_accidental_2008; @unctad_global_2009; @deschutter_food_2010; @gilbert_how_2010; @gilbert_speculative_2010; @herman_not_2011; @schumann_hunger_2011; @singleton_investor_2013.]. However, the fundamental question of the nature of the impact of financialisation across the entire cross-section of commodity futures markets has not yet been completely answered. We provide an empirical complement to a new stream of theoretical studies that try to model the impact of financialisation on various aspects of commodity futures markets^[@etula_broker-dealer_2013, @acharya_limits_2013, @cheng_convective_2014, @leclercq_equilibrium_2014, @sockin_informational_2015, @goldstein_speculation_2014, @ekeland_speculation_2014, @goldstein_commodity_2022, @ekeland_hedging_2019, @isleimeyyeh_role_2020.] and demonstrate that the effects of financialisation extend beyond the mechanical effects induced by indexation as outlined in @tang_index_2012 and @basak_model_2016.  
 
 \newpage
 
@@ -328,7 +329,7 @@ The onset of the financial crisis and the monetary policy regimes that followed,
 colnames <- c("asset", "regime", "estimate", periods)
 align <- make_series_of_repeated_chars(list(l = 3L, r = 4L))
 
-make_table("stats - combined", colnames, align, 1L:7L, 4L:7L)
+make_table("stats - combined", c("asset", "regime"), colnames, align, 1L:7L, 4L:7L)
 ```
 
 
@@ -341,7 +342,7 @@ make_table("stats - combined", colnames, align, 1L:7L, 4L:7L)
 colnames <- c("asset", "period", "moment", "dominant regime", "p-value", "significance")
 align <- make_series_of_repeated_chars(list(l = 4L, r = 2L))
 
-make_table("regime difference tests", colnames, align, 1L:4L, 5L:6L)
+make_table("regime difference tests", c("asset", "period"), colnames, align, 1L:4L, 5L:6L)
 ```
 
 
@@ -354,7 +355,7 @@ make_table("regime difference tests", colnames, align, 1L:4L, 5L:6L)
 colnames <- c("regressor", "sector", "sub-sector", periods)
 align <- make_series_of_repeated_chars(list(l = 3L, r = 4L))
 
-make_table("regressions - US returns ~ US CHP", colnames, align, 1L:7L, 4L:7L)
+make_table("regressions - US returns ~ US CHP", c("regressor", "sector"), colnames, align, 1L:7L, 4L:7L)
 ```
 
 \newpage
@@ -366,7 +367,7 @@ make_table("regressions - US returns ~ US CHP", colnames, align, 1L:7L, 4L:7L)
 colnames <- c(sectors, "regime", periods)
 align <- make_series_of_repeated_chars(list(l = 3L, r = 5L))
 
-make_table("correlations - periods", colnames, align, 1L:8L, 5L:8L)
+make_table("correlations - periods", c("country", "sector", "subsector"), colnames, align, 1L:8L, 5L:8L)
 ```
 
 \newpage
@@ -378,7 +379,7 @@ make_table("correlations - periods", colnames, align, 1L:8L, 5L:8L)
 colnames <- c(sectors, "decade", 0L:9L)
 align <- make_series_of_repeated_chars(list(l = 4L, r = 10L))
 
-make_table("correlations - years", colnames, align, 1L:14L, 5L:14L) %>%
+make_table("correlations - years", c("country", "sector", "subsector"), colnames, align, 1L:14L, 5L:14L) %>%
   landscape()
 ```
 
@@ -391,7 +392,10 @@ make_table("correlations - years", colnames, align, 1L:14L, 5L:14L) %>%
 colnames <- c(sectors, periods)
 align <- make_series_of_repeated_chars(list(l = 3L, r = 4L))
 
-make_table("regressions - all returns ~ market index", colnames, align, 1L:7L, 4L:7L)
+make_table(
+  "regressions - all returns ~ market index", c("country", "sector", "subsector"), 
+  colnames, align, 1L:7L, 4L:7L
+  )
 ```
 
 \newpage
@@ -403,8 +407,10 @@ make_table("regressions - all returns ~ market index", colnames, align, 1L:7L, 4
 colnames <- c(sectors, "factor", "regime", periods)
 align <- make_series_of_repeated_chars(list(l = 5L, r = 4L))
 
-make_table("regressions - all returns ~ factors", colnames, align, 1L:9L, 6L:9L) %>%
-  landscape()
+make_table(
+  "regressions - all returns ~ factors", c("country", "sector", "subsector", "factor"), 
+  colnames, align, 1L:9L, 6L:9L
+  ) %>% landscape()
 ```
 
 \newpage
@@ -420,7 +426,7 @@ make_table("regressions - all returns ~ factors", colnames, align, 1L:9L, 6L:9L)
 colnames <- c("asset", "country", "sector", "sub-sector")
 align <- make_series_of_repeated_chars(list(l = 4L))
 
-make_table("assets taxonomy", colnames, align, 1L, 2L:4L)
+make_table("assets taxonomy", c("country", "sector", "subsector"), colnames, align, 1L, 2L:4L)
 ```
 
 \newpage
