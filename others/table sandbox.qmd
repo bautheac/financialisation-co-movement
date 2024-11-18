@@ -1,0 +1,38 @@
+---
+title: "table sandbox"
+format: pdf
+editor: visual
+---
+
+## Quarto
+
+```{r}
+library(tidyverse)
+```
+
+# Table the runs into bottom of page
+
+```{r}
+gt::gt(mpg)
+```
+
+# Table that breaks across multiple pages
+
+`#show figure: set block(breakable: true)`{=typst}
+
+```{r}
+gt::gt(mpg)
+```
+
+# How to end that behavior if needed
+
+`#set block(breakable: false)`{=typst}
+
+```{r}
+gt::gt(mpg)
+```
+
+
+
+
+
