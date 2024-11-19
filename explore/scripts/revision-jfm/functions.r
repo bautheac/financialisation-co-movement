@@ -1005,7 +1005,7 @@ compute_correlations <- function(df) {
   cor( dplyr::select(df, -date), use = "pairwise.complete.obs")
 }
 
-make_pairwise_correlations_for_ticker_combinations_dataframe <- function(
+make_inner_correlations_for_ticker_combinations_dataframe <- function(
     combinations, commodity_futures_data, aggregate_CHP_regimes, period_dates
     ){
   
@@ -1234,7 +1234,7 @@ compute_average_pairwise_correlations_from_correlation_matrix <- function(correl
   mean(pairwise_correlations$correlation, na.rm = T)
 }
 
-add_top_3_and_average_to_pairwise_correlations_for_ticker_combinations_dataframe <- function(
+add_top_3_and_average_to_inner_correlations_for_ticker_combinations_dataframe <- function(
     pairwise_correlations_for_ticker_combinations_dataframe
 ){
   
@@ -1407,7 +1407,7 @@ map_solution_to_problem_domain_jargon_in_correlation_top_3_unnested_results_summ
 }
 ####
 
-format_correlation_summary_statistics_into_table <- function(correlations_summary){
+format_inner_correlations_summary_statistics_into_table <- function(correlations_summary){
   
   top_3 <- unnest_analysis_statistic_results_summary(correlations_summary, "top 3") %>%
     dplyr::mutate(`top-bottom 3` = factor(`top-bottom 3`, levels = c("top", "bottom"))) %>%

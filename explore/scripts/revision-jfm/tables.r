@@ -1,6 +1,6 @@
 library(magrittr)
 
-# Globals ####
+# Globals ######################################################################
 ## datasets ####
 data("tickers_futures", "tickers_cftc", package = "BBGsymbols")
 data("exchanges", package = "fewISOs")
@@ -53,7 +53,7 @@ sort_table_by_country_sector_subsector <- function(tb, sort_levels){
   ) %>% dplyr::arrange(sort) %>% dplyr::select(-sort)
 }
 
-# assets taxonomy ####
+# assets taxonomy ##############################################################
 `assets taxonomy` <- 
   make_asset_name_country_sector_subsector_dataframe(commodity_futures_tickers) %>%
   dplyr::mutate(
@@ -71,7 +71,7 @@ sort_table_by_country_sector_subsector <- function(tb, sort_levels){
     TRUE ~ asset
   ))
 
-# descriptive stats ####
+# descriptive stats ############################################################
 stats <- readr::read_rds(
   slituR::paste_forward_slash(results_directory_path, "descriptive-statistics-clean.rds")
   )
@@ -188,7 +188,7 @@ descriptive_stats_combined <- dplyr::bind_rows(commodities, countries) %>%
     estimate = ifelse(estimate == "mean", estimate, "volatility")
     )
 
-# regime difference tests ####
+# regime difference tests ######################################################
 regime_difference_tests <- readr::read_rds(
   slituR::paste_forward_slash(results_directory_path, "regime-difference-tests.rds")
 )
@@ -229,14 +229,15 @@ countries = dplyr::filter(
 
 regime_difference_tests <- dplyr::bind_rows(individuals, countries)
 
-# correlations ####
-correlations <- readr::read_rds(
-  slituR::paste_forward_slash(results_directory_path, "correlations.rds")
+# correlations #################################################################
+## inner ####
+correlations_inner <- readr::read_rds(
+  slituR::paste_forward_slash(results_directory_path, "correlations-inner.rds")
 )
 
-## By period ####
-correlations_periods <- dplyr::filter(
-  correlations, field == "close price", type == "return", frequency == "day", timespan == "period"
+### By period ####
+correlations_inner_periods <- dplyr::filter(
+  correlations_inner, field == "close price", type == "return", frequency == "day", timespan == "period"
 ) %>%
   dplyr::select(country, sector, subsector, period, regime, average) %>%
   dplyr::group_by(country, sector, subsector, period, regime) %>%
@@ -244,9 +245,9 @@ correlations_periods <- dplyr::filter(
   tidyr::pivot_wider(names_from = "period", values_from = "average") %>%
   sort_table_by_country_sector_subsector(sort_levels)
 
-## By year ####
-correlations_years <- dplyr::filter(
-  correlations, field == "close price", type == "return", frequency == "day", 
+### By year ####
+correlations_inner_years <- dplyr::filter(
+  correlations_inner, field == "close price", type == "return", frequency == "day", 
   timespan == "year", regime == "whole period"
 ) %>%
   dplyr::select(country, sector, subsector, year, average) %>%
@@ -392,8 +393,8 @@ tables <- tibble::tribble(
     "stats - combined",                         descriptive_stats_combined,
     "regime difference tests",                  regime_difference_tests,
     "regressions - US returns ~ US CHP",        `US commodity returns ~ CHP`,
-    "correlations - periods",                   correlations_periods,
-    "correlations - years",                     correlations_years,
+    "correlations - inner - periods",           correlations_inner_periods,
+    "correlations - inner - years",             correlations_inner_years,
     "regressions - all returns ~ market index", `all commodity returns ~ market index`,
     "regressions - all returns ~ factors",      `all commodity returns ~ factors`,
     "assets taxonomy",                          `assets taxonomy`

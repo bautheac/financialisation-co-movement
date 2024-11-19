@@ -1,4 +1,4 @@
-library(finRes); library(magrittr)
+pacman::p_load(finRes, magrittr)
 
 # source functions #############################################################
 source(here::here("explore", "scripts", "revision-jfm", "functions.r"))
@@ -40,29 +40,30 @@ commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(
   commodity_futures_tickers, analysis = "correlations"
   )
 
-### raw ####
-correlations_raw <- make_pairwise_correlations_for_ticker_combinations_dataframe(
+### inner ####
+#### raw ####
+correlations_inner_raw <- make_inner_correlations_for_ticker_combinations_dataframe(
   commodity_pool_tickers, commodity_futures_data, aggregate_CHP_regimes, period_dates
 )
 
-### summary ####
-#### load raw dataset (optional) ####
-# path_correlations_raw_file <- paste_forward_slash(results_directory_path, "correlations-raw.rds")
-# correlations_raw <- readr::read_rds(path_correlations_raw_file)
+#### summary ####
+##### load raw dataset (optional) ####
+# path_correlations_inner_raw_file <- paste_forward_slash(results_directory_path, "correlations-inner-raw.rds")
+# correlations_inner_raw <- readr::read_rds(path_correlations_inner_raw_file)
 
-#### summarise ####
-correlations_summary <- 
-  add_top_3_and_average_to_pairwise_correlations_for_ticker_combinations_dataframe(correlations_raw)
+##### summarise ####
+correlations_inner_summary <- 
+  add_top_3_and_average_to_inner_correlations_for_ticker_combinations_dataframe(correlations_inner_raw)
 
-### formatted ####
-#### load summary dataset (optional) ####
-# path_correlations_summary_file <- 
-#   paste_forward_slash(results_directory_path, "correlations-summary.rds")
-# correlations_summary <- readr::read_rds(path_correlations_summary_file)
+#### formatted ####
+##### load summary dataset (optional) ####
+# path_correlations_inner_summary_file <- 
+#   paste_forward_slash(results_directory_path, "correlations-inner-summary.rds")
+# correlations_inner_summary <- readr::read_rds(path_correlations_inner_summary_file)
 
-#### format ####
-correlations_formatted <- 
-  format_correlation_summary_statistics_into_table(correlations_summary)
+##### format ####
+correlations_inner_formatted <- 
+  format_inner_correlations_summary_statistics_into_table(correlations_inner_summary)
 
 ## regressions #################################################################
 commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(
@@ -142,19 +143,20 @@ path_regime_difference_tests_formatted_file <-
 saveRDS(regime_difference_tests_formatted, path_regime_difference_tests_formatted_file)
 
 ## correlations ################################################################
-### raw ####
-path_correlations_raw_file <- paste_forward_slash(results_directory_path, "correlations-raw.rds")
-saveRDS(correlations_raw, path_correlations_raw_file)
+### inner ####
+#### raw ####
+path_correlations_inner_raw_file <- paste_forward_slash(results_directory_path, "correlations-inner-raw.rds")
+saveRDS(correlations_inner_raw, path_correlations_inner_raw_file)
 
-#### summary ####
-path_correlations_summary_file <- 
-  paste_forward_slash(results_directory_path, "correlations-summary.rds")
-saveRDS(correlations_summary, path_correlations_summary_file)
+##### summary ####
+path_correlations_inner_summary_file <- 
+  paste_forward_slash(results_directory_path, "correlations-inner-summary.rds")
+saveRDS(correlations_inner_summary, path_correlations_inner_summary_file)
 
-### formatted ####
-path_correlations_formatted_file <- 
-  paste_forward_slash(results_directory_path, "correlations.rds")
-saveRDS(correlations_formatted, path_correlations_formatted_file)
+#### formatted ####
+path_correlations_inner_formatted_file <- 
+  paste_forward_slash(results_directory_path, "correlations-inner.rds")
+saveRDS(correlations_inner_formatted, path_correlations_inner_formatted_file)
 
 ## regressions #################################################################
 commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(

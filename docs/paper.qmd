@@ -367,7 +367,7 @@ make_table("regressions - US returns ~ US CHP", c("regressor", "sector"), colnam
 colnames <- c(sectors, "regime", periods)
 align <- make_series_of_repeated_chars(list(l = 3L, r = 5L))
 
-make_table("correlations - periods", c("country", "sector", "subsector"), colnames, align, 1L:8L, 5L:8L)
+make_table("correlations - inner - periods", c("country", "sector", "subsector"), colnames, align, 1L:8L, 5L:8L)
 ```
 
 \newpage
@@ -379,7 +379,7 @@ make_table("correlations - periods", c("country", "sector", "subsector"), colnam
 colnames <- c(sectors, "decade", 0L:9L)
 align <- make_series_of_repeated_chars(list(l = 4L, r = 10L))
 
-make_table("correlations - years", c("country", "sector", "subsector"), colnames, align, 1L:14L, 5L:14L) %>%
+make_table("correlations - inner - years", c("country", "sector", "subsector"), colnames, align, 1L:14L, 5L:14L) %>%
   landscape()
 ```
 

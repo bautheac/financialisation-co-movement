@@ -8,7 +8,7 @@
 
 <meta name="author" content="Devraj Basu">
 <meta name="author" content="Olivier Bauthéac">
-<meta name="dcterms.date" content="2024-11-18">
+<meta name="dcterms.date" content="2024-11-19">
 <meta name="keywords" content="Commodity markets, Financialisation, Co-movement, Asset pricing">
 
 <title>Financialisation of Commodity Markets</title>
@@ -158,7 +158,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 18, 2024</p>
+      <p class="date">November 19, 2024</p>
     </div>
   </div>
   
@@ -303,27 +303,6 @@ The onset of the financial crisis and the monetary policy regimes that followed,
 <section id="tables" class="level1">
 <h1>Tables</h1>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>debugging in: make_table("stats - combined", c("asset", "regime"), colnames, 
-    align, 1L:7L, 4L:7L)
-debug: {
-    get_results(tables, table_name) %&gt;% dplyr::mutate(dplyr::across(dplyr::where(is.factor), 
-        as.character)) %&gt;% collapse_rows(columns_to_collapse_rows_for) %&gt;% 
-        kbl(booktabs = T, longtable = T, col.names = colnames, 
-            align = align) %&gt;% kable_styling(latex_options = "striped", 
-        font_size = 7L) %&gt;% row_spec(0L, bold = TRUE, color = "black") %&gt;% 
-        column_spec(bold_columns, bold = TRUE) %&gt;% column_spec(coloured_columns, 
-        color = "#4285f4")
-}
-debug: get_results(tables, table_name) %&gt;% dplyr::mutate(dplyr::across(dplyr::where(is.factor), 
-    as.character)) %&gt;% collapse_rows(columns_to_collapse_rows_for) %&gt;% 
-    kbl(booktabs = T, longtable = T, col.names = colnames, align = align) %&gt;% 
-    kable_styling(latex_options = "striped", font_size = 7L) %&gt;% 
-    row_spec(0L, bold = TRUE, color = "black") %&gt;% column_spec(bold_columns, 
-    bold = TRUE) %&gt;% column_spec(coloured_columns, color = "#4285f4")
-exiting from: make_table("stats - combined", c("asset", "regime"), colnames, 
-    align, 1L:7L, 4L:7L)</code></pre>
-</div>
 <div id="tbl-stats-combined" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-stats-combined-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -2083,27 +2062,6 @@ Table&nbsp;1: This table shows mean returns and corresponding volatility for the
 </div>
 <div style="page-break-after: always;"></div>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>debugging in: make_table("regime difference tests", c("asset", "period"), colnames, 
-    align, 1L:4L, 5L:6L)
-debug: {
-    get_results(tables, table_name) %&gt;% dplyr::mutate(dplyr::across(dplyr::where(is.factor), 
-        as.character)) %&gt;% collapse_rows(columns_to_collapse_rows_for) %&gt;% 
-        kbl(booktabs = T, longtable = T, col.names = colnames, 
-            align = align) %&gt;% kable_styling(latex_options = "striped", 
-        font_size = 7L) %&gt;% row_spec(0L, bold = TRUE, color = "black") %&gt;% 
-        column_spec(bold_columns, bold = TRUE) %&gt;% column_spec(coloured_columns, 
-        color = "#4285f4")
-}
-debug: get_results(tables, table_name) %&gt;% dplyr::mutate(dplyr::across(dplyr::where(is.factor), 
-    as.character)) %&gt;% collapse_rows(columns_to_collapse_rows_for) %&gt;% 
-    kbl(booktabs = T, longtable = T, col.names = colnames, align = align) %&gt;% 
-    kable_styling(latex_options = "striped", font_size = 7L) %&gt;% 
-    row_spec(0L, bold = TRUE, color = "black") %&gt;% column_spec(bold_columns, 
-    bold = TRUE) %&gt;% column_spec(coloured_columns, color = "#4285f4")
-exiting from: make_table("regime difference tests", c("asset", "period"), colnames, 
-    align, 1L:4L, 5L:6L)</code></pre>
-</div>
 <div id="tbl-regime-diference-tests" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-regime-diference-tests-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -4182,27 +4140,6 @@ Table&nbsp;2: This table shows the results for tests of difference in mean (t-te
 </div>
 <div style="page-break-after: always;"></div>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>debugging in: make_table("regressions - US returns ~ US CHP", c("regressor", 
-    "sector"), colnames, align, 1L:7L, 4L:7L)
-debug: {
-    get_results(tables, table_name) %&gt;% dplyr::mutate(dplyr::across(dplyr::where(is.factor), 
-        as.character)) %&gt;% collapse_rows(columns_to_collapse_rows_for) %&gt;% 
-        kbl(booktabs = T, longtable = T, col.names = colnames, 
-            align = align) %&gt;% kable_styling(latex_options = "striped", 
-        font_size = 7L) %&gt;% row_spec(0L, bold = TRUE, color = "black") %&gt;% 
-        column_spec(bold_columns, bold = TRUE) %&gt;% column_spec(coloured_columns, 
-        color = "#4285f4")
-}
-debug: get_results(tables, table_name) %&gt;% dplyr::mutate(dplyr::across(dplyr::where(is.factor), 
-    as.character)) %&gt;% collapse_rows(columns_to_collapse_rows_for) %&gt;% 
-    kbl(booktabs = T, longtable = T, col.names = colnames, align = align) %&gt;% 
-    kable_styling(latex_options = "striped", font_size = 7L) %&gt;% 
-    row_spec(0L, bold = TRUE, color = "black") %&gt;% column_spec(bold_columns, 
-    bold = TRUE) %&gt;% column_spec(coloured_columns, color = "#4285f4")
-exiting from: make_table("regressions - US returns ~ US CHP", c("regressor", 
-    "sector"), colnames, align, 1L:7L, 4L:7L)</code></pre>
-</div>
 <div id="tbl-time-reg-US-CHP" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-time-reg-US-CHP-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -4432,27 +4369,6 @@ Table&nbsp;3: This table shows the average time series <span class="math inline"
 </div>
 <div style="page-break-after: always;"></div>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>debugging in: make_table("correlations - periods", c("country", "sector", "subsector"), 
-    colnames, align, 1L:8L, 5L:8L)
-debug: {
-    get_results(tables, table_name) %&gt;% dplyr::mutate(dplyr::across(dplyr::where(is.factor), 
-        as.character)) %&gt;% collapse_rows(columns_to_collapse_rows_for) %&gt;% 
-        kbl(booktabs = T, longtable = T, col.names = colnames, 
-            align = align) %&gt;% kable_styling(latex_options = "striped", 
-        font_size = 7L) %&gt;% row_spec(0L, bold = TRUE, color = "black") %&gt;% 
-        column_spec(bold_columns, bold = TRUE) %&gt;% column_spec(coloured_columns, 
-        color = "#4285f4")
-}
-debug: get_results(tables, table_name) %&gt;% dplyr::mutate(dplyr::across(dplyr::where(is.factor), 
-    as.character)) %&gt;% collapse_rows(columns_to_collapse_rows_for) %&gt;% 
-    kbl(booktabs = T, longtable = T, col.names = colnames, align = align) %&gt;% 
-    kable_styling(latex_options = "striped", font_size = 7L) %&gt;% 
-    row_spec(0L, bold = TRUE, color = "black") %&gt;% column_spec(bold_columns, 
-    bold = TRUE) %&gt;% column_spec(coloured_columns, color = "#4285f4")
-exiting from: make_table("correlations - periods", c("country", "sector", "subsector"), 
-    colnames, align, 1L:8L, 5L:8L)</code></pre>
-</div>
 <div id="tbl-correlations-periods" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-correlations-periods-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -4506,8 +4422,8 @@ Table&nbsp;4: This table shows the average return pairwise correlation coefficie
 </tr>
 <tr class="even">
 <td style="text-align: left; font-weight: bold;">US</td>
-<td style="text-align: left; font-weight: bold;"></td>
-<td style="text-align: left; font-weight: bold;"></td>
+<td style="text-align: left; font-weight: bold;">all</td>
+<td style="text-align: left; font-weight: bold;">all</td>
 <td style="text-align: right; font-weight: bold;">whole period</td>
 <td style="text-align: right; font-weight: bold; color: rgba(66, 133, 244, 255) !important;">0.0684</td>
 <td style="text-align: right; font-weight: bold; color: rgba(66, 133, 244, 255) !important;">0.1545</td>
@@ -4537,7 +4453,7 @@ Table&nbsp;4: This table shows the average return pairwise correlation coefficie
 <tr class="odd">
 <td style="text-align: left; font-weight: bold;"></td>
 <td style="text-align: left; font-weight: bold;">agriculturals</td>
-<td style="text-align: left; font-weight: bold;"></td>
+<td style="text-align: left; font-weight: bold;">all</td>
 <td style="text-align: right; font-weight: bold;">whole period</td>
 <td style="text-align: right; font-weight: bold; color: rgba(66, 133, 244, 255) !important;">0.0910</td>
 <td style="text-align: right; font-weight: bold; color: rgba(66, 133, 244, 255) !important;">0.1305</td>
@@ -4815,27 +4731,6 @@ Table&nbsp;4: This table shows the average return pairwise correlation coefficie
 </div>
 <div style="page-break-after: always;"></div>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>debugging in: make_table("correlations - years", c("country", "sector", "subsector"), 
-    colnames, align, 1L:14L, 5L:14L)
-debug: {
-    get_results(tables, table_name) %&gt;% dplyr::mutate(dplyr::across(dplyr::where(is.factor), 
-        as.character)) %&gt;% collapse_rows(columns_to_collapse_rows_for) %&gt;% 
-        kbl(booktabs = T, longtable = T, col.names = colnames, 
-            align = align) %&gt;% kable_styling(latex_options = "striped", 
-        font_size = 7L) %&gt;% row_spec(0L, bold = TRUE, color = "black") %&gt;% 
-        column_spec(bold_columns, bold = TRUE) %&gt;% column_spec(coloured_columns, 
-        color = "#4285f4")
-}
-debug: get_results(tables, table_name) %&gt;% dplyr::mutate(dplyr::across(dplyr::where(is.factor), 
-    as.character)) %&gt;% collapse_rows(columns_to_collapse_rows_for) %&gt;% 
-    kbl(booktabs = T, longtable = T, col.names = colnames, align = align) %&gt;% 
-    kable_styling(latex_options = "striped", font_size = 7L) %&gt;% 
-    row_spec(0L, bold = TRUE, color = "black") %&gt;% column_spec(bold_columns, 
-    bold = TRUE) %&gt;% column_spec(coloured_columns, color = "#4285f4")
-exiting from: make_table("correlations - years", c("country", "sector", "subsector"), 
-    colnames, align, 1L:14L, 5L:14L)</code></pre>
-</div>
 <div id="tbl-correlations-years" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-correlations-years-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -4913,8 +4808,8 @@ Table&nbsp;5: This table shows the average return pairwise correlation coefficie
 </tr>
 <tr class="even">
 <td style="text-align: left; font-weight: bold;">US</td>
-<td style="text-align: left; font-weight: bold;"></td>
-<td style="text-align: left; font-weight: bold;"></td>
+<td style="text-align: left; font-weight: bold;">all</td>
+<td style="text-align: left; font-weight: bold;">all</td>
 <td style="text-align: left; font-weight: bold;">1990</td>
 <td style="text-align: right; font-weight: bold; color: rgba(66, 133, 244, 255) !important;"></td>
 <td style="text-align: right; font-weight: bold; color: rgba(66, 133, 244, 255) !important;"></td>
@@ -4962,7 +4857,7 @@ Table&nbsp;5: This table shows the average return pairwise correlation coefficie
 <tr class="odd">
 <td style="text-align: left; font-weight: bold;"></td>
 <td style="text-align: left; font-weight: bold;">agriculturals</td>
-<td style="text-align: left; font-weight: bold;"></td>
+<td style="text-align: left; font-weight: bold;">all</td>
 <td style="text-align: left; font-weight: bold;">1990</td>
 <td style="text-align: right; font-weight: bold; color: rgba(66, 133, 244, 255) !important;"></td>
 <td style="text-align: right; font-weight: bold; color: rgba(66, 133, 244, 255) !important;"></td>
@@ -5402,27 +5297,6 @@ Table&nbsp;5: This table shows the average return pairwise correlation coefficie
 </div>
 <div style="page-break-after: always;"></div>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>debugging in: make_table("regressions - all returns ~ market index", c("country", 
-    "sector", "subsector"), colnames, align, 1L:7L, 4L:7L)
-debug: {
-    get_results(tables, table_name) %&gt;% dplyr::mutate(dplyr::across(dplyr::where(is.factor), 
-        as.character)) %&gt;% collapse_rows(columns_to_collapse_rows_for) %&gt;% 
-        kbl(booktabs = T, longtable = T, col.names = colnames, 
-            align = align) %&gt;% kable_styling(latex_options = "striped", 
-        font_size = 7L) %&gt;% row_spec(0L, bold = TRUE, color = "black") %&gt;% 
-        column_spec(bold_columns, bold = TRUE) %&gt;% column_spec(coloured_columns, 
-        color = "#4285f4")
-}
-debug: get_results(tables, table_name) %&gt;% dplyr::mutate(dplyr::across(dplyr::where(is.factor), 
-    as.character)) %&gt;% collapse_rows(columns_to_collapse_rows_for) %&gt;% 
-    kbl(booktabs = T, longtable = T, col.names = colnames, align = align) %&gt;% 
-    kable_styling(latex_options = "striped", font_size = 7L) %&gt;% 
-    row_spec(0L, bold = TRUE, color = "black") %&gt;% column_spec(bold_columns, 
-    bold = TRUE) %&gt;% column_spec(coloured_columns, color = "#4285f4")
-exiting from: make_table("regressions - all returns ~ market index", c("country", 
-    "sector", "subsector"), colnames, align, 1L:7L, 4L:7L)</code></pre>
-</div>
 <div id="tbl-regressions-index" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-regressions-index-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -5455,7 +5329,7 @@ Table&nbsp;6: This table shows the average time series regression coefficients f
 <tr class="even">
 <td style="text-align: left; font-weight: bold;">US</td>
 <td style="text-align: left; font-weight: bold;">agriculturals</td>
-<td style="text-align: left; font-weight: bold;"></td>
+<td style="text-align: left; font-weight: bold;">all</td>
 <td style="text-align: right; font-weight: bold; color: rgba(66, 133, 244, 255) !important;">0.7706</td>
 <td style="text-align: right; font-weight: bold; color: rgba(66, 133, 244, 255) !important;">0.7965</td>
 <td style="text-align: right; font-weight: bold; color: rgba(66, 133, 244, 255) !important;">0.8535</td>
@@ -5562,29 +5436,6 @@ Table&nbsp;6: This table shows the average time series regression coefficients f
 </div>
 <div style="page-break-after: always;"></div>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>debugging in: make_table("regressions - all returns ~ factors", c("country", 
-    "sector", "subsector", "factor"), colnames, align, 1L:9L, 
-    6L:9L)
-debug: {
-    get_results(tables, table_name) %&gt;% dplyr::mutate(dplyr::across(dplyr::where(is.factor), 
-        as.character)) %&gt;% collapse_rows(columns_to_collapse_rows_for) %&gt;% 
-        kbl(booktabs = T, longtable = T, col.names = colnames, 
-            align = align) %&gt;% kable_styling(latex_options = "striped", 
-        font_size = 7L) %&gt;% row_spec(0L, bold = TRUE, color = "black") %&gt;% 
-        column_spec(bold_columns, bold = TRUE) %&gt;% column_spec(coloured_columns, 
-        color = "#4285f4")
-}
-debug: get_results(tables, table_name) %&gt;% dplyr::mutate(dplyr::across(dplyr::where(is.factor), 
-    as.character)) %&gt;% collapse_rows(columns_to_collapse_rows_for) %&gt;% 
-    kbl(booktabs = T, longtable = T, col.names = colnames, align = align) %&gt;% 
-    kable_styling(latex_options = "striped", font_size = 7L) %&gt;% 
-    row_spec(0L, bold = TRUE, color = "black") %&gt;% column_spec(bold_columns, 
-    bold = TRUE) %&gt;% column_spec(coloured_columns, color = "#4285f4")
-exiting from: make_table("regressions - all returns ~ factors", c("country", 
-    "sector", "subsector", "factor"), colnames, align, 1L:9L, 
-    6L:9L)</code></pre>
-</div>
 <div id="tbl-regressions-factors" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-regressions-factors-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -5741,8 +5592,8 @@ Table&nbsp;7: This table shows the average time series regression <span class="m
 </tr>
 <tr class="odd">
 <td style="text-align: left; font-weight: bold;">US</td>
-<td style="text-align: left; font-weight: bold;"></td>
-<td style="text-align: left; font-weight: bold;"></td>
+<td style="text-align: left; font-weight: bold;">all</td>
+<td style="text-align: left; font-weight: bold;">all</td>
 <td style="text-align: left; font-weight: bold;">market</td>
 <td style="text-align: left; font-weight: bold;">whole period</td>
 <td style="text-align: right; font-weight: bold; color: rgba(66, 133, 244, 255) !important;">11.67%</td>
@@ -5874,7 +5725,7 @@ Table&nbsp;7: This table shows the average time series regression <span class="m
 <tr class="odd">
 <td style="text-align: left; font-weight: bold;"></td>
 <td style="text-align: left; font-weight: bold;">agriculturals</td>
-<td style="text-align: left; font-weight: bold;"></td>
+<td style="text-align: left; font-weight: bold;">all</td>
 <td style="text-align: left; font-weight: bold;">market</td>
 <td style="text-align: left; font-weight: bold;">whole period</td>
 <td style="text-align: right; font-weight: bold; color: rgba(66, 133, 244, 255) !important;">9.08%</td>
@@ -7339,27 +7190,6 @@ Table&nbsp;7: This table shows the average time series regression <span class="m
 <section id="sec-taxonomy" class="level2">
 <h2 class="anchored" data-anchor-id="sec-taxonomy">Commodity assets taxonomy</h2>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>debugging in: make_table("assets taxonomy", c("country", "sector", "subsector"), 
-    colnames, align, 1L, 2L:4L)
-debug: {
-    get_results(tables, table_name) %&gt;% dplyr::mutate(dplyr::across(dplyr::where(is.factor), 
-        as.character)) %&gt;% collapse_rows(columns_to_collapse_rows_for) %&gt;% 
-        kbl(booktabs = T, longtable = T, col.names = colnames, 
-            align = align) %&gt;% kable_styling(latex_options = "striped", 
-        font_size = 7L) %&gt;% row_spec(0L, bold = TRUE, color = "black") %&gt;% 
-        column_spec(bold_columns, bold = TRUE) %&gt;% column_spec(coloured_columns, 
-        color = "#4285f4")
-}
-debug: get_results(tables, table_name) %&gt;% dplyr::mutate(dplyr::across(dplyr::where(is.factor), 
-    as.character)) %&gt;% collapse_rows(columns_to_collapse_rows_for) %&gt;% 
-    kbl(booktabs = T, longtable = T, col.names = colnames, align = align) %&gt;% 
-    kable_styling(latex_options = "striped", font_size = 7L) %&gt;% 
-    row_spec(0L, bold = TRUE, color = "black") %&gt;% column_spec(bold_columns, 
-    bold = TRUE) %&gt;% column_spec(coloured_columns, color = "#4285f4")
-exiting from: make_table("assets taxonomy", c("country", "sector", "subsector"), 
-    colnames, align, 1L, 2L:4L)</code></pre>
-</div>
 <div id="tbl-assets-taxonomy" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-assets-taxonomy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -7524,7 +7354,7 @@ Table&nbsp;8: This table shows the detailed taxonomy for the thirty commodity as
 <tr class="odd">
 <td style="text-align: left; font-weight: bold;">Aluminium (XLME)</td>
 <td style="text-align: left; color: rgba(66, 133, 244, 255) !important;">GB</td>
-<td style="text-align: left; color: rgba(66, 133, 244, 255) !important;"></td>
+<td style="text-align: left; color: rgba(66, 133, 244, 255) !important;">metals</td>
 <td style="text-align: left; color: rgba(66, 133, 244, 255) !important;">base</td>
 </tr>
 <tr class="even">
@@ -7666,11 +7496,8 @@ Duffie, Darrell. 2014. <span>“Challenges to a Policy Treatment of sSpeculative
 <div id="ref-ederington_who_2002" class="csl-entry" role="listitem">
 Ederington, Louis, and Jae Ha Lee. 2002. <span>“Who Trades Futures and How: Evidence from the Heating Oil Futures Market.”</span> <em>The Journal of Business</em> 75 (2): 353–73. <a href="https://doi.org/10.1086/338706">https://doi.org/10.1086/338706</a>.
 </div>
-<div id="ref-ekeland_speculation_2016" class="csl-entry" role="listitem">
-Ekeland, Ivar, Delphine Lautier, and Bertrand Villeneuve. 2016. <span>“Speculation in Commodity Futures Markets: A Simple Equilibrium Model.”</span> <a href="https://hal.archives-ouvertes.fr/hal-01655848">https://hal.archives-ouvertes.fr/hal-01655848</a>.
-</div>
 <div id="ref-ekeland_hedging_2019" class="csl-entry" role="listitem">
-———. 2019. <span>“Hedging Pressure and Speculation in Commodity Markets.”</span> <em>Economic Theory</em> 68: 83–123. <a href="https://doi.org/10.1007/s00199-018-1115-y">https://doi.org/10.1007/s00199-018-1115-y</a>.
+Ekeland, Ivar, Delphine Lautier, and Bertrand Villeneuve. 2019. <span>“Hedging Pressure and Speculation in Commodity Markets.”</span> <em>Economic Theory</em> 68: 83–123. <a href="https://doi.org/10.1007/s00199-018-1115-y">https://doi.org/10.1007/s00199-018-1115-y</a>.
 </div>
 <div id="ref-etula_broker-dealer_2013" class="csl-entry" role="listitem">
 Etula, Erkko. 2013. <span>“Broker-Dealer Risk Appetite and Commodity Returns.”</span> <em>Journal of Financial Econometrics</em> 11 (3): 486–521. <a href="https://doi.org/10.1093/jjfinec/nbs024">https://doi.org/10.1093/jjfinec/nbs024</a>.
@@ -7882,6 +7709,9 @@ Turnovsky, Stephen J. 1983. <span>“The Determination of Spot and Futures Price
 <div id="ref-unctad_global_2009" class="csl-entry" role="listitem">
 UNCTAD, Secretariat Task Force on Systemic Issues, and Economic Cooperation. 2009. <span>“The Global Economic Crisis: Systemic Failures and Multilateral Remedies.”</span> <em>UNCTAD, Geneva</em>. <a href="https://unctad.org/system/files/official-document/gds20091_en.pdf">https://unctad.org/system/files/official-document/gds20091_en.pdf</a>.
 </div>
+<div id="ref-ekeland_speculation_2014" class="csl-entry" role="listitem">
+Villeneuve, Bertrand, Delphine Lautier, and Ivar Ekeland. 2014. <span>“Speculation in Commodity Futures Markets: A Simple Equilibrium Model.”</span> In <em>S<span>é</span>minaire Hotelling (RITM – ENS CACHAN)</em>, 37. Cachan, France. <a href="https://hal.science/hal-01655848">https://hal.science/hal-01655848</a>.
+</div>
 <div id="ref-weymar_supply_1966" class="csl-entry" role="listitem">
 Weymar, F. Helmut. 1966. <span>“The Supply of Storage Revisited.”</span> <em>The American Economic Review</em> 56 (5): 1226–34. <a href="http://www.jstor.org/stable/1815306">http://www.jstor.org/stable/1815306</a>.
 </div>
@@ -7907,7 +7737,7 @@ Yang, Fan. 2013. <span>“Investment Shocks and the Commodity Basis Spread.”</
 <li id="fn2"><p>See section <a href="#sec-background" class="quarto-xref">Section&nbsp;2.1</a> for a detailed discussion.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>Starting point based on earlier studies <span class="citation" data-cites="baker_financialization_2021 christoffersen_factor_2014">(<a href="#ref-baker_financialization_2021" role="doc-biblioref">Baker 2021</a>; <a href="#ref-christoffersen_factor_2014" role="doc-biblioref">Christoffersen, Lunde, and Olesen 2014</a>)</span>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p><span class="citation" data-cites="masters_testimony_2008">Michael W. Masters (<a href="#ref-masters_testimony_2008" role="doc-biblioref">2008</a>)</span>; <span class="citation" data-cites="masters_accidental_2008">M. W. Masters and White (<a href="#ref-masters_accidental_2008" role="doc-biblioref">2008</a>)</span>; <span class="citation" data-cites="unctad_global_2009">UNCTAD and Cooperation (<a href="#ref-unctad_global_2009" role="doc-biblioref">2009</a>)</span>; <span class="citation" data-cites="deschutter_food_2010">De Schutter (<a href="#ref-deschutter_food_2010" role="doc-biblioref">2010</a>)</span>; <span class="citation" data-cites="gilbert_how_2010">Gilbert (<a href="#ref-gilbert_how_2010" role="doc-biblioref">2010b</a>)</span>; <span class="citation" data-cites="gilbert_speculative_2010">Gilbert (<a href="#ref-gilbert_speculative_2010" role="doc-biblioref">2010a</a>)</span>; <span class="citation" data-cites="herman_not_2011">Herman, Kelly, and Nash (<a href="#ref-herman_not_2011" role="doc-biblioref">2011</a>)</span>; <span class="citation" data-cites="schumann_hunger_2011">Schumann (<a href="#ref-schumann_hunger_2011" role="doc-biblioref">2011</a>)</span>; <span class="citation" data-cites="singleton_investor_2013">Singleton (<a href="#ref-singleton_investor_2013" role="doc-biblioref">2013</a>)</span>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p><span class="citation" data-cites="etula_broker-dealer_2013">Etula (<a href="#ref-etula_broker-dealer_2013" role="doc-biblioref">2013</a>)</span>, <span class="citation" data-cites="acharya_limits_2013">Acharya, Lochstoer, and Ramadorai (<a href="#ref-acharya_limits_2013" role="doc-biblioref">2013</a>)</span>, <span class="citation" data-cites="cheng_convective_2014">Cheng, Kirilenko, and Xiong (<a href="#ref-cheng_convective_2014" role="doc-biblioref">2014</a>)</span>, <span class="citation" data-cites="leclercq_equilibrium_2014">Leclercq and Praz (<a href="#ref-leclercq_equilibrium_2014" role="doc-biblioref">2014</a>)</span>, <span class="citation" data-cites="sockin_informational_2015">Sockin and Xiong (<a href="#ref-sockin_informational_2015" role="doc-biblioref">2015</a>)</span>, <span class="citation" data-cites="goldstein_speculation_2014">Goldstein, Li, and Yang (<a href="#ref-goldstein_speculation_2014" role="doc-biblioref">2014</a>)</span>, <span class="citation" data-cites="ekeland_speculation_2016">Ekeland, Lautier, and Villeneuve (<a href="#ref-ekeland_speculation_2016" role="doc-biblioref">2016</a>)</span>, <span class="citation" data-cites="goldstein_commodity_2022">Goldstein and Yang (<a href="#ref-goldstein_commodity_2022" role="doc-biblioref">2022</a>)</span>, <span class="citation" data-cites="ekeland_hedging_2019">Ekeland, Lautier, and Villeneuve (<a href="#ref-ekeland_hedging_2019" role="doc-biblioref">2019</a>)</span>, <span class="citation" data-cites="isleimeyyeh_role_2020">Isleimeyyeh (<a href="#ref-isleimeyyeh_role_2020" role="doc-biblioref">2020</a>)</span>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p><span class="citation" data-cites="etula_broker-dealer_2013">Etula (<a href="#ref-etula_broker-dealer_2013" role="doc-biblioref">2013</a>)</span>, <span class="citation" data-cites="acharya_limits_2013">Acharya, Lochstoer, and Ramadorai (<a href="#ref-acharya_limits_2013" role="doc-biblioref">2013</a>)</span>, <span class="citation" data-cites="cheng_convective_2014">Cheng, Kirilenko, and Xiong (<a href="#ref-cheng_convective_2014" role="doc-biblioref">2014</a>)</span>, <span class="citation" data-cites="leclercq_equilibrium_2014">Leclercq and Praz (<a href="#ref-leclercq_equilibrium_2014" role="doc-biblioref">2014</a>)</span>, <span class="citation" data-cites="sockin_informational_2015">Sockin and Xiong (<a href="#ref-sockin_informational_2015" role="doc-biblioref">2015</a>)</span>, <span class="citation" data-cites="goldstein_speculation_2014">Goldstein, Li, and Yang (<a href="#ref-goldstein_speculation_2014" role="doc-biblioref">2014</a>)</span>, <span class="citation" data-cites="ekeland_speculation_2014">Villeneuve, Lautier, and Ekeland (<a href="#ref-ekeland_speculation_2014" role="doc-biblioref">2014</a>)</span>, <span class="citation" data-cites="goldstein_commodity_2022">Goldstein and Yang (<a href="#ref-goldstein_commodity_2022" role="doc-biblioref">2022</a>)</span>, <span class="citation" data-cites="ekeland_hedging_2019">Ekeland, Lautier, and Villeneuve (<a href="#ref-ekeland_hedging_2019" role="doc-biblioref">2019</a>)</span>, <span class="citation" data-cites="isleimeyyeh_role_2020">Isleimeyyeh (<a href="#ref-isleimeyyeh_role_2020" role="doc-biblioref">2020</a>)</span>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6"><p>ISDA &amp; SIFMA v US CFTC; Complaint, 1:11-cv-02146; December 2<sup>nd</sup>, 2011.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn7"><p>Understood as the market activity peculiar to index type investors.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8"><p>See <a href="#sec-taxonomy" class="quarto-xref">Section&nbsp;6.1</a> for a detailed taxonomy of the commodity assets considered in the study.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
