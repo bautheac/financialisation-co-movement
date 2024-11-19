@@ -12,3 +12,5 @@ explore/shiny/financialization-asset-pricing/results/
 docs/literature_files
 
 /.quarto/
+
+*.RData
