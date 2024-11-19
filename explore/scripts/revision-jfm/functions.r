@@ -154,7 +154,8 @@ make_US_commodity_pool_combinations_for_regressions_analysis <- function(){
   )
 }
 
-make_commodity_pool_tickers_dataframe_for_country_sectors_subsectors_combinations <- function(combinations, all_tickers){
+make_commodity_pool_tickers_dataframe_for_country_sectors_subsectors_combinations <- 
+  function(combinations, all_tickers){
   
   dplyr::rowwise(combinations) %>% 
     dplyr::mutate(
@@ -162,7 +163,8 @@ make_commodity_pool_tickers_dataframe_for_country_sectors_subsectors_combination
     )
 }
 
-make_commodity_pool_tickers_dataframe <- function(all_tickers, analysis = c("correlations", "regressions")){
+make_commodity_pool_tickers_dataframe <- 
+  function(all_tickers, analysis = c("correlations", "regressions")){
   
   all_all_all <- tibble::tibble(
     country = "all", sector = "all", subsector = "all", 
@@ -641,7 +643,6 @@ load_commodity_factor_returns <- function(){
   )
 } 
 
-
 load_data <- function(){
   ## time boundaries ####
   date_start <<- "1996-01-01"; date_end <<- "2018-12-14"
@@ -1005,6 +1006,7 @@ compute_correlations <- function(df) {
   cor( dplyr::select(df, -date), use = "pairwise.complete.obs")
 }
 
+## inner #######################################################################
 make_inner_correlations_for_ticker_combinations_dataframe <- function(
     combinations, commodity_futures_data, aggregate_CHP_regimes, period_dates
     ){
@@ -1015,6 +1017,41 @@ make_inner_correlations_for_ticker_combinations_dataframe <- function(
   )
   
   dplyr::mutate(combinations, results = analysis)
+}
+
+## cross #######################################################################
+extract_relative_change_for_field_frequency_tickerscombination <- function(
+    commodity_futures_data, field, frequency, tickers
+){
+  dplyr::filter(
+    commodity_futures_data, type == "return", field == field, frequency == frequency,
+    `active contract ticker` %in% tickers
+  ) %>% dplyr::select(ticker = `active contract ticker`, date, value)
+}
+
+make_EW_portfolio_for_tickers <- function(tickers, commodity_futures_data){
+  extract_relative_change_for_field_frequency_tickerscombination(
+    commodity_futures_data, "PX_LAST", "day", tickers
+  ) %>% dplyr::group_by(date) %>% dplyr::summarise(
+    return = mean(value, na.rm = TRUE), .groups = "drop"
+  )
+}
+
+make_EW_portfolios_returns_for_ticker_combinations_dataframe <- 
+  function(combinations, commodity_futures_data){
+
+    dplyr::group_by(combinations, country, sector, subsector) %>%
+      dplyr::mutate(
+        returns = purrr::map(tickers, ~make_EW_portfolio_for_tickers(., commodity_futures_data)), 
+      ) %>% dplyr::ungroup()
+  }
+
+make_cross_correlations_for_ticker_combinations_dataframe <- function(
+    combinations, commodity_futures_data, aggregate_CHP_regimes, period_dates
+    ){
+  
+  EW_portfolio_return <- 
+    make_EW_portfolios_returns_for_ticker_combinations_dataframe(combinations, commodity_futures_data)
 }
 
 ## regressions #################################################################

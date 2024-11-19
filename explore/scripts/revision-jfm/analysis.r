@@ -1,10 +1,9 @@
 pacman::p_load(finRes, magrittr)
 
-# source functions #############################################################
-source(here::here("explore", "scripts", "revision-jfm", "functions.r"))
-
 # load global variables ########################################################
-load_global_variables()
+# source(here::here("explore", "scripts", "revision-jfm", "functions.r"))
+# load_global_variables()
+load(here::here("explore", "scripts", "revision-jfm", "globals.RData"))
 
 # analysis #####################################################################
 
@@ -64,6 +63,12 @@ correlations_inner_summary <-
 ##### format ####
 correlations_inner_formatted <- 
   format_inner_correlations_summary_statistics_into_table(correlations_inner_summary)
+
+### cross ####
+#### raw ####
+correlations_cross_raw <- make_cross_correlations_for_ticker_combinations_dataframe(
+  commodity_pool_tickers, commodity_futures_data, aggregate_CHP_regimes, period_dates
+)
 
 ## regressions #################################################################
 commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(
