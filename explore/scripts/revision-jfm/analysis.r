@@ -1,13 +1,13 @@
 pacman::p_load(finRes, magrittr)
 
 # load global variables ########################################################
-# source(here::here("explore", "scripts", "revision-jfm", "functions.r"))
 # load_global_variables()
 load(here::here("explore", "scripts", "revision-jfm", "globals.RData"))
+source(here::here("explore", "scripts", "revision-jfm", "functions.r"))
 
 # analysis #####################################################################
 
-library(furrr)
+pacman::p_load(furrr)
 plan(multisession, workers = parallel::detectCores())
 
 ## regime difference tests #####################################################
@@ -35,11 +35,10 @@ regime_difference_tests_formatted <-
 
 
 ## correlations ################################################################
-commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(
-  commodity_futures_tickers, analysis = "correlations"
-  )
-
 ### inner ####
+commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(
+  commodity_futures_tickers, analysis = "correlations - inner"
+)
 #### raw ####
 correlations_inner_raw <- make_inner_correlations_for_ticker_combinations_dataframe(
   commodity_pool_tickers, commodity_futures_data, aggregate_CHP_regimes, period_dates
@@ -65,10 +64,31 @@ correlations_inner_formatted <-
   format_inner_correlations_summary_statistics_into_table(correlations_inner_summary)
 
 ### cross ####
+commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(
+  commodity_futures_tickers, analysis = "correlations - cross"
+)
 #### raw ####
 correlations_cross_raw <- make_cross_correlations_for_ticker_combinations_dataframe(
   commodity_pool_tickers, commodity_futures_data, aggregate_CHP_regimes, period_dates
 )
+
+#### summary ####
+##### load raw dataset (optional) ####
+# path_correlations_cross_raw_file <- paste_forward_slash(results_directory_path, "correlations-cross-raw.rds")
+# correlations_cross_raw <- readr::read_rds(path_correlations_cross_raw_file)
+
+##### summarise ####
+correlations_cross_summary <- summarise_cross_correlations(correlations_cross_raw)
+
+#### formatted ####
+##### load summary dataset (optional) ####
+path_correlations_cross_summary_file <-
+  paste_forward_slash(results_directory_path, "correlations-cross-summary.rds")
+correlations_cross_summary <- readr::read_rds(path_correlations_cross_summary_file)
+
+##### format ####
+correlations_cross_formatted <- format_cross_correlations_summary(correlations_cross_summary)
+
 
 ## regressions #################################################################
 commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(
@@ -162,6 +182,21 @@ saveRDS(correlations_inner_summary, path_correlations_inner_summary_file)
 path_correlations_inner_formatted_file <- 
   paste_forward_slash(results_directory_path, "correlations-inner.rds")
 saveRDS(correlations_inner_formatted, path_correlations_inner_formatted_file)
+
+### cross ####
+#### raw ####
+path_correlations_cross_raw_file <- paste_forward_slash(results_directory_path, "correlations-cross-raw.rds")
+saveRDS(correlations_cross_raw, path_correlations_cross_raw_file)
+
+##### summary ####
+path_correlations_cross_summary_file <- 
+  paste_forward_slash(results_directory_path, "correlations-cross-summary.rds")
+saveRDS(correlations_cross_summary, path_correlations_cross_summary_file)
+
+#### formatted ####
+path_correlations_cross_formatted_file <- 
+  paste_forward_slash(results_directory_path, "correlations-cross.rds")
+saveRDS(correlations_cross_formatted, path_correlations_cross_formatted_file)
 
 ## regressions #################################################################
 commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(

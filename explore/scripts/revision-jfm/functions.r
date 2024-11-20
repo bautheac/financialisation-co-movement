@@ -163,8 +163,9 @@ make_commodity_pool_tickers_dataframe_for_country_sectors_subsectors_combination
     )
 }
 
-make_commodity_pool_tickers_dataframe <- 
-  function(all_tickers, analysis = c("correlations", "regressions")){
+make_commodity_pool_tickers_dataframe <- function(
+    all_tickers, analysis = c("correlations - inner", correlations - inner, "regressions")
+    ){
   
   all_all_all <- tibble::tibble(
     country = "all", sector = "all", subsector = "all", 
@@ -176,7 +177,7 @@ make_commodity_pool_tickers_dataframe <-
     tickers = list(filter_commodity_futures_tickers(all_tickers, "US"))
   )
 
-  US_combinations <- if(analysis == "correlations"){
+  US_combinations <- if(analysis == "correlations - inner"){
     make_US_commodity_pool_combinations_for_correlations_analysis()
   } else {
     make_US_commodity_pool_combinations_for_regressions_analysis()
@@ -1034,7 +1035,7 @@ make_EW_portfolio_for_tickers <- function(tickers, commodity_futures_data){
     commodity_futures_data, "PX_LAST", "day", tickers
   ) %>% dplyr::group_by(date) %>% dplyr::summarise(
     return = mean(value, na.rm = TRUE), .groups = "drop"
-  )
+  ) %>% dplyr::filter(!is.na(return) & is.finite(return) & return != 1 & return != -1)
 }
 
 make_EW_portfolios_returns_for_ticker_combinations_dataframe <- 
@@ -1046,12 +1047,150 @@ make_EW_portfolios_returns_for_ticker_combinations_dataframe <-
       ) %>% dplyr::ungroup()
   }
 
+extract_aggregate_CHP_regimes_by_timespan <- function(aggregate_CHP_regimes, timespan){
+  dplyr::filter(aggregate_CHP_regimes, timespan == !!timespan) %>% 
+    dplyr::select(regimes) %>% purrr::flatten_df()
+}
+
+make_cross_correlations_for_ticker_combinations_dataframe_by_period_no_regimes <-
+  function(EW_portfolio_returns, period_dates){
+    
+    groups <- c("country", "sector", "subsector")
+    purrr::map_df(groups, function(group){
+
+      right_groups <- groups[match(group, groups):length(groups)][-1] 
+      
+      group <- rlang::ensym(group)
+      dplyr::select(EW_portfolio_returns, !!group, dplyr::all_of(right_groups), returns) %>% 
+        dplyr::filter(
+          !!group != "all" & dplyr::if_all(dplyr::all_of(right_groups), ~ . == "all") 
+        ) %>% dplyr::select(-dplyr::any_of(right_groups)) %>% tidyr::unnest(returns) %>%
+        dplyr::left_join(period_dates, by = "date") %>% dplyr::filter(!is.na(period)) %>%
+        tidyr::pivot_wider(names_from = group, values_from = return) %>%
+        dplyr::arrange(period, date) %>% dplyr::filter(complete.cases(.)) %>%
+        dplyr::group_by(period) %>% tidyr::nest() %>%
+        dplyr::mutate(results = purrr::map(data, compute_correlations)) %>% dplyr::ungroup() %>% 
+        dplyr::mutate(pool = rlang::as_string(group), regime = "whole period") %>%
+        dplyr::relocate(pool, .before = 1L) %>% dplyr::relocate(regime, .after = period)
+    })
+  }
+
+make_cross_correlations_for_ticker_combinations_dataframe_by_period_regimes <-
+  function(EW_portfolio_returns, aggregate_CHP_regimes_by_period){
+    
+    groups <- c("country", "sector", "subsector")
+    purrr::map_df(groups, function(group){
+      
+      right_groups <- groups[match(group, groups):length(groups)][-1] 
+      
+      group <- rlang::ensym(group)
+      dplyr::select(EW_portfolio_returns, !!group, dplyr::all_of(right_groups), returns) %>% 
+        dplyr::filter(
+          !!group != "all" & dplyr::if_all(dplyr::all_of(right_groups), ~ . == "all") 
+        ) %>% dplyr::select(-dplyr::any_of(right_groups)) %>% tidyr::unnest(returns) %>%
+        dplyr::left_join(aggregate_CHP_regimes_by_period, by = "date") %>% 
+        dplyr::filter(!is.na(period)) %>%
+        tidyr::pivot_wider(names_from = group, values_from = return) %>%
+        dplyr::arrange(period, date) %>% dplyr::filter(complete.cases(.)) %>%
+        dplyr::group_by(period, regime) %>% tidyr::nest() %>%
+        dplyr::mutate(results = purrr::map(data, compute_correlations)) %>%
+        dplyr::ungroup() %>% dplyr::mutate(pool = rlang::as_string(group)) %>%
+        dplyr::relocate(pool, .before = 1L)
+    })
+  }
+
+make_cross_correlations_for_ticker_combinations_dataframe_by_period <- 
+  function(EW_portfolio_returns, aggregate_CHP_regimes_by_period, period_dates){
+    
+    whole <- make_cross_correlations_for_ticker_combinations_dataframe_by_period_no_regimes(
+        EW_portfolio_returns, period_dates
+      )
+    regimes <- make_cross_correlations_for_ticker_combinations_dataframe_by_period_regimes(
+      EW_portfolio_returns, aggregate_CHP_regimes_by_period
+    )
+    
+    dplyr::bind_rows(whole, regimes) %>% dplyr::arrange(pool, period, regime)
+  }
+
+make_cross_correlations_for_ticker_combinations_dataframe_by_year_no_regimes <-
+  function(EW_portfolio_returns){
+    
+    groups <- c("country", "sector", "subsector")
+    purrr::map_df(groups, function(group){
+      
+      right_groups <- groups[match(group, groups):length(groups)][-1] 
+      
+      group <- rlang::ensym(group)
+      dplyr::select(EW_portfolio_returns, !!group, dplyr::all_of(right_groups), returns) %>% 
+        dplyr::filter(
+          !!group != "all" & dplyr::if_all(dplyr::all_of(right_groups), ~ . == "all") 
+        ) %>% dplyr::select(-dplyr::any_of(right_groups)) %>% tidyr::unnest(returns) %>%
+        tidyr::pivot_wider(names_from = group, values_from = return) %>%
+        dplyr::arrange(date) %>% dplyr::filter(complete.cases(.)) %>%
+        dplyr::mutate(year = lubridate::year(date)) %>% dplyr::group_by(year) %>%
+        tidyr::nest() %>% dplyr::mutate(results = purrr::map(data, compute_correlations)) %>% 
+        dplyr::ungroup() %>% 
+        dplyr::mutate(pool = rlang::as_string(group), regime = "whole period") %>%
+        dplyr::relocate(pool, .before = 1L) %>% dplyr::relocate(regime, .after = year)
+    })
+  }
+
+make_cross_correlations_for_ticker_combinations_dataframe_by_year_regimes <-
+  function(EW_portfolio_returns, aggregate_CHP_regimes_by_year){
+    
+    groups <- c("country", "sector", "subsector")
+    purrr::map_df(groups, function(group){
+      
+      right_groups <- groups[match(group, groups):length(groups)][-1] 
+      
+      group <- rlang::ensym(group)
+      dplyr::select(EW_portfolio_returns, !!group, dplyr::all_of(right_groups), returns) %>% 
+        dplyr::filter(
+          !!group != "all" & dplyr::if_all(dplyr::all_of(right_groups), ~ . == "all") 
+        ) %>% dplyr::select(-dplyr::any_of(right_groups)) %>% tidyr::unnest(returns) %>%
+        dplyr::left_join(aggregate_CHP_regimes_by_year, by = "date") %>% 
+        dplyr::filter(!is.na(year)) %>%
+        tidyr::pivot_wider(names_from = group, values_from = return) %>%
+        dplyr::arrange(year, date) %>% dplyr::filter(complete.cases(.)) %>%
+        dplyr::group_by(year, regime) %>% tidyr::nest() %>%
+        dplyr::mutate(results = purrr::map(data, compute_correlations)) %>%
+        dplyr::ungroup() %>% dplyr::mutate(pool = rlang::as_string(group)) %>%
+        dplyr::relocate(pool, .before = 1L)
+    })
+  }
+
+make_cross_correlations_for_ticker_combinations_dataframe_by_year <-
+  function(EW_portfolio_returns, aggregate_CHP_regimes_by_year){
+    
+    whole <- make_cross_correlations_for_ticker_combinations_dataframe_by_year_no_regimes(
+      EW_portfolio_returns
+    )
+    regimes <- make_cross_correlations_for_ticker_combinations_dataframe_by_year_regimes(
+      EW_portfolio_returns, aggregate_CHP_regimes_by_year
+    )
+    
+    dplyr::bind_rows(whole, regimes) %>% dplyr::arrange(pool, year, regime)
+  }
+
 make_cross_correlations_for_ticker_combinations_dataframe <- function(
     combinations, commodity_futures_data, aggregate_CHP_regimes, period_dates
     ){
   
-  EW_portfolio_return <- 
+  EW_portfolio_returns <- 
     make_EW_portfolios_returns_for_ticker_combinations_dataframe(combinations, commodity_futures_data)
+  
+  aggregate_CHP_regimes_by_period <-
+    extract_aggregate_CHP_regimes_by_timespan(aggregate_CHP_regimes, "period")
+  periods <- make_cross_correlations_for_ticker_combinations_dataframe_by_period(
+    EW_portfolio_returns, aggregate_CHP_regimes_by_period, period_dates
+  )
+  
+  aggregate_CHP_regimes_by_year <- extract_aggregate_CHP_regimes_by_timespan(aggregate_CHP_regimes, "year")
+  years <- make_cross_correlations_for_ticker_combinations_dataframe_by_year(
+    EW_portfolio_returns, aggregate_CHP_regimes_by_year
+  )
+  
+  tibble::tibble(timespan = c("period", "year"), results = list(periods, years))
 }
 
 ## regressions #################################################################
@@ -1285,6 +1424,32 @@ add_top_3_and_average_to_inner_correlations_for_ticker_combinations_dataframe <-
     dplyr::select(-c("tickers", "results"))
 }
 
+
+extract_unique_pairwise_correlations_from_correlation_matix <- function(correlation_matrix){
+
+  correlation_matrix[upper.tri(correlation_matrix, diag = FALSE)]
+}
+
+calculate_correlation_averages <- function(cross_correlations){
+  
+  dplyr::mutate(cross_correlations, summary = purrr::map(results, function(results_for_timespan){
+      dplyr::mutate(results_for_timespan, average = purrr::map(results, function(correlation_matix){
+        pairwise_correlations <-
+          extract_unique_pairwise_correlations_from_correlation_matix(correlation_matix)
+        mean(pairwise_correlations, na.rm = TRUE)
+      })) %>% dplyr::select(-c(data,results)) %>% tidyr::unnest(average)
+    }) 
+    ) %>% dplyr::select(-results)
+}
+
+
+summarise_cross_correlations <- function(cross_correlations){
+  
+  averages <- calculate_correlation_averages(cross_correlations)
+  
+  return(averages)
+}
+
 ## regressions #################################################################
 ### index ######################################################################
 extract_top_n_betas_from_lm_models <- function(lm_models){
@@ -1422,8 +1587,10 @@ format_regime_difference_tests_summary_into_table <- function(summary){
 }
 
 ## correlations ################################################################
-### top 3 ######################################################################
-#### local functions ####
+### inner
+#### top 3 #####################################################################
+#
+##### local functions ####
 map_solution_to_problem_domain_jargon_in_correlation_top_3_unnested_results_summary <- function(
     unnested_correlations_top_3_results_summary
 ){
@@ -1462,6 +1629,30 @@ format_inner_correlations_summary_statistics_into_table <- function(correlations
     arrange_columns_in_analysis_results_summary()
 }
 
+### cross ######################################################################
+format_cross_correlation_averages <- function(correlations_cross_summary){
+  
+  periods <- dplyr::filter(correlations_cross_summary, timespan == "period") %>% 
+    dplyr::mutate(summary = purrr::map(summary, function(summary){
+        dplyr::mutate(summary, average = purrr::map_dbl(average, ~round(., digits = 4L))) %>%
+          tidyr::pivot_wider(names_from = period, values_from = average)
+      }) 
+    )
+  
+  years <- dplyr::filter(correlations_cross_summary, timespan == "year") %>%
+    dplyr::mutate(summary = purrr::map(summary, function(summary){
+      dplyr::mutate(summary, average = purrr::map_dbl(average, ~round(., digits = 4L)))
+      }) 
+    )
+  
+  dplyr::bind_rows(periods, years)
+}
+
+
+format_cross_correlations_summary <- function(correlations_cross_summary){
+  
+  averages <- format_cross_correlation_averages(correlations_cross_summary)
+}
 ## regressions #################################################################
 ### index ######################################################################
 #### top 3 ####

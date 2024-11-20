@@ -1,4 +1,4 @@
-library(magrittr)
+pacman::p_load(magrittr)
 
 # Globals ######################################################################
 ## datasets ####
@@ -16,7 +16,9 @@ sort_levels <- c(
   "US-energy-gas", "US-energy-petroleum", "US-metals-all", "US-metals-base", 
   "US-metals-precious", "GB-all-all"
 )
+portfolio_levels <- c("countries", "sectors", "subsectors")
 subsector_levels <- c("all", "grains", "livestock", "softs", "gas", "petroleum", "base", "precious")
+regime_levels <- c("whole period", "backwardation", "contango")
 tables_directory_path <- here::here("explore", "tables", "revision-jfm")
 commodity_futures_tickers <- c(
   "BOA Comdty", "C A Comdty", "CCA Comdty", "CLA Comdty", "CTA Comdty", 
@@ -265,8 +267,40 @@ correlations_inner_years <- dplyr::filter(
     dplyr::across(c(`0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`), ~ stringr::str_replace_all(.x, "    NA", ""))
     )
 
+## cross ####
+correlations_cross <- readr::read_rds(
+  slituR::paste_forward_slash(results_directory_path, "correlations-cross.rds")
+)
 
-# regressions ####
+### By period ####
+correlations_cross_periods <- dplyr::filter(correlations_cross, timespan == "period") %>%
+  tidyr::unnest(summary) %>% dplyr::select(-timespan) %>% 
+  dplyr::mutate(
+    portfolios = ifelse(pool == "country", "countries", paste0(pool, "s")),
+    regime = factor(regime, levels = regime_levels),
+    ) %>%
+  dplyr::select(-pool) %>% dplyr::relocate(portfolios, .before = 1L) %>%
+  dplyr::arrange(portfolios, regime)
+
+### By year ####
+correlations_cross_years <- dplyr::filter(correlations_cross, timespan == "year") %>%
+  tidyr::unnest(summary) %>% dplyr::filter(regime == "whole period") %>% 
+  dplyr::mutate(
+    portfolios = ifelse(pool == "country", "countries", paste0(pool, "s")),
+    decade = slituR::floor_year_to_nearest_decade(year),
+    year = slituR::remove_decade_from_year(year)
+  ) %>%
+  dplyr::select(-c(timespan, regime, pool)) %>% 
+  dplyr::arrange(portfolios, decade, year) %>%
+  tidyr::pivot_wider(names_from = "year", values_from = "average") %>%
+  dplyr::relocate(`0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, .after = dplyr::last_col()) %>%
+  dplyr::mutate(
+    dplyr::across(c(`0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`), ~ format(.x, scientific = FALSE)),
+    dplyr::across(c(`0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`), ~ stringr::str_replace_all(.x, "    NA", ""))
+  )
+
+
+# regressions ##################################################################
 
 ## US commodity returns ~ CHP ####
 regressions_CHP <- readr::read_rds(
@@ -395,6 +429,8 @@ tables <- tibble::tribble(
     "regressions - US returns ~ US CHP",        `US commodity returns ~ CHP`,
     "correlations - inner - periods",           correlations_inner_periods,
     "correlations - inner - years",             correlations_inner_years,
+    "correlations - cross - periods",           correlations_cross_periods,
+    "correlations - cross - years",             correlations_cross_years,
     "regressions - all returns ~ market index", `all commodity returns ~ market index`,
     "regressions - all returns ~ factors",      `all commodity returns ~ factors`,
     "assets taxonomy",                          `assets taxonomy`
