@@ -1632,20 +1632,9 @@ format_inner_correlations_summary_statistics_into_table <- function(correlations
 ### cross ######################################################################
 format_cross_correlation_averages <- function(correlations_cross_summary){
   
-  periods <- dplyr::filter(correlations_cross_summary, timespan == "period") %>% 
-    dplyr::mutate(summary = purrr::map(summary, function(summary){
-        dplyr::mutate(summary, average = purrr::map_dbl(average, ~round(., digits = 4L))) %>%
-          tidyr::pivot_wider(names_from = period, values_from = average)
-      }) 
-    )
-  
-  years <- dplyr::filter(correlations_cross_summary, timespan == "year") %>%
-    dplyr::mutate(summary = purrr::map(summary, function(summary){
-      dplyr::mutate(summary, average = purrr::map_dbl(average, ~round(., digits = 4L)))
-      }) 
-    )
-  
-  dplyr::bind_rows(periods, years)
+  dplyr::mutate(correlations_cross_summary, summary = purrr::map(summary, function(summary){
+    dplyr::mutate(summary, average = purrr::map_dbl(average, ~round(., digits = 4L)))
+  })) 
 }
 
 

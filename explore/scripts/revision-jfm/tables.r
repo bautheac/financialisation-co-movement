@@ -278,9 +278,13 @@ correlations_cross_periods <- dplyr::filter(correlations_cross, timespan == "per
   dplyr::mutate(
     portfolios = ifelse(pool == "country", "countries", paste0(pool, "s")),
     regime = factor(regime, levels = regime_levels),
-    ) %>%
-  dplyr::select(-pool) %>% dplyr::relocate(portfolios, .before = 1L) %>%
-  dplyr::arrange(portfolios, regime)
+    period = ifelse(period == "financialization", "financialisation", period),
+    period = ifelse(period == "present", "post-crisis", period),
+    period = factor(period, levels = period_levels)
+    ) %>% dplyr::select(-pool) %>% 
+  dplyr::relocate(portfolios, .before = 1L) %>%
+  dplyr::arrange(portfolios, period, regime) %>%
+  tidyr::pivot_wider(names_from = "period", values_from = "average")
 
 ### By year ####
 correlations_cross_years <- dplyr::filter(correlations_cross, timespan == "year") %>%
