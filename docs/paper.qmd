@@ -362,7 +362,7 @@ make_table("regressions - US returns ~ US CHP", c("regressor", "sector"), colnam
 
 ```{r}
 #| label: tbl-correlations-periods
-#| tbl-cap: "This table shows the average return pairwise correlation coefficients calculated independently across the whole cross-section of commodity assets considered in the study as well as across countries and commodity sectors and sub-sectors for the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). For each period, the results are calculated independently over the entire period as well as over phases of aggregate backwardation and contango. Aggregate CHP construction and corresponding regime definitions are discussed in \\@sec-methods while the results are discussed in \\@sec-results and the taxonomy for the commodity assets considered is detailed in \\@sec-taxonomy."
+#| tbl-cap: "This table shows the average return pairwise correlation coefficients calculated independently across the whole cross-section of commodity assets considered in the study as well as within countries and commodity sectors and sub-sectors for the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). For each period, the results are calculated independently over the entire period as well as over phases of aggregate backwardation and contango. Aggregate CHP construction and corresponding regime definitions are discussed in \\@sec-methods while the results are discussed in \\@sec-results and the taxonomy for the commodity assets considered is detailed in \\@sec-taxonomy."
 
 colnames <- c(sectors, "regime", periods)
 align <- make_series_of_repeated_chars(list(l = 3L, r = 5L))
@@ -374,7 +374,7 @@ make_table("correlations - inner - periods", c("country", "sector", "subsector")
 
 ```{r}
 #| label: tbl-correlations-years
-#| tbl-cap: "This table shows the average return pairwise correlation coefficients calculated independently across the whole cross-section of commodity assets considered in the study as well as across countries and commodity sectors and sub-sectors by year for the whole period of interest (1997-2018). The results are discussed in \\@sec-results while \\@sec-taxonomy details the taxonomy for the commodity assets considered."
+#| tbl-cap: "While \\@tbl-correlations-periods shows results calculated independently for the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018), this stable shows the results of the same analysis calculated by year over the entire sample period (1997-2018). The results are discussed in \\@sec-results while \\@sec-taxonomy details the taxonomy for the commodity assets considered."
 
 colnames <- c(sectors, "decade", 0L:9L)
 align <- make_series_of_repeated_chars(list(l = 4L, r = 10L))
