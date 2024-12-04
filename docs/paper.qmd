@@ -406,7 +406,7 @@ make_table(table_name, columns_to_collapse_rows_for, colnames, align, longtable,
 #| label: tbl-correlations-cross-periods
 #| tbl-cap: "This table shows the return pairwise correlation coefficients between two equally weighted country portfolios (US, GB) with the first formed from the twenty four US commodities and the second from the six GB traded assets. The table further shows the average return pairwise correlation coefficients between equally weighted US sector portfolios (agriculturals, energy, metals) as well as between equally weighted US sub-sector portfolios (agriculturals: gains, livestock, softs; energy: gas, petroleum; metals: base, precious). The results are independently calculated for the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). For each period, the results are further calculated independently over the entire period as well as over phases of aggregate backwardation and contango. Aggregate CHP construction and corresponding regime definitions are discussed in \\@sec-methods while the results are discussed in \\@sec-results and the taxonomy for the commodity assets considered is detailed in \\@sec-taxonomy."
 
-table_name <- "correlations - cross - periods"
+table_name <- "correlations - cross - US - periods"
 columns_to_collapse_rows_for <- c("portfolios", "regime")
 colnames <- c("portfolios", "regime", periods)
 align <- make_series_of_repeated_chars(list(l = 1L, r = 5L))

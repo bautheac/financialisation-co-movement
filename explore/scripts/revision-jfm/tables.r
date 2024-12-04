@@ -278,12 +278,13 @@ correlations_inner_years <- dplyr::filter(
     )
 
 ## cross ####
-correlations_cross <- readr::read_rds(
-  slituR::paste_forward_slash(results_directory_path, "correlations-cross.rds")
+### US ####
+correlations_cross_US <- readr::read_rds(
+  slituR::paste_forward_slash(results_directory_path, "correlations-cross-US.rds")
 )
 
 ### By period ####
-correlations_cross_periods <- dplyr::filter(correlations_cross, timespan == "period") |>
+correlations_cross_US_periods <- dplyr::filter(correlations_cross_US, timespan == "period") |>
   tidyr::unnest(summary) |> dplyr::select(-timespan) |> 
   dplyr::mutate(
     portfolios = ifelse(pool == "country", "countries", paste0(pool, "s")),
@@ -297,7 +298,7 @@ correlations_cross_periods <- dplyr::filter(correlations_cross, timespan == "per
   tidyr::pivot_wider(names_from = "period", values_from = "average")
 
 ### By year ####
-correlations_cross_years <- dplyr::filter(correlations_cross, timespan == "year") |>
+correlations_cross_US_years <- dplyr::filter(correlations_cross_US, timespan == "year") |>
   tidyr::unnest(summary) |> dplyr::filter(regime == "whole period") |> 
   dplyr::mutate(
     portfolios = ifelse(pool == "country", "countries", paste0(pool, "s")),
@@ -443,8 +444,8 @@ tables <- tibble::tribble(
     "regressions - US returns ~ US CHP",        `US commodity returns ~ CHP`,
     "correlations - inner - periods",           correlations_inner_periods,
     "correlations - inner - years",             correlations_inner_years,
-    "correlations - cross - periods",           correlations_cross_periods,
-    "correlations - cross - years",             correlations_cross_years,
+    "correlations - cross - US - periods",      correlations_cross_US_periods,
+    "correlations - cross - US - years",        correlations_cross_US_years,
     "regressions - all returns ~ market index", `all commodity returns ~ market index`,
     "regressions - all returns ~ factors",      `all commodity returns ~ factors`,
     "assets taxonomy",                          `assets taxonomy`
