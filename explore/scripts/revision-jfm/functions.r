@@ -278,7 +278,7 @@ make_commodity_pool_tickers_dataframe_for_correlations_cross_global_analysis <- 
 
   pool <- c(rep("countries", nrow(countries)), rep("sectors", nrow(sectors)), rep("subsectors", nrow(subsectors)))
   
-  dplyr::rbind(countries, sectors, subsectors) |> dplyr::mutate(pool = pool) |>
+  dplyr::bind_rows(countries, sectors, subsectors) |> dplyr::mutate(pool = pool) |>
     dplyr::select(pool, dplyr::everything())
 }
 
@@ -1148,13 +1148,17 @@ make_EW_portfolio_for_tickers <- function(tickers, commodity_futures_data){
 }
 
 make_EW_portfolios_returns_for_ticker_combinations_dataframe <- 
-  function(combinations, commodity_futures_data){
-
-    dplyr::group_by(combinations, country, sector, subsector) %>%
+  function(combinations, commodity_futures_data) {
+    
+    group_vars <- names(combinations) %>% setdiff("tickers")
+    
+    dplyr::group_by(combinations, dplyr::across(dplyr::all_of(group_vars))) %>%
       dplyr::mutate(
-        returns = purrr::map(tickers, ~make_EW_portfolio_for_tickers(., commodity_futures_data)), 
-      ) %>% dplyr::ungroup()
-  }
+        returns = purrr::map(tickers, ~make_EW_portfolio_for_tickers(., commodity_futures_data))
+      ) %>%
+      dplyr::ungroup()
+}
+
 
 extract_aggregate_CHP_regimes_by_timespan <- function(aggregate_CHP_regimes, timespan){
   dplyr::filter(aggregate_CHP_regimes, timespan == !!timespan) %>% 
@@ -1182,7 +1186,7 @@ make_cross_US_correlations_for_ticker_combinations_dataframe_by_period_no_regime
         dplyr::mutate(pool = rlang::as_string(group), regime = "whole period") %>%
         dplyr::relocate(pool, .before = 1L) %>% dplyr::relocate(regime, .after = period)
     })
-  }
+}
 
 make_cross_US_correlations_for_ticker_combinations_dataframe_by_period_regimes <-
   function(EW_portfolio_returns, aggregate_CHP_regimes_by_period){
@@ -1282,6 +1286,27 @@ make_cross_US_correlations_for_ticker_combinations_dataframe_by_year <-
   }
 
 make_cross_US_correlations_for_ticker_combinations_dataframe <- function(
+    combinations, commodity_futures_data, aggregate_CHP_regimes, period_dates
+    ){
+  
+  EW_portfolio_returns <- 
+    make_EW_portfolios_returns_for_ticker_combinations_dataframe(combinations, commodity_futures_data)
+  
+  aggregate_CHP_regimes_by_period <-
+    extract_aggregate_CHP_regimes_by_timespan(aggregate_CHP_regimes, "period")
+  periods <- make_cross_US_correlations_for_ticker_combinations_dataframe_by_period(
+    EW_portfolio_returns, aggregate_CHP_regimes_by_period, period_dates
+  )
+  
+  aggregate_CHP_regimes_by_year <- extract_aggregate_CHP_regimes_by_timespan(aggregate_CHP_regimes, "year")
+  years <- make_cross_US_correlations_for_ticker_combinations_dataframe_by_year(
+    EW_portfolio_returns, aggregate_CHP_regimes_by_year
+  )
+  
+  tibble::tibble(timespan = c("period", "year"), results = list(periods, years))
+}
+
+make_cross_global_correlations_for_ticker_combinations_dataframe <- function(
     combinations, commodity_futures_data, aggregate_CHP_regimes, period_dates
     ){
   
