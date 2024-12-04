@@ -213,7 +213,7 @@ make_commodity_pool_tickers_dataframe_for_correlations_inner_analysis <- functio
   include_US_combinations_in_commodity_pool_tickers_dataframe_for_country_sectors_subsectors_combinations(skeleton, US_combinations)
 }
 
-make_commodity_pool_tickers_dataframe_for_correlations_cross_analysis <- function(all_tickers){
+make_commodity_pool_tickers_dataframe_for_correlations_cross_US_analysis <- function(all_tickers){
 
   skeleton <- make_commodity_pool_tickers_dataframe_skeleton_for_country_sectors_subsectors_combinations(all_tickers)
 
@@ -224,6 +224,62 @@ make_commodity_pool_tickers_dataframe_for_correlations_cross_analysis <- functio
     )
   
   include_US_combinations_in_commodity_pool_tickers_dataframe_for_country_sectors_subsectors_combinations(skeleton, US_combinations)
+}
+
+make_commodity_country_tickers_dataframe_for_correlations_cross_global_analysis <- function(all_tickers){
+  
+  US <- filter_commodity_futures_tickers(all_tickers, "US")
+  GB <- filter_commodity_futures_tickers(all_tickers, "GB")
+  tibble::tibble(portfolio = c("US", "GB"), tickers = list(US, GB))
+}
+
+make_commodity_sector_tickers_dataframe_for_correlations_cross_global_analysis <- function(all_tickers){
+  
+  agriculturals_US <- filter_commodity_futures_tickers(all_tickers, "US", "agriculturals")
+  energy_US <- filter_commodity_futures_tickers(all_tickers, "US", "energy")
+  metals_US <- filter_commodity_futures_tickers(all_tickers, "US", "metals")
+  metals_GB <- filter_commodity_futures_tickers(all_tickers, "GB", "metals")
+  
+  tibble::tibble(
+    portfolio = c("agriculturals (US)", "energy (US)", "metals (US)", "metals (GB)"),
+    tickers = list(agriculturals_US, energy_US, metals_US, metals_GB)
+    )
+}
+
+make_commodity_subsector_tickers_dataframe_for_correlations_cross_global_analysis <- function(all_tickers){
+  
+  grains_US <- filter_commodity_futures_tickers(all_tickers, "US", "agriculturals", "grains")
+  livestock_US <- filter_commodity_futures_tickers(all_tickers, "US", "agriculturals", "livestock")
+  softs_US <- filter_commodity_futures_tickers(all_tickers, "US", "agriculturals", "softs")
+  petroleum_US <- filter_commodity_futures_tickers(all_tickers, "US", "energy", "petroleum")
+  gas_US <- filter_commodity_futures_tickers(all_tickers, "US", "energy", "gas")
+  base_US <- filter_commodity_futures_tickers(all_tickers, "US", "metals", "base")
+  precious_US <- filter_commodity_futures_tickers(all_tickers, "US", "metals", "precious")
+  base_GB <- filter_commodity_futures_tickers(all_tickers, "GB", "metals", "base")
+
+  
+  tibble::tibble(
+    portfolio = c(
+      "grains (US)", "livestock (US)", "softs (US)", "petroleum (US)", "gas (US)",
+      "base (US)", "precious (US)", "base (GB)"
+      ),
+    tickers = list(
+      grains_US, livestock_US, softs_US, petroleum_US, gas_US, base_US, precious_US, base_GB
+      )
+    )
+}
+
+make_commodity_pool_tickers_dataframe_for_correlations_cross_global_analysis <- function(all_tickers){
+  
+  countries <- make_commodity_country_tickers_dataframe_for_correlations_cross_global_analysis(all_tickers)
+  sectors <- make_commodity_sector_tickers_dataframe_for_correlations_cross_global_analysis(all_tickers)
+  subsectors <- make_commodity_subsector_tickers_dataframe_for_correlations_cross_global_analysis(all_tickers)
+  
+
+  pool <- c(rep("countries", nrow(countries)), rep("sectors", nrow(sectors)), rep("subsectors", nrow(subsectors)))
+  
+  dplyr::rbind(countries, sectors, subsectors) |> dplyr::mutate(pool = pool) |>
+    dplyr::select(pool, dplyr::everything())
 }
 
 make_commodity_pool_tickers_dataframe_for_regressions_analysis <- function(all_tickers){
@@ -238,33 +294,6 @@ make_commodity_pool_tickers_dataframe_for_regressions_analysis <- function(all_t
   
   include_US_combinations_in_commodity_pool_tickers_dataframe_for_country_sectors_subsectors_combinations(skeleton, US_combinations)
 }
-
-# make_commodity_pool_tickers_dataframe <- function(
-#     all_tickers, 
-#     analysis = c("correlations - inner", "correlations - cross", "regressions")
-#     ){
-# 
-#   all_all_all <- make_commodity_pool_tickers_dataframe_entry(
-#     "all", "all", "all", filter_commodity_futures_tickers(all_tickers)
-#   )
-#   
-#   US_all_all <- make_commodity_pool_tickers_dataframe_entry(
-#     "US", "all", "all", filter_commodity_futures_tickers(all_tickers, "US")
-#   )
-# 
-#   analysis_function <- paste0("make_US_commodity_pool_combinations_for_", gsub(" - ", "_", analysis), "_analysis")
-#   US_combinations <- do.call(analysis_function, args = list())
-#   US_combinations <-
-#     make_commodity_pool_tickers_dataframe_for_country_sectors_subsectors_combinations(
-#       US_combinations, all_tickers
-#     )
-# 
-#   GB_all_all <- make_commodity_pool_tickers_dataframe_entry(
-#     "GB", "all", "all", filter_commodity_futures_tickers(all_tickers, "GB")
-#   )
-# 
-#   dplyr::bind_rows(all_all_all, US_all_all, US_combinations, GB_all_all)
-# }
 
 make_commodity_pool_tickers_dataframe <- function(
     all_tickers, 
