@@ -64,10 +64,11 @@ correlations_inner_formatted <-
   format_inner_correlations_summary_statistics_into_table(correlations_inner_summary)
 
 ### cross ####
-commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(
-  commodity_futures_tickers, analysis = "correlations - cross"
-)
 #### US ####
+commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(
+  commodity_futures_tickers, analysis = "correlations - cross - US"
+)
+
 ##### raw ####
 correlations_cross_US_raw <- make_cross_US_correlations_for_ticker_combinations_dataframe(
   commodity_pool_tickers, commodity_futures_data, aggregate_CHP_regimes, period_dates
@@ -90,6 +91,15 @@ correlations_cross_US_summary <- summarise_cross_US_correlations(correlations_cr
 ###### format ####
 correlations_cross_US_formatted <- format_cross_US_correlations_summary(correlations_cross_US_summary)
 
+#### global ####
+commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(
+  commodity_futures_tickers, analysis = "correlations - cross - global"
+)
+
+##### raw ####
+correlations_cross_global <- make_cross_US_correlations_for_ticker_combinations_dataframe(
+  commodity_pool_tickers, commodity_futures_data, aggregate_CHP_regimes, period_dates
+)
 
 ## regressions #################################################################
 commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(
