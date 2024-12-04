@@ -36,6 +36,7 @@ format:
       formatting: preprint
       model: 3p
       cite-style: authoryear
+
   html:
     grid:
       body-width: 1000px
@@ -50,12 +51,9 @@ format:
 ---
 
 ```{r}
-#| label: globals
+#| label: fetch
 #| include: false
-
-pacman::p_load(kableExtra, magrittr, slituR)
-
-knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+#| cache: true
 
 urls <- c(
   "https://www.dropbox.com/scl/fi/n7t8g3hn32d8e5gf2rcti/references.bib?rlkey=xy251n44q3y0t3omxpqk0dvyf&dl=1",
@@ -63,7 +61,17 @@ urls <- c(
 )
 file_names <- c("bibliography.bib", "style.css")
 purrr::walk2(urls, file_names, function(url, file_name) download.file(url, file_name))
+```
 
+
+```{r}
+#| label: globals
+#| include: false
+#| cache: false
+
+knitr::opts_chunk$set(cache = FALSE, echo = FALSE, message = FALSE, warning = FALSE)
+
+pacman::p_load(kableExtra, magrittr, slituR)
 
 tables_directory_path <- here::here("explore", "tables", "revision-jfm")
 
@@ -76,13 +84,13 @@ tables <- readr::read_rds(paste_forward_slash(tables_directory_path, "tables-for
 sectors <- c("country", "sector", "sub-sector")
 periods <- c("past", "financialisation", "crisis", "post-crisis")
 
-make_table <- function(table_name, columns_to_collapse_rows_for, colnames, align, bold_columns, coloured_columns){
+make_table <- function(table_name, columns_to_collapse_rows_for, colnames, align, longtable, bold_columns, coloured_columns){
   get_results(tables, table_name) %>% dplyr::mutate(dplyr::across(dplyr::where(is.factor), as.character)) %>%
-  collapse_rows(columns_to_collapse_rows_for) %>%
-  kbl(booktabs = T, longtable = T, col.names = colnames, align = align) %>%
-  kable_styling(latex_options = "striped", font_size = 7L) %>%
-  row_spec(0L, bold = TRUE, color = "black") %>%
-  column_spec(bold_columns, bold = TRUE) %>% column_spec(coloured_columns, color = "#4285f4")
+    collapse_rows(columns_to_collapse_rows_for) %>%
+    kbl(booktabs = T, longtable = longtable, col.names = colnames, align = align) %>%
+    kable_styling(latex_options = "basic", font_size = 7L) %>%
+    row_spec(0L, bold = TRUE, color = "black") %>%
+    column_spec(bold_columns, bold = TRUE) %>% column_spec(coloured_columns, color = "#4285f4")
 }
 ```
 
@@ -176,8 +184,8 @@ We examine the period from 1997 to 2018, during which we utilize futures-only po
 
 For each commodity asset we compute the daily and weekly front futures return as well as weekly commercial hedging pressure (CHP) time series with the CHP calculated as the ratio of the number of long commercial positions to the total number of commercial positions for the considered asset-week combination. For each asset-period combination we compute the average annual daily return and corresponding volatility over the entire period as well as over phases of cross-sectional low and high CHP^[Aggregate CHP or **CHP**: see below for a formal definition and description of the phase construction process.] and further test for significance in difference between the two regimes using t-tests for mean returns and F-test for corresponding variances. These statistics are also computed, and their difference between regimes tested, for equally weighted portfolios of the US and GB traded commodity assets independently.  
 
-For each period, the weekly return series for the individual US-traded assets are regressed on both the relative change on their respective CHP series and that on the cross-sectional CHP independently. The resulting $R^{2}$ values are then averaged by sector and sub-sector. Additionally, pairwise daily return correlations are computed for each combination of assets across the periods of interest and for each individual year within the full sample period. These correlation coefficients are then averaged across the entire cross-section of assets, as well as by country, sector, and sub-sector. For each period, the coefficients are also calculated and averaged across phases of low and high cross-sectional CHP.  
-
+For each period, the weekly return series for the individual US-traded assets are regressed on both the relative change on their respective CHP series and that on the cross-sectional CHP independently. The resulting $R^{2}$ values are then averaged by sector and sub-sector. Additionally, pairwise daily return correlations are computed for each combination of assets across the periods of interest and for each individual year within the full sample period. These correlation coefficients are then averaged across the entire cross-section of assets, as well as by country, sector, and sub-sector. For each period, the coefficients are also calculated and averaged independently over phases of low and high cross-sectional CHP. We further form equally weighted portfolios by country, by grouping together the US and GB traded assets independently, as well a
+by sector and sub-sector for the US traded assets. For each period we compute the correlation coefficient between the two country portfolios as well as the average pairwise correlation coefficients between the sector and sub-sector portfolios; these are computed over the entire period as well as over phases of low and high cross-sectional CHP.  
 This approach sheds light on the evolving interconnectedness among commodity assets as the complex transitions from traditional market dynamics---where commodity producers and speculators had distinct roles---to a more intricate landscape shaped by the influx of financial investors.  
 
 \bigskip
@@ -268,7 +276,7 @@ In the second model hedgers are seen as liquidity providers as in @kang_tale_202
 
 Financialisation was a global phenomenon, through the channel of index investment it simultaneously influenced the entire spectrum of liquid commodities, eventually spurring the transformation of commodity markets from a collection of idiosyncratic markets into a more cohesive collection akin to an asset class. In this context, interconnectedness emerges as a crucial aspect that warrants thorough examination.   
 We strive to address this issue by first examining the average returns pairwise correlations between commodities across the entire cross-section of the commodity assets considered in the study as well as by country, sector and sub-sector. @tbl-correlations-inner-periods shows the results for the four periods of interest with the results reported for the entire period as well as for periods of **backwardation** and **contango**. For the entire sample the average pairwise correlation jumps from 0.07 in the first period to 0.16 over financialisation. This finding indicates higher interdependence within the full cross-section of commodities starting with the financialisation period, consistent with the empirical findings in @fryMcKibbin_evolution_2023 and @mayer_financialization_2017 as well as with the theoretical model of @basak_model_2016. The sector analysis sheds light on the driving force behind these changes. The US metals see the sharpest increase in pairwise correlations going from 0.22 over the past period to 0.56 over financialisation while the three other sectors see a much smaller percentage increase during financialisation relative to the past period. These results thus suggest that the US metals sector was the driving force behind increased average pairwise correlations during financialisation, a new observation to the best of our knowledge. The pattern of correlations is very similar across phases of **backwardation** and **contango** for all the sectors and sub-sectors over the past and financialisation periods which indicates that increased commodity interdependence over financialisation was not a phase driven phenomenon in the same way that individual commodity returns are, as demonstrated in @tbl-stats-combined.   
-We break down these average correlations by years in @tbl-correlations-inner-years. For the full sample of assets, the average pairwise correlations remain in the 0.06–0.08 range from 1998 through 2003, before suddenly increasing to 0.12 from 2003 to 2004. This suggests 2004 as a distinct break point for the onset of financialisation, as noted in several studies [@baker_financialization_2021; @tang_index_2012]. We further observe that the US metals appear to have played a major role in this as the increase seems driven by the sector which average pairwise correlation more than doubles (0.49 vs 0.22) over the period.   
+We break down these average correlations by year in @tbl-correlations-inner-years. For the full sample of assets, the average pairwise correlations remain in the 0.06–0.08 range from 1998 through 2003, before suddenly increasing to 0.12 from 2003 to 2004. This suggests 2004 as a distinct break point for the onset of financialisation, as noted in several studies [@baker_financialization_2021; @tang_index_2012]. We further observe that the US metals appear to have played a major role in this as the increase seems driven by the sector which average pairwise correlation more than doubles (0.49 vs 0.22) over the period.   
 
 \medskip
 
@@ -318,6 +326,9 @@ With the benefit of hindsight, this focus appears to have been too narrow. As ou
 The results of our analysis further suggest that financialisation had cross-sectional effects on market fundamentals across the commodity complex beyond energy and agricultural commodities and in fact strongest for the metals sector at the global level; an aspect largely overlooked in the original approach that we believe the existing literature has not fully analysed.  
 The onset of the financial crisis and the monetary policy regimes that followed, on the other hand, also appear to have induced significant changes in commodity pricing dynamics. In contrast with financialisation, our results suggest that the crisis and its aftermath have delivered an exogenous shock across the entire cross-section of liquid commodities which appears to have further altered the cross-sectional dynamics and eventually triggered a motion of reversion to legacy, pre-financialisation, fundamentals.  
 
+
+\newgeometry{margin=.75in}
+
 \newpage
 
 # Tables
@@ -326,10 +337,15 @@ The onset of the financial crisis and the monetary policy regimes that followed,
 #| label: tbl-stats-combined
 #| tbl-cap: "This table shows mean returns and corresponding volatility for the twenty four individual US commodities and the six GB metals considered in the study as well as for two equally weighted portfolios formed from the US commodities and the GB metals respectively across the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). for each period the figures are shown independently for the entire period as well as for phases of aggregate backwardation (aggregate CHP $\\leq$ period median) and aggregate contango (aggregate CHP > period median). Mean values significant at the 1%, 5% and 10% level are marked with \\\\*\\\\*\\\\*, \\\\*\\\\* and \\\\* respectively. Aggregate CHP construction and corresponding regime definitions are discussed in \\@sec-methods while the results are discussed in \\@sec-results."
 
+table_name <- "stats - combined"
+columns_to_collapse_rows_for <- c("asset", "regime")
 colnames <- c("asset", "regime", "estimate", periods)
 align <- make_series_of_repeated_chars(list(l = 3L, r = 4L))
+longtable <- TRUE
+bold_columns <- 1L:3L
+coloured_columns <- 4L:7L
 
-make_table("stats - combined", c("asset", "regime"), colnames, align, 1L:7L, 4L:7L)
+make_table(table_name, columns_to_collapse_rows_for, colnames, align, longtable, bold_columns, coloured_columns)
 ```
 
 
@@ -339,10 +355,15 @@ make_table("stats - combined", c("asset", "regime"), colnames, align, 1L:7L, 4L:
 #| label: tbl-regime-diference-tests
 #| tbl-cap: "This table shows the results for tests of difference in mean (t-test) and variance (F-test) between phases of aggregate backwardation and contango for the twenty four individual US commodities and the six GB metals considered in the study as well as for two equally weighted portfolios formed from the US commodities and the GB metals respectively across the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). 1%, 5% and 10% p-value levels are marked with \\\\*\\\\*\\\\*, \\\\*\\\\* and \\\\* respectively in the significance column. Aggregate CHP construction and corresponding regime definitions are discussed in \\@sec-methods while the results are discussed in \\@sec-results."
 
+table_name <- "regime difference tests"
+columns_to_collapse_rows_for <- c("asset", "period")
 colnames <- c("asset", "period", "moment", "dominant regime", "p-value", "significance")
 align <- make_series_of_repeated_chars(list(l = 4L, r = 2L))
+longtable <- TRUE
+bold_columns <- 1L:4L 
+coloured_columns <- 5L:6L
 
-make_table("regime difference tests", c("asset", "period"), colnames, align, 1L:4L, 5L:6L)
+make_table(table_name, columns_to_collapse_rows_for, colnames, align, longtable, bold_columns, coloured_columns)
 ```
 
 
@@ -352,10 +373,15 @@ make_table("regime difference tests", c("asset", "period"), colnames, align, 1L:
 #| label: tbl-time-reg-US-CHP
 #| tbl-cap: "This table shows the average time series $R^{2}$ for models where the returns series for the twenty four individual US commodities are independently regressed against relative change in their own commercial hedging pressure (CHP) series as well as against that in aggregate CHP, a market wide measure of CHP which calculation method is discussed in \\@sec-methods. Averages are calculated independently across the whole cross-section of US traded commodity assets considered in the study as well as across commodity sectors and sub-sectors for the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). The results are discussed in \\@sec-results while \\@sec-taxonomy details the taxonomy for the commodity assets considered."
 
+table_name <- "regressions - US returns ~ US CHP"
+columns_to_collapse_rows_for <- c("regressor", "sector")
 colnames <- c("regressor", "sector", "sub-sector", periods)
 align <- make_series_of_repeated_chars(list(l = 3L, r = 4L))
+longtable <- TRUE
+bold_columns <- 1L:7L
+coloured_columns <- 4L:7L
 
-make_table("regressions - US returns ~ US CHP", c("regressor", "sector"), colnames, align, 1L:7L, 4L:7L)
+make_table(table_name, columns_to_collapse_rows_for, colnames, align, longtable, bold_columns, coloured_columns)
 ```
 
 \newpage
@@ -364,23 +390,80 @@ make_table("regressions - US returns ~ US CHP", c("regressor", "sector"), colnam
 #| label: tbl-correlations-inner-periods
 #| tbl-cap: "This table shows the average return pairwise correlation coefficients calculated independently across the whole cross-section of commodity assets considered in the study as well as within countries and commodity sectors and sub-sectors for the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). For each period, the results are calculated independently over the entire period as well as over phases of aggregate backwardation and contango. Aggregate CHP construction and corresponding regime definitions are discussed in \\@sec-methods while the results are discussed in \\@sec-results and the taxonomy for the commodity assets considered is detailed in \\@sec-taxonomy."
 
+
+table_name <- "correlations - inner - periods"
+columns_to_collapse_rows_for <- c("country", "sector", "subsector")
 colnames <- c(sectors, "regime", periods)
 align <- make_series_of_repeated_chars(list(l = 3L, r = 5L))
-
-make_table("correlations - inner - periods", c("country", "sector", "subsector"), colnames, align, 1L:8L, 5L:8L)
+longtable <- TRUE
+bold_columns <- 1L:8L 
+coloured_columns <- 5L:8L
+  
+make_table(table_name, columns_to_collapse_rows_for, colnames, align, longtable, bold_columns, coloured_columns)
 ```
-
-\newpage
 
 ```{r}
 #| label: tbl-correlations-cross-periods
 #| tbl-cap: "This table shows the return pairwise correlation coefficients between two equally weighted country portfolios (US, GB) with the first formed from the twenty four US commodities and the second from the six GB traded assets. The table further shows the average return pairwise correlation coefficients between equally weighted US sector portfolios (agriculturals, energy, metals) as well as between equally weighted US sub-sector portfolios (agriculturals: gains, livestock, softs; energy: gas, petroleum; metals: base, precious). The results are independently calculated for the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). For each period, the results are further calculated independently over the entire period as well as over phases of aggregate backwardation and contango. Aggregate CHP construction and corresponding regime definitions are discussed in \\@sec-methods while the results are discussed in \\@sec-results and the taxonomy for the commodity assets considered is detailed in \\@sec-taxonomy."
 
+table_name <- "correlations - cross - periods"
+columns_to_collapse_rows_for <- c("portfolios", "regime")
 colnames <- c("portfolios", "regime", periods)
 align <- make_series_of_repeated_chars(list(l = 1L, r = 5L))
+longtable <- TRUE
+bold_columns <- 1L:2L
+coloured_columns <- 3L:6L
 
-make_table("correlations - cross - periods", c("portfolios", "regime"), colnames, align, 1L:2L, 3L:6L)
+make_table(table_name, columns_to_collapse_rows_for, colnames, align, longtable, bold_columns, coloured_columns)
 ```
+
+\newpage
+
+
+```{r}
+#| eval: false
+#| label: tbl-experimental
+#| tbl-cap: "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum."
+#| tbl-subcap: 
+#|     - "Average pairwise inner correlations"
+#|     - "Average pairwise cross correlations"
+#| layout-nrows: 2
+
+table1_format <- list(
+  table_name = "correlations - inner - periods",
+  columns_to_collapse_rows_for = c("country", "sector", "subsector"),
+  longtable = FALSE,
+  colnames = c(sectors, "regime", periods),
+  align = make_series_of_repeated_chars(list(l = 3L, r = 5L)),
+  bold_columns = 1L:8L, 
+  coloured_columns = 5L:8L
+  )
+table2_format <- list(
+  table_name = "correlations - cross - periods",
+  columns_to_collapse_rows_for = c("portfolios", "regime"),
+  longtable = TRUE,
+  colnames = c("portfolios", "regime", periods),
+  align = make_series_of_repeated_chars(list(l = 1L, r = 5L)),
+  bold_columns = 1L:2L, 
+  coloured_columns = 3L:6L
+)
+formats <- list(table1_format, table2_format)
+
+get_results(tables, table1_format$table_name) %>% dplyr::mutate(dplyr::across(dplyr::where(is.factor), as.character)) %>%
+    collapse_rows(table1_format$columns_to_collapse_rows_for) %>%
+    kable(booktabs = T, longtable = table1_format$longtable, col.names = table1_format$colnames, align = table1_format$align, escape = FALSE) %>%
+    kable_styling(font_size = 7L) %>%
+    row_spec(0L, bold = TRUE, color = "black") %>%
+    column_spec(table1_format$bold_columns, bold = TRUE) %>% column_spec(table1_format$coloured_columns, color = "#4285f4")
+
+get_results(tables, table2_format$table_name) %>% dplyr::mutate(dplyr::across(dplyr::where(is.factor), as.character)) %>%
+    collapse_rows(table2_format$columns_to_collapse_rows_for) %>%
+    kable(booktabs = T, longtable = table2_format$longtable, col.names = table2_format$colnames, align = table2_format$align, escape = FALSE) %>%
+    kable_styling(font_size = 7L) %>%
+    row_spec(0L, bold = TRUE, color = "black") %>%
+    column_spec(table2_format$bold_columns, bold = TRUE) %>% column_spec(table2_format$coloured_columns, color = "#4285f4")
+```
+
 
 \newpage
 
@@ -388,10 +471,16 @@ make_table("correlations - cross - periods", c("portfolios", "regime"), colnames
 #| label: tbl-correlations-inner-years
 #| tbl-cap: "While \\@tbl-correlations-inner-periods shows results calculated independently for the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018), this stable shows the results of the same analysis calculated by year over the entire sample period (1997-2018). The results are discussed in \\@sec-results while \\@sec-taxonomy details the taxonomy for the commodity assets considered."
 
+
+table_name <- "correlations - inner - years"
+columns_to_collapse_rows_for <- c("country", "sector", "subsector")
 colnames <- c(sectors, "decade", 0L:9L)
 align <- make_series_of_repeated_chars(list(l = 4L, r = 10L))
+longtable <- TRUE
+bold_columns <- 1L:14L
+coloured_columns <- 5L:14L
 
-make_table("correlations - inner - years", c("country", "sector", "subsector"), colnames, align, 1L:14L, 5L:14L) %>%
+make_table(table_name, columns_to_collapse_rows_for, colnames, align, longtable, bold_columns, coloured_columns) %>%
   landscape()
 ```
 
@@ -401,13 +490,15 @@ make_table("correlations - inner - years", c("country", "sector", "subsector"), 
 #| label: tbl-regressions-index
 #| tbl-cap: "This table shows the average time series regression coefficients for models where the returns series for all the commodity assets considered in the study are independently regressed against the return series for our market factor, an equally weighted portfolio of the 24 US commodities considered in the study. The results are calculated independently across countries as well as commodity sectors and sub-sectors for the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). The market factor construction is discussed in \\@sec-methods while the results are discussed in \\@sec-results and the taxonomy for the commodity assets considered is detailed in \\@sec-taxonomy."
 
+table_name <- "regressions - all returns ~ market index"
+columns_to_collapse_rows_for <- c("country", "sector", "subsector")
 colnames <- c(sectors, periods)
 align <- make_series_of_repeated_chars(list(l = 3L, r = 4L))
+longtable <- TRUE
+bold_columns <- 1L:7L
+coloured_columns <- 4L:7L
 
-make_table(
-  "regressions - all returns ~ market index", c("country", "sector", "subsector"), 
-  colnames, align, 1L:7L, 4L:7L
-  )
+make_table(table_name, columns_to_collapse_rows_for, colnames, align, longtable, bold_columns, coloured_columns)
 ```
 
 \newpage
@@ -416,14 +507,18 @@ make_table(
 #| label: tbl-regressions-factors
 #| tbl-cap: "This table shows the average time series regression $R^{2}$ for models where the returns series for all the commodity assets considered in the study are independently regressed against the return series for our mimicking portfolios for risk factors in returns, including the market, CHP, open interest and term structure factors. The results are calculated independently across countries and commodity sectors and sub-sectors for the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018); for each period the results are calculated independently over the entire period as well as over phases of aggregate backwardation and contango. Factors as well as aggregate CHP construction and corresponding regime definitions are discussed in \\@sec-methods while the results are discussed in \\@sec-results and the taxonomy for the commodity assets considered is detailed in \\@sec-taxonomy."
 
+table_name <- "regressions - all returns ~ factors"
+columns_to_collapse_rows_for <- c("country", "sector", "subsector", "factor")
 colnames <- c(sectors, "factor", "regime", periods)
 align <- make_series_of_repeated_chars(list(l = 5L, r = 4L))
+longtable <- TRUE
+bold_columns <- 1L:9L
+coloured_columns <- 6L:9L
 
-make_table(
-  "regressions - all returns ~ factors", c("country", "sector", "subsector", "factor"), 
-  colnames, align, 1L:9L, 6L:9L
-  ) %>% landscape()
+make_table(table_name, columns_to_collapse_rows_for, colnames, align, longtable, bold_columns, coloured_columns) 
 ```
+
+\restoregeometry
 
 \newpage
 
@@ -435,10 +530,15 @@ make_table(
 #| label: tbl-assets-taxonomy
 #| tbl-cap: "This table shows the detailed taxonomy for the thirty commodity assets considered in the study. The assets are classified by the country of residence of the exchange where they are traded as well as by sector and sub-sector according to the nature of the asset."
 
+table_name <- "assets taxonomy"
+columns_to_collapse_rows_for <- c("country", "sector", "subsector")
 colnames <- c("asset", "country", "sector", "sub-sector")
 align <- make_series_of_repeated_chars(list(l = 4L))
+longtable <- TRUE
+bold_columns <- 1L
+coloured_columns <- 2L:4L
 
-make_table("assets taxonomy", c("country", "sector", "subsector"), colnames, align, 1L, 2L:4L)
+make_table(table_name, columns_to_collapse_rows_for, colnames, align, longtable, bold_columns, coloured_columns)
 ```
 
 \newpage
