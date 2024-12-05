@@ -1838,11 +1838,6 @@ format_cross_correlation_averages <- function(correlations_cross_summary){
   })) 
 }
 
-
-format_cross_US_correlations_summary <- function(correlations_cross_summary){
-  
-  averages <- format_cross_correlation_averages(correlations_cross_summary)
-}
 ## regressions #################################################################
 ### index ######################################################################
 #### top 3 ####
