@@ -1643,12 +1643,13 @@ calculate_correlation_averages <- function(cross_correlations){
 }
 
 
-summarise_cross_US_correlations <- function(cross_US_correlations){
+summarise_cross_correlations <- function(cross_correlations){
   
-  averages <- calculate_correlation_averages(cross_US_correlations)
+  averages <- calculate_correlation_averages(cross_correlations)
   
   return(averages)
 }
+
 
 ## regressions #################################################################
 ### index ######################################################################
