@@ -70,8 +70,8 @@ commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(
 )
 
 ##### raw ####
-correlations_cross_US_raw <- make_cross_US_correlations_for_ticker_combinations_dataframe(
-  commodity_pool_tickers, commodity_futures_data, aggregate_CHP_regimes, period_dates
+correlations_cross_US_raw <- make_global_correlations_for_ticker_combinations_dataframe(
+  commodity_pool_tickers, commodity_futures_data, aggregate_CHP_regimes, period_dates, "US"
 )
 
 ##### summary ####
@@ -80,7 +80,7 @@ correlations_cross_US_raw <- make_cross_US_correlations_for_ticker_combinations_
 # correlations_cross_US_raw <- readr::read_rds(path_correlations_cross_US_raw_file)
 
 ###### summarise ####
-correlations_cross_US_summary <- summarise_cross_US_correlations(correlations_cross_US_raw)
+correlations_cross_US_summary <- summarise_cross_correlations(correlations_cross_US_raw)
 
 ##### formatted ####
 ###### load summary dataset (optional) ####
@@ -89,7 +89,7 @@ correlations_cross_US_summary <- summarise_cross_US_correlations(correlations_cr
 # correlations_cross_US_summary <- readr::read_rds(path_correlations_cross_US_summary_file)
 
 ###### format ####
-correlations_cross_US_formatted <- format_cross_US_correlations_summary(correlations_cross_US_summary)
+correlations_cross_US_formatted <- format_cross_correlation_averages(correlations_cross_US_summary)
 
 #### global ####
 commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(
@@ -97,9 +97,27 @@ commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(
 )
 
 ##### raw ####
-correlations_cross_global <- make_cross_US_correlations_for_ticker_combinations_dataframe(
-  commodity_pool_tickers, commodity_futures_data, aggregate_CHP_regimes, period_dates
+correlations_cross_global_raw <- make_global_correlations_for_ticker_combinations_dataframe(
+  commodity_pool_tickers, commodity_futures_data, aggregate_CHP_regimes, period_dates, "global"
 )
+
+##### summary ####
+###### load raw dataset (optional) ####
+# path_correlations_cross_global_raw_file <- paste_forward_slash(results_directory_path, "correlations-cross-global-raw.rds")
+# correlations_cross_global_raw <- readr::read_rds(path_correlations_cross_global_raw_file)
+
+###### summarise ####
+correlations_cross_global_summary <- summarise_cross_correlations(correlations_cross_global_raw)
+
+##### formatted ####
+###### load summary dataset (optional) ####
+# path_correlations_cross_global_summary_file <-
+#   paste_forward_slash(results_directory_path, "correlations-cross-global-summary.rds")
+# correlations_cross_global_summary <- readr::read_rds(path_correlations_cross_global_summary_file)
+
+###### format ####
+correlations_cross_global_formatted <- format_cross_correlation_averages(correlations_cross_global_summary)
+
 
 ## regressions #################################################################
 commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(
@@ -209,6 +227,21 @@ saveRDS(correlations_cross_US_summary, path_correlations_cross_US_summary_file)
 path_correlations_cross_US_formatted_file <- 
   paste_forward_slash(results_directory_path, "correlations-cross-US.rds")
 saveRDS(correlations_cross_US_formatted, path_correlations_cross_US_formatted_file)
+
+#### global ####
+##### raw ####
+path_correlations_cross_global_raw_file <- paste_forward_slash(results_directory_path, "correlations-cross-global-raw.rds")
+saveRDS(correlations_cross_global_raw, path_correlations_cross_global_raw_file)
+
+###### summary ####
+path_correlations_cross_global_summary_file <- 
+  paste_forward_slash(results_directory_path, "correlations-cross-global-summary.rds")
+saveRDS(correlations_cross_global_summary, path_correlations_cross_global_summary_file)
+
+##### formatted ####
+path_correlations_cross_global_formatted_file <- 
+  paste_forward_slash(results_directory_path, "correlations-cross-global.rds")
+saveRDS(correlations_cross_global_formatted, path_correlations_cross_global_formatted_file)
 
 ## regressions #################################################################
 commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(
