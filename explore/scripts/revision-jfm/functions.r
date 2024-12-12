@@ -1286,8 +1286,9 @@ make_cross_US_correlations_for_ticker_combinations_dataframe_by_year_no_regimes 
       ) %>% dplyr::select(-dplyr::any_of(right_groups)) %>% tidyr::unnest(returns) %>%
       tidyr::pivot_wider(names_from = group, values_from = return) %>%
       dplyr::arrange(date) %>% dplyr::filter(complete.cases(.)) %>%
-      dplyr::mutate(year = lubridate::year(date)) %>% dplyr::group_by(year) %>%
-      tidyr::nest() %>% dplyr::mutate(results = purrr::map(data, compute_correlations)) %>% 
+      dplyr::mutate(year = lubridate::year(date)) %>% dplyr::filter(year >= 1997L) %>%
+      dplyr::group_by(year) %>% tidyr::nest() %>% 
+        dplyr::mutate(results = purrr::map(data, compute_correlations)) %>% 
       dplyr::ungroup() %>% 
       dplyr::mutate(pool = rlang::as_string(group), regime = "whole period") %>%
       dplyr::relocate(pool, .before = 1L) %>% dplyr::relocate(regime, .after = year)
@@ -1303,7 +1304,8 @@ make_cross_global_correlations_for_ticker_combinations_dataframe_by_year_no_regi
       tidyr::pivot_wider(df, names_from = portfolio, values_from = return) |>
         dplyr::arrange(date) |> 
         dplyr::filter(complete.cases(dplyr::across(dplyr::everything()))) |>
-        dplyr::mutate(year = lubridate::year(date)) |> dplyr::group_by(year) |> 
+        dplyr::mutate(year = lubridate::year(date)) |> dplyr::filter(year >= 1997L) |> 
+        dplyr::group_by(year) |> 
         tidyr::nest() |> dplyr::mutate(results = purrr::map(data, compute_correlations)) |> 
         dplyr::ungroup() |> dplyr::mutate(regime = "whole period") |> 
         dplyr::relocate(regime, .after = year)
