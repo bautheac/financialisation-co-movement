@@ -278,42 +278,88 @@ correlations_inner_years <- dplyr::filter(
     )
 
 ## cross ####
+format_correlations_cross_by_period <- function(correlations_cross){
+  
+  dplyr::filter(correlations_cross, timespan == "period") |>
+    tidyr::unnest(summary) |> dplyr::select(-timespan) |> 
+    dplyr::mutate(
+      portfolios = ifelse(
+        pool == "country", "countries", ifelse(stringr::str_ends(pool, "s"), pool, paste0(pool, "s"))
+      ),
+      regime = factor(regime, levels = regime_levels),
+      period = ifelse(period == "financialization", "financialisation", period),
+      period = ifelse(period == "present", "post-crisis", period),
+      period = factor(period, levels = period_levels)
+    ) |> dplyr::select(-pool) |> 
+    dplyr::relocate(portfolios, .before = 1L) |>
+    dplyr::arrange(portfolios, period, regime) |>
+    tidyr::pivot_wider(names_from = "period", values_from = "average")
+}
+
+format_correlations_cross_by_year <- function(correlations_cross){
+  
+  dplyr::filter(correlations_cross, timespan == "year") |>
+    tidyr::unnest(summary) |> dplyr::filter(regime == "whole period") |> 
+    dplyr::mutate(
+      portfolios = ifelse(
+        pool == "country", "countries", ifelse(stringr::str_ends(pool, "s"), pool, paste0(pool, "s"))
+      ),
+      decade = slituR::floor_year_to_nearest_decade(year),
+      year = slituR::remove_decade_from_year(year)
+    ) |>
+    dplyr::select(-c(timespan, regime, pool)) |> 
+    dplyr::arrange(portfolios, decade, year) |>
+    tidyr::pivot_wider(names_from = "year", values_from = "average") |>
+    dplyr::relocate(`0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, .after = dplyr::last_col()) |>
+    dplyr::mutate(
+      dplyr::across(c(`0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`), ~ format(.x, scientific = FALSE)),
+      dplyr::across(c(`0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`), ~ stringr::str_replace_all(.x, "    NA", ""))
+    )
+}
+
 ### US ####
 correlations_cross_US <- readr::read_rds(
   slituR::paste_forward_slash(results_directory_path, "correlations-cross-US.rds")
 )
 
-### By period ####
-correlations_cross_US_periods <- dplyr::filter(correlations_cross_US, timespan == "period") |>
-  tidyr::unnest(summary) |> dplyr::select(-timespan) |> 
-  dplyr::mutate(
-    portfolios = ifelse(pool == "country", "countries", paste0(pool, "s")),
-    regime = factor(regime, levels = regime_levels),
-    period = ifelse(period == "financialization", "financialisation", period),
-    period = ifelse(period == "present", "post-crisis", period),
-    period = factor(period, levels = period_levels)
-    ) |> dplyr::select(-pool) |> 
-  dplyr::relocate(portfolios, .before = 1L) |>
-  dplyr::arrange(portfolios, period, regime) |>
-  tidyr::pivot_wider(names_from = "period", values_from = "average")
+#### By period ####
+##### all pools #####
+correlations_cross_US_periods_all <- format_correlations_cross_by_period(correlations_cross_US)
 
-### By year ####
-correlations_cross_US_years <- dplyr::filter(correlations_cross_US, timespan == "year") |>
-  tidyr::unnest(summary) |> dplyr::filter(regime == "whole period") |> 
-  dplyr::mutate(
-    portfolios = ifelse(pool == "country", "countries", paste0(pool, "s")),
-    decade = slituR::floor_year_to_nearest_decade(year),
-    year = slituR::remove_decade_from_year(year)
-  ) |>
-  dplyr::select(-c(timespan, regime, pool)) |> 
-  dplyr::arrange(portfolios, decade, year) |>
-  tidyr::pivot_wider(names_from = "year", values_from = "average") |>
-  dplyr::relocate(`0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, .after = dplyr::last_col()) |>
-  dplyr::mutate(
-    dplyr::across(c(`0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`), ~ format(.x, scientific = FALSE)),
-    dplyr::across(c(`0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`), ~ stringr::str_replace_all(.x, "    NA", ""))
-  )
+##### sub-sectors #####
+correlations_cross_US_periods_subsectors <- format_correlations_cross_by_period(correlations_cross_US) |> 
+  dplyr::filter(portfolios == "subsectors") |> dplyr::select(-portfolios)
 
+#### By year ####
+##### all pools #####
+correlations_cross_US_years_all <- format_correlations_cross_by_year(correlations_cross_US)
+
+##### sub-sectors #####
+correlations_cross_US_years_subsectors <- format_correlations_cross_by_year(correlations_cross_US) |> 
+  dplyr::filter(portfolios == "subsectors") |> dplyr::select(-portfolios)
+
+
+### global ####
+correlations_cross_global <- readr::read_rds(
+  slituR::paste_forward_slash(results_directory_path, "correlations-cross-global.rds")
+)
+
+#### By period ####
+##### all pools #####
+correlations_cross_global_periods_all <- format_correlations_cross_by_period(correlations_cross_global)
+
+##### sub-sectors #####
+correlations_cross_global_periods_subsectors <- format_correlations_cross_by_period(correlations_cross_global) |> 
+  dplyr::filter(portfolios == "subsectors") |> dplyr::select(-portfolios)
+
+
+#### By year ####
+##### all pools #####
+correlations_cross_global_years_all <- format_correlations_cross_by_year(correlations_cross_global)
+
+##### sub-sectors #####
+correlations_cross_global_years_subsectors <- format_correlations_cross_by_year(correlations_cross_global) |> 
+  dplyr::filter(portfolios == "subsectors") |> dplyr::select(-portfolios)
 
 # regressions ##################################################################
 
@@ -436,19 +482,25 @@ regressions_factors <- readr::read_rds(
 
 # export ####
 tables <- tibble::tribble(
-    ~analysis,                                  ~results,
-    "stats - whole",                            descriptive_stats_whole,
-    "stats - regimes",                          descriptive_stats_regimes,
-    "stats - combined",                         descriptive_stats_combined,
-    "regime difference tests",                  regime_difference_tests,
-    "regressions - US returns ~ US CHP",        `US commodity returns ~ CHP`,
-    "correlations - inner - periods",           correlations_inner_periods,
-    "correlations - inner - years",             correlations_inner_years,
-    "correlations - cross - US - periods",      correlations_cross_US_periods,
-    "correlations - cross - US - years",        correlations_cross_US_years,
-    "regressions - all returns ~ market index", `all commodity returns ~ market index`,
-    "regressions - all returns ~ factors",      `all commodity returns ~ factors`,
-    "assets taxonomy",                          `assets taxonomy`
+    ~analysis,                                              ~results,
+    "stats - whole",                                        descriptive_stats_whole,
+    "stats - regimes",                                      descriptive_stats_regimes,
+    "stats - combined",                                     descriptive_stats_combined,
+    "regime difference tests",                              regime_difference_tests,
+    "regressions - US returns ~ US CHP",                    `US commodity returns ~ CHP`,
+    "correlations - inner - periods",                       correlations_inner_periods,
+    "correlations - inner - years",                         correlations_inner_years,
+    "correlations - cross - US - periods - all",            correlations_cross_US_periods_all,
+    "correlations - cross - US - periods - subsectors",     correlations_cross_US_periods_subsectors,
+    "correlations - cross - US - years - all",              correlations_cross_US_years_all,
+    "correlations - cross - US - years - subsectors",       correlations_cross_US_years_subsectors,
+    "correlations - cross - global - periods - all",        correlations_cross_global_periods_all,
+    "correlations - cross - global - periods - subsectors", correlations_cross_global_periods_subsectors,
+    "correlations - cross - global - years - all",          correlations_cross_global_years_all,
+    "correlations - cross - global - years - subsectors",   correlations_cross_global_years_subsectors,
+    "regressions - all returns ~ market index",             `all commodity returns ~ market index`,
+    "regressions - all returns ~ factors",                  `all commodity returns ~ factors`,
+    "assets taxonomy",                                      `assets taxonomy`
   )
 
 readr::write_rds(
