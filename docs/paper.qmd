@@ -401,6 +401,8 @@ coloured_columns <- 5L:8L
 make_table(table_name, columns_to_collapse_rows_for, colnames, align, longtable, bold_columns, coloured_columns)
 ```
 
+\newpage
+
 ```{r}
 #| label: tbl-correlations-cross-periods
 #| tbl-cap: "This table shows the average return pairwise correlation coefficients between equally weighted US sub-sector portfolios (agriculturals: gains, livestock, softs; energy: gas, petroleum; metals: base, precious). The results are independently calculated for the four periods of interest (past: 1997-2003; financialisation: 2004-2008; crisis: 2008-2013; post-crisis: 2013-2018). For each period, the results are further calculated independently over the entire period as well as over phases of aggregate backwardation and contango. Aggregate CHP construction and corresponding regime definitions are discussed in \\@sec-methods while the results are discussed in \\@sec-results and the taxonomy for the commodity assets considered is detailed in \\@sec-taxonomy."
