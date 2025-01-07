@@ -79,8 +79,8 @@ construct_path <- function() {
 path_directory <- construct_path()
 
 
-correlations_raw <- readr::read_rds(file.path(path_directory, "results", "correlations.rds"))
-correlations_helpers <- list(
+correlations_inner_raw <- readr::read_rds(file.path(path_directory, "results", "correlations-inner.rds"))
+correlations_inner_helpers <- list(
   period = list(
     calls = c("average", "top_3"), 
     variables = list(
@@ -96,8 +96,8 @@ correlations_helpers <- list(
     )
   )
 )
-correlations_split <- split_analysis_summary_results_into_category_dataframes(
-  correlations_raw, correlations_helpers
+correlations_inner_split <- split_analysis_summary_results_into_category_dataframes(
+  correlations_inner_raw, correlations_inner_helpers
   )
 
 regressions_index_raw <- readr::read_rds(file.path(path_directory, "results", "regressions-index.rds"))
@@ -140,6 +140,6 @@ regressions_factors_split <- split_analysis_summary_results_into_category_datafr
 
 
 results <- list(
-  correlations = correlations_split, 
+  correlations = list(inner = correlations_inner_split), 
   regressions = list(index = regressions_index_split, factors = regressions_factors_split)
 )

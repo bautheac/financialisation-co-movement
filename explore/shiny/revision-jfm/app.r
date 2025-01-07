@@ -32,7 +32,7 @@ sidebar <- dashboardSidebar(
 body <- dashboardBody(
   tabItems(
     tabItem(tabName = "correlations", results_summary_UI("correlations", list(
-      period = results$correlations$period, year = results$correlations$year
+      period = results$correlations$inner$period, year = results$correlations$inner$year
     ))),
     tabItem(tabName = "regressions-index", results_summary_UI("regressions-index", list(
       period = results$regressions$index$period, year = results$regressions$index$year
@@ -49,7 +49,7 @@ ui <- dashboardPage(
 
 server <- function(input, output) {
   results_summary_Server("correlations", list(
-    period = results$correlations$period, year = results$correlations$year
+    period = results$correlations$inner$period, year = results$correlations$inner$year
   ))
   
   results_summary_Server("regressions-index", list(
