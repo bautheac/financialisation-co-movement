@@ -21,7 +21,10 @@ source(file.path(path_directory, "modules", "results_summary.r"))
 
 sidebar <- dashboardSidebar(
   sidebarMenu(
-    menuItem("Correlations", tabName = "correlations", icon = icon("table")),
+    menuItem("Correlations", tabName = "correlations", icon = icon("table"),
+             menuSubItem("Inner", tabName = "correlations-inner")
+    
+    ),
     menuItem("Regressions", icon = icon("table"),
              menuSubItem("Index", tabName = "regressions-index"),
              menuSubItem("Factors", tabName = "regressions-factors")
@@ -31,7 +34,7 @@ sidebar <- dashboardSidebar(
 
 body <- dashboardBody(
   tabItems(
-    tabItem(tabName = "correlations", results_summary_UI("correlations", list(
+    tabItem(tabName = "correlations-inner", results_summary_UI("correlations-inner", list(
       period = results$correlations$inner$period, year = results$correlations$inner$year
     ))),
     tabItem(tabName = "regressions-index", results_summary_UI("regressions-index", list(
@@ -48,7 +51,7 @@ ui <- dashboardPage(
 )
 
 server <- function(input, output) {
-  results_summary_Server("correlations", list(
+  results_summary_Server("correlations-inner", list(
     period = results$correlations$inner$period, year = results$correlations$inner$year
   ))
   
