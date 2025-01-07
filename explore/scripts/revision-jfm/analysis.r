@@ -1,14 +1,13 @@
-library(finRes); library(magrittr)
-
-# source functions #############################################################
-source(here::here("explore", "scripts", "revision-jfm", "functions.r"))
+pacman::p_load(finRes)
 
 # load global variables ########################################################
-load_global_variables()
+# load_global_variables()
+load(here::here("explore", "scripts", "revision-jfm", "globals.RData"))
+source(here::here("explore", "scripts", "revision-jfm", "functions.r"))
 
 # analysis #####################################################################
 
-library(furrr)
+pacman::p_load(furrr)
 plan(multisession, workers = parallel::detectCores())
 
 ## regime difference tests #####################################################
@@ -36,33 +35,89 @@ regime_difference_tests_formatted <-
 
 
 ## correlations ################################################################
+### inner ####
 commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(
-  commodity_futures_tickers, analysis = "correlations"
-  )
-
-### raw ####
-correlations_raw <- make_pairwise_correlations_for_ticker_combinations_dataframe(
+  commodity_futures_tickers, analysis = "correlations - inner"
+)
+#### raw ####
+correlations_inner_raw <- make_inner_correlations_for_ticker_combinations_dataframe(
   commodity_pool_tickers, commodity_futures_data, aggregate_CHP_regimes, period_dates
 )
 
-### summary ####
-#### load raw dataset (optional) ####
-# path_correlations_raw_file <- paste_forward_slash(results_directory_path, "correlations-raw.rds")
-# correlations_raw <- readr::read_rds(path_correlations_raw_file)
+#### summary ####
+##### load raw dataset (optional) ####
+# path_correlations_inner_raw_file <- paste_forward_slash(results_directory_path, "correlations-inner-raw.rds")
+# correlations_inner_raw <- readr::read_rds(path_correlations_inner_raw_file)
 
-#### summarise ####
-correlations_summary <- 
-  add_top_3_and_average_to_pairwise_correlations_for_ticker_combinations_dataframe(correlations_raw)
+##### summarise ####
+correlations_inner_summary <- 
+  add_top_3_and_average_to_inner_correlations_for_ticker_combinations_dataframe(correlations_inner_raw)
 
-### formatted ####
-#### load summary dataset (optional) ####
-# path_correlations_summary_file <- 
-#   paste_forward_slash(results_directory_path, "correlations-summary.rds")
-# correlations_summary <- readr::read_rds(path_correlations_summary_file)
+#### formatted ####
+##### load summary dataset (optional) ####
+# path_correlations_inner_summary_file <- 
+#   paste_forward_slash(results_directory_path, "correlations-inner-summary.rds")
+# correlations_inner_summary <- readr::read_rds(path_correlations_inner_summary_file)
 
-#### format ####
-correlations_formatted <- 
-  format_correlation_summary_statistics_into_table(correlations_summary)
+##### format ####
+correlations_inner_formatted <- 
+  format_inner_correlations_summary_statistics_into_table(correlations_inner_summary)
+
+### cross ####
+#### US ####
+commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(
+  commodity_futures_tickers, analysis = "correlations - cross - US"
+)
+
+##### raw ####
+correlations_cross_US_raw <- make_global_correlations_for_ticker_combinations_dataframe(
+  commodity_pool_tickers, commodity_futures_data, aggregate_CHP_regimes, period_dates, "US"
+)
+
+##### summary ####
+###### load raw dataset (optional) ####
+# path_correlations_cross_US_raw_file <- paste_forward_slash(results_directory_path, "correlations-cross-US-raw.rds")
+# correlations_cross_US_raw <- readr::read_rds(path_correlations_cross_US_raw_file)
+
+###### summarise ####
+correlations_cross_US_summary <- summarise_cross_correlations(correlations_cross_US_raw)
+
+##### formatted ####
+###### load summary dataset (optional) ####
+# path_correlations_cross_US_summary_file <-
+#   paste_forward_slash(results_directory_path, "correlations-cross-US-summary.rds")
+# correlations_cross_US_summary <- readr::read_rds(path_correlations_cross_US_summary_file)
+
+###### format ####
+correlations_cross_US_formatted <- format_cross_correlation_averages(correlations_cross_US_summary)
+
+#### global ####
+commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(
+  commodity_futures_tickers, analysis = "correlations - cross - global"
+)
+
+##### raw ####
+correlations_cross_global_raw <- make_global_correlations_for_ticker_combinations_dataframe(
+  commodity_pool_tickers, commodity_futures_data, aggregate_CHP_regimes, period_dates, "global"
+)
+
+##### summary ####
+###### load raw dataset (optional) ####
+# path_correlations_cross_global_raw_file <- paste_forward_slash(results_directory_path, "correlations-cross-global-raw.rds")
+# correlations_cross_global_raw <- readr::read_rds(path_correlations_cross_global_raw_file)
+
+###### summarise ####
+correlations_cross_global_summary <- summarise_cross_correlations(correlations_cross_global_raw)
+
+##### formatted ####
+###### load summary dataset (optional) ####
+# path_correlations_cross_global_summary_file <-
+#   paste_forward_slash(results_directory_path, "correlations-cross-global-summary.rds")
+# correlations_cross_global_summary <- readr::read_rds(path_correlations_cross_global_summary_file)
+
+###### format ####
+correlations_cross_global_formatted <- format_cross_correlation_averages(correlations_cross_global_summary)
+
 
 ## regressions #################################################################
 commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(
@@ -142,19 +197,51 @@ path_regime_difference_tests_formatted_file <-
 saveRDS(regime_difference_tests_formatted, path_regime_difference_tests_formatted_file)
 
 ## correlations ################################################################
-### raw ####
-path_correlations_raw_file <- paste_forward_slash(results_directory_path, "correlations-raw.rds")
-saveRDS(correlations_raw, path_correlations_raw_file)
+### inner ####
+#### raw ####
+path_correlations_inner_raw_file <- paste_forward_slash(results_directory_path, "correlations-inner-raw.rds")
+saveRDS(correlations_inner_raw, path_correlations_inner_raw_file)
 
-#### summary ####
-path_correlations_summary_file <- 
-  paste_forward_slash(results_directory_path, "correlations-summary.rds")
-saveRDS(correlations_summary, path_correlations_summary_file)
+##### summary ####
+path_correlations_inner_summary_file <- 
+  paste_forward_slash(results_directory_path, "correlations-inner-summary.rds")
+saveRDS(correlations_inner_summary, path_correlations_inner_summary_file)
 
-### formatted ####
-path_correlations_formatted_file <- 
-  paste_forward_slash(results_directory_path, "correlations.rds")
-saveRDS(correlations_formatted, path_correlations_formatted_file)
+#### formatted ####
+path_correlations_inner_formatted_file <- 
+  paste_forward_slash(results_directory_path, "correlations-inner.rds")
+saveRDS(correlations_inner_formatted, path_correlations_inner_formatted_file)
+
+### cross ####
+#### US ####
+##### raw ####
+path_correlations_cross_US_raw_file <- paste_forward_slash(results_directory_path, "correlations-cross-US-raw.rds")
+saveRDS(correlations_cross_US_raw, path_correlations_cross_US_raw_file)
+
+###### summary ####
+path_correlations_cross_US_summary_file <- 
+  paste_forward_slash(results_directory_path, "correlations-cross-US-summary.rds")
+saveRDS(correlations_cross_US_summary, path_correlations_cross_US_summary_file)
+
+##### formatted ####
+path_correlations_cross_US_formatted_file <- 
+  paste_forward_slash(results_directory_path, "correlations-cross-US.rds")
+saveRDS(correlations_cross_US_formatted, path_correlations_cross_US_formatted_file)
+
+#### global ####
+##### raw ####
+path_correlations_cross_global_raw_file <- paste_forward_slash(results_directory_path, "correlations-cross-global-raw.rds")
+saveRDS(correlations_cross_global_raw, path_correlations_cross_global_raw_file)
+
+###### summary ####
+path_correlations_cross_global_summary_file <- 
+  paste_forward_slash(results_directory_path, "correlations-cross-global-summary.rds")
+saveRDS(correlations_cross_global_summary, path_correlations_cross_global_summary_file)
+
+##### formatted ####
+path_correlations_cross_global_formatted_file <- 
+  paste_forward_slash(results_directory_path, "correlations-cross-global.rds")
+saveRDS(correlations_cross_global_formatted, path_correlations_cross_global_formatted_file)
 
 ## regressions #################################################################
 commodity_pool_tickers <- make_commodity_pool_tickers_dataframe(

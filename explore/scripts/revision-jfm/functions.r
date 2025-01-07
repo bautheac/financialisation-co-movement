@@ -132,7 +132,7 @@ filter_commodity_futures_tickers <- function(
   tickers$ticker
 }
 
-make_US_commodity_pool_combinations_for_correlations_analysis <- function(){
+make_US_commodity_pool_combinations_for_correlations_inner_analysis <- function(){
   
   tibble::tibble(
     country = rep("US", 8L),
@@ -143,7 +143,7 @@ make_US_commodity_pool_combinations_for_correlations_analysis <- function(){
   )
 }
 
-make_US_commodity_pool_combinations_for_regressions_analysis <- function(){
+make_US_commodity_pool_combinations_for_correlations_cross_analysis <- function(){
   
   tibble::tibble(
     country = rep("US", 10L),
@@ -154,7 +154,12 @@ make_US_commodity_pool_combinations_for_regressions_analysis <- function(){
   )
 }
 
-make_commodity_pool_tickers_dataframe_for_country_sectors_subsectors_combinations <- function(combinations, all_tickers){
+make_US_commodity_pool_combinations_for_regressions_analysis <- function(){
+  make_US_commodity_pool_combinations_for_correlations_cross_analysis()
+}
+
+make_commodity_pool_tickers_dataframe_for_country_sectors_subsectors_combinations <- 
+  function(combinations, all_tickers){
   
   dplyr::rowwise(combinations) %>% 
     dplyr::mutate(
@@ -162,34 +167,141 @@ make_commodity_pool_tickers_dataframe_for_country_sectors_subsectors_combination
     )
 }
 
-make_commodity_pool_tickers_dataframe <- function(all_tickers, analysis = c("correlations", "regressions")){
-  
-  all_all_all <- tibble::tibble(
-    country = "all", sector = "all", subsector = "all", 
-    tickers = list(filter_commodity_futures_tickers(all_tickers))
-    )
-  
-  US_all_all <- tibble::tibble(
-    country = "US", sector = "all", subsector = "all", 
-    tickers = list(filter_commodity_futures_tickers(all_tickers, "US"))
+make_commodity_pool_tickers_dataframe_entry <- function(country, sector, subsector, tickers){
+  tibble::tibble(
+    country = country, sector = sector, subsector = subsector, tickers = list(tickers)
   )
+}
 
-  US_combinations <- if(analysis == "correlations"){
-    make_US_commodity_pool_combinations_for_correlations_analysis()
-  } else {
-    make_US_commodity_pool_combinations_for_regressions_analysis()
-  }
+make_commodity_pool_tickers_dataframe_skeleton_for_country_sectors_subsectors_combinations <- 
+  function(all_tickers){
+  
+  all_all_all <- make_commodity_pool_tickers_dataframe_entry(
+    "all", "all", "all", filter_commodity_futures_tickers(all_tickers)
+  )
+  
+  US_all_all <- make_commodity_pool_tickers_dataframe_entry(
+    "US", "all", "all", filter_commodity_futures_tickers(all_tickers, "US")
+  )
+  
+  GB_all_all <- make_commodity_pool_tickers_dataframe_entry(
+    "GB", "all", "all", filter_commodity_futures_tickers(all_tickers, "GB")
+  )
+  
+  dplyr::bind_rows(all_all_all, US_all_all, GB_all_all)
+}
+
+include_US_combinations_in_commodity_pool_tickers_dataframe_for_country_sectors_subsectors_combinations <- 
+  function(skeleton, US_combinations){
+    
+    top <- dplyr::slice(skeleton, 1L:2L)
+    bottom <- dplyr::slice(skeleton, 3L)
+    
+    dplyr::bind_rows(top, US_combinations, bottom)
+}
+
+make_commodity_pool_tickers_dataframe_for_correlations_inner_analysis <- function(all_tickers){
+
+  skeleton <- make_commodity_pool_tickers_dataframe_skeleton_for_country_sectors_subsectors_combinations(all_tickers)
+
+  US_combinations <- make_US_commodity_pool_combinations_for_correlations_inner_analysis()
   US_combinations <-
     make_commodity_pool_tickers_dataframe_for_country_sectors_subsectors_combinations(
       US_combinations, all_tickers
     )
   
-  GB_all_all <- tibble::tibble(
-    country = "GB", sector = "all", subsector = "all", 
-    tickers = list(filter_commodity_futures_tickers(all_tickers, "GB"))
-  )
+  include_US_combinations_in_commodity_pool_tickers_dataframe_for_country_sectors_subsectors_combinations(skeleton, US_combinations)
+}
 
-  dplyr::bind_rows(all_all_all, US_all_all, US_combinations, GB_all_all)
+make_commodity_pool_tickers_dataframe_for_correlations_cross_US_analysis <- function(all_tickers){
+
+  skeleton <- make_commodity_pool_tickers_dataframe_skeleton_for_country_sectors_subsectors_combinations(all_tickers)
+
+  US_combinations <- make_US_commodity_pool_combinations_for_correlations_cross_analysis()
+  US_combinations <-
+    make_commodity_pool_tickers_dataframe_for_country_sectors_subsectors_combinations(
+      US_combinations, all_tickers
+    )
+  
+  include_US_combinations_in_commodity_pool_tickers_dataframe_for_country_sectors_subsectors_combinations(skeleton, US_combinations)
+}
+
+make_commodity_country_tickers_dataframe_for_correlations_cross_global_analysis <- function(all_tickers){
+  
+  US <- filter_commodity_futures_tickers(all_tickers, "US")
+  GB <- filter_commodity_futures_tickers(all_tickers, "GB")
+  tibble::tibble(portfolio = c("US", "GB"), tickers = list(US, GB))
+}
+
+make_commodity_sector_tickers_dataframe_for_correlations_cross_global_analysis <- function(all_tickers){
+  
+  agriculturals_US <- filter_commodity_futures_tickers(all_tickers, "US", "agriculturals")
+  energy_US <- filter_commodity_futures_tickers(all_tickers, "US", "energy")
+  metals_US <- filter_commodity_futures_tickers(all_tickers, "US", "metals")
+  metals_GB <- filter_commodity_futures_tickers(all_tickers, "GB", "metals")
+  
+  tibble::tibble(
+    portfolio = c("agriculturals (US)", "energy (US)", "metals (US)", "metals (GB)"),
+    tickers = list(agriculturals_US, energy_US, metals_US, metals_GB)
+    )
+}
+
+make_commodity_subsector_tickers_dataframe_for_correlations_cross_global_analysis <- function(all_tickers){
+  
+  grains_US <- filter_commodity_futures_tickers(all_tickers, "US", "agriculturals", "grains")
+  livestock_US <- filter_commodity_futures_tickers(all_tickers, "US", "agriculturals", "livestock")
+  softs_US <- filter_commodity_futures_tickers(all_tickers, "US", "agriculturals", "softs")
+  petroleum_US <- filter_commodity_futures_tickers(all_tickers, "US", "energy", "petroleum")
+  gas_US <- filter_commodity_futures_tickers(all_tickers, "US", "energy", "gas")
+  base_US <- filter_commodity_futures_tickers(all_tickers, "US", "metals", "base")
+  precious_US <- filter_commodity_futures_tickers(all_tickers, "US", "metals", "precious")
+  base_GB <- filter_commodity_futures_tickers(all_tickers, "GB", "metals", "base")
+
+  
+  tibble::tibble(
+    portfolio = c(
+      "grains (US)", "livestock (US)", "softs (US)", "petroleum (US)", "gas (US)",
+      "base (US)", "precious (US)", "base (GB)"
+      ),
+    tickers = list(
+      grains_US, livestock_US, softs_US, petroleum_US, gas_US, base_US, precious_US, base_GB
+      )
+    )
+}
+
+make_commodity_pool_tickers_dataframe_for_correlations_cross_global_analysis <- function(all_tickers){
+  
+  countries <- make_commodity_country_tickers_dataframe_for_correlations_cross_global_analysis(all_tickers)
+  sectors <- make_commodity_sector_tickers_dataframe_for_correlations_cross_global_analysis(all_tickers)
+  subsectors <- make_commodity_subsector_tickers_dataframe_for_correlations_cross_global_analysis(all_tickers)
+  
+
+  pool <- c(rep("countries", nrow(countries)), rep("sectors", nrow(sectors)), rep("subsectors", nrow(subsectors)))
+  
+  dplyr::bind_rows(countries, sectors, subsectors) |> dplyr::mutate(pool = pool) |>
+    dplyr::select(pool, dplyr::everything())
+}
+
+make_commodity_pool_tickers_dataframe_for_regressions_analysis <- function(all_tickers){
+
+  skeleton <- make_commodity_pool_tickers_dataframe_skeleton_for_country_sectors_subsectors_combinations(all_tickers)
+
+  US_combinations <- make_US_commodity_pool_combinations_for_regressions_analysis()
+  US_combinations <-
+    make_commodity_pool_tickers_dataframe_for_country_sectors_subsectors_combinations(
+      US_combinations, all_tickers
+    )
+  
+  include_US_combinations_in_commodity_pool_tickers_dataframe_for_country_sectors_subsectors_combinations(skeleton, US_combinations)
+}
+
+make_commodity_pool_tickers_dataframe <- function(
+    all_tickers, 
+    analysis = c("correlations - inner", "correlations - cross", "regressions")
+    ){
+
+  fun <- paste0("make_commodity_pool_tickers_dataframe_for_", gsub(" - ", "_", analysis), "_analysis")
+  do.call(fun, args = list(all_tickers))
 }
 
 ### commodity futures levels data ##############################################
@@ -641,7 +753,6 @@ load_commodity_factor_returns <- function(){
   )
 } 
 
-
 load_data <- function(){
   ## time boundaries ####
   date_start <<- "1996-01-01"; date_end <<- "2018-12-14"
@@ -1005,7 +1116,8 @@ compute_correlations <- function(df) {
   cor( dplyr::select(df, -date), use = "pairwise.complete.obs")
 }
 
-make_pairwise_correlations_for_ticker_combinations_dataframe <- function(
+## inner #######################################################################
+make_inner_correlations_for_ticker_combinations_dataframe <- function(
     combinations, commodity_futures_data, aggregate_CHP_regimes, period_dates
     ){
   
@@ -1015,6 +1127,272 @@ make_pairwise_correlations_for_ticker_combinations_dataframe <- function(
   )
   
   dplyr::mutate(combinations, results = analysis)
+}
+
+## cross #######################################################################
+extract_relative_change_for_field_frequency_tickerscombination <- function(
+    commodity_futures_data, field, frequency, tickers
+){
+  dplyr::filter(
+    commodity_futures_data, type == "return", field == field, frequency == frequency,
+    `active contract ticker` %in% tickers
+  ) %>% dplyr::select(ticker = `active contract ticker`, date, value)
+}
+
+make_EW_portfolio_for_tickers <- function(tickers, commodity_futures_data){
+  extract_relative_change_for_field_frequency_tickerscombination(
+    commodity_futures_data, "PX_LAST", "day", tickers
+  ) %>% dplyr::group_by(date) %>% dplyr::summarise(
+    return = mean(value, na.rm = TRUE), .groups = "drop"
+  ) %>% dplyr::filter(!is.na(return) & is.finite(return) & return != 1 & return != -1)
+}
+
+make_EW_portfolios_returns_for_ticker_combinations_dataframe <- 
+  function(combinations, commodity_futures_data) {
+    
+    group_vars <- names(combinations) %>% setdiff("tickers")
+    
+    dplyr::group_by(combinations, dplyr::across(dplyr::all_of(group_vars))) %>%
+      dplyr::mutate(
+        returns = purrr::map(tickers, ~make_EW_portfolio_for_tickers(., commodity_futures_data))
+      ) %>%
+      dplyr::ungroup()
+}
+
+
+extract_aggregate_CHP_regimes_by_timespan <- function(aggregate_CHP_regimes, timespan){
+  dplyr::filter(aggregate_CHP_regimes, timespan == !!timespan) %>% 
+    dplyr::select(regimes) %>% purrr::flatten_df()
+}
+
+make_cross_US_correlations_for_ticker_combinations_dataframe_by_period_no_regimes <-
+  function(EW_portfolio_returns, period_dates){
+    
+    groups <- c("country", "sector", "subsector")
+    purrr::map_df(groups, function(group){
+
+      right_groups <- groups[match(group, groups):length(groups)][-1] 
+      
+      group <- rlang::ensym(group)
+      dplyr::select(EW_portfolio_returns, !!group, dplyr::all_of(right_groups), returns) %>% 
+        dplyr::filter(
+          !!group != "all" & dplyr::if_all(dplyr::all_of(right_groups), ~ . == "all") 
+        ) %>% dplyr::select(-dplyr::any_of(right_groups)) %>% tidyr::unnest(returns) %>%
+        dplyr::left_join(period_dates, by = "date") %>% dplyr::filter(!is.na(period)) %>%
+        tidyr::pivot_wider(names_from = group, values_from = return) %>%
+        dplyr::arrange(period, date) %>% dplyr::filter(complete.cases(.)) %>%
+        dplyr::group_by(period) %>% tidyr::nest() %>%
+        dplyr::mutate(results = purrr::map(data, compute_correlations)) %>% dplyr::ungroup() %>% 
+        dplyr::mutate(pool = rlang::as_string(group), regime = "whole period") %>%
+        dplyr::relocate(pool, .before = 1L) %>% dplyr::relocate(regime, .after = period)
+    })
+}
+
+make_cross_global_correlations_for_ticker_combinations_dataframe_by_period_no_regimes <-
+  function(EW_portfolio_returns, period_dates){
+    
+  dplyr::select(EW_portfolio_returns, -tickers) |> tidyr::unnest(returns) |> 
+    dplyr::left_join(period_dates, by = "date") |> dplyr::filter(!is.na(period)) |>
+    dplyr::group_by(pool) |> tidyr::nest() |> 
+    dplyr::mutate(results = purrr::map(data, function(df){
+      tidyr::pivot_wider(df, names_from = portfolio, values_from = return) |>
+        dplyr::arrange(period, date) |> 
+        dplyr::filter(complete.cases(dplyr::across(dplyr::everything()))) |>
+        dplyr::group_by(period) |> tidyr::nest() |>
+        dplyr::mutate(results = purrr::map(data, compute_correlations)) |> dplyr::ungroup() |> 
+        dplyr::mutate(regime = "whole period") |> dplyr::relocate(regime, .after = period)
+    })) |> dplyr::ungroup() |> dplyr::select(-data) |> tidyr::unnest(results) 
+}
+
+make_cross_US_correlations_for_ticker_combinations_dataframe_by_period_regimes <-
+  function(EW_portfolio_returns, aggregate_CHP_regimes_by_period){
+    
+  groups <- c("country", "sector", "subsector")
+  purrr::map_df(groups, function(group){
+    
+    right_groups <- groups[match(group, groups):length(groups)][-1] 
+    
+    group <- rlang::ensym(group)
+    dplyr::select(EW_portfolio_returns, !!group, dplyr::all_of(right_groups), returns) %>% 
+      dplyr::filter(
+        !!group != "all" & dplyr::if_all(dplyr::all_of(right_groups), ~ . == "all") 
+      ) %>% dplyr::select(-dplyr::any_of(right_groups)) %>% tidyr::unnest(returns) %>%
+      dplyr::left_join(aggregate_CHP_regimes_by_period, by = "date") %>% 
+      dplyr::filter(!is.na(period)) %>%
+      tidyr::pivot_wider(names_from = group, values_from = return) %>%
+      dplyr::arrange(period, date) %>% dplyr::filter(complete.cases(.)) %>%
+      dplyr::group_by(period, regime) %>% tidyr::nest() %>%
+      dplyr::mutate(results = purrr::map(data, compute_correlations)) %>%
+      dplyr::ungroup() %>% dplyr::mutate(pool = rlang::as_string(group)) %>%
+      dplyr::relocate(pool, .before = 1L)
+  })
+}
+
+make_cross_global_correlations_for_ticker_combinations_dataframe_by_period_regimes <-
+  function(EW_portfolio_returns, aggregate_CHP_regimes_by_period){
+    
+  dplyr::select(EW_portfolio_returns, -tickers) |> tidyr::unnest(returns) |> 
+    dplyr::left_join(aggregate_CHP_regimes_by_period, by = "date") |> 
+    dplyr::filter(!is.na(period)) |> dplyr::group_by(pool, regime) |> tidyr::nest() |> 
+    dplyr::mutate(results = purrr::map(data, function(df){
+      tidyr::pivot_wider(df, names_from = portfolio, values_from = return) |>
+        dplyr::arrange(period, date) |> 
+        dplyr::filter(complete.cases(dplyr::across(dplyr::everything()))) |>
+        dplyr::group_by(period) |> tidyr::nest() |>
+        dplyr::mutate(results = purrr::map(data, compute_correlations)) |> 
+        dplyr::ungroup()
+    })) |> dplyr::ungroup() |> dplyr::select(-data) |> tidyr::unnest(results) 
+}
+
+
+make_cross_US_correlations_for_ticker_combinations_dataframe_by_period <- 
+  function(EW_portfolio_returns, aggregate_CHP_regimes_by_period, period_dates){
+    
+  whole <- make_cross_US_correlations_for_ticker_combinations_dataframe_by_period_no_regimes(
+      EW_portfolio_returns, period_dates
+    )
+  regimes <- make_cross_US_correlations_for_ticker_combinations_dataframe_by_period_regimes(
+    EW_portfolio_returns, aggregate_CHP_regimes_by_period
+  )
+  
+  dplyr::bind_rows(whole, regimes) %>% dplyr::arrange(pool, period, regime)
+}
+
+make_cross_global_correlations_for_ticker_combinations_dataframe_by_period <- 
+  function(EW_portfolio_returns, aggregate_CHP_regimes_by_period, period_dates){
+    
+  whole <- make_cross_global_correlations_for_ticker_combinations_dataframe_by_period_no_regimes(
+      EW_portfolio_returns, period_dates
+    )
+  regimes <- make_cross_global_correlations_for_ticker_combinations_dataframe_by_period_regimes(
+    EW_portfolio_returns, aggregate_CHP_regimes_by_period
+  )
+  
+  dplyr::bind_rows(whole, regimes) %>% dplyr::arrange(pool, period, regime)
+}
+
+make_cross_US_correlations_for_ticker_combinations_dataframe_by_year_no_regimes <-
+  function(EW_portfolio_returns, period_dates = NULL){
+    
+  groups <- c("country", "sector", "subsector")
+  purrr::map_df(groups, function(group){
+    
+    right_groups <- groups[match(group, groups):length(groups)][-1] 
+    
+    group <- rlang::ensym(group)
+    dplyr::select(EW_portfolio_returns, !!group, dplyr::all_of(right_groups), returns) %>% 
+      dplyr::filter(
+        !!group != "all" & dplyr::if_all(dplyr::all_of(right_groups), ~ . == "all") 
+      ) %>% dplyr::select(-dplyr::any_of(right_groups)) %>% tidyr::unnest(returns) %>%
+      tidyr::pivot_wider(names_from = group, values_from = return) %>%
+      dplyr::arrange(date) %>% dplyr::filter(complete.cases(.)) %>%
+      dplyr::mutate(year = lubridate::year(date)) %>% dplyr::filter(year >= 1997L) %>%
+      dplyr::group_by(year) %>% tidyr::nest() %>% 
+        dplyr::mutate(results = purrr::map(data, compute_correlations)) %>% 
+      dplyr::ungroup() %>% 
+      dplyr::mutate(pool = rlang::as_string(group), regime = "whole period") %>%
+      dplyr::relocate(pool, .before = 1L) %>% dplyr::relocate(regime, .after = year)
+  })
+}
+
+make_cross_global_correlations_for_ticker_combinations_dataframe_by_year_no_regimes <-
+  function(EW_portfolio_returns, period_dates = NULL){
+    
+  dplyr::select(EW_portfolio_returns, -tickers) |> tidyr::unnest(returns) |> 
+    dplyr::group_by(pool) |> tidyr::nest() |> 
+    dplyr::mutate(results = purrr::map(data, function(df){
+      tidyr::pivot_wider(df, names_from = portfolio, values_from = return) |>
+        dplyr::arrange(date) |> 
+        dplyr::filter(complete.cases(dplyr::across(dplyr::everything()))) |>
+        dplyr::mutate(year = lubridate::year(date)) |> dplyr::filter(year >= 1997L) |> 
+        dplyr::group_by(year) |> 
+        tidyr::nest() |> dplyr::mutate(results = purrr::map(data, compute_correlations)) |> 
+        dplyr::ungroup() |> dplyr::mutate(regime = "whole period") |> 
+        dplyr::relocate(regime, .after = year)
+    })) |> dplyr::ungroup() |> dplyr::select(-data) |> tidyr::unnest(results) 
+}
+
+make_cross_US_correlations_for_ticker_combinations_dataframe_by_year_regimes <-
+  function(EW_portfolio_returns, aggregate_CHP_regimes_by_year){
+    
+  groups <- c("country", "sector", "subsector")
+  purrr::map_df(groups, function(group){
+    
+    right_groups <- groups[match(group, groups):length(groups)][-1] 
+    
+    group <- rlang::ensym(group)
+    dplyr::select(EW_portfolio_returns, !!group, dplyr::all_of(right_groups), returns) %>% 
+      dplyr::filter(
+        !!group != "all" & dplyr::if_all(dplyr::all_of(right_groups), ~ . == "all") 
+      ) %>% dplyr::select(-dplyr::any_of(right_groups)) %>% tidyr::unnest(returns) %>%
+      dplyr::left_join(aggregate_CHP_regimes_by_year, by = "date") %>% 
+      dplyr::filter(!is.na(year)) %>%
+      tidyr::pivot_wider(names_from = group, values_from = return) %>%
+      dplyr::arrange(year, date) %>% dplyr::filter(complete.cases(.), year >= 1997L) %>%
+      dplyr::group_by(year, regime) %>% tidyr::nest() %>%
+      dplyr::mutate(results = purrr::map(data, compute_correlations)) %>%
+      dplyr::ungroup() %>% dplyr::mutate(pool = rlang::as_string(group)) %>%
+      dplyr::relocate(pool, .before = 1L)
+  })
+}
+
+make_cross_global_correlations_for_ticker_combinations_dataframe_by_year_regimes <-
+  function(EW_portfolio_returns, aggregate_CHP_regimes_by_year){
+    
+  dplyr::select(EW_portfolio_returns, -tickers) |> tidyr::unnest(returns) |> 
+    dplyr::left_join(aggregate_CHP_regimes_by_year, by = "date") |> 
+    dplyr::filter(!is.na(year), year >= 1997L) |> dplyr::group_by(pool) |> tidyr::nest() |> 
+    dplyr::mutate(results = purrr::map(data, function(df){
+      tidyr::pivot_wider(df, names_from = portfolio, values_from = return) |>
+        dplyr::arrange(year, date) |> 
+        dplyr::filter(complete.cases(dplyr::across(dplyr::everything()))) |>
+        dplyr::group_by(year, regime) |> tidyr::nest() |> 
+        dplyr::mutate(results = purrr::map(data, compute_correlations)) |> 
+        dplyr::ungroup() |> dplyr::relocate(regime, .after = year)
+    })) |> dplyr::ungroup() |> dplyr::select(-data) |> tidyr::unnest(results) 
+}
+
+make_cross_correlations_for_ticker_combinations_dataframe_for_spanmarket_and_spantime <- function(
+    EW_portfolio_returns, aggregate_CHP_regimes, period_dates = NULL,
+    span_market = c("US", "global"), span_time = c("period", "year")
+    ){
+
+  function_whole <- paste0(
+    "make_cross_", span_market, "_correlations_for_ticker_combinations_dataframe_by_", span_time, "_no_regimes"
+  )  
+  whole <- match.fun(function_whole)(EW_portfolio_returns, period_dates)
+  
+  function_regimes <- paste0(
+    "make_cross_", span_market, "_correlations_for_ticker_combinations_dataframe_by_", span_time, "_regimes"
+  )
+  regimes <- match.fun(function_regimes)(EW_portfolio_returns, aggregate_CHP_regimes)
+
+  dplyr::bind_rows(whole, regimes) %>% dplyr::arrange(.[[1L]], .[[2L]], .[[3L]])
+}
+
+
+make_global_correlations_for_ticker_combinations_dataframe <- function(
+    combinations, commodity_futures_data, aggregate_CHP_regimes, period_dates, 
+    span_market = c("US", "global")
+    ){
+  
+  EW_portfolio_returns <- 
+    make_EW_portfolios_returns_for_ticker_combinations_dataframe(combinations, commodity_futures_data)
+  
+  aggregate_CHP_regimes_by_period <-
+    extract_aggregate_CHP_regimes_by_timespan(aggregate_CHP_regimes, "period")
+  periods <- make_cross_correlations_for_ticker_combinations_dataframe_for_spanmarket_and_spantime(
+    EW_portfolio_returns = EW_portfolio_returns, aggregate_CHP_regimes = aggregate_CHP_regimes_by_period, 
+    period_dates = period_dates, span_market = span_market, span_time = "period"
+  )
+
+  aggregate_CHP_regimes_by_year <- extract_aggregate_CHP_regimes_by_timespan(aggregate_CHP_regimes, "year")
+  years <- make_cross_correlations_for_ticker_combinations_dataframe_for_spanmarket_and_spantime(
+    EW_portfolio_returns = EW_portfolio_returns, aggregate_CHP_regimes = aggregate_CHP_regimes_by_year, 
+    span_market = span_market,  span_time = "year"
+  )
+  
+  tibble::tibble(timespan = c("period", "year"), results = list(periods, years))
 }
 
 ## regressions #################################################################
@@ -1234,7 +1612,7 @@ compute_average_pairwise_correlations_from_correlation_matrix <- function(correl
   mean(pairwise_correlations$correlation, na.rm = T)
 }
 
-add_top_3_and_average_to_pairwise_correlations_for_ticker_combinations_dataframe <- function(
+add_top_3_and_average_to_inner_correlations_for_ticker_combinations_dataframe <- function(
     pairwise_correlations_for_ticker_combinations_dataframe
 ){
   
@@ -1247,6 +1625,33 @@ add_top_3_and_average_to_pairwise_correlations_for_ticker_combinations_dataframe
     ) %>% 
     dplyr::select(-c("tickers", "results"))
 }
+
+
+extract_unique_pairwise_correlations_from_correlation_matix <- function(correlation_matrix){
+
+  correlation_matrix[upper.tri(correlation_matrix, diag = FALSE)]
+}
+
+calculate_correlation_averages <- function(cross_correlations){
+  
+  dplyr::mutate(cross_correlations, summary = purrr::map(results, function(results_for_timespan){
+      dplyr::mutate(results_for_timespan, average = purrr::map(results, function(correlation_matix){
+        pairwise_correlations <-
+          extract_unique_pairwise_correlations_from_correlation_matix(correlation_matix)
+        mean(pairwise_correlations, na.rm = TRUE)
+      })) %>% dplyr::select(-c(data,results)) %>% tidyr::unnest(average)
+    }) 
+    ) %>% dplyr::select(-results)
+}
+
+
+summarise_cross_correlations <- function(cross_correlations){
+  
+  averages <- calculate_correlation_averages(cross_correlations)
+  
+  return(averages)
+}
+
 
 ## regressions #################################################################
 ### index ######################################################################
@@ -1385,8 +1790,10 @@ format_regime_difference_tests_summary_into_table <- function(summary){
 }
 
 ## correlations ################################################################
-### top 3 ######################################################################
-#### local functions ####
+### inner
+#### top 3 #####################################################################
+#
+##### local functions ####
 map_solution_to_problem_domain_jargon_in_correlation_top_3_unnested_results_summary <- function(
     unnested_correlations_top_3_results_summary
 ){
@@ -1407,7 +1814,7 @@ map_solution_to_problem_domain_jargon_in_correlation_top_3_unnested_results_summ
 }
 ####
 
-format_correlation_summary_statistics_into_table <- function(correlations_summary){
+format_inner_correlations_summary_statistics_into_table <- function(correlations_summary){
   
   top_3 <- unnest_analysis_statistic_results_summary(correlations_summary, "top 3") %>%
     dplyr::mutate(`top-bottom 3` = factor(`top-bottom 3`, levels = c("top", "bottom"))) %>%
@@ -1423,6 +1830,14 @@ format_correlation_summary_statistics_into_table <- function(correlations_summar
     mutate_appropriate_columns_to_factors_in_analysis_unnested_results_summary() %>%
     dplyr::mutate(dplyr::across(.cols = c(average, correlation), ~round(.x, digits = 4L))) %>%
     arrange_columns_in_analysis_results_summary()
+}
+
+### cross ######################################################################
+format_cross_correlation_averages <- function(correlations_cross_summary){
+  
+  dplyr::mutate(correlations_cross_summary, summary = purrr::map(summary, function(summary){
+    dplyr::mutate(summary, average = purrr::map_dbl(average, ~round(., digits = 4L)))
+  })) 
 }
 
 ## regressions #################################################################
