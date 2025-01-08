@@ -100,6 +100,17 @@ correlations_inner_split <- split_analysis_summary_results_into_category_datafra
   correlations_inner_raw, correlations_inner_helpers
   )
 
+correlations_cross_split <- purrr::map(c("US", "global"), function(x){
+  file_name <- paste0("correlations-cross-", x, ".rds")
+  results <- readr::read_rds(file.path(path_directory, "results", file_name))
+  periods <- results$summary[[1L]] |> tidyr::pivot_wider(names_from = period, values_from = average)
+  years <- results$summary[[2L]] |> tidyr::pivot_wider(names_from = year, values_from = average)
+  
+  list(period = list(Average = periods), year = list(Average = years))
+  }
+) |> setNames(c("US", "global"))
+
+
 regressions_index_raw <- readr::read_rds(file.path(path_directory, "results", "regressions-index.rds"))
 regressions_index_helpers <- list(
   period = list(
@@ -140,6 +151,6 @@ regressions_factors_split <- split_analysis_summary_results_into_category_datafr
 
 
 results <- list(
-  correlations = list(inner = correlations_inner_split), 
+  correlations = list(inner = correlations_inner_split, cross = correlations_cross_split), 
   regressions = list(index = regressions_index_split, factors = regressions_factors_split)
 )

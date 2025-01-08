@@ -21,13 +21,17 @@ source(file.path(path_directory, "modules", "results_summary.r"))
 
 sidebar <- dashboardSidebar(
   sidebarMenu(
-    menuItem("Correlations", tabName = "correlations", icon = icon("table"),
-             menuSubItem("Inner", tabName = "correlations-inner")
+    menuItem("Correlations", tabName = "correlations",
+             menuItem("Inner", tabName = "correlations-inner"),
+             menuItem("Cross", tabName = "correlations-cross", 
+                      menuItem("US", tabName = "correlations-cross-US"),
+                      menuItem("Global", tabName = "correlations-cross-global")
+            )
     
     ),
-    menuItem("Regressions", icon = icon("table"),
-             menuSubItem("Index", tabName = "regressions-index"),
-             menuSubItem("Factors", tabName = "regressions-factors")
+    menuItem("Regressions",
+             menuItem("Index", tabName = "regressions-index"),
+             menuItem("Factors", tabName = "regressions-factors")
     )
   )
 )
@@ -37,6 +41,13 @@ body <- dashboardBody(
     tabItem(tabName = "correlations-inner", results_summary_UI("correlations-inner", list(
       period = results$correlations$inner$period, year = results$correlations$inner$year
     ))),
+    tabItem(tabName = "correlations-cross-US", results_summary_UI("correlations-cross-US", list(
+      period = results$correlations$cross$US$period, year = results$correlations$cross$US$year
+    ))),
+    tabItem(tabName = "correlations-cross-global", results_summary_UI("correlations-cross-global", list(
+      period = results$correlations$cross$global$period, year = results$correlations$cross$global$year
+    ))),
+    tabItem(tabName = "correlations-cross", h2("Cross")),
     tabItem(tabName = "regressions-index", results_summary_UI("regressions-index", list(
       period = results$regressions$index$period, year = results$regressions$index$year
     ))),
@@ -53,6 +64,13 @@ ui <- dashboardPage(
 server <- function(input, output) {
   results_summary_Server("correlations-inner", list(
     period = results$correlations$inner$period, year = results$correlations$inner$year
+  ))
+  
+  results_summary_Server("correlations-cross-US", list(
+    period = results$correlations$cross$US$period, year = results$correlations$cross$US$year
+  ))
+  results_summary_Server("correlations-cross-global", list(
+    period = results$correlations$cross$global$period, year = results$correlations$cross$global$year
   ))
   
   results_summary_Server("regressions-index", list(
