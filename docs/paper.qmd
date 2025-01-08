@@ -32,7 +32,7 @@ format:
   elsevier-pdf:
     keep-tex: true
     journal:  
-      name: Journal of Futures Markets
+      name: the Journal of Futures Markets
       formatting: preprint
       model: 3p
       cite-style: authoryear
@@ -274,7 +274,7 @@ In the second model hedgers are seen as liquidity providers as in @kang_tale_202
 \medskip
 
 Financialisation was a global phenomenon, through the channel of index investment it simultaneously influenced the entire spectrum of liquid commodities, eventually spurring the transformation of commodity markets from a collection of idiosyncratic markets into a more cohesive collection akin to an asset class. In this context, interconnectedness emerges as a crucial aspect that warrants thorough examination.   
-We strive to address this issue by first examining the average returns pairwise correlations between commodities across the entire cross-section of the commodity assets considered in the study as well as by country, sector and sub-sector. @tbl-correlations-inner-periods shows the results for the four periods of interest with the results reported for the entire period as well as for periods of **backwardation** and **contango**. For the entire sample the average pairwise correlation jumps from 0.07 in the first period to 0.16 over financialisation. This finding indicates higher interdependence within the full cross-section of commodities starting with the financialisation period, consistent with the empirical findings in @fryMcKibbin_evolution_2023 and @mayer_financialization_2017 as well as with the theoretical model of @basak_model_2016. The sector analysis sheds light on the driving force behind these changes. The US metals see the sharpest increase in pairwise correlations going from 0.22 over the past period to 0.56 over financialisation while the three other sectors see a much smaller percentage increase during financialisation relative to the past period. These results thus suggest that the US metals sector was the driving force behind increased average pairwise correlations during financialisation, a new observation to the best of our knowledge. The pattern of correlations is very similar across phases of **backwardation** and **contango** for all the sectors and sub-sectors over the past and financialisation periods. In this context, the ontological consequences of financialisation are better observed from an investment perspective as illustrated in @tbl-correlations-cross-periods where we observe average pairwise correlation coefficients between equally weighted portfolios of US traded commodity assets grouped by sub-sector. Although modest in magnitude, these exhibit a telling pattern, mirroring that shown by the individual commodity returns in @tbl-stats-combined, with a substantially higher average coefficient over **backwardation** phases in the first period (0.12 vs. 0.03) and the pattern reversed over financilisation with an average coefficient substantially higher in **contango** (0.12 vs. 0.02).  
+We strive to address this issue by first examining the average returns pairwise correlations between commodities across the entire cross-section of the commodity assets considered in the study as well as by country, sector and sub-sector. @tbl-correlations-inner-periods shows the results for the four periods of interest with the results reported for the entire period as well as for periods of **backwardation** and **contango**. For the entire sample the average pairwise correlation jumps from 0.07 in the first period to 0.16 over financialisation. This finding indicates higher interdependence within the full cross-section of commodities starting with the financialisation period, consistent with the empirical findings in @fryMcKibbin_evolution_2023 and @mayer_financialization_2017 as well as with the theoretical model of @basak_model_2016. The sector analysis sheds light on the driving force behind these changes. The US metals see the sharpest increase in pairwise correlations going from 0.22 over the past period to 0.56 over financialisation while the three other sectors see a much smaller percentage increase during financialisation relative to the past period. These results thus suggest that the US metals sector was the driving force behind increased average pairwise correlations during financialisation, a new observation to the best of our knowledge. The pattern of correlations is very similar across phases of **backwardation** and **contango** for all the sectors and sub-sectors over the past and financialisation periods. In this context, the ontological consequences of financialisation are better observed from an investment perspective as illustrated in @tbl-correlations-cross-periods where we observe average pairwise correlation coefficients between equally weighted portfolios of US traded commodity assets grouped by sub-sector^[A more detailed breakdown of country, sector and subsector average pairwise correlations is provided in the attached [Internet Appendix](http://bautheac.duckdns.org:3838/bautheac/revision-jfm/).]. Although modest in magnitude, these exhibit a telling pattern, mirroring that shown by the individual commodity returns in @tbl-stats-combined, with a substantially higher average coefficient over **backwardation** phases in the first period (0.12 vs. 0.03) and the pattern reversed over financilisation with an average coefficient substantially higher in **contango** (0.12 vs. 0.02).  
 We break down @tbl-correlations-inner-periods's average correlations by year in @tbl-correlations-inner-years. For the full sample of assets, the average pairwise correlations remain in the 0.06–0.08 range from 1998 through 2003, before suddenly increasing to 0.12 from 2003 to 2004. This suggests 2004 as a distinct break point for the onset of financialisation, as noted in several studies [@baker_financialization_2021; @tang_index_2012]. We further observe that the US metals appear to have played a major role in this as the increase seems driven by the sector which average pairwise correlation more than doubles (0.49 vs 0.22) over the period.   
 
 \medskip
@@ -417,54 +417,6 @@ coloured_columns <- 2L:5L
 
 make_table(table_name, columns_to_collapse_rows_for, colnames, align, longtable, bold_columns, coloured_columns)
 ```
-
-\newpage
-
-
-```{r}
-#| eval: false
-#| label: tbl-experimental
-#| tbl-cap: "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum."
-#| tbl-subcap: 
-#|     - "Average pairwise inner correlations"
-#|     - "Average pairwise cross correlations"
-#| layout-nrows: 2
-
-table1_format <- list(
-  table_name = "correlations - inner - periods",
-  columns_to_collapse_rows_for = c("country", "sector", "subsector"),
-  longtable = FALSE,
-  colnames = c(sectors, "regime", periods),
-  align = make_series_of_repeated_chars(list(l = 3L, r = 5L)),
-  bold_columns = 1L:8L, 
-  coloured_columns = 5L:8L
-  )
-table2_format <- list(
-  table_name = "correlations - cross - periods",
-  columns_to_collapse_rows_for = c("portfolios", "regime"),
-  longtable = TRUE,
-  colnames = c("portfolios", "regime", periods),
-  align = make_series_of_repeated_chars(list(l = 1L, r = 5L)),
-  bold_columns = 1L:2L, 
-  coloured_columns = 3L:6L
-)
-formats <- list(table1_format, table2_format)
-
-get_results(tables, table1_format$table_name) %>% dplyr::mutate(dplyr::across(dplyr::where(is.factor), as.character)) %>%
-    collapse_rows(table1_format$columns_to_collapse_rows_for) %>%
-    kable(booktabs = T, longtable = table1_format$longtable, col.names = table1_format$colnames, align = table1_format$align, escape = FALSE) %>%
-    kable_styling(font_size = 7L) %>%
-    row_spec(0L, bold = TRUE, color = "black") %>%
-    column_spec(table1_format$bold_columns, bold = TRUE) %>% column_spec(table1_format$coloured_columns, color = "#4285f4")
-
-get_results(tables, table2_format$table_name) %>% dplyr::mutate(dplyr::across(dplyr::where(is.factor), as.character)) %>%
-    collapse_rows(table2_format$columns_to_collapse_rows_for) %>%
-    kable(booktabs = T, longtable = table2_format$longtable, col.names = table2_format$colnames, align = table2_format$align, escape = FALSE) %>%
-    kable_styling(font_size = 7L) %>%
-    row_spec(0L, bold = TRUE, color = "black") %>%
-    column_spec(table2_format$bold_columns, bold = TRUE) %>% column_spec(table2_format$coloured_columns, color = "#4285f4")
-```
-
 
 \newpage
 
