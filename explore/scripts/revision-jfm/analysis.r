@@ -14,7 +14,16 @@ plan(multisession, workers = parallel::detectCores())
 ## descriptive stats ###########################################################
 ### equally weighted portfolios ################################################
 #### raw ####
-descriptive_stats_ew_portfolios_raw <- make_ew_portfolios_stats()
+descriptive_stats_ew_portfolios_raw <- make_ew_portfolios_stats_raw()
+
+#### summary ####
+##### load raw dataset (optional) ####
+# path_descriptive_stats_ew_portfolios_raw_file <- 
+#   paste_forward_slash(results_directory_path, "descriptive-stats-ew-portfolios-raw.rds")
+# descriptive_stats_ew_portfolios_raw <- readr::read_rds(path_descriptive_stats_ew_portfolios_raw_file)
+
+##### summarise ####
+descriptive_stats_ew_portfolios_summary <- make_ew_portfolios_stats_summary(descriptive_stats_ew_portfolios_raw)
 
 
 
@@ -208,10 +217,16 @@ regressions_factors_formatted <-
 
 # export #######################################################################
 ## descriptive stats ###########################################################
-### raw ####
+### equally weighted portfolios ################################################
+#### raw ####
 path_descriptive_stats_ew_portfolios_raw_file <- 
   paste_forward_slash(results_directory_path, "descriptive-stats-ew-portfolios-raw.rds")
 saveRDS(descriptive_stats_ew_portfolios_raw, path_descriptive_stats_ew_portfolios_raw_file)
+#### summary ####
+path_descriptive_stats_ew_portfolios_summary_file <- 
+  paste_forward_slash(results_directory_path, "descriptive-stats-ew-portfolios-summary.rds")
+saveRDS(descriptive_stats_ew_portfolios_summary, path_descriptive_stats_ew_portfolios_summary_file)
+
 
 ## regime difference tests #####################################################
 ### raw ####

@@ -1035,7 +1035,7 @@ compute_ew_sector_portfolio_stats <- function(ew_sector_portfolio_returns, aggre
   ) |> dplyr::select(-returns)
 }
 
-make_ew_portfolios_stats <- function(){
+make_ew_portfolios_stats_raw <- function(){
   pools <- make_ticker_pools_for_stats()
   
   returns <- compute_ew_sector_portfolio_returns(pools)
@@ -1045,6 +1045,26 @@ make_ew_portfolios_stats <- function(){
   stats <- compute_ew_sector_portfolio_stats(returns, regimes)
   
   return(stats)
+}
+
+
+make_ew_portfolios_stats_summary <- function(portfolios_stats_raw) {
+  dplyr::mutate(
+    portfolios_stats_raw,
+    stats = purrr::map(stats, function(stats){
+      dplyr::mutate(
+        stats,
+        stats = purrr::map(stats, function(stats){
+          dplyr::mutate(
+            stats, 
+            p_value = purrr::map_dbl(mean, ~ .x$p.value),
+            mean = purrr::map_dbl(mean, ~ .x$estimate[[1L]]) * 252L,
+            volatility = volatility * sqrt(252L)
+          ) |> dplyr::relocate(volatility, .after = dplyr::everything())
+        }) 
+      ) 
+    }) 
+  ) 
 }
 
 ## regime difference tests #####################################################
