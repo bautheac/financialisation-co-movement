@@ -10,6 +10,14 @@ source(here::here("explore", "scripts", "revision-jfm", "functions.r"))
 pacman::p_load(furrr)
 plan(multisession, workers = parallel::detectCores())
 
+
+## descriptive stats ###########################################################
+### equally weighted portfolios ################################################
+#### raw ####
+descriptive_stats_ew_portfolios_raw <- make_ew_portfolios_stats()
+
+
+
 ## regime difference tests #####################################################
 ### raw ####
 regime_difference_tests_raw <- make_regime_difference_tests()
@@ -179,7 +187,32 @@ regressions_factors_formatted <-
   format_regression_factor_summary_statistics_into_table(regressions_factors_summary)
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # export #######################################################################
+## descriptive stats ###########################################################
+### raw ####
+path_descriptive_stats_ew_portfolios_raw_file <- 
+  paste_forward_slash(results_directory_path, "descriptive-stats-ew-portfolios-raw.rds")
+saveRDS(descriptive_stats_ew_portfolios_raw, path_descriptive_stats_ew_portfolios_raw_file)
+
 ## regime difference tests #####################################################
 ### raw ####
 path_regime_difference_tests_raw_file <- 

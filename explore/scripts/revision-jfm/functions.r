@@ -980,6 +980,21 @@ make_ticker_pools_for_stats <- function() {
     dplyr::arrange(country, sector, subsector)
 }
 
+compute_ew_sector_portfolio_returns <- function(ticker_pools) {
+  dplyr::mutate(
+    ticker_pools,
+    returns = purrr::map(tickers, function(tickers) {
+      dplyr::filter(
+        commodity_futures_data,
+        type == "return", frequency == "day", field == "PX_LAST",
+        `active contract ticker` %in% tickers
+      ) |> 
+        dplyr::select(ticker = `active contract ticker`, date, return = value) |>
+        dplyr::summarise(return = mean(return, na.rm = TRUE), .by = date)
+    })
+  )
+}
+
 make_aggregate_CHP_regimes_for_stats <- function() {
   regimes <- dplyr::mutate(
     aggregate_CHP_regimes,
@@ -997,22 +1012,40 @@ make_aggregate_CHP_regimes_for_stats <- function() {
   )
 }
 
-make_ew_sector_portfolios <- function(ticker_pools) {
+compute_ew_sector_portfolio_stats <- function(ew_sector_portfolio_returns, aggregate_CHP_regimes) {
+
   dplyr::mutate(
-    ticker_pools,
-    returns = purrr::map(tickers, function(tickers) {
-      dplyr::filter(
-        commodity_futures_data,
-        type == "return", frequency == "day", field == "PX_LAST",
-        `active contract ticker` %in% tickers
-      ) |> 
-        dplyr::select(ticker = `active contract ticker`, date, return = value) |>
-        dplyr::summarise(return = mean(return, na.rm = TRUE), .by = date)
-    })
-  )
+    ew_sector_portfolio_returns,
+    stats = purrr::map(returns, function(returns){
+      dplyr::mutate(
+        aggregate_CHP_regimes,
+        stats = purrr::map(regimes, function(regimes){
+          dplyr::left_join(regimes, returns, by = "date") |>
+            dplyr::filter(!is.na(return)) |>
+            dplyr::summarise(
+              mean = list(t.test(return, na.rm = TRUE)), volatility = sd(return, na.rm = TRUE), 
+              .by = c("regime", "period")
+            ) |> 
+            tibble::as_tibble() |>
+            dplyr::select(period, regime, mean, volatility) |> 
+            dplyr::arrange(period, regime)
+        }) 
+      ) |> dplyr::select(-regimes)
+    }) 
+  ) |> dplyr::select(-returns)
 }
 
-
+make_ew_portfolios_stats <- function(){
+  pools <- make_ticker_pools_for_stats()
+  
+  returns <- compute_ew_sector_portfolio_returns(pools)
+  
+  regimes <- make_aggregate_CHP_regimes_for_stats()
+  
+  stats <- compute_ew_sector_portfolio_stats(returns, regimes)
+  
+  return(stats)
+}
 
 ## regime difference tests #####################################################
 make_tickers_list_for_regime_difference_tests <- function() {
@@ -1154,6 +1187,7 @@ make_regime_difference_tests <- function() {
   )
   return(results)
 }
+
 
 ## correlations ################################################################
 ### local functions ############################################################
