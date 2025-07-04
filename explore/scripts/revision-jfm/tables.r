@@ -76,8 +76,10 @@ long_to_short_asset_name_map <- tibble::tribble(
   dplyr::relocate(country, .after = asset) |>
   dplyr::arrange(country, sector, subsector) 
 
+readr::write_rds(`assets taxonomy`, slituR::paste_forward_slash(tables_directory_path, "assets-taxonomy.rds"))
 
 # descriptive stats ############################################################
+## individual assets ###########################################################
 stats <- readr::read_rds(
   slituR::paste_forward_slash(results_directory_path, "descriptive-statistics-clean.rds")
   )
@@ -106,7 +108,7 @@ commodities_market_countries <- dplyr::filter(stats, analysis == "commodity futu
   ) |> dplyr::select(-c(type, frequency, field, year)) |>
   dplyr::mutate_if(.predicate = is.list, .funs = unlist)
 
-## whole ####
+### whole ####
 commodities <- dplyr::filter(commodities_market_individuals, regime == "all") |>
   dplyr::select(-c(regime, min, max)) |> 
   dplyr::mutate(
@@ -132,9 +134,9 @@ countries <- dplyr::filter(commodities_market_countries, regime == "all") |>
     cols = c("mean", "sd"), names_to = "estimate", values_to = "value"
   ) |> tidyr::pivot_wider(names_from = "period", values_from = "value")
 
-descriptive_stats_whole <- dplyr::bind_rows(commodities, countries)
+descriptive_stats_individuals_whole <- dplyr::bind_rows(commodities, countries)
 
-## regimes ####
+### regimes ####
 commodities <- dplyr::filter(commodities_market_individuals, regime != "all") |>
   dplyr::select(-c(min, max)) |> 
   dplyr::mutate(
@@ -160,9 +162,9 @@ countries <- dplyr::filter(commodities_market_countries, regime != "all") |>
     cols = c("mean", "sd"), names_to = "estimate", values_to = "value"
   ) |> tidyr::pivot_wider(names_from = "period", values_from = "value")
 
-descriptive_stats_regimes <- dplyr::bind_rows(commodities, countries)
+descriptive_stats_individuals_regimes <- dplyr::bind_rows(commodities, countries)
 
-## combined ####
+### combined ####
 commodities <- dplyr::select(commodities_market_individuals, -c(min, max)) |> 
   dplyr::mutate(
     mean = slituR::percentize(mean), sd = slituR::percentize(sd),
@@ -188,7 +190,7 @@ countries <- dplyr::select(commodities_market_countries, -c(min, max, sector, su
 
 # q: this only works in the html output, μ and σ appear as blank in the pdf output; how to fix this?
 
-descriptive_stats_combined <- dplyr::bind_rows(commodities, countries) |>
+descriptive_stats_individuals_combined <- dplyr::bind_rows(commodities, countries) |>
   dplyr::mutate(
     regime = ifelse(regime == "all", "whole period", regime),
     estimate = ifelse(estimate == "mean", estimate, "volatility")
@@ -196,6 +198,38 @@ descriptive_stats_combined <- dplyr::bind_rows(commodities, countries) |>
   dplyr::left_join(long_to_short_asset_name_map, by = c("asset" = "long")) |>
   dplyr::mutate(asset = dplyr::coalesce(short, asset)) |>
   dplyr::select(-short)
+
+readr::write_rds(
+  descriptive_stats_individuals_combined, 
+  slituR::paste_forward_slash(tables_directory_path, "stats-individual-assets.rds")
+)
+
+## equally weighted portfolio ##################################################
+stats <- readr::read_rds(
+  slituR::paste_forward_slash(results_directory_path, "descriptive-stats-ew-portfolios.rds")
+)
+
+descriptive_stats_ew_portfolios <- dplyr::filter(stats, timespan == "period") |> 
+  dplyr::select(-timespan) |>
+  dplyr::mutate(
+    period = ifelse(period == "financialization", "financialisation", period),
+    period = ifelse(period == "present", "post-crisis", period),
+    period = factor(period, levels = period_levels),
+    regime = ifelse(regime == "all", "whole period", regime),
+    significance = slituR::significance(p_value),
+    dplyr::across(c(mean, volatility), slituR::percentize),
+    mean = paste0(significance, mean)
+  ) |> 
+  dplyr::select(-c(p_value, significance)) |>
+  dplyr::arrange(period) |>
+  sort_table_by_country_sector_subsector(sort_levels) |>
+  tidyr::pivot_longer(cols = c("mean", "volatility"), names_to = "estimate", values_to = "value") |> 
+  tidyr::pivot_wider(names_from = "period", values_from = "value")
+
+readr::write_rds(
+  descriptive_stats_ew_portfolios, 
+  slituR::paste_forward_slash(tables_directory_path, "stats-ew-portfolios.rds")
+)
 
 # regime difference tests ######################################################
 regime_difference_tests <- readr::read_rds(
@@ -241,6 +275,40 @@ regime_difference_tests <- dplyr::bind_rows(individuals, countries) |>
   dplyr::mutate(asset = dplyr::coalesce(short, asset)) |>
   dplyr::select(-short)
 
+readr::write_rds(
+  regime_difference_tests, 
+  slituR::paste_forward_slash(tables_directory_path, "regime-difference-tests.rds")
+)
+
+# individual asset stats & regime difference tests #############################
+
+stats_individuals <- tidyr::pivot_longer(
+  descriptive_stats_individuals_combined, c(past, financialization, crisis, present),
+  names_to = "period", values_to = "value"
+) |> dplyr::filter(regime == "whole period") |> dplyr::select(-regime) |>
+  dplyr::mutate(
+    period = ifelse(period == "financialization", "financialisation", period),
+    period = ifelse(period == "present", "post-crisis", period),
+    period = factor(period, levels = period_levels)
+  )
+
+regime_tests <- dplyr::mutate(
+  regime_difference_tests, 
+  summary = paste0("b", ifelse(`dominant regime` == "backwardation", ">", "<"), "c", significance)
+) |>
+  dplyr::select(asset, period, estimate = moment, `difference test summary` = summary)
+
+individual_asset_stats_regime_difference_tests <- 
+  dplyr::left_join(stats_individuals, regime_tests, by = c("asset", "estimate", "period")) |>
+  dplyr::mutate(value = paste0(value, " (", `difference test summary`, ")")) |> 
+  dplyr::select(asset, estimate, period, value) |>
+  tidyr::pivot_wider(names_from = "period", values_from = "value")
+
+readr::write_rds(
+  individual_asset_stats_regime_difference_tests, 
+  slituR::paste_forward_slash(tables_directory_path, "asset-stats-regime-difference-tests-combined.rds")
+)
+
 # correlations #################################################################
 ## inner ####
 correlations_inner <- readr::read_rds(
@@ -279,7 +347,7 @@ correlations_inner_years <- dplyr::filter(
 
 ## cross ####
 format_correlations_cross_by_period <- function(correlations_cross){
-  
+
   dplyr::filter(correlations_cross, timespan == "period") |>
     tidyr::unnest(summary) |> dplyr::select(-timespan) |> 
     dplyr::mutate(
@@ -287,6 +355,7 @@ format_correlations_cross_by_period <- function(correlations_cross){
         pool == "country", "countries", ifelse(stringr::str_ends(pool, "s"), pool, paste0(pool, "s"))
       ),
       regime = factor(regime, levels = regime_levels),
+      period = as.character(period),
       period = ifelse(period == "financialization", "financialisation", period),
       period = ifelse(period == "present", "post-crisis", period),
       period = factor(period, levels = period_levels)
@@ -321,10 +390,11 @@ format_correlations_cross_by_year <- function(correlations_cross){
 correlations_cross_US <- readr::read_rds(
   slituR::paste_forward_slash(results_directory_path, "correlations-cross-US.rds")
 )
-
+correlations_cross_US$summary[[1L]]
 #### By period ####
 ##### all pools #####
 correlations_cross_US_periods_all <- format_correlations_cross_by_period(correlations_cross_US)
+
 
 ##### sub-sectors #####
 correlations_cross_US_periods_subsectors <- format_correlations_cross_by_period(correlations_cross_US) |> 
@@ -467,7 +537,7 @@ regressions_factors <- readr::read_rds(
   slituR::paste_forward_slash(results_directory_path, "regressions-factors.rds")
 )
 
-`all commodity returns ~ factors` <- dplyr::filter(
+`all commodity returns ~ factors - long` <- dplyr::filter(
   regressions_factors, field == "close price", type == "return", frequency == "day", 
   timespan == "period", factor != "open interest aggregate", leg == "factor"
 ) |>
@@ -480,13 +550,28 @@ regressions_factors <- readr::read_rds(
   sort_table_by_country_sector_subsector(sort_levels)
 
 
+`all commodity returns ~ factors - short` <- dplyr::filter(
+  regressions_factors, field == "close price", type == "return", frequency == "day", 
+  timespan == "period", factor != "open interest aggregate", leg == "factor", 
+  regime == "whole period"
+) |>
+  dplyr::select(country, sector, subsector, period, factor, average) |>
+  dplyr::mutate(
+    factor = factor |> stringr::str_replace_all("open interest nearby", "open interest"),
+    average = slituR::percentize(average)
+  ) |>
+  tidyr::pivot_wider(names_from = "period", values_from = "average") 
+
+
 # export ####
 tables <- tibble::tribble(
     ~analysis,                                              ~results,
-    "stats - whole",                                        descriptive_stats_whole,
-    "stats - regimes",                                      descriptive_stats_regimes,
-    "stats - combined",                                     descriptive_stats_combined,
+    "stats - individual assets - whole",                    descriptive_stats_individuals_whole,
+    "stats - individual assets - regimes",                  descriptive_stats_individuals_regimes,
+    "stats - individual assets - combined",                 descriptive_stats_individuals_combined,
+    "stats - equally weighted portfolios",                  descriptive_stats_ew_portfolios,
     "regime difference tests",                              regime_difference_tests,
+    "stats-individuals - regime difference tests",          individual_asset_stats_regime_difference_tests,
     "regressions - US returns ~ US CHP",                    `US commodity returns ~ CHP`,
     "correlations - inner - periods",                       correlations_inner_periods,
     "correlations - inner - years",                         correlations_inner_years,
@@ -499,7 +584,8 @@ tables <- tibble::tribble(
     "correlations - cross - global - years - all",          correlations_cross_global_years_all,
     "correlations - cross - global - years - subsectors",   correlations_cross_global_years_subsectors,
     "regressions - all returns ~ market index",             `all commodity returns ~ market index`,
-    "regressions - all returns ~ factors",                  `all commodity returns ~ factors`,
+    "regressions - all returns ~ factors - long",           `all commodity returns ~ factors - long`,
+    "regressions - all returns ~ factors - short",          `all commodity returns ~ factors - short`,
     "assets taxonomy",                                      `assets taxonomy`
   )
 
