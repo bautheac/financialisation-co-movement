@@ -21,6 +21,10 @@ source(file.path(path_directory, "modules", "results_summary.r"))
 
 sidebar <- dashboardSidebar(
   sidebarMenu(
+    menuItem("Stats", tabName = "stats",
+             menuItem("Descriptive", tabName = "stats-descriptive"),
+             menuItem("Regime ≠ tests", tabName = "stats-difference-tests")
+             ),
     menuItem("Correlations", tabName = "correlations",
              menuItem("Inner", tabName = "correlations-inner"),
              menuItem("Cross", tabName = "correlations-cross", 
@@ -38,6 +42,12 @@ sidebar <- dashboardSidebar(
 
 body <- dashboardBody(
   tabItems(
+    tabItem(tabName = "stats-descriptive", results_summary_UI("stats-descriptive", list(
+      period = results$stats$descriptive$period, year = results$stats$descriptive$year
+    ))),
+    tabItem(tabName = "stats-difference-tests", results_summary_UI("stats-difference-tests", list(
+      period = results$stats$regime_tests$period
+    ))),
     tabItem(tabName = "correlations-inner", results_summary_UI("correlations-inner", list(
       period = results$correlations$inner$period, year = results$correlations$inner$year
     ))),
@@ -62,6 +72,13 @@ ui <- dashboardPage(
 )
 
 server <- function(input, output) {
+  
+  results_summary_Server("stats-descriptive", list(
+    period = results$stats$descriptive$period, year = results$stats$descriptive$year
+  ))
+  
+  results_summary_Server("stats-difference-tests", list(period = results$stats$regime_tests$period))
+  
   results_summary_Server("correlations-inner", list(
     period = results$correlations$inner$period, year = results$correlations$inner$year
   ))

@@ -16,7 +16,7 @@ results_summary_Server <- function(id, results) {
   moduleServer(id, function(input, output, session) {
     
     ns <- session$ns
-    
+    # browser()
     lapply(seq_along(results), function(i) {
       results_summary_category_Server(names(results)[i], results[[i]])
     })

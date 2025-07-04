@@ -79,7 +79,46 @@ construct_path <- function() {
 path_directory <- construct_path()
 
 
-correlations_inner_raw <- readr::read_rds(file.path(path_directory, "results", "correlations-inner.rds"))
+period_levels <- c("past", "financialisation", "crisis", "post-crisis")
+
+
+
+
+
+
+# stats ########################################################################
+## descriptive #################################################################
+descriptive <- readr::read_rds(file.path(path_directory, "results", "descriptive-statistics.rds")) |>
+  lapply(function(x) list(`Individual assets` = x))
+
+
+## regime tests ################################################################
+regime_tests_raw <- readr::read_rds(file.path(path_directory, "results", "regime-difference-tests.rds")) 
+
+descriptive_periods <- tidyr::pivot_longer(
+  descriptive$periods$`Individual assets`, c(past, financialisation, crisis, `post-crisis`), names_to = "period", values_to = "value"
+) |> dplyr::filter(regime != "whole period") |>
+  tidyr::pivot_wider(names_from = regime, values_from = value)
+
+regime_tests <- dplyr::left_join(
+  descriptive_periods,
+  dplyr::select(regime_tests_raw, commodity = asset, period, statistic = moment, `≠ p-value` = `p-value`),
+  by = c("commodity", "period", "statistic")
+) |> dplyr::rename(estimate = statistic) |> dplyr::relocate(estimate, .after = period) |>
+  dplyr::mutate(
+    commodity = factor(commodity, levels = unique(commodity)), period = factor(period, levels = unique(period)),
+  ) |>
+  dplyr::arrange(commodity, period, estimate, .by_group = TRUE)
+
+
+
+
+
+
+# correlations #################################################################
+
+correlations_inner_raw <- readr::read_rds(file.path(path_directory, "results", "correlations-inner.rds")) 
+
 correlations_inner_helpers <- list(
   period = list(
     calls = c("average", "top_3"), 
@@ -110,6 +149,25 @@ correlations_cross_split <- purrr::map(c("US", "global"), function(x){
   }
 ) |> setNames(c("US", "global"))
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# regressions ##################################################################
 
 regressions_index_raw <- readr::read_rds(file.path(path_directory, "results", "regressions-index.rds"))
 regressions_index_helpers <- list(
@@ -150,7 +208,29 @@ regressions_factors_helpers <- list(
 regressions_factors_split <- split_analysis_summary_results_into_category_dataframes(regressions_factors_raw, regressions_factors_helpers)
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 results <- list(
+  stats = list(descriptive = descriptive, regime_tests = list(periods = list(`Individual assets` = regime_tests))),
   correlations = list(inner = correlations_inner_split, cross = correlations_cross_split), 
   regressions = list(index = regressions_index_split, factors = regressions_factors_split)
 )
