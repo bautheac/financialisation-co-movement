@@ -36,7 +36,6 @@ format:
       formatting: preprint
       model: 3p
       cite-style: authoryear
-
   html:
     grid:
       body-width: 1000px
