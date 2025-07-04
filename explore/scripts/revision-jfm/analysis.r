@@ -6,15 +6,26 @@ load(here::here("explore", "scripts", "revision-jfm", "globals.RData"))
 source(here::here("explore", "scripts", "revision-jfm", "functions.r"))
 
 # analysis #####################################################################
-
 pacman::p_load(furrr)
 plan(multisession, workers = parallel::detectCores())
 
 
 ## descriptive stats ###########################################################
+### individual assets ##########################################################
+#### formatted ####
+##### load summary dataset (optional) ####
+path_descriptive_stats_assets_summary_file <-
+  paste_forward_slash(results_directory_path, "descriptive-statistics-clean.rds")
+descriptive_stats_assets_summary <- extract_descriptive_stats_assets_summary()
+
+##### format ####
+descriptive_stats_assets_formatted <- format_asset_stats(descriptive_stats_assets_summary)
+
+
+
 ### equally weighted portfolios ################################################
 #### raw ####
-descriptive_stats_ew_portfolios_raw <- make_ew_portfolios_stats_raw()
+descriptive_stats_ew_portfolios_raw <- compute_ew_portfolios_stats_raw()
 
 #### summary ####
 ##### load raw dataset (optional) ####
@@ -23,7 +34,19 @@ descriptive_stats_ew_portfolios_raw <- make_ew_portfolios_stats_raw()
 # descriptive_stats_ew_portfolios_raw <- readr::read_rds(path_descriptive_stats_ew_portfolios_raw_file)
 
 ##### summarise ####
-descriptive_stats_ew_portfolios_summary <- make_ew_portfolios_stats_summary(descriptive_stats_ew_portfolios_raw)
+descriptive_stats_ew_portfolios_summary <- 
+  summarise_ew_portfolios_stats(descriptive_stats_ew_portfolios_raw)
+
+#### formatted ####
+##### load summary dataset (optional) ####
+# path_descriptive_stats_ew_portfolios_summary_file <- 
+#   paste_forward_slash(results_directory_path, "descriptive-stats-ew-portfolios-summary.rds")
+# descriptive_stats_ew_portfolios_summary <- 
+#   readr::read_rds(path_descriptive_stats_ew_portfolios_summary_file)
+
+##### format ####
+descriptive_stats_ew_portfolios_formatted <- 
+  format_ew_portfolios_stats(descriptive_stats_ew_portfolios_summary)
 
 
 
@@ -42,9 +65,9 @@ regime_difference_tests_summary <- extract_pvalues_from_test_objects(regime_diff
 
 ### formatted ####
 #### load summary dataset (optional) ####
-# path_regime_difference_tests_summary_file <- 
-#   paste_forward_slash(results_directory_path, "regime-difference-tests-summary.rds")
-# regime_difference_tests_summary <- readr::read_rds(path_regime_difference_tests_summary_file)
+path_regime_difference_tests_summary_file <-
+  paste_forward_slash(results_directory_path, "regime-difference-tests-summary.rds")
+regime_difference_tests_summary <- readr::read_rds(path_regime_difference_tests_summary_file)
 
 #### format ####
 regime_difference_tests_formatted <- 
@@ -72,7 +95,7 @@ correlations_inner_summary <-
 
 #### formatted ####
 ##### load summary dataset (optional) ####
-# path_correlations_inner_summary_file <- 
+# path_correlations_inner_summary_file <-
 #   paste_forward_slash(results_directory_path, "correlations-inner-summary.rds")
 # correlations_inner_summary <- readr::read_rds(path_correlations_inner_summary_file)
 
@@ -160,7 +183,7 @@ regressions_index_summary <-
 
 #### formatted ####
 ##### load summary dataset (optional) ####
-# path_regressions_index_summary_file <- 
+# path_regressions_index_summary_file <-
 #   paste_forward_slash(results_directory_path, "regressions-index-summary.rds")
 # regressions_index_summary <- readr::read_rds(path_regressions_index_summary_file)
 
@@ -187,7 +210,7 @@ regressions_factors_summary <-
 
 #### formatted ####
 ##### load summary dataset (optional) ####
-# path_regressions_factors_summary_file <- 
+# path_regressions_factors_summary_file <-
 #   paste_forward_slash(results_directory_path, "regressions-factors-summary.rds")
 # regressions_factors_summary <- readr::read_rds(path_regressions_factors_summary_file)
 
@@ -217,15 +240,27 @@ regressions_factors_formatted <-
 
 # export #######################################################################
 ## descriptive stats ###########################################################
+### individual assets ##########################################################
+### formatted ####
+path_descriptive_stats_assets_formatted_file <-
+  paste_forward_slash(results_directory_path, "descriptive-statistics.rds")
+saveRDS(descriptive_stats_assets_formatted, path_descriptive_stats_assets_formatted_file)
+
 ### equally weighted portfolios ################################################
 #### raw ####
 path_descriptive_stats_ew_portfolios_raw_file <- 
   paste_forward_slash(results_directory_path, "descriptive-stats-ew-portfolios-raw.rds")
 saveRDS(descriptive_stats_ew_portfolios_raw, path_descriptive_stats_ew_portfolios_raw_file)
+
 #### summary ####
 path_descriptive_stats_ew_portfolios_summary_file <- 
   paste_forward_slash(results_directory_path, "descriptive-stats-ew-portfolios-summary.rds")
 saveRDS(descriptive_stats_ew_portfolios_summary, path_descriptive_stats_ew_portfolios_summary_file)
+
+### formatted ####
+path_descriptive_stats_ew_portfolios_formatted_file <- 
+  paste_forward_slash(results_directory_path, "descriptive-stats-ew-portfolios.rds")
+saveRDS(descriptive_stats_ew_portfolios_formatted, path_descriptive_stats_ew_portfolios_formatted_file)
 
 
 ## regime difference tests #####################################################

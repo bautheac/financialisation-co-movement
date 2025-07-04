@@ -943,6 +943,54 @@ make_analysis_for_ticker_combinations_dataframe <- function(
   })
 }
 
+## descriptive stats for individual assets #####################################
+
+extract_descriptive_stats_assets_summary <- function(){
+  readr::read_rds(path_descriptive_stats_assets_summary_file) |>
+    dplyr::filter(analysis == "commodity futures") |> dplyr::select(results) |>
+    tidyr::unnest(results) |> dplyr::filter(analysis == "market variables") |>
+    dplyr::select(results) |> tidyr::unnest(results) |> 
+    dplyr::filter(assets == "individual commodities") |> dplyr::select(results) |>
+    tidyr::unnest(results)
+}
+
+format_asset_stats <- function(stats_assets_summary) {
+  sort_levels <- c(
+    "all-all-all", "US-all-all", "US-agriculturals-all", "US-agriculturals-grains",
+    "US-agriculturals-livestock", "US-agriculturals-softs", "US-energy-all", 
+    "US-energy-gas", "US-energy-petroleum", "US-metals-all", "US-metals-base", 
+    "US-metals-precious", "GB-all-all"
+  )
+  
+  subset <- dplyr::filter(
+    stats_assets_summary, type == "returns", frequency == "daily", field == "close price"
+  ) |>
+    dplyr::mutate(
+      sort = paste0(country, "-", sector, "-", subsector) |> factor(levels = sort_levels)
+    ) |>
+    dplyr::arrange(sort, commodity) |>
+    dplyr::select(commodity, period, year, regime, mean, p.value, volatility = sd) |>
+    dplyr::mutate(
+      regime = ifelse(regime == "all", "whole period", regime),
+      regime = factor(regime, levels = c("whole period", "backwardation", "contango")),
+      period = as.character(period),
+      period = ifelse(period == "financialization", "financialisation", period),
+      period = ifelse(period == "present", "post-crisis", period),
+      period = factor(period, levels = c("past", "financialisation", "crisis", "post-crisis", "year")),
+      dplyr::across(c(mean, volatility), ~ slituR::percentize(.x)),
+      significance = slituR::significance(unlist(p.value)),
+      mean = paste0(significance, mean)
+    ) |> dplyr::select(-c(p.value, significance)) |>
+    tidyr::pivot_longer(cols = c(mean, volatility), names_to = "statistic", values_to = "value")
+  
+  periods <- dplyr::filter(subset, period != "year") |> dplyr::select(-year) |>
+    tidyr::pivot_wider(names_from = period, values_from = value)
+  years <- dplyr::filter(subset, period == "year") |> dplyr::select(-period) |>
+    tidyr::pivot_wider(names_from = year, values_from = value)
+  
+  list(periods = periods, years = years)
+}
+
 ## descriptive stats for equally weighted sector portfolios ####################
 make_ticker_pools_for_stats <- function() {
   US_energy_all_tickers <- dplyr::filter(
@@ -988,7 +1036,7 @@ compute_ew_sector_portfolio_returns <- function(ticker_pools) {
         commodity_futures_data,
         type == "return", frequency == "day", field == "PX_LAST",
         `active contract ticker` %in% tickers
-      ) |> 
+      ) |>
         dplyr::select(ticker = `active contract ticker`, date, return = value) |>
         dplyr::summarise(return = mean(return, na.rm = TRUE), .by = date)
     })
@@ -1004,67 +1052,75 @@ make_aggregate_CHP_regimes_for_stats <- function() {
       } else {
         regimes
       }
-      
+
       all <- dplyr::mutate(regimes, regime = "all")
-      
-      dplyr::bind_rows(regimes, all)
+
+      dplyr::bind_rows(regimes, all) |> dplyr::mutate(period = as.character(period))
     })
   )
 }
 
 compute_ew_sector_portfolio_stats <- function(ew_sector_portfolio_returns, aggregate_CHP_regimes) {
-
   dplyr::mutate(
     ew_sector_portfolio_returns,
-    stats = purrr::map(returns, function(returns){
+    stats = purrr::map(returns, function(returns) {
       dplyr::mutate(
         aggregate_CHP_regimes,
-        stats = purrr::map(regimes, function(regimes){
+        stats = purrr::map(regimes, function(regimes) {
           dplyr::left_join(regimes, returns, by = "date") |>
             dplyr::filter(!is.na(return)) |>
             dplyr::summarise(
-              mean = list(t.test(return, na.rm = TRUE)), volatility = sd(return, na.rm = TRUE), 
+              mean = list(t.test(return, na.rm = TRUE)), volatility = sd(return, na.rm = TRUE),
               .by = c("regime", "period")
-            ) |> 
+            ) |>
             tibble::as_tibble() |>
-            dplyr::select(period, regime, mean, volatility) |> 
+            dplyr::select(period, regime, mean, volatility) |>
             dplyr::arrange(period, regime)
-        }) 
+        })
       ) |> dplyr::select(-regimes)
-    }) 
+    })
   ) |> dplyr::select(-returns)
 }
 
-make_ew_portfolios_stats_raw <- function(){
+compute_ew_portfolios_stats_raw <- function() {
   pools <- make_ticker_pools_for_stats()
-  
+
   returns <- compute_ew_sector_portfolio_returns(pools)
-  
+
   regimes <- make_aggregate_CHP_regimes_for_stats()
-  
+
   stats <- compute_ew_sector_portfolio_stats(returns, regimes)
-  
+
   return(stats)
 }
 
 
-make_ew_portfolios_stats_summary <- function(portfolios_stats_raw) {
+summarise_ew_portfolios_stats <- function(portfolios_stats_raw) {
   dplyr::mutate(
     portfolios_stats_raw,
-    stats = purrr::map(stats, function(stats){
+    stats = purrr::map(stats, function(stats) {
       dplyr::mutate(
         stats,
-        stats = purrr::map(stats, function(stats){
+        stats = purrr::map(stats, function(stats) {
           dplyr::mutate(
-            stats, 
+            stats,
             p_value = purrr::map_dbl(mean, ~ .x$p.value),
             mean = purrr::map_dbl(mean, ~ .x$estimate[[1L]]) * 252L,
             volatility = volatility * sqrt(252L)
           ) |> dplyr::relocate(volatility, .after = dplyr::everything())
-        }) 
-      ) 
-    }) 
-  ) 
+        })
+      )
+    })
+  )
+}
+
+format_ew_portfolios_stats <- function(portfolios_stats_summaries) {
+  dplyr::mutate(
+    portfolios_stats_summaries,
+    stats = purrr::map(stats, ~ tidyr::unnest(.x, stats))
+  ) |>
+    dplyr::select(-tickers) |>
+    tidyr::unnest(stats)
 }
 
 ## regime difference tests #####################################################
@@ -1949,14 +2005,33 @@ format_inner_correlations_summary_statistics_into_table <- function(correlations
     map_solution_to_problem_domain_jargon_in_analysis_unnested_results_summary() %>%
     mutate_appropriate_columns_to_factors_in_analysis_unnested_results_summary() %>%
     dplyr::mutate(dplyr::across(.cols = c(average, correlation), ~ round(.x, digits = 4L))) %>%
-    arrange_columns_in_analysis_results_summary()
+    arrange_columns_in_analysis_results_summary() |>
+    dplyr::mutate(
+      period = as.character(period),
+      period = ifelse(period == "financialization", "financialisation", period),
+      period = ifelse(period == "present", "post-crisis", period),
+      period = factor(period, levels = c("past", "financialisation", "crisis", "post-crisis", NA))
+    )
 }
 
 ### cross ######################################################################
 format_cross_correlation_averages <- function(correlations_cross_summary) {
   dplyr::mutate(correlations_cross_summary, summary = purrr::map(summary, function(summary) {
     dplyr::mutate(summary, average = purrr::map_dbl(average, ~ round(., digits = 4L)))
-  }))
+  })) |> 
+    dplyr::mutate(
+      summary = purrr::map2(timespan, summary, function(timespan, summary){
+        if(timespan == "period"){
+          dplyr::mutate(
+            summary,
+            period = as.character(period),
+            period = ifelse(period == "financialization", "financialisation", period),
+            period = ifelse(period == "present", "post-crisis", period),
+            period = factor(period, levels = c("past", "financialisation", "crisis", "post-crisis", NA))
+          )
+        } else { summary }
+      })
+    )
 }
 
 ## regressions #################################################################
@@ -2004,7 +2079,13 @@ format_regression_index_summary_statistics_into_table <- function(regressions_su
     map_solution_to_problem_domain_jargon_in_analysis_unnested_results_summary() %>%
     mutate_appropriate_columns_to_factors_in_analysis_unnested_results_summary() %>%
     dplyr::mutate(dplyr::across(c(average, beta, `p value`, `R squared`), ~ round(.x, digits = 4L))) %>%
-    arrange_columns_in_analysis_results_summary()
+    arrange_columns_in_analysis_results_summary() |>
+    dplyr::mutate(
+      period = as.character(period),
+      period = ifelse(period == "financialization", "financialisation", period),
+      period = ifelse(period == "present", "post-crisis", period),
+      period = factor(period, levels = c("past", "financialisation", "crisis", "post-crisis", NA))
+    )
 }
 
 ### factor #####################################################################
@@ -2042,5 +2123,11 @@ format_regression_factor_summary_statistics_into_table <- function(regressions_s
     ) %>%
     dplyr::arrange(
       field, type, frequency, country, sector, subsector, timespan, period, year, factor, leg, regime
+    ) |>
+    dplyr::mutate(
+      period = as.character(period),
+      period = ifelse(period == "financialization", "financialisation", period),
+      period = ifelse(period == "present", "post-crisis", period),
+      period = factor(period, levels = c("past", "financialisation", "crisis", "post-crisis", NA))
     )
 }
