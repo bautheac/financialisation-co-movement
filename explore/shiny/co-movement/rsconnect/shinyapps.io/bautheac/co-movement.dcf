@@ -1,0 +1,13 @@
+name: co-movement
+title: co-movement
+username: bautheac
+account: bautheac
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 15090273
+bundleId: 10632622
+url: https://bautheac.shinyapps.io/co-movement/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .vscode/settings.json
