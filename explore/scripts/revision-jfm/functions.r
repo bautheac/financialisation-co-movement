@@ -1068,10 +1068,11 @@ compute_ew_sector_portfolio_stats <- function(ew_sector_portfolio_returns, aggre
         aggregate_CHP_regimes,
         stats = purrr::map(regimes, function(regimes) {
           dplyr::left_join(regimes, returns, by = "date") |>
-            dplyr::filter(!is.na(return)) |>
+            dplyr::group_by(regime, period) |>
+            dplyr::filter(sum(!is.na(return)) >= 2) |>
             dplyr::summarise(
               mean = list(t.test(return, na.rm = TRUE)), volatility = sd(return, na.rm = TRUE),
-              .by = c("regime", "period")
+              .groups = "drop"
             ) |>
             tibble::as_tibble() |>
             dplyr::select(period, regime, mean, volatility) |>
