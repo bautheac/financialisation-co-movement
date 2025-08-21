@@ -205,8 +205,6 @@ readr::write_rds(
 )
 
 ## equally weighted portfolio ##################################################
-
-### original ###################################################################
 stats <- readr::read_rds(
   slituR::paste_forward_slash(results_directory_path, "descriptive-stats-ew-portfolios.rds")
 )
@@ -232,39 +230,6 @@ readr::write_rds(
   descriptive_stats_ew_portfolios, 
   slituR::paste_forward_slash(tables_directory_path, "stats-ew-portfolios.rds")
 )
-
-
-### revision jfm ###############################################################
-
-stats <- readr::read_rds(
-  here::here("explore", "shiny", "original", "results", "descriptive-statistics-clean.rds")
-)
-
-descriptive_stats_ew_portfolios_revision_jfm <- dplyr::filter(
-  stats$results[[1L]]$results[[1L]]$results[[2L]],
-  type == "returns", period != "year", frequency == "daily", sector == "all", subsector == "all", field == "close price"
-) |> 
-  dplyr::select(country, sector, subsector, period, regime, mean, p_value = p.value, volatility = sd) |>
-  dplyr::mutate(
-    period = ifelse(period == "financialization", "financialisation", period),
-    period = ifelse(period == "present", "post-crisis", period),
-    period = factor(period, levels = period_levels),
-    regime = ifelse(regime == "all", "whole period", regime),
-    significance = slituR::significance(p_value),
-    dplyr::across(c(mean, volatility), slituR::percentize),
-    mean = paste0(significance, mean)
-  ) |> 
-  dplyr::select(-c(p_value, significance)) |>
-  dplyr::arrange(period) |>
-  sort_table_by_country_sector_subsector(sort_levels) |>
-  tidyr::pivot_longer(cols = c("mean", "volatility"), names_to = "estimate", values_to = "value") |> 
-  tidyr::pivot_wider(names_from = "period", values_from = "value")
-
-readr::write_rds(
-  descriptive_stats_ew_portfolios_revision_jfm, 
-  slituR::paste_forward_slash(tables_directory_path, "stats-ew-portfolios-revision-jfm.rds")
-)
-
 
 
 # regime difference tests ######################################################
@@ -317,7 +282,7 @@ readr::write_rds(
 )
 
 # individual asset stats & regime difference tests #############################
-
+## original ####################################################################
 stats_individuals <- tidyr::pivot_longer(
   descriptive_stats_individuals_combined, c(past, financialization, crisis, present),
   names_to = "period", values_to = "value"
@@ -344,6 +309,50 @@ readr::write_rds(
   individual_asset_stats_regime_difference_tests, 
   slituR::paste_forward_slash(tables_directory_path, "asset-stats-regime-difference-tests-combined.rds")
 )
+
+## revision jfm ################################################################
+ew_stats <- readr::read_rds(
+  here::here("explore", "shiny", "original", "results", "descriptive-statistics-clean.rds")
+)$results[[1L]]$results[[1L]]$results[[2L]] |> dplyr::filter(
+  type == "returns", period != "year", frequency == "daily", sector == "all", 
+  subsector == "all", field == "close price"
+) |> 
+  dplyr::select(country, sector, subsector, period, regime, mean, p_value = p.value, volatility = sd) |>
+  dplyr::mutate(
+    period = ifelse(period == "financialization", "financialisation", period),
+    period = ifelse(period == "present", "post-crisis", period),
+    period = factor(period, levels = period_levels),
+    regime = ifelse(regime == "all", "whole period", regime),
+    significance = slituR::significance(p_value),
+    dplyr::across(c(mean, volatility), slituR::percentize),
+    mean = paste0(significance, mean)
+  ) |> 
+  dplyr::select(-c(p_value, significance)) |>
+  dplyr::arrange(period) |>
+  sort_table_by_country_sector_subsector(sort_levels) |>
+  tidyr::pivot_longer(cols = c("mean", "volatility"), names_to = "estimate", values_to = "value") |> 
+  tidyr::pivot_wider(names_from = "period", values_from = "value") |>
+  dplyr::mutate(asset = paste(country, "commodities", sep = " ")) |>
+  dplyr::select(-dplyr::contains(c("country", "sector"))) |>
+  dplyr::relocate(asset, .before = everything())
+
+ew_regime_tests <- dplyr::filter(regime_difference_tests, grepl("commodities", asset)) |>
+  dplyr::select(asset:moment, significance) |> dplyr::rename(estimate = moment) |>
+  tidyr::pivot_wider(names_from = "period", values_from = "significance") |>
+  dplyr::mutate(regime = "backwardation vs. contango")
+
+ew_asset_stats_regime_difference_tests <- dplyr::bind_rows(ew_stats, ew_regime_tests) |> 
+  dplyr::mutate(dplyr::across(asset:estimate, ~ factor(.x, levels = unique(.x)))) |>
+  dplyr::relocate(estimate, .before = regime) |>
+  dplyr::arrange(asset, estimate, regime)
+
+readr::write_rds(
+  ew_asset_stats_regime_difference_tests, 
+  slituR::paste_forward_slash(tables_directory_path, "ew-stats-regime-difference-tests-combined.rds")
+)
+
+
+
 
 # correlations #################################################################
 ## inner ####
@@ -606,9 +615,9 @@ tables <- tibble::tribble(
     "stats - individual assets - regimes",                  descriptive_stats_individuals_regimes,
     "stats - individual assets - combined",                 descriptive_stats_individuals_combined,
     "stats - equally weighted portfolios",                  descriptive_stats_ew_portfolios,
-    "stats - equally weighted portfolios - revision jfm",   descriptive_stats_ew_portfolios_revision_jfm,
     "regime difference tests",                              regime_difference_tests,
     "stats-individuals - regime difference tests",          individual_asset_stats_regime_difference_tests,
+    "stats-ew - regime difference tests",                   ew_asset_stats_regime_difference_tests,
     "regressions - US returns ~ US CHP",                    `US commodity returns ~ CHP`,
     "correlations - inner - periods",                       correlations_inner_periods,
     "correlations - inner - years",                         correlations_inner_years,
