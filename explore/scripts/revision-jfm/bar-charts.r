@@ -35,15 +35,24 @@ table_estimates <- filter(stats_individuals, !stringr::str_detect(asset, "commod
     cols = c(`past vs. financialisation`, `financialisation vs. crisis`, `crisis vs. post-crisis`),
     names_to = "period", values_to = "value"
   ) |>
-  dplyr::mutate(period = factor(period, levels = c("past vs. financialisation", "financialisation vs. crisis", "crisis vs. post-crisis")))
+  # dplyr::mutate(period = factor(period, levels = c("past vs. financialisation", "financialisation vs. crisis", "crisis vs. post-crisis")))
+  dplyr::mutate(
+    period = factor(period, levels = unique(period)), operator = paste("previous", operator, "next", sep = " ")
+  ) 
+
 
 figures_estimates <- ggplot(table_estimates, aes(x = period, y = value, fill = operator)) +
   geom_bar(stat = "identity") +
-  geom_text(aes(label = value), position = position_stack(vjust = 0.5), color = "white", size = 4, fontface = "bold") +
+  geom_text(aes(label = value), position = position_stack(vjust = 0.5), color = "white", size = 3, fontface = "bold") +
   facet_wrap(~estimate, ncol = 1) +
-  labs(x = "", y = "", fill = "") +
+  labs(title = "Estimate comparison from one period to the next", x = "", y = "", fill = "") +
   theme_minimal() +
-  theme(strip.text = element_text(size = 16)) +
+  theme(
+    strip.text = element_text(size = 10), plot.title = element_text(size = 12, hjust = 0.5),
+    legend.position = "bottom", legend.justification = "left", 
+    legend.direction = "horizontal", legend.box = "horizontal",
+    legend.margin = margin(t = -10, b = 20, unit = "pt")
+    ) +
   scale_fill_manual(values = met.brewer("Isfahan2", 2))
 
 figure_estimates_path <- paste_forward_slash(figures_directory_path, "estimates.rds")
@@ -53,20 +62,29 @@ write_rds(figures_estimates, figure_estimates_path)
 
 table_regimes <- filter(stats_individuals, !stringr::str_detect(asset, "commodities"), regime != "whole period") |> 
   pivot_longer(cols = past:present, names_to = "period", values_to = "value") |>
+    dplyr::mutate(period = stringr::str_replace_all(period, c("financialization" = "financialisation", "present" = "post-crisis"))) |>
   pivot_wider(names_from = regime, values_from = value) |>
   summarise(
     `<` = sum(backwardation < contango, na.rm = TRUE), `>` = sum(backwardation > contango, na.rm = TRUE),
     .by = c("estimate", "period")
   ) |>
-  pivot_longer(cols = c("<", ">"), names_to = "operator", values_to = "value") 
+  pivot_longer(cols = c("<", ">"), names_to = "operator", values_to = "value") |>
+  dplyr::mutate(
+    period = factor(period, levels = unique(period)), operator = paste("backwardation", operator, "contango", sep = " ")
+  )
 
 figure_regimes <- ggplot(table_regimes, aes(x = period, y = value, fill = operator)) +
   geom_bar(stat = "identity") +
-  geom_text(aes(label = value), position = position_stack(vjust = 0.5), color = "white", size = 4, fontface = "bold") +
+  geom_text(aes(label = value), position = position_stack(vjust = 0.5), color = "white", size = 3, fontface = "bold") +
   facet_wrap(~estimate, ncol = 1) +
-  labs(x = "", y = "", fill = "") +
+  labs(title = expression("Estimate comparison between " * bold("CHP") * " regimes"), x = "", y = "", fill = "") +
   theme_minimal() +
-  theme(strip.text = element_text(size = 16)) +
+  theme(
+    strip.text = element_text(size = 10), plot.title = element_text(size = 12, hjust = 0.5),
+    legend.position = "bottom", legend.justification = "left", 
+    legend.direction = "horizontal", legend.box = "horizontal",
+    legend.margin = margin(t = -10, b = 20, unit = "pt")
+    ) +
   scale_fill_manual(values = met.brewer("Isfahan2", 2))
 
 

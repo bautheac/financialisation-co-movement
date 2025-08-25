@@ -53,6 +53,13 @@ format:
 #| label: fetch
 #| include: false
 #| cache: true
+library(dplyr)
+library(ggplot2)
+library(here)
+library(MetBrewer)
+library(readr)
+library(slituR)
+library(tidyr)
 
 urls <- c(
   "https://www.dropbox.com/scl/fi/n7t8g3hn32d8e5gf2rcti/references.bib?rlkey=xy251n44q3y0t3omxpqk0dvyf&dl=1",
@@ -72,6 +79,7 @@ knitr::opts_chunk$set(cache = FALSE, echo = FALSE, message = FALSE, warning = FA
 
 pacman::p_load(kableExtra, magrittr, slituR)
 
+figures_directory_path <- here::here("explore", "results", "figures")
 tables_directory_path <- here::here("explore", "tables", "revision-jfm")
 
 
@@ -258,7 +266,6 @@ By relating returns on attribute based risk factor mimicking portfolios to retur
 
 # Results & discussion {#sec-results}
 
-
 @tbl-stats-regime-tests displays descriptive statistics for the commodity series considered in the study; the results show a clear pattern of increase in average return during financialisation with most individual commodities showing a higher mean return and an equally weighted portfolio of the US traded assets showing a mean returns of 15.9% significant at the 5% level vs. 6.9% with a 10% significance in the pre-financialisation period. The increase is even more pronounced for an equally weighted portfolio of GB traded assets (metals), 2.47% (not significant) to 21.8% (significant at the 10% level), which sets out the global nature of the phenomenon. The pattern of results for volatilities is similar although the increase is less pronounced with a weaker majority of individual commodities showing heightened volatility and both equally weighted portfolios showing an increase, more pronounced for the GB assets. Financialisation seems however to have impacted the commodity complex beyond these mechanical effects of increased long participation ensuing from the entry of index type investments as our results suggest next.     
 The cross-sectional nature of financialisation naturally leads us to extend the individual hedging pressure paradigm by incorporating aggregate CHP (**CHP**), a market wide measure of hedging pressure. The traditional Keynesian hedging pressure paradigm postulates a negative relationship between the return on an individual commodity futures and its hedging pressure. The extended Keynesian hedging pressure paradigm, in the context of financialisation, should also imply that returns for individual commodities should be high in periods where **CHP** is low and vice et versa. @tbl-stats-regime-tests further reports the dominating regime for each asset-period-moment combination along with the corresponding results of difference tests for returns mean and variance between the two regimes^[The estimate values per regime as well as the p-values for the corresponding difference tests are available in the attached [Internet Appendix](https://bautheac.shinyapps.io/co-movement/).].  
 Over the first period eighteen of the twenty-four US commodities have higher mean returns during periods of **backwardation** as compared to **contango**, with the difference being statistically significant at the 10% level for two commodities, at the 5% level for one and at the 1% level for another. For the remaining six commodities the higher mean return during **contango** is not statistically significant for any of them. For the six GB commodities, all metals, five of them had higher mean returns during phases of **backwardation** as compared to **contango** in the first period, with one of these differences being statistically significant at the 10% level while for the remaining asset (Zinc (XLME)) the higher mean return during **contango** is not statistically significant. An equally weighted portfolio of the twenty-four US commodities had a mean return of 15.4% during **backwardation** phases, statistically significant at the 1% level, and a mean return of -1.1% during **contango**, both in the first period, with the difference between them statistically significant at the 5% level. The corresponding figures for an equally weighted portfolio of the GB metals were 4.4% and 0.3% respectively. These results provide broad support for an aggregate version of the Keynesian hedging pressure hypothesis and suggest that hedgers in the aggregate were engaged in risk transfer during this period.  
@@ -328,6 +335,32 @@ The onset of the financial crisis and the monetary policy regimes that followed,
 
 \newgeometry{margin=.75in}
 
+
+# Figures {.unnumbered}  
+
+```{r}
+#| label: fig-estimates
+#| fig-cap: "This figure compares the evolution of estimates for mean (top panel) and volatility (bottom panel) for individual commodity returns across three period transitions: past → financialisation, financialisation → crisis and crisis → post-crisis. Each stacked bar shows how many cases fall into two categories: yellow (the estimate in the previous period is smaller than in the next period) and blue (the estimate in the previous period is larger than in the next period); numbers inside the bars indicate the count of observations in each category. Detailed results are available in the attached [Internet Appendix](https://bautheac.shinyapps.io/co-movement/). Period definitions are discussed in @sec-methods while the results are discussed in @sec-results."
+#| fig-height: 6
+#| fig-width: 5
+
+estimates <- readr::read_rds(here::here(figures_directory_path, "estimates.rds"))
+estimates
+```
+
+\newpage
+
+```{r}
+#| label: fig-regimes
+#| fig-cap: "This figure compares estimates for mean (top panel) and volatility (bottom panel) for individual commodity returns between **CHP** regime phases (**backwardation** vs. **contango**) for the four periods. Each stacked bar shows how many cases fall into two categories: yellow (the estimate for the **backwardation phase** is smaller than for the **contango** phase) and blue (the estimate for the **backwardation phase** is greater than for the **contango** phase); numbers inside the bars indicate the count of observations in each category. **Backwardation** and **contango** regimes as well as period definitions are discussed in @sec-methods while the results are discussed in @sec-results."
+#| fig-height: 6
+#| fig-width: 5
+
+regimes <- readr::read_rds(here::here(figures_directory_path, "regimes.rds"))
+regimes
+```
+
+\newpage
 
 # Tables {.unnumbered}  
 
