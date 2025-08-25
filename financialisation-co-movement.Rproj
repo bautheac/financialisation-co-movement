@@ -1,8 +1,8 @@
 Version: 1.0
 ProjectId: c45e098d-ccea-4a5e-9816-20ef9dc39b76
 
-RestoreWorkspace: Default
-SaveWorkspace: Default
+RestoreWorkspace: No
+SaveWorkspace: No
 AlwaysSaveHistory: Default
 
 EnableCodeIndexing: Yes
@@ -11,4 +11,6 @@ NumSpacesForTab: 2
 Encoding: UTF-8
 
 RnwWeave: Sweave
-LaTeX: pdfLaTeX
+LaTeX: XeLaTeX
+
+SpellingDictionary: en_GB

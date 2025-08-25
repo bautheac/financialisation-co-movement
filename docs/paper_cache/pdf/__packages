@@ -1,3 +1,9 @@
 kableExtra
 magrittr
 slituR
+dplyr
+ggplot2
+here
+MetBrewer
+readr
+tidyr
