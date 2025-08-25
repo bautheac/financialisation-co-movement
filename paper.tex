@@ -1428,8 +1428,6 @@ to legacy, pre-financialisation, fundamentals.
 
 \newpage
 
-\newgeometry{margin=.75in}
-
 \section*{Figures}\label{figures}
 \addcontentsline{toc}{section}{Figures}
 
@@ -1476,8 +1474,8 @@ phase) and blue (the estimate for the \textbf{backwardation phase} is
 greater than for the \textbf{contango} phase); numbers inside the bars
 indicate the count of observations in each category.
 \textbf{Backwardation} and \textbf{contango} regimes as well as period
-definitions are discussed in @sec-methods while the results are
-discussed in @sec-results.}
+definitions are discussed in Section~\ref{sec-methods} while the results
+are discussed in Section~\ref{sec-results}.}
 
 \end{figure}%
 
@@ -1486,110 +1484,49 @@ discussed in @sec-results.}
 \section*{Tables}\label{tables}
 \addcontentsline{toc}{section}{Tables}
 
-\newpage
-
 \begingroup\fontsize{7}{9}\selectfont
 
-\begin{longtable}[t]{>{}l>{}r>{}r>{}r>{}r>{}r}
+\begin{longtable}[t]{>{}l>{}l>{}l>{}r>{}r>{}r>{}r}
 
 \caption{\label{tbl-stats-regime-tests}This table shows mean returns and
-volatilities for the individual commodities and two equally weighted
-portfolios of US and GB traded assets for the four periods. For each
-period, estimates are computed independently over the whole
-period--figure shown--as well as over phases of \textbf{backwardation}
-(b) and \textbf{contango} (c)--results in brackets. The table further
-shows the results of t-tests of significance for the mean returns
-computed over the whole periods and t-tests of difference between these
-when computed over the two phases independently along with F-tests of
-difference for the corresponding variances. Values significant at the
-1\%, 5\% and 10\% level are marked with ***, ** and * respectively.
-Detailed results are available in the attached
-\href{https://bautheac.shinyapps.io/co-movement/}{Internet Appendix}.
-\textbf{Backwardation} and \textbf{contango} regimes as well as period
-definitions are discussed in Section~\ref{sec-methods} while the results
-are discussed in Section~\ref{sec-results}.}
+volatilities for two equally weighted portfolios of US and GB traded
+assets for the four periods. For each period, estimates are computed
+independently over the whole period as well as over phases of
+\textbf{backwardation} and \textbf{contango}. The table further shows
+the results of t-tests of significance for the mean returns as well as
+t-tests of difference between these when computed over the two phases
+independently along with F-tests of difference for the corresponding
+variances. Values significant at the 1\%, 5\% and 10\% level are marked
+with ***, ** and * respectively. Detailed results are available in the
+attached \href{https://bautheac.shinyapps.io/co-movement/}{Internet
+Appendix}. \textbf{Backwardation} and \textbf{contango} regimes as well
+as period definitions are discussed in Section~\ref{sec-methods} while
+the results are discussed in Section~\ref{sec-results}.}
 
 \tabularnewline
 
 \toprule
-\textcolor{black}{\textbf{asset}} & \textcolor{black}{\textbf{estimate}} & \textcolor{black}{\textbf{past}} & \textcolor{black}{\textbf{financialisation}} & \textcolor{black}{\textbf{crisis}} & \textcolor{black}{\textbf{post-crisis}}\\
+\textcolor{black}{\textbf{asset}} & \textcolor{black}{\textbf{estimate}} & \textcolor{black}{\textbf{regime}} & \textcolor{black}{\textbf{past}} & \textcolor{black}{\textbf{financialisation}} & \textcolor{black}{\textbf{crisis}} & \textcolor{black}{\textbf{post-crisis}}\\
 \midrule
-\textbf{Corn-\#2 yellow (XCBT)} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{3.48\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{21.37\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{6.89\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{-4.51\% (b<c)}}\\
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{23\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{29.54\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{36.15\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{21.8\% (b<c*)}}\\
-\textbf{Oats (XCBT)} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{5.49\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{21.62\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{8.89\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{-0.87\% (b>c)}}\\
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{32.22\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{31.04\% (b>c***)}} & \textcolor[HTML]{4285f4}{\textbf{34.67\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{29.5\% (b>c***)}}\\
-\textbf{Soybean meal (XCBT)} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{7.29\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{12.06\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{8.12\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{-0.33\% (b<c)}}\\
+\textbf{US commodities} & \textbf{mean} & \textbf{whole period} & \textcolor[HTML]{4285f4}{\textbf{*6.89\%}} & \textcolor[HTML]{4285f4}{\textbf{**15.89\%}} & \textcolor[HTML]{4285f4}{\textbf{9.39\%}} & \textcolor[HTML]{4285f4}{\textbf{-0.18\%}}\\
+\textbf{} & \textbf{} & \textbf{backwardation} & \textcolor[HTML]{4285f4}{\textbf{***15.44\%}} & \textcolor[HTML]{4285f4}{\textbf{*15.66\%}} & \textcolor[HTML]{4285f4}{\textbf{13.4\%}} & \textcolor[HTML]{4285f4}{\textbf{6.82\%}}\\
+\textbf{} & \textbf{} & \textbf{contango} & \textcolor[HTML]{4285f4}{\textbf{-1.09\%}} & \textcolor[HTML]{4285f4}{\textbf{*16.16\%}} & \textcolor[HTML]{4285f4}{\textbf{4.9\%}} & \textcolor[HTML]{4285f4}{\textbf{-6.33\%}}\\
+\textbf{} & \textbf{} & \textbf{backwardation vs. contango} & \textcolor[HTML]{4285f4}{\textbf{**}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}}\\
+\textbf{} & \textbf{volatility} & \textbf{whole period} & \textcolor[HTML]{4285f4}{\textbf{10\%}} & \textcolor[HTML]{4285f4}{\textbf{13.62\%}} & \textcolor[HTML]{4285f4}{\textbf{17.58\%}} & \textcolor[HTML]{4285f4}{\textbf{9.86\%}}\\
 \addlinespace
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{26.34\% (b>c***)}} & \textcolor[HTML]{4285f4}{\textbf{32.55\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{31.78\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{25.11\% (b<c)}}\\
-\textbf{Soybean oil (XCBT)} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{6.21\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{15.57\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{4.04\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{-7.39\% (b<c)}}\\
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{21.43\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{28.35\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{25.75\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{18.95\% (b<c**)}}\\
-\textbf{Soybeans (XCBT)} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{6.89\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{13.36\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{6.19\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{-3.82\% (b<c)}}\\
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{21.47\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{30.04\% (b>c***)}} & \textcolor[HTML]{4285f4}{\textbf{28\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{21.22\% (b>c*)}}\\
+\textbf{} & \textbf{} & \textbf{backwardation} & \textcolor[HTML]{4285f4}{\textbf{9.88\%}} & \textcolor[HTML]{4285f4}{\textbf{14.21\%}} & \textcolor[HTML]{4285f4}{\textbf{14.83\%}} & \textcolor[HTML]{4285f4}{\textbf{8.59\%}}\\
+\textbf{} & \textbf{} & \textbf{contango} & \textcolor[HTML]{4285f4}{\textbf{10.09\%}} & \textcolor[HTML]{4285f4}{\textbf{13.05\%}} & \textcolor[HTML]{4285f4}{\textbf{19.98\%}} & \textcolor[HTML]{4285f4}{\textbf{10.95\%}}\\
+\textbf{} & \textbf{} & \textbf{backwardation vs. contango} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{**}} & \textcolor[HTML]{4285f4}{\textbf{***}} & \textcolor[HTML]{4285f4}{\textbf{***}}\\
+\textbf{GB commodities} & \textbf{mean} & \textbf{whole period} & \textcolor[HTML]{4285f4}{\textbf{2.47\%}} & \textcolor[HTML]{4285f4}{\textbf{*21.77\%}} & \textcolor[HTML]{4285f4}{\textbf{5.25\%}} & \textcolor[HTML]{4285f4}{\textbf{2.72\%}}\\
+\textbf{} & \textbf{} & \textbf{backwardation} & \textcolor[HTML]{4285f4}{\textbf{4.41\%}} & \textcolor[HTML]{4285f4}{\textbf{8.01\%}} & \textcolor[HTML]{4285f4}{\textbf{15.06\%}} & \textcolor[HTML]{4285f4}{\textbf{**19.95\%}}\\
 \addlinespace
-\textbf{Wheat-SRW (XCBT)} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{5.07\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{17.63\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{6.68\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{-1.58\% (b>c)}}\\
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{24.93\% (b>c**)}} & \textcolor[HTML]{4285f4}{\textbf{33.03\% (b>c***)}} & \textcolor[HTML]{4285f4}{\textbf{37.62\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{26.58\% (b<c)}}\\
-\textbf{Cattle-feeder (XCME)} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{0.39\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{7.43\% (b>c*)}} & \textcolor[HTML]{4285f4}{\textbf{7.13\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{1.87\% (b>c)}}\\
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{13.23\% (b<c*)}} & \textcolor[HTML]{4285f4}{\textbf{15.16\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{15.24\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{18.69\% (b>c***)}}\\
-\textbf{Cattle-live (XCME)} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{3.45\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{8.77\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{4.13\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{1.92\% (b<c)}}\\
+\textbf{} & \textbf{} & \textbf{contango} & \textcolor[HTML]{4285f4}{\textbf{0.34\%}} & \textcolor[HTML]{4285f4}{\textbf{*35.56\%}} & \textcolor[HTML]{4285f4}{\textbf{-5.24\%}} & \textcolor[HTML]{4285f4}{\textbf{-14.05\%}}\\
+\textbf{} & \textbf{} & \textbf{backwardation vs. contango} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{**}}\\
+\textbf{} & \textbf{volatility} & \textbf{whole period} & \textcolor[HTML]{4285f4}{\textbf{15.66\%}} & \textcolor[HTML]{4285f4}{\textbf{26.91\%}} & \textcolor[HTML]{4285f4}{\textbf{30.24\%}} & \textcolor[HTML]{4285f4}{\textbf{16.19\%}}\\
+\textbf{} & \textbf{} & \textbf{backwardation} & \textcolor[HTML]{4285f4}{\textbf{14.39\%}} & \textcolor[HTML]{4285f4}{\textbf{25.92\%}} & \textcolor[HTML]{4285f4}{\textbf{25.94\%}} & \textcolor[HTML]{4285f4}{\textbf{15.13\%}}\\
+\textbf{} & \textbf{} & \textbf{contango} & \textcolor[HTML]{4285f4}{\textbf{16.87\%}} & \textcolor[HTML]{4285f4}{\textbf{27.88\%}} & \textcolor[HTML]{4285f4}{\textbf{34.06\%}} & \textcolor[HTML]{4285f4}{\textbf{17.1\%}}\\
 \addlinespace
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{17.1\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{17.43\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{16.32\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{18.3\% (b>c***)}}\\
-\textbf{Lean hogs (XCME)} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{0.73\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{8.4\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{12.69\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{-1.09\% (b>c)}}\\
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{38.33\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{31.89\% (b>c***)}} & \textcolor[HTML]{4285f4}{\textbf{30.37\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{36.94\% (b<c*)}}\\
-\textbf{Cocoa (IFUS)} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{3.66\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{16.35\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{1.39\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{3.65\% (b<c)}}\\
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{32.66\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{29.99\% (b>c*)}} & \textcolor[HTML]{4285f4}{\textbf{31.03\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{24.69\% (b>c**)}}\\
-\addlinespace
-\textbf{Coffee-C (IFUS)} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{-5.91\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{20.38\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{2.2\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{1.99\% (b>c)}}\\
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{43.84\% (b>c***)}} & \textcolor[HTML]{4285f4}{\textbf{32.3\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{30.17\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{31.86\% (b<c)}}\\
-\textbf{Cotton-\#2 (IFUS)} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{3.24\% (b>c*)}} & \textcolor[HTML]{4285f4}{\textbf{0.95\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{12.53\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{0.5\% (b>c)}}\\
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{26.38\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{29.01\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{33.26\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{20.61\% (b>c*)}}\\
-\textbf{Lumber (XCME)} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{1.9\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{-3.58\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{11.74\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{5.06\% (b>c**)}}\\
-\addlinespace
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{30.58\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{29.39\% (b>c**)}} & \textcolor[HTML]{4285f4}{\textbf{36.31\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{25.1\% (b<c***)}}\\
-\textbf{Orange juice (IFUS)} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{1.67\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{13.87\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{14.4\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{3.8\% (b>c)}}\\
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{29.5\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{33.01\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{34.43\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{29.37\% (b<c)}}\\
-\textbf{Sugar-\#11 (IFUS)} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{-4.56\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{24.87\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{11.82\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{-1.16\% (b<c)}}\\
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{34.88\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{33.25\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{37.9\% (b>c***)}} & \textcolor[HTML]{4285f4}{\textbf{28.72\% (b<c*)}}\\
-\addlinespace
-\textbf{Natural gas (XNYM)} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{35.38\% (b>c**)}} & \textcolor[HTML]{4285f4}{\textbf{16.25\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{0.93\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{8.33\% (b>c)}}\\
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{61.55\% (b>c*)}} & \textcolor[HTML]{4285f4}{\textbf{54.6\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{53.58\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{44.58\% (b<c**)}}\\
-\textbf{Crude oil-WTI (XNYM)} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{15.43\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{*28.74\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{9.67\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{-5.64\% (b>c)}}\\
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{39.87\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{32.56\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{42.84\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{34.69\% (b<c***)}}\\
-\textbf{Gasoline (XNYM)} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{16.65\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{30.95\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{10.59\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{-5.37\% (b>c)}}\\
-\addlinespace
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{42.77\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{41.76\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{40.07\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{37.09\% (b<c***)}}\\
-\textbf{Heating oil (XNYM)} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{16.31\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{*29.88\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{6.83\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{-3.44\% (b>c)}}\\
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{40.75\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{35.09\% (b<c**)}} & \textcolor[HTML]{4285f4}{\textbf{33.17\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{30.56\% (b<c***)}}\\
-\textbf{Copper (XCEC)} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{1.45\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{*28.15\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{6.19\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{-0.1\% (b>c)}}\\
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{21.23\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{31.89\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{34.91\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{19.56\% (b<c***)}}\\
-\addlinespace
-\textbf{Gold (XCEC)} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{4.5\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{14.35\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{14.01\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{0.53\% (b>c)}}\\
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{15.14\% (b>c***)}} & \textcolor[HTML]{4285f4}{\textbf{18.89\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{21.46\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{14.41\% (b<c***)}}\\
-\textbf{Palladium (XNYM)} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{9.12\% (b>c***)}} & \textcolor[HTML]{4285f4}{\textbf{9.03\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{*29.12\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{13.75\% (b>c*)}}\\
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{38.27\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{32.71\% (b>c**)}} & \textcolor[HTML]{4285f4}{\textbf{36.14\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{25.38\% (b<c***)}}\\
-\textbf{Platinum (XNYM)} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{12.93\% (b>c*)}} & \textcolor[HTML]{4285f4}{\textbf{10.56\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{7.29\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{-7.92\% (b>c)}}\\
-\addlinespace
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{22.62\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{22.66\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{25.53\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{19.48\% (b<c***)}}\\
-\textbf{Silver (XCEC)} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{6.19\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{17.54\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{21.96\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{-2.43\% (b>c)}}\\
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{22\% (b<c**)}} & \textcolor[HTML]{4285f4}{\textbf{33.92\% (b<c*)}} & \textcolor[HTML]{4285f4}{\textbf{39.87\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{24.35\% (b<c***)}}\\
-\textbf{Aluminium (XLME)} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{1.13\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{13.78\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{-3.58\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{3.15\% (b>c**)}}\\
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{17.6\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{26.41\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{26.48\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{18.56\% (b>c)}}\\
-\addlinespace
-\textbf{Copper (XLME)} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{0.45\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{**28.59\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{5.74\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{0.03\% (b>c)}}\\
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{19.25\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{31.09\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{34.27\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{18.92\% (b<c***)}}\\
-\textbf{Lead (XLME)} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{3.83\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{28.99\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{10.74\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{2.07\% (b>c)}}\\
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{19.64\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{41.74\% (b<c**)}} & \textcolor[HTML]{4285f4}{\textbf{41.05\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{23.26\% (b>c)}}\\
-\textbf{Nickel (XLME)} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{19.31\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{12.5\% (b<c**)}} & \textcolor[HTML]{4285f4}{\textbf{3.52\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{0.31\% (b>c***)}}\\
-\addlinespace
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{32.26\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{44.27\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{41.45\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{28.98\% (b>c)}}\\
-\textbf{Tin (XLME)} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{4.07\% (b>c*)}} & \textcolor[HTML]{4285f4}{\textbf{*29.1\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{7.46\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{1.68\% (b>c)}}\\
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{15.38\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{31.71\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{35.61\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{18.79\% (b<c***)}}\\
-\textbf{Zinc (XLME)} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{-4.52\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{20.13\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{7.62\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{9.07\% (b>c*)}}\\
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{21.73\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{38.77\% (b<c**)}} & \textcolor[HTML]{4285f4}{\textbf{36.17\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{23.25\% (b<c**)}}\\
-\addlinespace
-\textbf{US commodities} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{*6.89\% (b>c**)}} & \textcolor[HTML]{4285f4}{\textbf{**15.89\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{9.39\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{-0.18\% (b>c)}}\\
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{10\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{13.62\% (b>c**)}} & \textcolor[HTML]{4285f4}{\textbf{17.58\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{9.86\% (b<c***)}}\\
-\textbf{GB commodities} & \textbf{mean} & \textcolor[HTML]{4285f4}{\textbf{2.47\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{*21.77\% (b<c)}} & \textcolor[HTML]{4285f4}{\textbf{5.25\% (b>c)}} & \textcolor[HTML]{4285f4}{\textbf{2.72\% (b>c**)}}\\
-\textbf{} & \textbf{volatility} & \textcolor[HTML]{4285f4}{\textbf{15.66\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{26.91\% (b<c*)}} & \textcolor[HTML]{4285f4}{\textbf{30.24\% (b<c***)}} & \textcolor[HTML]{4285f4}{\textbf{16.19\% (b<c***)}}\\
+\textbf{} & \textbf{} & \textbf{backwardation vs. contango} & \textcolor[HTML]{4285f4}{\textbf{***}} & \textcolor[HTML]{4285f4}{\textbf{*}} & \textcolor[HTML]{4285f4}{\textbf{***}} & \textcolor[HTML]{4285f4}{\textbf{***}}\\
 \bottomrule
 
 \end{longtable}
@@ -1951,8 +1888,6 @@ detailed in Section~\ref{sec-taxonomy}.}
 \end{longtable}
 
 \endgroup{}
-
-\restoregeometry
 
 \newpage
 
