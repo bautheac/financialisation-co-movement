@@ -333,7 +333,7 @@ The onset of the financial crisis and the monetary policy regimes that followed,
 
 \newpage
 
-\newgeometry{margin=.75in}
+<!-- \newgeometry{margin=.75in} -->
 
 
 # Figures {.unnumbered}  
@@ -364,19 +364,17 @@ regimes
 
 # Tables {.unnumbered}  
 
-\newpage
-
 ```{r}
 #| label: tbl-stats-regime-tests
-#| tbl-cap: "This table shows mean returns and volatilities for the individual commodities and two equally weighted portfolios of US and GB traded assets for the four periods. For each period, estimates are computed independently over the whole period--figure shown--as well as over phases of **backwardation** (b) and **contango** (c)--results in brackets. The table further shows the results of t-tests of significance for the mean returns computed over the whole periods and t-tests of difference between these when computed over the two phases independently along with F-tests of difference for the corresponding variances. Values significant at the 1%, 5% and 10% level are marked with \\\\*\\\\*\\\\*, \\\\*\\\\* and \\\\* respectively. Detailed results are available in the attached [Internet Appendix](https://bautheac.shinyapps.io/co-movement/). **Backwardation** and **contango** regimes as well as period definitions are discussed in \\@sec-methods while the results are discussed in \\@sec-results."
+#| tbl-cap: "This table shows mean returns and volatilities for two equally weighted portfolios of US and GB traded assets for the four periods. For each period, estimates are computed independently over the whole period as well as over phases of **backwardation** and **contango**. The table further shows the results of t-tests of significance for the mean returns as well as t-tests of difference between these when computed over the two phases independently along with F-tests of difference for the corresponding variances. Values significant at the 1%, 5% and 10% level are marked with \\\\*\\\\*\\\\*, \\\\*\\\\* and \\\\* respectively. Detailed results are available in the attached [Internet Appendix](https://bautheac.shinyapps.io/co-movement/). **Backwardation** and **contango** regimes as well as period definitions are discussed in \\@sec-methods while the results are discussed in \\@sec-results."
 
-table_name <- "stats-individuals - regime difference tests"
-columns_to_collapse_rows_for <- c("asset")
-colnames <- c("asset", "estimate", "past", "financialisation", "crisis", "post-crisis")
-align <- make_series_of_repeated_chars(list(l = 1L, r = 5L))
+table_name <- "stats-ew - regime difference tests"
+columns_to_collapse_rows_for <- c("asset", "estimate")
+colnames <- c("asset", "estimate", "regime", "past", "financialisation", "crisis", "post-crisis")
+align <- make_series_of_repeated_chars(list(l = 3L, r = 4L))
 longtable <- TRUE
-bold_columns <- 1L:6L 
-coloured_columns <- 3L:6L
+bold_columns <- 1L:7L 
+coloured_columns <- 4L:7L
 
 make_table(table_name, columns_to_collapse_rows_for, colnames, align, longtable, bold_columns, coloured_columns)
 ```
@@ -488,7 +486,7 @@ coloured_columns <- 5L:8L
 make_table(table_name, columns_to_collapse_rows_for, colnames, align, longtable, bold_columns, coloured_columns)
 ```
 
-\restoregeometry
+<!-- \restoregeometry -->
 
 \newpage
 

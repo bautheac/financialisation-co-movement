@@ -77,7 +77,7 @@ figure_regimes <- ggplot(table_regimes, aes(x = period, y = value, fill = operat
   geom_bar(stat = "identity") +
   geom_text(aes(label = value), position = position_stack(vjust = 0.5), color = "white", size = 3, fontface = "bold") +
   facet_wrap(~estimate, ncol = 1) +
-  labs(title = expression("Estimate comparison between " * bold("CHP") * " regimes"), x = "", y = "", fill = "") +
+  labs(title = expression("Estimate comparison between " * bold("CHP") * " regime phases"), x = "", y = "", fill = "") +
   theme_minimal() +
   theme(
     strip.text = element_text(size = 10), plot.title = element_text(size = 12, hjust = 0.5),
