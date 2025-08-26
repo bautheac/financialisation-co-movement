@@ -9,6 +9,7 @@ library(tidyr)
 
 
 tables_directory_path <- here("explore", "tables", "revision-jfm")
+results_directory_path <- here::here("explore", "results", "revision-jfm")
 figures_directory_path <- here("explore", "results", "figures")
 
 table_stats_individuals_path <- paste_forward_slash(tables_directory_path, "stats-individual-assets.rds")
@@ -88,6 +89,53 @@ figure_regimes <- ggplot(table_regimes, aes(x = period, y = value, fill = operat
   scale_fill_manual(values = met.brewer("Isfahan2", 2))
 
 
-
 figure_regimes_path <- paste_forward_slash(figures_directory_path, "regimes.rds")
 write_rds(figure_regimes, figure_regimes_path)
+
+
+
+
+
+table_correlations_path <- paste_forward_slash(tables_directory_path, "correlations-inner-years.rds")
+correlations <- read_rds(table_correlations_path) 
+
+
+table_correlations <- readr::read_rds(
+  slituR::paste_forward_slash(results_directory_path, "correlations-inner.rds")
+) |> dplyr::filter(
+    field == "close price", type == "return", frequency == "day", 
+    timespan == "year", regime == "whole period", subsector == "all"
+  ) |>
+    dplyr::select(country, sector, year, average) |>
+    dplyr::slice_tail(n = 1L, by = c("country", "sector", "year")) |>
+    dplyr::mutate(
+       `asset pool` = paste(country, sector, sep = "-"),
+      `asset pool` = factor(
+        `asset pool`, levels = c("all-all", "US-all", "US-agriculturals", "US-energy", "US-metals", "GB-all")
+      )
+    ) |>
+    dplyr::select(`asset pool`, year, average)
+
+
+# Create a line chart for correlations
+figure_correlations <- ggplot(table_correlations, aes(x = year, y = average, color = `asset pool`, group = `asset pool`)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 2, show.legend = FALSE) +
+  # geom_text(aes(label = round(average, 2)), vjust = -1, size = 5, fontface = "bold", show.legend = FALSE) +
+  labs(title = "Average returns pairwise correlations", x = "", y = "", color = "Asset Pool") +
+  theme_minimal() +
+  theme(
+    strip.text = element_text(size = 10),
+    plot.title = element_text(size = 12, hjust = 0.5),
+    legend.position = "bottom",
+    legend.justification = "left",
+    legend.direction = "horizontal",
+    legend.box = "horizontal",
+    legend.margin = margin(t = -10, b = 20, unit = "pt")
+  ) +
+  scale_color_manual(values = met.brewer("Isfahan2", length(unique(table_correlations$`asset pool`)))) +
+  guides(color = guide_legend(nrow = 1)) +
+  scale_x_continuous(breaks = sort(unique(table_correlations$year)))
+
+figure_correlations_path <- paste_forward_slash(figures_directory_path, "correlations.rds")
+write_rds(figure_correlations, figure_correlations_path)
