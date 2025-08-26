@@ -92,6 +92,7 @@
 \def\fps@figure{htbp}
 \makeatother
 
+\usepackage{rotating}
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
@@ -878,8 +879,10 @@ front futures contract daily returns are regressed on returns to the
 mimicking portfolio for a particular risk factor with the corresponding
 \(\beta\)s and \(R^{2}\)s averaged. For the long-short factors the
 \(\beta\)s and \(R^{2}\)s are computed for models where the regressor is
-the factor itself as well as both its long and short legs independently
-(results available upon request).
+the factor itself as well as both its long and short legs
+independently\footnote{A detailed breakdown of these results is provided
+  in the attached
+  \href{https://bautheac.shinyapps.io/co-movement/}{Internet Appendix}.}.
 
 For each time period considered in the study, being one of the four
 multi-year periods described above or any individual year over the
@@ -1035,15 +1038,13 @@ emerges as a crucial aspect that warrants thorough examination.\\
 We strive to address this issue by first examining the average returns
 pairwise correlations between commodities across the entire
 cross-section of the commodity assets considered in the study as well as
-by country, sector and sub-sector.
-Table~\ref{tbl-correlations-inner-periods} shows the results for the
-four periods of interest with the results reported for the entire period
-as well as for periods of \textbf{backwardation} and \textbf{contango}.
-For the entire sample the average pairwise correlation jumps from 0.07
-in the first period to 0.16 over financialisation. This finding
-indicates higher interdependence within the full cross-section of
-commodities starting with the financialisation period, consistent with
-the empirical findings in \citet{fryMcKibbin_evolution_2023} and
+by country, sector and sub-sector with the results shown in
+Table~\ref{tbl-correlations-inner-periods}. For the entire sample the
+average pairwise correlation jumps from 0.07 in the first period to 0.16
+over financialisation. This finding indicates higher interdependence
+within the full cross-section of commodities starting with the
+financialisation period, consistent with the empirical findings in
+\citet{fryMcKibbin_evolution_2023} and
 \citet{mayer_financialization_2017} as well as with the theoretical
 model of \citet{basak_model_2016}. The sector analysis sheds light on
 the driving force behind these changes. The US metals see the sharpest
@@ -1055,9 +1056,12 @@ driving force behind increased average pairwise correlations during
 financialisation, a new observation to the best of our knowledge. The
 pattern of correlations is very similar across phases of
 \textbf{backwardation} and \textbf{contango} for all the sectors and
-sub-sectors over the past and financialisation periods. In this context,
-the ontological consequences of financialisation are better observed
-from an investment perspective as illustrated in
+sub-sectors over the past and financialisation periods\footnote{A
+  breakdown of the average pairwise correlations by regime is provided
+  in the attached
+  \href{https://bautheac.shinyapps.io/co-movement/}{Internet Appendix}.}.
+In this context, the ontological consequences of financialisation are
+better observed from an investment perspective as illustrated in
 Table~\ref{tbl-correlations-cross-periods} where we observe average
 pairwise correlation coefficients between equally weighted portfolios of
 US traded commodity assets grouped by sub-sector\footnote{A more
@@ -1071,11 +1075,11 @@ coefficient over \textbf{backwardation} phases in the first period (0.12
 vs.~0.03) and the pattern reversed over financilisation with an average
 coefficient substantially higher in \textbf{contango} (0.12 vs.~0.02).\\
 We break down Table~\ref{tbl-correlations-inner-periods}'s average
-correlations by year in Table~\ref{tbl-correlations-inner-years}. For
-the full sample of assets, the average pairwise correlations remain in
-the 0.06--0.08 range from 1998 through 2003, before suddenly increasing
-to 0.12 from 2003 to 2004. This suggests 2004 as a distinct break point
-for the onset of financialisation, as noted in several studies
+correlations by year in Figure~\ref{fig-correlations}. For the full
+sample of assets, the average pairwise correlations remain in the
+0.06--0.08 range from 1998 through 2003, before suddenly increasing to
+0.12 from 2003 to 2004. This suggests 2004 as a distinct break point for
+the onset of financialisation, as noted in several studies
 \citep{baker_financialization_2021, tang_index_2012}. We further observe
 that the US metals appear to have played a major role in this as the
 increase seems driven by the sector which average pairwise correlation
@@ -1109,27 +1113,24 @@ contrast, the corresponding figure for the energy sector shows a
 substantial decrease, down to 1.61 during financialisation from 2.33
 over the past period.\\
 The corresponding pricing performance displays a similar pattern as
-shown in Table~\ref{tbl-regressions-factors} where for each period the
-corresponding \(R^{2}\) values are independently averaged over the
-entire period as well as over periods of \textbf{contango} and
-\textbf{backwardation}. The average \(R^{2}\) for the market factor
-across the entire cross-section of commodity assets, including the GB
-traded base metals, increases to around 20\% during financialisation
-compared to around 10\% over the previous period with the rise driven by
-the metals sector at large. The sector average for the US traded assets
-jumps to 31\% during financialisation from 7.5\% over the past period
-while for the GB traded assets the corresponding figure increases from
-less than 2\%, or virtually no explanatory power for the (US based)
-market factor, to almost 12\% over the financialisation period. The
-results for our other risk factor mimicking portfolios show a similar
-pattern and provide a deeper insights into co-movement dynamics in this
-context. All three factors---CHP, open interest and term
-structure---performed poorly in the first period, indicating that the
-commodities with extreme factor attributes (high or low CHP for example)
-were uncorrelated with the rest of the commodity cross-section, and the
-overall performance consistent across periods of \textbf{contango} and
-\textbf{backwardation}\footnote{A breakdown of the performance by regime
-  is provided in the attached
+shown in Table~\ref{tbl-regressions-factors}. The average \(R^{2}\) for
+the market factor across the entire cross-section of commodity assets,
+including the GB traded base metals, increases to around 20\% during
+financialisation compared to around 10\% over the previous period with
+the rise driven by the metals sector at large. The sector average for
+the US traded assets jumps to 31\% during financialisation from 7.5\%
+over the past period while for the GB traded assets the corresponding
+figure increases from less than 2\%, or virtually no explanatory power
+for the (US based) market factor, to almost 12\% over the
+financialisation period. The results for our other risk factor mimicking
+portfolios show a similar pattern and provide a deeper insights into
+co-movement dynamics in this context. All three factors---CHP, open
+interest and term structure---performed poorly in the first period,
+indicating that the commodities with extreme factor attributes (high or
+low CHP for example) were uncorrelated with the rest of the commodity
+cross-section, and the overall performance consistent across periods of
+\textbf{contango} and \textbf{backwardation}\footnote{A breakdown of the
+  performance by regime is provided in the attached
   \href{https://bautheac.shinyapps.io/co-movement/}{Internet Appendix}.}.
 The onset of financialisation leads to a substantial improvement in the
 performance of the CHP factor with its average \(R^{2}\), albeit still
@@ -1206,16 +1207,16 @@ with the greater interdependence between equity and commodity markets
 over this period documented in
 \citet{silvennoinen_financialisation_2013}. The figure for the US traded
 section of the metals sector only progresses modestly to 0.59 after
-peaking at 0.63 in 2006 (Table~\ref{tbl-correlations-inner-years}). In
-contrast, the GB traded assets see a sharp increase to over 0.65
-starting in 2007 up to a peak of 0.69 in 2010, and so does the
-agricultural sector with the sharpest increase in 2008 when the average
-pairwise correlation for the sector jumps to 0.30. The energy sector
-also shows a substantial progression starting in 2007 and peaking at
-0.63 in 2008 before leveling back down over the rest of the period. The
-onset of the financial crisis seems therefore to have had an across the
-board impact on the interdependence of commodities in contrast with
-financialisation, much more closely related to the metals sector.
+peaking at 0.63 in 2006 (Figure~\ref{fig-correlations}). In contrast,
+the GB traded assets see a sharp increase to over 0.65 starting in 2007
+up to a peak of 0.69 in 2010, and so does the agricultural sector with
+the sharpest increase in 2008 when the average pairwise correlation for
+the sector jumps to 0.30. The energy sector also shows a substantial
+progression starting in 2007 and peaking at 0.63 in 2008 before leveling
+back down over the rest of the period. The onset of the financial crisis
+seems therefore to have had an across the board impact on the
+interdependence of commodities in contrast with financialisation, much
+more closely related to the metals sector.
 
 \medskip
 
@@ -1241,7 +1242,7 @@ and four GB traded assets, showing lower mean returns relative to the
 crisis while the same number of US commodities and all GB metals show
 lower figures relative to the financialisation period; mean returns for
 equally weighted portfolios of US and GB assets
-(@Table~\ref{tbl-stats-regime-tests}) drop down to -0.2\% and 2.7\%
+(Table~\ref{tbl-stats-regime-tests}) drop down to -0.2\% and 2.7\%
 respectively. Interestingly volatility also recedes substantially with
 twenty six commodities, including twenty US assets and all GB metals,
 showing lower volatility figures relative to both the crisis and
@@ -1307,9 +1308,8 @@ observed during financialisation, with the figure for the entire
 cross-section (Table~\ref{tbl-correlations-inner-periods}) dropping down
 to 0.12 from 0.28 over the crisis. This substantial decline, that does
 not seem to have been widely noted, appears to begin in the latter part
-of the crisis period, around 2012
-(Table~\ref{tbl-correlations-inner-years}), before leveling down over
-the whole post-crisis period.
+of the crisis period, around 2012 (Figure~\ref{fig-correlations}),
+before leveling down over the whole post-crisis period.
 
 \medskip
 
@@ -1333,25 +1333,27 @@ combined with the subsequent accommodative monetary policy, may have
 triggered a reversion toward pre-financialization fundamentals in the
 commodity futures complex; an issue that, to our knowledge, has not been
 widely discussed in the existing literature.\\
-The phases analysis further documents the emerging role/dominance of the
-\textbf{contango} regime post-crisis with average correlations higher
-during those phases and the pattern stronger for the metal assets both
-US and GB traded. Similarly, for the latter the pricing performance of
-the market factor is considerably better during phase of
-\textbf{contango} in contrast with the previous periods that showed no
-substantial difference between phase of \textbf{contango} and
-\textbf{backwardation}. The figures for the US and GB traded segments of
-the sector are 23\% (\textbf{contango}) vs 11.5\%
-(\textbf{backwardation}) against 36.2\% vs 43\% during financialisation
-and 14.4\% (\textbf{contango}) vs 6.6\% (\textbf{backwardation}) against
-33.5\% vs 34.4\% during financialisation respectively. Taken together,
-these results indicate some recent changes in the correlation structure
-within the sector and provide additional evidence that the
-interdependence effects of financialization seems to have been strongest
-for the entire cross-section of the metals sector with a lesser impact
-for the other sectors. This observation, along with the decline in
-interdependence in the commodity sector at large documented above, could
-form a valuable basis for future research.
+The phases analysis\footnote{Results available in the attached
+  \href{https://bautheac.shinyapps.io/co-movement/}{Internet Appendix}.}
+further documents the emerging role/dominance of the \textbf{contango}
+regime post-crisis with average correlations higher during those phases
+and the pattern stronger for the metal assets both US and GB traded.
+Similarly, for the latter the pricing performance of the market factor
+is considerably better during phase of \textbf{contango} in contrast
+with the previous periods that showed no substantial difference between
+phase of \textbf{contango} and \textbf{backwardation}. The figures for
+the US and GB traded segments of the sector are 23\% (\textbf{contango})
+vs 11.5\% (\textbf{backwardation}) against 36.2\% vs 43\% during
+financialisation and 14.4\% (\textbf{contango}) vs 6.6\%
+(\textbf{backwardation}) against 33.5\% vs 34.4\% during
+financialisation respectively. Taken together, these results indicate
+some recent changes in the correlation structure within the sector and
+provide additional evidence that the interdependence effects of
+financialization seems to have been strongest for the entire
+cross-section of the metals sector with a lesser impact for the other
+sectors. This observation, along with the decline in interdependence in
+the commodity sector at large documented above, could form a valuable
+basis for future research.
 
 \newpage
 
@@ -1477,6 +1479,32 @@ are discussed in Section~\ref{sec-results}.}
 
 \newpage
 
+\newgeometry{margin=2.5cm}
+
+\begin{sidewaysfigure}
+
+\centering{
+
+\includegraphics{paper_files/figure-pdf/fig-correlations-1.pdf}
+
+}
+
+\caption{\label{fig-correlations}While
+Table~\ref{tbl-correlations-inner-periods} shows results computed
+independently for the four periods, this figure shows the results of the
+same analysis implemented for each year over the entire sample period.
+The corresponding figures along with a breakdown by sub-sector are
+provided in the attached
+\href{https://bautheac.shinyapps.io/co-movement/}{Internet Appendix}.
+The results are discussed in Section~\ref{sec-results} while
+Section~\ref{sec-taxonomy} details the commodity assets taxonomy.}
+
+\end{sidewaysfigure}%
+
+\restoregeometry
+
+\newpage
+
 \section*{Tables}\label{tables}
 \addcontentsline{toc}{section}{Tables}
 
@@ -1493,11 +1521,12 @@ the results of t-tests of significance for the mean returns as well as
 t-tests of difference between these when computed over the two phases
 independently along with F-tests of difference for the corresponding
 variances. Values significant at the 1\%, 5\% and 10\% level are marked
-with ***, ** and * respectively. Detailed results are available in the
-attached \href{https://bautheac.shinyapps.io/co-movement/}{Internet
-Appendix}. \textbf{Backwardation} and \textbf{contango} regimes as well
-as period definitions are discussed in Section~\ref{sec-methods} while
-the results are discussed in Section~\ref{sec-results}.}
+with ***, ** and * respectively. Results for individual commodity assets
+are available in the attached
+\href{https://bautheac.shinyapps.io/co-movement/}{Internet Appendix}.
+\textbf{Backwardation} and \textbf{contango} regimes as well as period
+definitions are discussed in Section~\ref{sec-methods} while the results
+are discussed in Section~\ref{sec-results}.}
 
 \tabularnewline
 
@@ -1589,63 +1618,39 @@ in Section~\ref{sec-taxonomy}.}
 
 \begingroup\fontsize{7}{9}\selectfont
 
-\begin{longtable}[t]{>{}l>{}l>{}l>{}r>{}r>{}r>{}r>{}r}
+\begin{longtable}[t]{>{}l>{}l>{}l>{}r>{}r>{}r>{}r}
 
 \caption{\label{tbl-correlations-inner-periods}This table shows the
 average return pairwise correlation coefficients computed independently
 across the whole cross-section of individual commodity assets as well as
 within countries and commodity sectors and sub-sectors for the four
-periods. For each period, the results are computed independently over
-the entire period as well as over phases of \textbf{backwardation} and
-\textbf{contango}. \textbf{Backwardation} and \textbf{contango} regimes
-as well as period definitions are discussed in Section~\ref{sec-methods}
-while the results are discussed in Section~\ref{sec-results} and the
-commodity assets taxonomy is detailed in Section~\ref{sec-taxonomy}.}
+periods. A breakdown of the average pairwise correlations by
+\textbf{CHP} regime (\textbf{backwardation} vs.~\textbf{contango}) is
+provided in the attached
+\href{https://bautheac.shinyapps.io/co-movement/}{Internet Appendix}.
+\textbf{Backwardation} and \textbf{contango} regimes as well as period
+definitions are discussed in Section~\ref{sec-methods} while the results
+are discussed in Section~\ref{sec-results} and the commodity assets
+taxonomy is detailed in Section~\ref{sec-taxonomy}.}
 
 \tabularnewline
 
 \toprule
-\textcolor{black}{\textbf{country}} & \textcolor{black}{\textbf{sector}} & \textcolor{black}{\textbf{sub-sector}} & \textcolor{black}{\textbf{regime}} & \textcolor{black}{\textbf{past}} & \textcolor{black}{\textbf{financialisation}} & \textcolor{black}{\textbf{crisis}} & \textcolor{black}{\textbf{post-crisis}}\\
+\textcolor{black}{\textbf{country}} & \textcolor{black}{\textbf{sector}} & \textcolor{black}{\textbf{sub-sector}} & \textcolor{black}{\textbf{past}} & \textcolor{black}{\textbf{financialisation}} & \textcolor{black}{\textbf{crisis}} & \textcolor{black}{\textbf{post-crisis}}\\
 \midrule
-\textbf{all} & \textbf{all} & \textbf{all} & \textbf{whole period} & \textcolor[HTML]{4285f4}{\textbf{0.0737}} & \textcolor[HTML]{4285f4}{\textbf{0.1638}} & \textcolor[HTML]{4285f4}{\textbf{0.2849}} & \textcolor[HTML]{4285f4}{\textbf{0.1282}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{backwardation} & \textcolor[HTML]{4285f4}{\textbf{0.0724}} & \textcolor[HTML]{4285f4}{\textbf{0.1790}} & \textcolor[HTML]{4285f4}{\textbf{0.2709}} & \textcolor[HTML]{4285f4}{\textbf{0.1001}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{contango} & \textcolor[HTML]{4285f4}{\textbf{0.0748}} & \textcolor[HTML]{4285f4}{\textbf{0.1501}} & \textcolor[HTML]{4285f4}{\textbf{0.2985}} & \textcolor[HTML]{4285f4}{\textbf{0.1495}}\\
-\textbf{US} & \textbf{all} & \textbf{all} & \textbf{whole period} & \textcolor[HTML]{4285f4}{\textbf{0.0684}} & \textcolor[HTML]{4285f4}{\textbf{0.1545}} & \textcolor[HTML]{4285f4}{\textbf{0.2526}} & \textcolor[HTML]{4285f4}{\textbf{0.1096}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{backwardation} & \textcolor[HTML]{4285f4}{\textbf{0.0642}} & \textcolor[HTML]{4285f4}{\textbf{0.1697}} & \textcolor[HTML]{4285f4}{\textbf{0.2323}} & \textcolor[HTML]{4285f4}{\textbf{0.0859}}\\
+\textbf{all} & \textbf{all} & \textbf{all} & \textcolor[HTML]{4285f4}{\textbf{0.0737}} & \textcolor[HTML]{4285f4}{\textbf{0.1638}} & \textcolor[HTML]{4285f4}{\textbf{0.2849}} & \textcolor[HTML]{4285f4}{\textbf{0.1282}}\\
+\textbf{US} & \textbf{all} & \textbf{all} & \textcolor[HTML]{4285f4}{\textbf{0.0684}} & \textcolor[HTML]{4285f4}{\textbf{0.1545}} & \textcolor[HTML]{4285f4}{\textbf{0.2526}} & \textcolor[HTML]{4285f4}{\textbf{0.1096}}\\
+\textbf{} & \textbf{agriculturals} & \textbf{all} & \textcolor[HTML]{4285f4}{\textbf{0.0910}} & \textcolor[HTML]{4285f4}{\textbf{0.1305}} & \textcolor[HTML]{4285f4}{\textbf{0.2322}} & \textcolor[HTML]{4285f4}{\textbf{0.1075}}\\
+\textbf{} & \textbf{} & \textbf{grains} & \textcolor[HTML]{4285f4}{\textbf{0.4421}} & \textcolor[HTML]{4285f4}{\textbf{0.4898}} & \textcolor[HTML]{4285f4}{\textbf{0.5673}} & \textcolor[HTML]{4285f4}{\textbf{0.3728}}\\
+\textbf{} & \textbf{} & \textbf{livestock} & \textcolor[HTML]{4285f4}{\textbf{0.3340}} & \textcolor[HTML]{4285f4}{\textbf{0.2868}} & \textcolor[HTML]{4285f4}{\textbf{0.3707}} & \textcolor[HTML]{4285f4}{\textbf{0.3333}}\\
 \addlinespace
-\textbf{} & \textbf{} & \textbf{} & \textbf{contango} & \textcolor[HTML]{4285f4}{\textbf{0.0720}} & \textcolor[HTML]{4285f4}{\textbf{0.1402}} & \textcolor[HTML]{4285f4}{\textbf{0.2706}} & \textcolor[HTML]{4285f4}{\textbf{0.1268}}\\
-\textbf{} & \textbf{agriculturals} & \textbf{all} & \textbf{whole period} & \textcolor[HTML]{4285f4}{\textbf{0.0910}} & \textcolor[HTML]{4285f4}{\textbf{0.1305}} & \textcolor[HTML]{4285f4}{\textbf{0.2322}} & \textcolor[HTML]{4285f4}{\textbf{0.1075}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{backwardation} & \textcolor[HTML]{4285f4}{\textbf{0.0799}} & \textcolor[HTML]{4285f4}{\textbf{0.1421}} & \textcolor[HTML]{4285f4}{\textbf{0.1975}} & \textcolor[HTML]{4285f4}{\textbf{0.0955}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{contango} & \textcolor[HTML]{4285f4}{\textbf{0.1018}} & \textcolor[HTML]{4285f4}{\textbf{0.1184}} & \textcolor[HTML]{4285f4}{\textbf{0.2611}} & \textcolor[HTML]{4285f4}{\textbf{0.1186}}\\
-\textbf{} & \textbf{} & \textbf{grains} & \textbf{whole period} & \textcolor[HTML]{4285f4}{\textbf{0.4421}} & \textcolor[HTML]{4285f4}{\textbf{0.4898}} & \textcolor[HTML]{4285f4}{\textbf{0.5673}} & \textcolor[HTML]{4285f4}{\textbf{0.3728}}\\
+\textbf{} & \textbf{} & \textbf{softs} & \textcolor[HTML]{4285f4}{\textbf{0.0391}} & \textcolor[HTML]{4285f4}{\textbf{0.0853}} & \textcolor[HTML]{4285f4}{\textbf{0.1584}} & \textcolor[HTML]{4285f4}{\textbf{0.0764}}\\
+\textbf{} & \textbf{energy} & \textbf{all} & \textcolor[HTML]{4285f4}{\textbf{0.4908}} & \textcolor[HTML]{4285f4}{\textbf{0.5892}} & \textcolor[HTML]{4285f4}{\textbf{0.4687}} & \textcolor[HTML]{4285f4}{\textbf{0.4203}}\\
+\textbf{} & \textbf{} & \textbf{petroleum} & \textcolor[HTML]{4285f4}{\textbf{0.7278}} & \textcolor[HTML]{4285f4}{\textbf{0.7846}} & \textcolor[HTML]{4285f4}{\textbf{0.7692}} & \textcolor[HTML]{4285f4}{\textbf{0.7175}}\\
+\textbf{} & \textbf{metals} & \textbf{all} & \textcolor[HTML]{4285f4}{\textbf{0.2167}} & \textcolor[HTML]{4285f4}{\textbf{0.5553}} & \textcolor[HTML]{4285f4}{\textbf{0.5877}} & \textcolor[HTML]{4285f4}{\textbf{0.4721}}\\
+\textbf{} & \textbf{} & \textbf{precious} & \textcolor[HTML]{4285f4}{\textbf{0.2883}} & \textcolor[HTML]{4285f4}{\textbf{0.6305}} & \textcolor[HTML]{4285f4}{\textbf{0.6704}} & \textcolor[HTML]{4285f4}{\textbf{0.5762}}\\
 \addlinespace
-\textbf{} & \textbf{} & \textbf{} & \textbf{backwardation} & \textcolor[HTML]{4285f4}{\textbf{0.4312}} & \textcolor[HTML]{4285f4}{\textbf{0.5283}} & \textcolor[HTML]{4285f4}{\textbf{0.5749}} & \textcolor[HTML]{4285f4}{\textbf{0.3289}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{contango} & \textcolor[HTML]{4285f4}{\textbf{0.4570}} & \textcolor[HTML]{4285f4}{\textbf{0.4510}} & \textcolor[HTML]{4285f4}{\textbf{0.5675}} & \textcolor[HTML]{4285f4}{\textbf{0.4161}}\\
-\textbf{} & \textbf{} & \textbf{livestock} & \textbf{whole period} & \textcolor[HTML]{4285f4}{\textbf{0.3340}} & \textcolor[HTML]{4285f4}{\textbf{0.2868}} & \textcolor[HTML]{4285f4}{\textbf{0.3707}} & \textcolor[HTML]{4285f4}{\textbf{0.3333}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{backwardation} & \textcolor[HTML]{4285f4}{\textbf{0.3053}} & \textcolor[HTML]{4285f4}{\textbf{0.2652}} & \textcolor[HTML]{4285f4}{\textbf{0.3906}} & \textcolor[HTML]{4285f4}{\textbf{0.3220}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{contango} & \textcolor[HTML]{4285f4}{\textbf{0.3605}} & \textcolor[HTML]{4285f4}{\textbf{0.3150}} & \textcolor[HTML]{4285f4}{\textbf{0.3557}} & \textcolor[HTML]{4285f4}{\textbf{0.3483}}\\
-\addlinespace
-\textbf{} & \textbf{} & \textbf{softs} & \textbf{whole period} & \textcolor[HTML]{4285f4}{\textbf{0.0391}} & \textcolor[HTML]{4285f4}{\textbf{0.0853}} & \textcolor[HTML]{4285f4}{\textbf{0.1584}} & \textcolor[HTML]{4285f4}{\textbf{0.0764}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{backwardation} & \textcolor[HTML]{4285f4}{\textbf{0.0437}} & \textcolor[HTML]{4285f4}{\textbf{0.0845}} & \textcolor[HTML]{4285f4}{\textbf{0.1210}} & \textcolor[HTML]{4285f4}{\textbf{0.0685}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{contango} & \textcolor[HTML]{4285f4}{\textbf{0.0334}} & \textcolor[HTML]{4285f4}{\textbf{0.0874}} & \textcolor[HTML]{4285f4}{\textbf{0.1937}} & \textcolor[HTML]{4285f4}{\textbf{0.0833}}\\
-\textbf{} & \textbf{energy} & \textbf{all} & \textbf{whole period} & \textcolor[HTML]{4285f4}{\textbf{0.4908}} & \textcolor[HTML]{4285f4}{\textbf{0.5892}} & \textcolor[HTML]{4285f4}{\textbf{0.4687}} & \textcolor[HTML]{4285f4}{\textbf{0.4203}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{backwardation} & \textcolor[HTML]{4285f4}{\textbf{0.4844}} & \textcolor[HTML]{4285f4}{\textbf{0.5949}} & \textcolor[HTML]{4285f4}{\textbf{0.4601}} & \textcolor[HTML]{4285f4}{\textbf{0.4179}}\\
-\addlinespace
-\textbf{} & \textbf{} & \textbf{} & \textbf{contango} & \textcolor[HTML]{4285f4}{\textbf{0.4957}} & \textcolor[HTML]{4285f4}{\textbf{0.5869}} & \textcolor[HTML]{4285f4}{\textbf{0.4779}} & \textcolor[HTML]{4285f4}{\textbf{0.4210}}\\
-\textbf{} & \textbf{} & \textbf{petroleum} & \textbf{whole period} & \textcolor[HTML]{4285f4}{\textbf{0.7278}} & \textcolor[HTML]{4285f4}{\textbf{0.7846}} & \textcolor[HTML]{4285f4}{\textbf{0.7692}} & \textcolor[HTML]{4285f4}{\textbf{0.7175}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{backwardation} & \textcolor[HTML]{4285f4}{\textbf{0.6962}} & \textcolor[HTML]{4285f4}{\textbf{0.7854}} & \textcolor[HTML]{4285f4}{\textbf{0.7727}} & \textcolor[HTML]{4285f4}{\textbf{0.7282}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{contango} & \textcolor[HTML]{4285f4}{\textbf{0.7606}} & \textcolor[HTML]{4285f4}{\textbf{0.7856}} & \textcolor[HTML]{4285f4}{\textbf{0.7716}} & \textcolor[HTML]{4285f4}{\textbf{0.7134}}\\
-\textbf{} & \textbf{metals} & \textbf{all} & \textbf{whole period} & \textcolor[HTML]{4285f4}{\textbf{0.2167}} & \textcolor[HTML]{4285f4}{\textbf{0.5553}} & \textcolor[HTML]{4285f4}{\textbf{0.5877}} & \textcolor[HTML]{4285f4}{\textbf{0.4721}}\\
-\addlinespace
-\textbf{} & \textbf{} & \textbf{} & \textbf{backwardation} & \textcolor[HTML]{4285f4}{\textbf{0.2201}} & \textcolor[HTML]{4285f4}{\textbf{0.5418}} & \textcolor[HTML]{4285f4}{\textbf{0.6353}} & \textcolor[HTML]{4285f4}{\textbf{0.4155}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{contango} & \textcolor[HTML]{4285f4}{\textbf{0.2145}} & \textcolor[HTML]{4285f4}{\textbf{0.5727}} & \textcolor[HTML]{4285f4}{\textbf{0.5709}} & \textcolor[HTML]{4285f4}{\textbf{0.5035}}\\
-\textbf{} & \textbf{} & \textbf{precious} & \textbf{whole period} & \textcolor[HTML]{4285f4}{\textbf{0.2883}} & \textcolor[HTML]{4285f4}{\textbf{0.6305}} & \textcolor[HTML]{4285f4}{\textbf{0.6704}} & \textcolor[HTML]{4285f4}{\textbf{0.5762}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{backwardation} & \textcolor[HTML]{4285f4}{\textbf{0.3070}} & \textcolor[HTML]{4285f4}{\textbf{0.6061}} & \textcolor[HTML]{4285f4}{\textbf{0.6991}} & \textcolor[HTML]{4285f4}{\textbf{0.5386}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{contango} & \textcolor[HTML]{4285f4}{\textbf{0.2713}} & \textcolor[HTML]{4285f4}{\textbf{0.6591}} & \textcolor[HTML]{4285f4}{\textbf{0.6615}} & \textcolor[HTML]{4285f4}{\textbf{0.5949}}\\
-\addlinespace
-\textbf{GB} & \textbf{all} & \textbf{all} & \textbf{whole period} & \textcolor[HTML]{4285f4}{\textbf{0.4047}} & \textcolor[HTML]{4285f4}{\textbf{0.4691}} & \textcolor[HTML]{4285f4}{\textbf{0.6536}} & \textcolor[HTML]{4285f4}{\textbf{0.4412}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{backwardation} & \textcolor[HTML]{4285f4}{\textbf{0.3987}} & \textcolor[HTML]{4285f4}{\textbf{0.4753}} & \textcolor[HTML]{4285f4}{\textbf{0.6729}} & \textcolor[HTML]{4285f4}{\textbf{0.3954}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{contango} & \textcolor[HTML]{4285f4}{\textbf{0.4108}} & \textcolor[HTML]{4285f4}{\textbf{0.4652}} & \textcolor[HTML]{4285f4}{\textbf{0.6456}} & \textcolor[HTML]{4285f4}{\textbf{0.4797}}\\
+\textbf{GB} & \textbf{all} & \textbf{all} & \textcolor[HTML]{4285f4}{\textbf{0.4047}} & \textcolor[HTML]{4285f4}{\textbf{0.4691}} & \textcolor[HTML]{4285f4}{\textbf{0.6536}} & \textcolor[HTML]{4285f4}{\textbf{0.4412}}\\
 \bottomrule
 
 \end{longtable}
@@ -1683,70 +1688,6 @@ in Section~\ref{sec-taxonomy}.}
 \end{longtable}
 
 \endgroup{}
-
-\newpage
-
-\begin{landscape}\begingroup\fontsize{7}{9}\selectfont
-
-\begin{longtable}[t]{>{}l>{}l>{}l>{}l>{}r>{}r>{}r>{}r>{}r>{}r>{}r>{}r>{}r>{}r}
-
-\caption{\label{tbl-correlations-inner-years}While
-Table~\ref{tbl-correlations-inner-periods} shows results computed
-independently for the four periods, this table shows the results of the
-same analysis implemented for each year over the entire sample period.
-The results are discussed in Section~\ref{sec-results} while
-Section~\ref{sec-taxonomy} details the commodity assets taxonomy.}
-
-\tabularnewline
-
-\toprule
-\textcolor{black}{\textbf{country}} & \textcolor{black}{\textbf{sector}} & \textcolor{black}{\textbf{sub-sector}} & \textcolor{black}{\textbf{decade}} & \textcolor{black}{\textbf{0}} & \textcolor{black}{\textbf{1}} & \textcolor{black}{\textbf{2}} & \textcolor{black}{\textbf{3}} & \textcolor{black}{\textbf{4}} & \textcolor{black}{\textbf{5}} & \textcolor{black}{\textbf{6}} & \textcolor{black}{\textbf{7}} & \textcolor{black}{\textbf{8}} & \textcolor{black}{\textbf{9}}\\
-\midrule
-\textbf{all} & \textbf{all} & \textbf{all} & \textbf{1990} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{0.0401}} & \textcolor[HTML]{4285f4}{\textbf{0.0812}} & \textcolor[HTML]{4285f4}{\textbf{0.0822}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{2000} & \textcolor[HTML]{4285f4}{\textbf{0.0652}} & \textcolor[HTML]{4285f4}{\textbf{0.0719}} & \textcolor[HTML]{4285f4}{\textbf{0.0796}} & \textcolor[HTML]{4285f4}{\textbf{0.0848}} & \textcolor[HTML]{4285f4}{\textbf{0.1242}} & \textcolor[HTML]{4285f4}{\textbf{0.1247}} & \textcolor[HTML]{4285f4}{\textbf{0.1650}} & \textcolor[HTML]{4285f4}{\textbf{0.1541}} & \textcolor[HTML]{4285f4}{\textbf{0.3334}} & \textcolor[HTML]{4285f4}{\textbf{0.2913}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{2010} & \textcolor[HTML]{4285f4}{\textbf{0.2743}} & \textcolor[HTML]{4285f4}{\textbf{0.2837}} & \textcolor[HTML]{4285f4}{\textbf{0.2235}} & \textcolor[HTML]{4285f4}{\textbf{0.1432}} & \textcolor[HTML]{4285f4}{\textbf{0.1139}} & \textcolor[HTML]{4285f4}{\textbf{0.1547}} & \textcolor[HTML]{4285f4}{\textbf{0.1339}} & \textcolor[HTML]{4285f4}{\textbf{0.0963}} & \textcolor[HTML]{4285f4}{\textbf{0.1374}} & \textcolor[HTML]{4285f4}{\textbf{}}\\
-\textbf{US} & \textbf{all} & \textbf{all} & \textbf{1990} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{0.0536}} & \textcolor[HTML]{4285f4}{\textbf{0.0811}} & \textcolor[HTML]{4285f4}{\textbf{0.0803}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{2000} & \textcolor[HTML]{4285f4}{\textbf{0.0597}} & \textcolor[HTML]{4285f4}{\textbf{0.0652}} & \textcolor[HTML]{4285f4}{\textbf{0.0600}} & \textcolor[HTML]{4285f4}{\textbf{0.0723}} & \textcolor[HTML]{4285f4}{\textbf{0.1073}} & \textcolor[HTML]{4285f4}{\textbf{0.1164}} & \textcolor[HTML]{4285f4}{\textbf{0.1502}} & \textcolor[HTML]{4285f4}{\textbf{0.1479}} & \textcolor[HTML]{4285f4}{\textbf{0.3284}} & \textcolor[HTML]{4285f4}{\textbf{0.2621}}\\
-\addlinespace
-\textbf{} & \textbf{} & \textbf{} & \textbf{2010} & \textcolor[HTML]{4285f4}{\textbf{0.2275}} & \textcolor[HTML]{4285f4}{\textbf{0.2541}} & \textcolor[HTML]{4285f4}{\textbf{0.1850}} & \textcolor[HTML]{4285f4}{\textbf{0.1018}} & \textcolor[HTML]{4285f4}{\textbf{0.0986}} & \textcolor[HTML]{4285f4}{\textbf{0.1371}} & \textcolor[HTML]{4285f4}{\textbf{0.1064}} & \textcolor[HTML]{4285f4}{\textbf{0.0905}} & \textcolor[HTML]{4285f4}{\textbf{0.1197}} & \textcolor[HTML]{4285f4}{\textbf{}}\\
-\textbf{} & \textbf{agriculturals} & \textbf{all} & \textbf{1990} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{0.0827}} & \textcolor[HTML]{4285f4}{\textbf{0.0916}} & \textcolor[HTML]{4285f4}{\textbf{0.1121}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{2000} & \textcolor[HTML]{4285f4}{\textbf{0.0918}} & \textcolor[HTML]{4285f4}{\textbf{0.0967}} & \textcolor[HTML]{4285f4}{\textbf{0.0734}} & \textcolor[HTML]{4285f4}{\textbf{0.0827}} & \textcolor[HTML]{4285f4}{\textbf{0.1111}} & \textcolor[HTML]{4285f4}{\textbf{0.1090}} & \textcolor[HTML]{4285f4}{\textbf{0.1125}} & \textcolor[HTML]{4285f4}{\textbf{0.1131}} & \textcolor[HTML]{4285f4}{\textbf{0.3034}} & \textcolor[HTML]{4285f4}{\textbf{0.2507}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{2010} & \textcolor[HTML]{4285f4}{\textbf{0.2038}} & \textcolor[HTML]{4285f4}{\textbf{0.2304}} & \textcolor[HTML]{4285f4}{\textbf{0.1583}} & \textcolor[HTML]{4285f4}{\textbf{0.0716}} & \textcolor[HTML]{4285f4}{\textbf{0.0846}} & \textcolor[HTML]{4285f4}{\textbf{0.1360}} & \textcolor[HTML]{4285f4}{\textbf{0.1121}} & \textcolor[HTML]{4285f4}{\textbf{0.1148}} & \textcolor[HTML]{4285f4}{\textbf{0.1181}} & \textcolor[HTML]{4285f4}{\textbf{}}\\
-\textbf{} & \textbf{} & \textbf{grains} & \textbf{1990} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{0.5243}} & \textcolor[HTML]{4285f4}{\textbf{0.4882}} & \textcolor[HTML]{4285f4}{\textbf{0.5650}}\\
-\addlinespace
-\textbf{} & \textbf{} & \textbf{} & \textbf{2000} & \textcolor[HTML]{4285f4}{\textbf{0.4870}} & \textcolor[HTML]{4285f4}{\textbf{0.4337}} & \textcolor[HTML]{4285f4}{\textbf{0.3851}} & \textcolor[HTML]{4285f4}{\textbf{0.3402}} & \textcolor[HTML]{4285f4}{\textbf{0.4473}} & \textcolor[HTML]{4285f4}{\textbf{0.5335}} & \textcolor[HTML]{4285f4}{\textbf{0.4594}} & \textcolor[HTML]{4285f4}{\textbf{0.5040}} & \textcolor[HTML]{4285f4}{\textbf{0.6325}} & \textcolor[HTML]{4285f4}{\textbf{0.5681}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{2010} & \textcolor[HTML]{4285f4}{\textbf{0.5389}} & \textcolor[HTML]{4285f4}{\textbf{0.6424}} & \textcolor[HTML]{4285f4}{\textbf{0.5592}} & \textcolor[HTML]{4285f4}{\textbf{0.3199}} & \textcolor[HTML]{4285f4}{\textbf{0.3134}} & \textcolor[HTML]{4285f4}{\textbf{0.4390}} & \textcolor[HTML]{4285f4}{\textbf{0.3872}} & \textcolor[HTML]{4285f4}{\textbf{0.4123}} & \textcolor[HTML]{4285f4}{\textbf{0.3618}} & \textcolor[HTML]{4285f4}{\textbf{}}\\
-\textbf{} & \textbf{} & \textbf{livestock} & \textbf{1990} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{0.2192}} & \textcolor[HTML]{4285f4}{\textbf{0.3724}} & \textcolor[HTML]{4285f4}{\textbf{0.3453}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{2000} & \textcolor[HTML]{4285f4}{\textbf{0.2762}} & \textcolor[HTML]{4285f4}{\textbf{0.3315}} & \textcolor[HTML]{4285f4}{\textbf{0.3243}} & \textcolor[HTML]{4285f4}{\textbf{0.3497}} & \textcolor[HTML]{4285f4}{\textbf{0.2937}} & \textcolor[HTML]{4285f4}{\textbf{0.4170}} & \textcolor[HTML]{4285f4}{\textbf{0.2784}} & \textcolor[HTML]{4285f4}{\textbf{0.2744}} & \textcolor[HTML]{4285f4}{\textbf{0.2822}} & \textcolor[HTML]{4285f4}{\textbf{0.3365}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{2010} & \textcolor[HTML]{4285f4}{\textbf{0.3568}} & \textcolor[HTML]{4285f4}{\textbf{0.4772}} & \textcolor[HTML]{4285f4}{\textbf{0.3585}} & \textcolor[HTML]{4285f4}{\textbf{0.1783}} & \textcolor[HTML]{4285f4}{\textbf{0.3532}} & \textcolor[HTML]{4285f4}{\textbf{0.4246}} & \textcolor[HTML]{4285f4}{\textbf{0.3445}} & \textcolor[HTML]{4285f4}{\textbf{0.2948}} & \textcolor[HTML]{4285f4}{\textbf{0.2994}} & \textcolor[HTML]{4285f4}{\textbf{}}\\
-\addlinespace
-\textbf{} & \textbf{} & \textbf{softs} & \textbf{1990} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{-0.0042}} & \textcolor[HTML]{4285f4}{\textbf{-0.0001}} & \textcolor[HTML]{4285f4}{\textbf{0.0128}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{2000} & \textcolor[HTML]{4285f4}{\textbf{0.0603}} & \textcolor[HTML]{4285f4}{\textbf{0.0289}} & \textcolor[HTML]{4285f4}{\textbf{0.0470}} & \textcolor[HTML]{4285f4}{\textbf{0.0807}} & \textcolor[HTML]{4285f4}{\textbf{0.0577}} & \textcolor[HTML]{4285f4}{\textbf{0.0624}} & \textcolor[HTML]{4285f4}{\textbf{0.0765}} & \textcolor[HTML]{4285f4}{\textbf{0.0485}} & \textcolor[HTML]{4285f4}{\textbf{0.2484}} & \textcolor[HTML]{4285f4}{\textbf{0.1710}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{2010} & \textcolor[HTML]{4285f4}{\textbf{0.1273}} & \textcolor[HTML]{4285f4}{\textbf{0.1400}} & \textcolor[HTML]{4285f4}{\textbf{0.1038}} & \textcolor[HTML]{4285f4}{\textbf{0.0568}} & \textcolor[HTML]{4285f4}{\textbf{0.0413}} & \textcolor[HTML]{4285f4}{\textbf{0.0983}} & \textcolor[HTML]{4285f4}{\textbf{0.1280}} & \textcolor[HTML]{4285f4}{\textbf{0.0825}} & \textcolor[HTML]{4285f4}{\textbf{0.0565}} & \textcolor[HTML]{4285f4}{\textbf{}}\\
-\textbf{} & \textbf{energy} & \textbf{all} & \textbf{1990} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{0.4060}} & \textcolor[HTML]{4285f4}{\textbf{0.4552}} & \textcolor[HTML]{4285f4}{\textbf{0.5256}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{2000} & \textcolor[HTML]{4285f4}{\textbf{0.4362}} & \textcolor[HTML]{4285f4}{\textbf{0.5186}} & \textcolor[HTML]{4285f4}{\textbf{0.5682}} & \textcolor[HTML]{4285f4}{\textbf{0.5248}} & \textcolor[HTML]{4285f4}{\textbf{0.6212}} & \textcolor[HTML]{4285f4}{\textbf{0.6402}} & \textcolor[HTML]{4285f4}{\textbf{0.5082}} & \textcolor[HTML]{4285f4}{\textbf{0.5530}} & \textcolor[HTML]{4285f4}{\textbf{0.6278}} & \textcolor[HTML]{4285f4}{\textbf{0.4840}}\\
-\addlinespace
-\textbf{} & \textbf{} & \textbf{} & \textbf{2010} & \textcolor[HTML]{4285f4}{\textbf{0.4549}} & \textcolor[HTML]{4285f4}{\textbf{0.4752}} & \textcolor[HTML]{4285f4}{\textbf{0.3796}} & \textcolor[HTML]{4285f4}{\textbf{0.2889}} & \textcolor[HTML]{4285f4}{\textbf{0.4103}} & \textcolor[HTML]{4285f4}{\textbf{0.4282}} & \textcolor[HTML]{4285f4}{\textbf{0.4442}} & \textcolor[HTML]{4285f4}{\textbf{0.3890}} & \textcolor[HTML]{4285f4}{\textbf{0.4270}} & \textcolor[HTML]{4285f4}{\textbf{}}\\
-\textbf{} & \textbf{} & \textbf{petroleum} & \textbf{1990} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{0.7207}} & \textcolor[HTML]{4285f4}{\textbf{0.7946}} & \textcolor[HTML]{4285f4}{\textbf{0.8527}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{2000} & \textcolor[HTML]{4285f4}{\textbf{0.6122}} & \textcolor[HTML]{4285f4}{\textbf{0.7632}} & \textcolor[HTML]{4285f4}{\textbf{0.8072}} & \textcolor[HTML]{4285f4}{\textbf{0.6948}} & \textcolor[HTML]{4285f4}{\textbf{0.8321}} & \textcolor[HTML]{4285f4}{\textbf{0.7377}} & \textcolor[HTML]{4285f4}{\textbf{0.7703}} & \textcolor[HTML]{4285f4}{\textbf{0.7895}} & \textcolor[HTML]{4285f4}{\textbf{0.8184}} & \textcolor[HTML]{4285f4}{\textbf{0.7460}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{2010} & \textcolor[HTML]{4285f4}{\textbf{0.8835}} & \textcolor[HTML]{4285f4}{\textbf{0.7867}} & \textcolor[HTML]{4285f4}{\textbf{0.6692}} & \textcolor[HTML]{4285f4}{\textbf{0.6075}} & \textcolor[HTML]{4285f4}{\textbf{0.6710}} & \textcolor[HTML]{4285f4}{\textbf{0.7069}} & \textcolor[HTML]{4285f4}{\textbf{0.7547}} & \textcolor[HTML]{4285f4}{\textbf{0.6672}} & \textcolor[HTML]{4285f4}{\textbf{0.7786}} & \textcolor[HTML]{4285f4}{\textbf{}}\\
-\textbf{} & \textbf{metals} & \textbf{all} & \textbf{1990} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{0.2296}} & \textcolor[HTML]{4285f4}{\textbf{0.2877}} & \textcolor[HTML]{4285f4}{\textbf{0.2449}}\\
-\addlinespace
-\textbf{} & \textbf{} & \textbf{} & \textbf{2000} & \textcolor[HTML]{4285f4}{\textbf{0.1860}} & \textcolor[HTML]{4285f4}{\textbf{0.1832}} & \textcolor[HTML]{4285f4}{\textbf{0.1992}} & \textcolor[HTML]{4285f4}{\textbf{0.2290}} & \textcolor[HTML]{4285f4}{\textbf{0.4923}} & \textcolor[HTML]{4285f4}{\textbf{0.4480}} & \textcolor[HTML]{4285f4}{\textbf{0.6328}} & \textcolor[HTML]{4285f4}{\textbf{0.5426}} & \textcolor[HTML]{4285f4}{\textbf{0.5664}} & \textcolor[HTML]{4285f4}{\textbf{0.5547}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{2010} & \textcolor[HTML]{4285f4}{\textbf{0.6297}} & \textcolor[HTML]{4285f4}{\textbf{0.6458}} & \textcolor[HTML]{4285f4}{\textbf{0.6649}} & \textcolor[HTML]{4285f4}{\textbf{0.6160}} & \textcolor[HTML]{4285f4}{\textbf{0.4531}} & \textcolor[HTML]{4285f4}{\textbf{0.4850}} & \textcolor[HTML]{4285f4}{\textbf{0.4269}} & \textcolor[HTML]{4285f4}{\textbf{0.3584}} & \textcolor[HTML]{4285f4}{\textbf{0.5259}} & \textcolor[HTML]{4285f4}{\textbf{}}\\
-\textbf{} & \textbf{} & \textbf{precious} & \textbf{1990} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{0.3063}} & \textcolor[HTML]{4285f4}{\textbf{0.3451}} & \textcolor[HTML]{4285f4}{\textbf{0.3308}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{2000} & \textcolor[HTML]{4285f4}{\textbf{0.2934}} & \textcolor[HTML]{4285f4}{\textbf{0.2337}} & \textcolor[HTML]{4285f4}{\textbf{0.3053}} & \textcolor[HTML]{4285f4}{\textbf{0.2959}} & \textcolor[HTML]{4285f4}{\textbf{0.5688}} & \textcolor[HTML]{4285f4}{\textbf{0.5674}} & \textcolor[HTML]{4285f4}{\textbf{0.6969}} & \textcolor[HTML]{4285f4}{\textbf{0.6143}} & \textcolor[HTML]{4285f4}{\textbf{0.6428}} & \textcolor[HTML]{4285f4}{\textbf{0.6713}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{2010} & \textcolor[HTML]{4285f4}{\textbf{0.7004}} & \textcolor[HTML]{4285f4}{\textbf{0.7107}} & \textcolor[HTML]{4285f4}{\textbf{0.7089}} & \textcolor[HTML]{4285f4}{\textbf{0.6988}} & \textcolor[HTML]{4285f4}{\textbf{0.5620}} & \textcolor[HTML]{4285f4}{\textbf{0.6088}} & \textcolor[HTML]{4285f4}{\textbf{0.5652}} & \textcolor[HTML]{4285f4}{\textbf{0.4746}} & \textcolor[HTML]{4285f4}{\textbf{0.5716}} & \textcolor[HTML]{4285f4}{\textbf{}}\\
-\addlinespace
-\textbf{GB} & \textbf{all} & \textbf{all} & \textbf{1990} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{}} & \textcolor[HTML]{4285f4}{\textbf{0.2289}} & \textcolor[HTML]{4285f4}{\textbf{0.3601}} & \textcolor[HTML]{4285f4}{\textbf{0.4487}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{2000} & \textcolor[HTML]{4285f4}{\textbf{0.3550}} & \textcolor[HTML]{4285f4}{\textbf{0.4082}} & \textcolor[HTML]{4285f4}{\textbf{0.4775}} & \textcolor[HTML]{4285f4}{\textbf{0.5526}} & \textcolor[HTML]{4285f4}{\textbf{0.5068}} & \textcolor[HTML]{4285f4}{\textbf{0.4792}} & \textcolor[HTML]{4285f4}{\textbf{0.4340}} & \textcolor[HTML]{4285f4}{\textbf{0.4653}} & \textcolor[HTML]{4285f4}{\textbf{0.5795}} & \textcolor[HTML]{4285f4}{\textbf{0.6647}}\\
-\textbf{} & \textbf{} & \textbf{} & \textbf{2010} & \textcolor[HTML]{4285f4}{\textbf{0.6886}} & \textcolor[HTML]{4285f4}{\textbf{0.6742}} & \textcolor[HTML]{4285f4}{\textbf{0.6122}} & \textcolor[HTML]{4285f4}{\textbf{0.6606}} & \textcolor[HTML]{4285f4}{\textbf{0.4700}} & \textcolor[HTML]{4285f4}{\textbf{0.5003}} & \textcolor[HTML]{4285f4}{\textbf{0.4636}} & \textcolor[HTML]{4285f4}{\textbf{0.3810}} & \textcolor[HTML]{4285f4}{\textbf{0.3598}} & \textcolor[HTML]{4285f4}{\textbf{}}\\
-\bottomrule
-
-\end{longtable}
-
-\endgroup{}
-\end{landscape}
 
 \newpage
 
