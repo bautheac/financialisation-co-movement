@@ -362,13 +362,19 @@ correlations_inner <- readr::read_rds(
 
 ### By period ####
 correlations_inner_periods <- dplyr::filter(
-  correlations_inner, field == "close price", type == "return", frequency == "day", timespan == "period"
+  correlations_inner, field == "close price", type == "return", frequency == "day", 
+  timespan == "period", regime == "whole period"
 ) |>
-  dplyr::select(country, sector, subsector, period, regime, average) |>
-  dplyr::group_by(country, sector, subsector, period, regime) |>
+  dplyr::select(country, sector, subsector, period, average) |>
+  dplyr::group_by(country, sector, subsector, period) |>
   dplyr::slice_tail(n = 1L) |> dplyr::ungroup() |>
   tidyr::pivot_wider(names_from = "period", values_from = "average") |>
   sort_table_by_country_sector_subsector(sort_levels)
+
+readr::write_rds(
+  correlations_inner_periods, 
+  slituR::paste_forward_slash(tables_directory_path, "correlations-inner-periods.rds")
+)
 
 ### By year ####
 correlations_inner_years <- dplyr::filter(
@@ -389,6 +395,11 @@ correlations_inner_years <- dplyr::filter(
     dplyr::across(c(`0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`), ~ format(.x, scientific = FALSE)),
     dplyr::across(c(`0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`), ~ stringr::str_replace_all(.x, "    NA", ""))
     )
+
+readr::write_rds(
+  correlations_inner_years, 
+  slituR::paste_forward_slash(tables_directory_path, "correlations-inner-years.rds")
+)
 
 ## cross ####
 format_correlations_cross_by_period <- function(correlations_cross){
