@@ -62,12 +62,12 @@ library(readr)
 library(slituR)
 library(tidyr)
 
-urls <- c(
-  "https://www.dropbox.com/scl/fi/n7t8g3hn32d8e5gf2rcti/references.bib?rlkey=xy251n44q3y0t3omxpqk0dvyf&dl=1",
-  "https://www.dropbox.com/scl/fi/c46nb5xpxwgvjdspla9p5/style.css?rlkey=d666hnaxod2stvkxel33or0cg&dl=1"
-)
-file_names <- c("bibliography.bib", "style.css")
-purrr::walk2(urls, file_names, function(url, file_name) download.file(url, file_name))
+# urls <- c(
+#   "https://www.dropbox.com/scl/fi/n7t8g3hn32d8e5gf2rcti/references.bib?rlkey=xy251n44q3y0t3omxpqk0dvyf&dl=1",
+#   "https://www.dropbox.com/scl/fi/c46nb5xpxwgvjdspla9p5/style.css?rlkey=d666hnaxod2stvkxel33or0cg&dl=1"
+# )
+# file_names <- c("bibliography.bib", "style.css")
+# purrr::walk2(urls, file_names, function(url, file_name) download.file(url, file_name))
 ```
 
 
